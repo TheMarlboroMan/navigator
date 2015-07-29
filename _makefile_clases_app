@@ -1,0 +1,100 @@
+################################################################################
+#Definciones
+
+DIR_CLASES_APP=./class/app/
+DIR_NIVELES=$(DIR_CLASES_APP)niveles/
+DIR_INTERFACES=$(DIR_CLASES_APP)interfaces/
+DIR_INPUT=$(DIR_CLASES_APP)input/
+DIR_GRAFICOS=$(DIR_CLASES_APP)graficos/
+DIR_JUEGO=$(DIR_CLASES_APP)juego/
+DIR_COLISIONES=$(DIR_CLASES_APP)colisiones/
+
+################################################################################
+#Juego
+
+$(DIR_O)jugador.o:\
+$(DIR_O)actor.o \
+$(DIR_INPUT)input_usuario.h \
+$(DIR_JUEGO)jugador.h \
+$(DIR_JUEGO)jugador.cpp
+	$(CC) $(CFLAGS) $(INCLUDES) $(DIR_JUEGO)jugador.cpp -o $(DIR_O)jugador.o
+
+$(DIR_O)actor.o:\
+$(DIR_O)espaciable.o \
+$(DIR_JUEGO)actor.h \
+$(DIR_JUEGO)actor.cpp
+	$(CC) $(CFLAGS) $(INCLUDES) $(DIR_JUEGO)actor.cpp -o $(DIR_O)actor.o
+
+$(DIR_O)actor_movil.o:\
+$(DIR_O)actor.o \
+$(DIR_O)movil.o \
+$(DIR_JUEGO)actor_movil.h \
+$(DIR_JUEGO)actor_movil.cpp
+	$(CC) $(CFLAGS) $(INCLUDES) $(DIR_JUEGO)actor_movil.cpp -o $(DIR_O)actor_movil.o
+
+################################################################################
+#Niveles
+
+$(DIR_O)mapa.o:\
+$(DIR_O)sala.o \
+$(DIR_NIVELES)mapa.h \
+$(DIR_NIVELES)mapa.cpp
+	$(CC) $(CFLAGS) $(INCLUDES) $(DIR_NIVELES)mapa.cpp -o $(DIR_O)mapa.o
+
+$(DIR_O)sala.o:\
+$(DIR_O)celda.o \
+$(DIR_NIVELES)sala.h \
+$(DIR_NIVELES)sala.cpp
+	$(CC) $(CFLAGS) $(INCLUDES) $(DIR_NIVELES)sala.cpp -o $(DIR_O)sala.o
+
+$(DIR_O)celda.o:\
+$(DIR_O)espaciable.o\
+$(DIR_NIVELES)celda.h \
+$(DIR_NIVELES)celda.cpp
+	$(CC) $(CFLAGS) $(INCLUDES) $(DIR_NIVELES)celda.cpp -o $(DIR_O)celda.o
+
+################################################################################
+#Graficos
+
+$(DIR_O)representador.o :\
+$(DIR_O)representable.o \
+$(DIR_GRAFICOS)representador.h \
+$(DIR_GRAFICOS)representador.cpp
+	$(CC) $(CFLAGS) $(INCLUDES) $(DIR_GRAFICOS)representador.cpp -o $(DIR_O)representador.o
+
+$(DIR_O)representable.o :\
+$(DIR_GRAFICOS)representable.h \
+$(DIR_GRAFICOS)representable.cpp
+	$(CC) $(CFLAGS) $(INCLUDES) $(DIR_GRAFICOS)representable.cpp -o $(DIR_O)representable.o
+
+################################################################################
+#Colisiones
+
+$(DIR_O)calculador_colisiones.o:\
+$(DIR_O)espaciable.o\
+$(DIR_COLISIONES)calculador_colisiones.h \
+$(DIR_COLISIONES)calculador_colisiones.cpp
+	$(CC) $(CFLAGS) $(INCLUDES) $(DIR_COLISIONES)calculador_colisiones.cpp -o $(DIR_O)calculador_colisiones.o
+
+################################################################################
+#Input
+
+$(DIR_O)recogedor_input.o:\
+$(DIR_INPUT)input_usuario.h \
+$(DIR_INPUT)recogedor_input.h \
+$(DIR_INPUT)recogedor_input.cpp
+	$(CC) $(CFLAGS) $(INCLUDES) $(DIR_INPUT)recogedor_input.cpp -o $(DIR_O)recogedor_input.o
+
+################################################################################
+#Interfaces
+
+$(DIR_O)espaciable.o:\
+$(DIR_INTERFACES)espaciable.h \
+$(DIR_INTERFACES)espaciable.cpp
+	$(CC) $(CFLAGS) $(INCLUDES) $(DIR_INTERFACES)espaciable.cpp -o $(DIR_O)espaciable.o
+
+$(DIR_O)movil.o:\
+$(DIR_INTERFACES)movil.h \
+$(DIR_INTERFACES)movil.cpp
+	$(CC) $(CFLAGS) $(INCLUDES) $(DIR_INTERFACES)movil.cpp -o $(DIR_O)movil.o
+

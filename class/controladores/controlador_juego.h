@@ -5,6 +5,8 @@
 
 #include "controlador_base.h"
 #include "../app/juego/jugador.h"
+#include "../app/juego/automapa/automapa.h"
+#include "../app/juego/sistemas/contador_tiempo.h"
 #include "../app/niveles/mapa.h"
 #include "../app/graficos/representador.h"
 #include "../app/colisiones/calculador_colisiones.h"
@@ -20,13 +22,18 @@ class Controlador_juego:public Controlador_base
 	App_Niveles::Mapa mapa;
 	App_Juego::Jugador jugador;
 
+	App_Juego_Automapa::Automapa automapa;
+	App_Juego_Sistemas::Contador_tiempo contador_tiempo;
 	App_Niveles::Sala * sala_actual;
+	
 
 	///////////////
 	//Métodos internos.
 
 	void procesar_jugador(App_Juego::Jugador& j, float delta, App_Input::Input_usuario iu);
 	void controlar_salida_sala(App_Juego::Jugador& j);
+	void iniciar_automapa();
+	void refrescar_automapa();
 
 	///////////////
 	//Interface pública.

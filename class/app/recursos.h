@@ -17,7 +17,8 @@ class Recursos_graficos
 	};
 
 	enum texturas{
-		RT_DEFECTO=1
+		RT_DEFECTO=1,
+		RT_AUTOMAPA=2
 	};
 };
 

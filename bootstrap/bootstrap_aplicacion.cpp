@@ -11,28 +11,34 @@ void App::loop_aplicacion(Kernel_app& kernel)
 
 	//Controladores e interfaces.
 	Controlador_juego C_J(DI, kernel.acc_pantalla());
+
 	Interface_controlador * IC=&C_J;
 
 	//Loop principal.
 	while(kernel.loop(*IC))
 	{
-/*		
 		if(DI.es_cambio_estado())
 		{
+/*
 			switch(DI.acc_estado_actual())
 			{
-				case Director_estados::t_estados::INTRO: break;
-				case Director_estados::t_estados::EJEMPLO: break;
+				case Director_estados::t_estados::JUEGO: break;
+				case Director_estados::t_estados::GENERADOR: break;
 			}
+*/
 
+/*
 			switch(DI.acc_estado_deseado())
 			{
-				case Director_estados::t_estados::INTRO: IC=&C_I; break;
-				case Director_estados::t_estados::EJEMPLO: IC=&C_E; break;
+				case Director_estados::t_estados::JUEGO: 
+					IC=&C_J; 
+				break;
+				case Director_estados::t_estados::GENERADOR: IC=&C_G; break;
+
 			}
+*/
 
 			DI.confirmar_cambio_estado();
 		}
-*/
 	};
 }

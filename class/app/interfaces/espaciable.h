@@ -65,6 +65,12 @@ class Espaciable
 	static bool es_a_la_izquierda_de(const t_caja& una, const t_caja& otra) {return una.origen.x+una.w <= otra.origen.x;}
 	static bool es_a_la_derecha_de(const t_caja& una, const t_caja& otra) {return una.origen.x >= otra.origen.x+otra.w;}
 
+	void establecer_en_posicion(const Espaciable& e)
+	{
+		mut_x_caja(e.acc_espaciable_x());	
+		mut_y_caja(e.acc_espaciable_y());
+	}
+	
 	void establecer_posicion(float x, float y)
 	{
 		mut_x_caja(x);	

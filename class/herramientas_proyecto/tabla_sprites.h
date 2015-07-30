@@ -36,6 +36,9 @@ comparten la misma hoja de sprites aunque representan cosas distintas.
 
 extern DLibH::Log_base LOG;
 
+namespace HerramientasProyecto
+{
+
 struct Frame_sprites
 {
 	public:
@@ -70,4 +73,5 @@ class Tabla_sprites
 	Frame_sprites obtener(unsigned int);
 };
 
+}
 #endif

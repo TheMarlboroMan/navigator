@@ -3,6 +3,9 @@
 
 #include <random>
 
+namespace HerramientasProyecto
+{
+
 class Generador_int
 {
 	public:
@@ -17,4 +20,5 @@ class Generador_int
 	
 };
 
+}
 #endif

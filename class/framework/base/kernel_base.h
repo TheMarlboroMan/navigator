@@ -2,18 +2,18 @@
 #define KERNEL_MOTOR_SDL2_H
 
 #include <string>
+#include <stdexcept>
 #include "configuracion_base.h"
 #include "input_base.h"
 #include "audio_base.h"
 #include "cargador_recursos_base.h"
 #include "../interface_controlador.h"
 
-class Kernel_excepcion
+
+class Kernel_excepcion:public std::logic_error
 {
 	public:
-
-	std::string mensaje;
-	Kernel_excepcion(const std::string& m):mensaje(m) {}
+	Kernel_excepcion(const std::string& m):logic_error(m) {}
 };
 
 typedef Kernel_excepcion Kernel_exception;

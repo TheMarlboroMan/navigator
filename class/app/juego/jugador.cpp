@@ -9,8 +9,8 @@ const float Jugador::ACELERACION_HORIZONTAL_SEGUNDO=300.0;
 const float Jugador::DECELERACION_HORIZONTAL_SEGUNDO=350.0;
 const float Jugador::MAXIMA_VELOCIDAD_HORIZONTAL=200.0;
 const float Jugador::MAXIMA_VELOCIDAD_VERTICAL=150.0;
-const float Jugador::MAXIMA_VELOCIDAD_CAIDA=80.0;
-const float Jugador::VELOCIDAD_MINIMA_IMPACTO=60.0;
+const float Jugador::MAXIMA_VELOCIDAD_CAIDA=150.0;
+const float Jugador::VELOCIDAD_MINIMA_IMPACTO=100.0;
 
 Jugador::Jugador(float x, float y)
 	:Actor_movil(x, y, W, H),

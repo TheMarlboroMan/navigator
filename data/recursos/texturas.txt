@@ -1,2 +1,3 @@
 #indice	ruta	transparencia	rtrans	gtrans	btrans
 1	data/graficos/defecto.png	1	0	255	255
+2	data/graficos/automapa.png	1	0	255	255

@@ -40,8 +40,10 @@ class Actor:public App_Interfaces::Espaciable
 
 	public:
 
+	Actor();
 	Actor(float x, float y, unsigned int w, unsigned int h);
-	~Actor();
+
+	void establecer_caja(float x, float y, unsigned int w, unsigned int h);
 
 	bool es_para_borrar() const {return para_borrar;}
 	void marcar_para_borrar() {para_borrar=true;}

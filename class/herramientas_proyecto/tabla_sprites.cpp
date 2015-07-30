@@ -1,5 +1,7 @@
 #include "tabla_sprites.h"
 
+using namespace HerramientasProyecto;
+
 Tabla_sprites::Tabla_sprites(const std::string& ruta)
 {
 	cargar(ruta);

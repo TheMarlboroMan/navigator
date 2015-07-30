@@ -87,14 +87,6 @@ class Jugador:public Actor_movil, public App_Graficos::Representable
 	int acc_salud() const {return salud;}
 	int acc_escudo() const {return escudo;}
 
-	void colocar_inicio()
-	{
-		mut_x_caja(32.0);
-		mut_y_caja(32.0);
-		establecer_vector(0.0, Movil::t_vector::V_X);
-		establecer_vector(0.0, Movil::t_vector::V_Y);
-	}
-
 //	bool es_encarando_direccion(t_direcciones dir) const {return direccion==dir;}
 };
 

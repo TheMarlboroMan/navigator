@@ -1,5 +1,8 @@
 #include "controlador_juego.h"
 #include "../app/recursos.h"
+#include "../app/definiciones/definiciones.h"
+#include "../app/generador/traductor_mapas.h"
+#include "../app/generador/generador_estructura_niveles.h"
 
 using namespace App_Niveles;
 using namespace App_Juego;
@@ -7,88 +10,30 @@ using namespace App_Graficos;
 using namespace App_Colisiones;
 using namespace App_Input;
 
-/**
-* TODO: Notas para el generador de salas:
-* - Cada sala tendría que tener un spawn point además de sus salidas.
-* - El algoritmo podría decir "voy a generar 4 salas de camino y luego 3 extras".
-* - Generaría el camino y luego, de entre lo que sobre, colocaría las extras.
-* - Al colocar las salas secuenciales determina las salidas que tiene.
-* - Al colocar las salas extras determina las salidas que tienen.
-* - No queda claro al colocar una extra a qué sala estaría conectada: si 
-* elegimos una al azar entre las adyacentes y sólo una no habrá loops en los 
-* mapas. Algo interesante sería asignar a la única posible (si la hay) y si hay
-* más de una asignar oportunidades distintas a cada una.
-* - El algoritmo no detecta dead ends para darles buenas cosas. Se podría 
-* calcular la distancia a las salas que tienen una única salida con respecto
-* al inicio para darles unos niveles de bonus o algo. Con respecto a la salida
-* o a la llegada, que son los sitios obligatorios a los que hay que ir. Si 
-* lo hacemos así tendremos que meternos en pathfinding para no andar en 
-* círculos!!!!!
-*/
-
 Controlador_juego::Controlador_juego(Director_estados &DI, DLibV::Pantalla& pantalla)
 	:Controlador_base(DI),
-	mapa(2, 2),
+	mapa(0, 0),
 	jugador(32.0, 32.0),
+	contador_tiempo(),
 	sala_actual(nullptr)
 {
+	//TODO: Envolver todo esto en una clase que lo haga sólo...
+	//TODO: Hacerlo cuando todo esté listo, claro.
 
-	Sala sala0_0(20, 10, 0, 0);
-	Sala sala1_0(20, 10, 1, 0);
-	Sala sala0_1(20, 10, 0, 1);
-	Sala sala1_1(20, 10, 1, 1);
+	using namespace App_Generador;
+	Generador_estructura_niveles GEN;
+	GEN.generar_camino_principal(20);
+	GEN.generar_salas_secundarias(20);
+	GEN.normalizar();
 
-	for(unsigned int x=0; x<sala0_0.acc_w(); ++x)
-	{
-		sala0_0.insertar_celda(x, 0, Celda::tipo_celda::solida);
-		sala0_0.insertar_celda(x, 9, Celda::tipo_celda::solida);
-		sala1_0.insertar_celda(x, 0, Celda::tipo_celda::solida);
-		sala1_0.insertar_celda(x, 9, Celda::tipo_celda::solida);
-		sala0_1.insertar_celda(x, 0, Celda::tipo_celda::solida);
-		sala0_1.insertar_celda(x, 9, Celda::tipo_celda::solida);
-		sala1_1.insertar_celda(x, 0, Celda::tipo_celda::solida);
-		sala1_1.insertar_celda(x, 9, Celda::tipo_celda::solida);
-	}
+	Traductor_mapas TM;
+	mapa=TM.traducir_mapa(GEN.acc_proto_salas());
 
-	for(unsigned int y=1; y<sala0_0.acc_h()-1; ++y)
-	{
-		sala0_0.insertar_celda(0, y, Celda::tipo_celda::solida);
-		sala0_0.insertar_celda(19, y, Celda::tipo_celda::solida);
-		sala1_0.insertar_celda(0, y, Celda::tipo_celda::solida);
-		sala1_0.insertar_celda(19, y, Celda::tipo_celda::solida);
-		sala0_1.insertar_celda(0, y, Celda::tipo_celda::solida);
-		sala0_1.insertar_celda(19, y, Celda::tipo_celda::solida);
-		sala1_1.insertar_celda(0, y, Celda::tipo_celda::solida);
-		sala1_1.insertar_celda(19, y, Celda::tipo_celda::solida);
-	}
+	sala_actual=&(mapa.obtener_sala_inicio());
 
-	sala0_0.erase(19, 5);
-	sala0_0.erase(19, 6);
-	sala0_0.erase(10, 9);
-	sala0_0.erase(9, 9);
+	iniciar_automapa();
 
-	sala1_0.erase(0, 5);
-	sala1_0.erase(0, 6);
-	sala1_0.erase(10, 9);
-	sala1_0.erase(9, 9);
-
-	sala0_1.erase(19, 5);
-	sala0_1.erase(19, 6);
-	sala0_1.erase(10, 0);
-	sala0_1.erase(9, 0);
-
-	sala1_1.erase(0, 5);
-	sala1_1.erase(0, 6);
-	sala1_1.erase(10, 0);
-	sala1_1.erase(9, 0);
-	
-	mapa.insertar_sala(0,0,sala0_0);
-	mapa.insertar_sala(1,0,sala1_0);
-	mapa.insertar_sala(0,1,sala0_1);
-	mapa.insertar_sala(1,1,sala1_1);
-	
-
-	sala_actual=&(mapa.obtener_sala(0, 0));
+	contador_tiempo.mut_tiempo_restante(180.0);
 }
 
 Controlador_juego::~Controlador_juego()
@@ -113,10 +58,7 @@ void Controlador_juego::loop(Input_base& input, float delta)
 	}
 	else
 	{
-//		if(input.es_input_down(Input::I_ESPACIO))
-//		{
-//			solicitar_cambio_estado(Director_estados::t_estados::EJEMPLO);
-//		}
+		contador_tiempo.turno(delta);
 
 		Recogedor_input RI;
 		Input_usuario iu=RI.recoger_input_usuario(input);
@@ -125,6 +67,12 @@ void Controlador_juego::loop(Input_base& input, float delta)
 
 		//TODO TODO TODO...
 		if(jugador.acc_salud() <= 0.0)
+		{
+			abandonar_aplicacion();
+		}
+
+		//TODO TODO TODO...
+		if(!contador_tiempo.es_tiempo_restante())
 		{
 			abandonar_aplicacion();
 		}
@@ -137,31 +85,44 @@ void Controlador_juego::loop(Input_base& input, float delta)
 * @param Jugador j
 *
 * TODO: Ajustar coordenadas para que sea menos instantáneo.
-* TODO: Colocar al jugador en una de las salidas.
 * Controla que el jugador ha salido de una sala.
 */
 
 void Controlador_juego::controlar_salida_sala(Jugador& j)
 {
-	int salida=0;
+	using namespace App_Definiciones;
 
-	if(j.acc_espaciable_x() < 0) salida=1;
-	else if(j.acc_espaciable_x() > 630) salida=2;
-	else if(j.acc_espaciable_y() < 0) salida=3;
-	else if(j.acc_espaciable_y() > 360) salida=4;
+	direcciones salida=direcciones::nada;
 
-	if(salida)
+	if(j.acc_espaciable_x() < 0) salida=direcciones::izquierda;
+	else if(j.acc_espaciable_x() > 630) salida=direcciones::derecha;
+	else if(j.acc_espaciable_y() < 0) salida=direcciones::arriba;
+	else if(j.acc_espaciable_y() > 320) salida=direcciones::abajo;
+
+	if(salida!=direcciones::nada)
  	{
 		int ax=sala_actual->acc_x(), ay=sala_actual->acc_y();
 		switch(salida)
 		{
-			case 1: --ax; break;
-			case 2: ++ax; break;
-			case 3: --ay; break;
-			case 4: ++ay; break;
+			case direcciones::izquierda: --ax; break;
+			case direcciones::derecha: ++ax; break;
+			case direcciones::arriba: --ay; break;
+			case direcciones::abajo: ++ay; break;
+			case direcciones::nada: break;
 		}
-		j.colocar_inicio();
-		sala_actual=&mapa.obtener_sala(ax, ay);
+		
+		try
+		{
+			sala_actual=&mapa.obtener_sala(ax, ay);
+			const auto& s=sala_actual->obtener_entrada_posicion(obtener_direccion_contraria(salida));
+			j.establecer_en_posicion(s);
+			refrescar_automapa();
+		}
+		catch(std::logic_error& e)
+		{
+			LOG<<"ERROR AL CAMBIAR DE SALA: "<<e.what()<<std::endl;
+			abandonar_aplicacion();
+		}
 	}
 }
 
@@ -200,17 +161,77 @@ void Controlador_juego::procesar_jugador(Jugador& j, float delta, Input_usuario 
 
 void Controlador_juego::dibujar(DLibV::Pantalla& pantalla)
 {
+	//Pantalla...
 	pantalla.limpiar(128, 128, 128, 255);
 	std::vector<const Representable *> vr=(*sala_actual).obtener_vector_celdas_representables();
 	vr.push_back(&jugador);
 	representador.generar_vista(pantalla, vr);
 
+	//Hud
 	std::stringstream ss;
-	ss<<jugador.acc_espaciable_x()<<","<<jugador.acc_espaciable_y()<<" HULL: "<<jugador.acc_salud()<<" SHIELD: "<<jugador.acc_escudo();
+	ss<<jugador.acc_espaciable_x()<<","<<jugador.acc_espaciable_y()<<std::endl<<" HULL: "<<jugador.acc_salud()<<" SHIELD: "<<jugador.acc_escudo();
 
 	DLibV::Representacion_texto_auto_estatica rep_hud(pantalla.acc_renderer(), DLibV::Gestor_superficies::obtener(App::Recursos_graficos::RS_FUENTE_BASE), ss.str());
 	rep_hud.establecer_posicion(16, 16);
 	rep_hud.volcar(pantalla);
-	
 
+	//Contador de tiempo...
+	rep_hud.asignar(contador_tiempo.formatear_tiempo_restante());
+	rep_hud.establecer_posicion(16, 32);
+	rep_hud.volcar(pantalla);
+
+	//Automapa	
+	representador.dibujar_marco_automapa(pantalla);
+
+	const auto& v=automapa.acc_vista();
+	int x=0, y=0;
+
+	for(const auto& u : v)
+	{
+		representador.dibujar_pieza_automapa(pantalla, x, y, u.visitado ? u.tipo : App_Definiciones::direcciones::nada);
+		if(++x==App_Juego_Automapa::Definiciones_automapa::ANCHO)
+		{
+			x=0; ++y;
+		}
+	}
+}
+
+void Controlador_juego::refrescar_automapa()
+{
+	int x=sala_actual->acc_x(), y=sala_actual->acc_y();
+	automapa.descubrir(x, y);
+	automapa.refrescar_vista(x, y);
+}
+
+void Controlador_juego::iniciar_automapa()
+{
+	//Llegados a este punto podríamos usar de nuevo la información que
+	//sacó el generador, mucho más legible, pero nos vamos a quedar con
+	//esto, rápidamente...
+
+	struct llamable_salas
+	{
+		struct info
+		{
+			int x, y;
+			App_Definiciones::direcciones dir;
+			info(int px, int py, App_Definiciones::direcciones pd)
+				:x(px), y(py), dir(pd)
+			{} 
+		};
+
+		std::vector<info> v;
+
+		void operator()(const Sala& s)
+		{
+			v.push_back(info(s.acc_x(), s.acc_y(), s.acc_direcciones_entradas()) );
+		}
+	}ls;
+
+	automapa.inicializar(mapa.acc_w(), mapa.acc_h());
+	mapa.para_cada_sala(ls);
+	for(const auto& i : ls.v) automapa.configurar(i.x, i.y, i.dir);
+
+
+	refrescar_automapa();
 }

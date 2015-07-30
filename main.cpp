@@ -30,7 +30,7 @@ int main(int argc, char ** argv)
 		}
 		catch(Kernel_excepcion &e)
 		{
-			std::cout<<e.mensaje<<std::endl;
+			std::cout<<e.what()<<std::endl;
 		}
 	}
 	

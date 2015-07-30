@@ -3,6 +3,7 @@
 
 #include "../niveles/sala.h"
 #include "../juego/actor_movil.h"
+#include "../definiciones/definiciones.h"
 
 namespace App_Colisiones
 {

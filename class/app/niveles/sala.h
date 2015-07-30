@@ -2,7 +2,9 @@
 #define SALA_H
 
 #include "celda.h"
-#include "../matriz2d.h"
+#include "entrada.h"
+#include "../../herramientas_proyecto/matriz2d.h"
+#include "../definiciones/definiciones.h"
 
 namespace App_Niveles
 {
@@ -10,69 +12,94 @@ namespace App_Niveles
 class Sala
 {
 	///////////
-	// Definiciones
-
-	typedef unsigned int t_dim;
-
-	///////////
 	// Propiedades
 
 	private:
 
-	t_dim pos_x, pos_y; //Posición en una rejilla general.
-	t_dim w, h;		//Ancho y alto.
-	Matriz_2d<Celda> celdas;
+	App_Definiciones::tipos::coordenadas_t_dim pos; //Posición en una rejilla general.
+	App_Definiciones::tipos::t_dim w, h;		//Ancho y alto.
+	HerramientasProyecto::Matriz_2d<Celda> celdas;
+	std::vector<Entrada> entradas;
+	App_Definiciones::direcciones direcciones_entradas;
 
 	///////////
 	// Interface pública.
 
 	public:
 
-	Sala(t_dim pw, t_dim ph, t_dim px, t_dim py)
-		:pos_x(px), pos_y(py), 
-		w(pw), h(ph),
-		celdas(pw, ph)
-	{}
-
-	t_dim acc_x() const {return pos_x;}
-	t_dim acc_y() const {return pos_y;}
-	t_dim acc_w() const {return w;}
-	t_dim acc_h() const {return h;}
-
 	/**
-	* @throw Matriz_2d_excepcion_item_existe
+	* @param t_dim pw 
+	* @param t_dim ph
+	* @param t_dim px
+	* @param t_dim py
 	*/
 
-	void insertar_celda(Celda::t_dim px, Celda::t_dim py, Celda::tipo_celda pt)
-	{
-		celdas(px, py, Celda(px, py, pt));
-	}
+	Sala(App_Definiciones::tipos::t_dim pw, 
+		App_Definiciones::tipos::t_dim ph, 
+		App_Definiciones::tipos::t_dim px, 
+		App_Definiciones::tipos::t_dim py)
+		:pos(px, py),
+		w(pw), h(ph),
+		celdas(pw, ph),
+		direcciones_entradas(App_Definiciones::direcciones::nada)
+	{}
 
-	void erase(Celda::t_dim px, Celda::t_dim py)
-	{
-		celdas.erase(px, py);
-	}
+	App_Definiciones::tipos::t_dim acc_x() const {return pos.x;}
+	App_Definiciones::tipos::t_dim acc_y() const {return pos.y;}
+	App_Definiciones::tipos::t_dim acc_w() const {return w;}
+	App_Definiciones::tipos::t_dim acc_h() const {return h;}
+	App_Definiciones::direcciones acc_direcciones_entradas() const {return direcciones_entradas;}
 
 	/**
+	* @param t_dim x
+	* @param t_dim y
+	* @param tipo_celda t
+	* @throw Matriz_2d_excepcion_item_existe cuando la celda está ocupada.
+	*/
+
+	void insertar_celda(App_Definiciones::tipos::t_dim px, App_Definiciones::tipos::t_dim py, Celda::tipo_celda pt);
+
+	/**
+	* @param t_dim x
+	* @param t_dim_y
+	* @throw Matriz_2d_excepcion_item_invalido cuando no existe la celda.
+	*/
+
+	void erase(App_Definiciones::tipos::t_dim px, App_Definiciones::tipos::t_dim py);
+
+	/**
+	* @return std::vector<const Representable *>
 	* Devuelve un vector con punteros a las celdas representables.
 	*/
 	
-	std::vector<const App_Graficos::Representable *> obtener_vector_celdas_representables() const
-	{
-		struct obtener
-		{
-			std::vector<const App_Graficos::Representable *> r;
-			void operator()(const Celda& c) {r.push_back(&c);}
-		}obt;
+	std::vector<const App_Graficos::Representable *> obtener_vector_celdas_representables() const;
 
-		celdas.aplicar(obt);
-		return obt.r;
-	}
+	/**
+	* @param Entrada e
+	* @throws TODO
+	* Inserta una entrada en el vector de entradas. Se comprueba si se ha
+	* intentado insertar una entrada para la misma posición antes, lo que
+	* lanzaría la excepción.
+	*/
 
-	//Este acceso a las internas está para facilitar el tema del cálculo de colisiones en otras clases.
-	//Lo podríamos reimaginar haciendo que esta clase reciba el calculador de colisiones
-	//y haciendo que le inyecte la información de turno.
-	const Matriz_2d<Celda>& acc_matriz() const {return celdas;}
+	void insertar_entrada(const Entrada& e);
+
+	/**
+	* @return Matriz_2d<Celda>&
+	* Este acceso a las internas está para facilitar el tema del cálculo de 
+	* colisiones en otras clases. Lo podríamos reimaginar haciendo que esta 
+	* clase reciba el calculador de colisiones y haciendo que le inyecte 
+	* la información de turno.
+	*/
+
+	const HerramientasProyecto::Matriz_2d<Celda>& acc_matriz() const {return celdas;}
+
+	/**
+	* @return Entrada
+	* @throw std::logic_error cuando no hay entrada en esa posición.
+	*/
+
+	const Entrada& obtener_entrada_posicion(App_Definiciones::direcciones p);
 };
 
 }

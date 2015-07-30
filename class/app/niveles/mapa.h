@@ -8,40 +8,78 @@ namespace App_Niveles
 
 class Mapa
 {
+	///////////////
+	// Propiedades
 	private:
 
-	unsigned int w, h;
-	Matriz_2d<Sala> salas;
+	App_Definiciones::tipos::t_dim w, h;
+	App_Definiciones::tipos::coordenadas_t_dim sala_inicial;
+	HerramientasProyecto::Matriz_2d<Sala> salas;
 
 	///////////
 	// Interface pública.
 
 	public:
 
-	Mapa(unsigned int pw, unsigned int ph)
+	Mapa(App_Definiciones::tipos::t_dim pw, App_Definiciones::tipos::t_dim ph)
 		:w(pw), h(ph),
+		sala_inicial(0, 0),
 		salas(w, h)
 	{}
 
-	unsigned int acc_w() const {return w;}
-	unsigned int acc_h() const {return h;}
+	App_Definiciones::tipos::t_dim acc_w() const {return w;}
+	App_Definiciones::tipos::t_dim acc_h() const {return h;}
 
 	/**
+	* @param t_dim x
+	* @param t_dim y
+	* @param Sala& sala
 	* @throw Matriz_2d_excepcion_item_existe
+	* @throw Matriz_2d_excepcion_fuera_limites
 	*/
 
-	void insertar_sala(unsigned int px, unsigned py, Sala& sala)
+	void insertar_sala(App_Definiciones::tipos::t_dim px, App_Definiciones::tipos::t_dim py, Sala& sala)
 	{
 		salas.insert(px, py, sala);
 	}
 
 	/**
-	* @throw Matriz_2d_excepcion_item_existe
+	* @param t_dim x
+	* @param t_dim y
+	* @throw Matriz_2d_excepcion_item_no_existe
+	* @return Sala&
 	*/
 
-	Sala& obtener_sala(unsigned int px, unsigned int py)
+	Sala& obtener_sala(App_Definiciones::tipos::t_dim px, App_Definiciones::tipos::t_dim py)
 	{
 		return salas(px, py);
+	}
+
+	/**
+	* @throw Matriz_2d_excepcion_item_no_existe
+	* @return Sala&
+	*/
+
+	Sala& obtener_sala_inicio()
+	{
+		return salas(sala_inicial.x, sala_inicial.y);
+	}
+
+	void establecer_coordenadas_sala_inicial(App_Definiciones::tipos::t_dim px, 
+				App_Definiciones::tipos::t_dim py)
+	{
+		sala_inicial.x=px;
+		sala_inicial.y=py;
+	}
+
+	/**
+	* Ejecuta el llamable l para cada una de las salas...
+	*/
+
+	template<typename Llamable> 
+	void para_cada_sala(Llamable& l) const
+	{
+		salas.aplicar(l);
 	}
 };
 

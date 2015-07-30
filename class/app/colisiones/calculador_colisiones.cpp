@@ -4,6 +4,7 @@ using namespace App_Colisiones;
 using namespace App_Interfaces;
 using namespace App_Niveles;
 using namespace App_Juego;
+using namespace App_Definiciones;
 
 std::vector<const Celda *> Calculador_colisiones::celdas_en_caja(const Espaciable::t_caja& c, const Sala& sala) const
 {
@@ -15,7 +16,7 @@ std::vector<const Celda *> Calculador_colisiones::celdas_en_caja(const Espaciabl
 	auto mundo_a_indice_celdas=[](float val)
 	{
 		int v=floor(val);
-		return floor(v / Celda::DIM_CELDA); //Si W y H tuvieran valores distintos sería un tema.
+		return floor(v / tipos::DIM_CELDA); //Si W y H tuvieran valores distintos sería un tema.
 	};
 
 	float punto_inicio_x=c.origen.x;
@@ -23,8 +24,8 @@ std::vector<const Celda *> Calculador_colisiones::celdas_en_caja(const Espaciabl
 	float punto_inicio_y=c.origen.y;
 	float punto_fin_y=c.origen.y+c.h;
 
-	float punto_fin_rejilla_x=sala.acc_w()*Celda::DIM_CELDA;
-	float punto_fin_rejilla_y=sala.acc_h()*Celda::DIM_CELDA;
+	float punto_fin_rejilla_x=sala.acc_w()*tipos::DIM_CELDA;
+	float punto_fin_rejilla_y=sala.acc_h()*tipos::DIM_CELDA;
 
 	std::vector<const Celda *> resultado;
 

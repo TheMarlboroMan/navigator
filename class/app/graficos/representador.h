@@ -2,6 +2,7 @@
 #define REPRESENTADOR_H
 
 #include "representable.h"
+#include "../definiciones/definiciones.h"
 
 /*El representador funciona de la siguiente forma: desde el controlador 
 generamos un array de punteros a "Representables". Se le pasa el array al 
@@ -18,6 +19,12 @@ namespace App_Graficos
 
 class Representador
 {
+	/////////////////////////
+	// Definiciones
+	static const int X_AUTOMAPA=400;
+	static const int Y_AUTOMAPA=64;
+	static const int DIM_AUTOMAPA=7;
+
 	/////////////////////////
 	// Propiedades
 	
@@ -37,6 +44,9 @@ class Representador
 
 	unsigned int generar_vista(DLibV::Pantalla&, DLibV::Camara&, const std::vector<const Representable *>&);
 	unsigned int generar_vista(DLibV::Pantalla&, const std::vector<const Representable *>&);
+
+	void dibujar_marco_automapa(DLibV::Pantalla&);
+	void dibujar_pieza_automapa(DLibV::Pantalla&, int x, int y, App_Definiciones::direcciones t);
 
 	Representador();
 	~Representador();

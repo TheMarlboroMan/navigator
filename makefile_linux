@@ -8,7 +8,7 @@ CFLAGS=-c $(SIMBOLOS_DEBUG) $(OPTIMIZACION) $(FLAGS_BASE)
 CFLAGS_TARGET_FINAL=$(SIMBOLOS_DEBUG) $(OPTIMIZACION) $(FLAGS_BASE)
 CC=g++
 EJECUTABLE=a.out
-LIMPIAR=rm objects/*; rm libdan2/objects/*; rm libDanSDL2.a; rm $(EJECUTABLE);
+LIMPIAR=rm objects/*; rm $(EJECUTABLE); mkdir objects; touch objects/dummy;
 COMANDO_MOVER=mv libdan2/libDanSDL2.a libDanSDL2.a; 
 
 DIR_LIBDAN2=/home/dani/Escritorio/stuff/libdan2

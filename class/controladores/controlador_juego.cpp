@@ -163,7 +163,8 @@ void Controlador_juego::dibujar(DLibV::Pantalla& pantalla)
 {
 	//Pantalla...
 	pantalla.limpiar(128, 128, 128, 255);
-	std::vector<const Representable *> vr=(*sala_actual).obtener_vector_celdas_representables();
+	std::vector<const Representable *> vr=(*sala_actual).obtener_vector_representables();
+	
 	vr.push_back(&jugador);
 	representador.generar_vista(pantalla, vr);
 

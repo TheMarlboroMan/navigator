@@ -110,17 +110,17 @@ void Traductor_mapas::muros_sala(Sala& sala, direcciones salidas)
 void Traductor_mapas::obstaculos_sala(Sala& sala)
 {
 	using namespace HerramientasProyecto;
+	using namespace App_Juego_ObjetoJuego;
 
 	//Generar la cantidad de obstáculos...
 	Generador_int GEN(0, 20);
 	int c=GEN();
 
+	Generador_int GX(1, 18);
+	Generador_int GY(1, 8);
+
 	while(c)
 	{
-		//TODO: Estos valores, en constantes.
-		Generador_int GX(1, 18);
-		Generador_int GY(1, 8);
-
 		try
 		{
 			sala.insertar_celda(GX(), GY(), Celda::tipo_celda::solida);
@@ -131,4 +131,8 @@ void Traductor_mapas::obstaculos_sala(Sala& sala)
 			//Nada, simplemente no decrementamos el contador.
 		}
 	}
+
+	//De forma super cutre, vamos a volcar un bonus.
+	std::shared_ptr<Bonus_tiempo> bt(new Bonus_tiempo(GX()*App_Definiciones::tipos::DIM_CELDA, GY()*App_Definiciones::tipos::DIM_CELDA));
+	sala.insertar_objeto_juego(bt);
 }

@@ -21,9 +21,7 @@ $(DIR_O)traductor_mapas.o\
 $(DIR_O)proto_sala.o\
 $(DIR_O)automapa.o\
 $(DIR_O)contador_tiempo.o\
-$(DIR_O)item_base.o\
-$(DIR_O)item_estatico.o\
-$(DIR_O)item_tiempo.o\
+$(DIR_O)bonus_tiempo.o\
 
 DEP_CONTROLADORES=$(DIR_O)controlador_base.o \
 $(DIR_O)controlador_juego.o \

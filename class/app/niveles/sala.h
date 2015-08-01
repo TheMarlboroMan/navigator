@@ -5,6 +5,10 @@
 #include "entrada.h"
 #include "../../herramientas_proyecto/matriz2d.h"
 #include "../definiciones/definiciones.h"
+#include <memory>
+
+//Incluir los diversos tipos de objetos de mapa...
+#include "../juego/objetos_juego/bonus_tiempo.h"
 
 namespace App_Niveles
 {
@@ -16,11 +20,14 @@ class Sala
 
 	private:
 
-	App_Definiciones::tipos::coordenadas_t_dim pos; //Posición en una rejilla general.
-	App_Definiciones::tipos::t_dim w, h;		//Ancho y alto.
-	HerramientasProyecto::Matriz_2d<Celda> celdas;
-	std::vector<Entrada> entradas;
-	App_Definiciones::direcciones direcciones_entradas;
+	App_Definiciones::tipos::coordenadas_t_dim 	pos; //Posición en una rejilla general.
+	App_Definiciones::tipos::t_dim 			w, h;		//Ancho y alto.
+	HerramientasProyecto::Matriz_2d<Celda> 		celdas;
+	//TODO: Quizás podamos meter las entradas en los objetos de juego.
+	std::vector<Entrada> 				entradas;
+	App_Definiciones::direcciones 			direcciones_entradas;
+
+	std::vector<std::shared_ptr<App_Interfaces::Objeto_juego_interface> >		objetos_juego;	//Todos los objetos de juego van aquí.
 
 	///////////
 	// Interface pública.
@@ -44,11 +51,11 @@ class Sala
 		direcciones_entradas(App_Definiciones::direcciones::nada)
 	{}
 
-	App_Definiciones::tipos::t_dim acc_x() const {return pos.x;}
-	App_Definiciones::tipos::t_dim acc_y() const {return pos.y;}
-	App_Definiciones::tipos::t_dim acc_w() const {return w;}
-	App_Definiciones::tipos::t_dim acc_h() const {return h;}
-	App_Definiciones::direcciones acc_direcciones_entradas() const {return direcciones_entradas;}
+	App_Definiciones::tipos::t_dim acc_x() const	 		{return pos.x;}
+	App_Definiciones::tipos::t_dim acc_y() const	 		{return pos.y;}
+	App_Definiciones::tipos::t_dim acc_w() const	 		{return w;}
+	App_Definiciones::tipos::t_dim acc_h() const			{return h;}
+	App_Definiciones::direcciones acc_direcciones_entradas() const 	{return direcciones_entradas;}
 
 	/**
 	* @param t_dim x
@@ -69,10 +76,10 @@ class Sala
 
 	/**
 	* @return std::vector<const Representable *>
-	* Devuelve un vector con punteros a las celdas representables.
+	* Devuelve un vector con punteros a los objetos representables que contiene representables.
 	*/
 	
-	std::vector<const App_Graficos::Representable *> obtener_vector_celdas_representables() const;
+	std::vector<const App_Graficos::Representable *> obtener_vector_representables() const;
 
 	/**
 	* @param Entrada e
@@ -100,6 +107,9 @@ class Sala
 	*/
 
 	const Entrada& obtener_entrada_posicion(App_Definiciones::direcciones p);
+
+	void 		insertar_objeto_juego(std::shared_ptr<App_Interfaces::Objeto_juego_interface> obj);
+	size_t 		limpiar_objetos_juego_para_borrar();
 };
 
 }

@@ -1,4 +1,5 @@
 #include "sala.h"
+#include "../visitantes/visitante_objeto_juego.h"
 
 using namespace App_Niveles;
 using namespace HerramientasProyecto;
@@ -25,15 +26,28 @@ void Sala::erase(App_Definiciones::tipos::t_dim px, App_Definiciones::tipos::t_d
 * Devuelve un vector con punteros a las celdas representables.
 */
 
-std::vector<const App_Graficos::Representable *> Sala::obtener_vector_celdas_representables() const
+std::vector<const App_Graficos::Representable *> Sala::obtener_vector_representables() const
 {
 	struct obtener
 	{
 		std::vector<const App_Graficos::Representable *> r;
 		void operator()(const Celda& c) {r.push_back(&c);}
 	}obt;
-
 	celdas.aplicar(obt);
+
+	//Visitante específico para sacar la face "representable" de los objetos juego.
+	struct Visitante_objeto_juego_vector_representable:public App_Visitantes::Visitante_objeto_juego_const
+	{
+		std::vector<const App_Graficos::Representable *>& v;
+		Visitante_objeto_juego_vector_representable(std::vector<const App_Graficos::Representable *>& pv)
+			:v(pv)
+		{}
+	
+		virtual void visitar(const App_Juego_ObjetoJuego::Bonus_tiempo& o) {v.push_back(&o);}
+	}v(obt.r);
+
+	for(const auto& oj : objetos_juego) oj->recibir_visitante(v);
+
 	return obt.r;
 }
 
@@ -45,7 +59,6 @@ void Sala::insertar_entrada(const Entrada& e)
 
 	direcciones_entradas=direcciones_entradas | e.acc_posicion();
 }
-
 const Entrada& Sala::obtener_entrada_posicion(App_Definiciones::direcciones p)
 {
 	for(const auto& e : entradas)
@@ -53,4 +66,41 @@ const Entrada& Sala::obtener_entrada_posicion(App_Definiciones::direcciones p)
 		if(e.acc_posicion()==p) return e;
 	}
 	throw std::logic_error("No hay entrada en la posición establecida");
+}
+
+void Sala::insertar_objeto_juego(std::shared_ptr<App_Interfaces::Objeto_juego_interface> obj)
+{
+	objetos_juego.push_back(obj);
+}
+
+/**
+* @return size_t : indicando el número de elementos eliminados.
+* Recorre el vector de objetos juego elíminando de forma definitiva todos los
+* actores que puedan estar para borrar.
+*/
+
+size_t Sala::limpiar_objetos_juego_para_borrar()
+{
+	size_t	res=0;
+	auto 	ini=objetos_juego.begin(),
+		fin=objetos_juego.end();
+
+	while(ini < fin)
+	{
+		if( (*ini)->es_borrar() )
+		{
+//			delete *ini;
+			//Supuestamente esto libera la memoria...
+			//TODO: Comprobar.
+			ini=objetos_juego.erase(ini);
+		
+			++res;
+		}
+		else
+		{
+			++ini;
+		}		
+	}
+
+	return res;
 }

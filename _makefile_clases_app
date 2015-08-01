@@ -7,9 +7,10 @@ DIR_INTERFACES=$(DIR_CLASES_APP)interfaces/
 DIR_INPUT=$(DIR_CLASES_APP)input/
 DIR_GRAFICOS=$(DIR_CLASES_APP)graficos/
 DIR_JUEGO=$(DIR_CLASES_APP)juego/
+DIR_VISITANTES=$(DIR_CLASES_APP)visitantes/
 DIR_JUEGO_AUTOMAPA=$(DIR_JUEGO)automapa/
 DIR_JUEGO_SISTEMAS=$(DIR_JUEGO)sistemas/
-DIR_JUEGO_ITEMS=$(DIR_JUEGO)items/
+DIR_JUEGO_OBJETOS=$(DIR_JUEGO)objetos_juego/
 DIR_COLISIONES=$(DIR_CLASES_APP)colisiones/
 DIR_DEFINICIONES=$(DIR_CLASES_APP)definiciones/
 DIR_GENERADOR=$(DIR_CLASES_APP)generador/
@@ -38,24 +39,16 @@ $(DIR_JUEGO)actor_movil.cpp
 	$(CC) $(CFLAGS) $(INCLUDES) $(DIR_JUEGO)actor_movil.cpp -o $(DIR_O)actor_movil.o
 
 ################################################################################
-#Juego items
+#Objetos juego
+$(DIR_O)bonus_tiempo.o:\
+$(DIR_O)actor.o\
+$(DIR_VISITANTES)visitante_objeto_juego.h\
+$(DIR_INTERFACES)objeto_juego_interface.h\
+$(DIR_JUEGO_OBJETOS)bonus_tiempo.h\
+$(DIR_JUEGO_OBJETOS)bonus_tiempo.cpp
+	$(CC) $(CFLAGS) $(INCLUDES) $(DIR_JUEGO_OBJETOS)bonus_tiempo.cpp -o $(DIR_O)bonus_tiempo.o
 
-$(DIR_O)item_tiempo.o:\
-$(DIR_O)item_estatico.o\
-$(DIR_JUEGO_ITEMS)item_tiempo.h \
-$(DIR_JUEGO_ITEMS)item_tiempo.cpp
-	$(CC) $(CFLAGS) $(INCLUDES) $(DIR_JUEGO_ITEMS)item_tiempo.cpp -o $(DIR_O)item_tiempo.o
 
-$(DIR_O)item_estatico.o:\
-$(DIR_O)item_base.o\
-$(DIR_JUEGO_ITEMS)item_estatico.h \
-$(DIR_JUEGO_ITEMS)item_estatico.cpp
-	$(CC) $(CFLAGS) $(INCLUDES) $(DIR_JUEGO_ITEMS)item_estatico.cpp -o $(DIR_O)item_estatico.o
-
-$(DIR_O)item_base.o:\
-$(DIR_JUEGO_ITEMS)item_base.h \
-$(DIR_JUEGO_ITEMS)item_base.cpp
-	$(CC) $(CFLAGS) $(INCLUDES) $(DIR_JUEGO_ITEMS)item_base.cpp -o $(DIR_O)item_base.o
 
 ################################################################################
 #Juego sistemas
@@ -86,6 +79,7 @@ $(DIR_O)sala.o:\
 $(DIR_O)celda.o \
 $(DIR_O)entrada.o \
 $(DIR_O)definiciones.o \
+$(DIR_VISITANTES)visitante_objeto_juego.h\
 $(DIR_NIVELES)sala.h \
 $(DIR_NIVELES)sala.cpp
 	$(CC) $(CFLAGS) $(INCLUDES) $(DIR_NIVELES)sala.cpp -o $(DIR_O)sala.o

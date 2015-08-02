@@ -4,6 +4,11 @@
 #include "../app/generador/traductor_mapas.h"
 #include "../app/generador/generador_estructura_niveles.h"
 
+#include "../app/visitantes/visitante_objeto_juego.h"
+#include "../app/juego/logica_bonus.h"
+#include "../app/juego/objetos_juego/bonus_tiempo.h"
+#include "../app/juego/objetos_juego/bonus_escudo.h"
+
 using namespace App_Niveles;
 using namespace App_Juego;
 using namespace App_Graficos;
@@ -78,6 +83,7 @@ void Controlador_juego::loop(Input_base& input, float delta)
 		}
 	
 		controlar_salida_sala(jugador);
+		logica_mundo();
 	}
 }
 
@@ -158,22 +164,31 @@ void Controlador_juego::procesar_jugador(Jugador& j, float delta, Input_usuario 
 
 	//En primer lugar evaluamos los items.
 
-	/*
-	class Stuff:public algo no const
+	using namespace App_Visitantes;
+	Logica_bonus lb(contador_tiempo);
+
+	class Visitante_bonus:public Visitante_objeto_juego
 	{
-		//TODO: Los métodos de recogida los podríamos tener en otras
-		//clases, para aligerar el controlador y no pasar la referencia
-		//al mismo al visitante, que es un poco raro.
-
+		///////////
+		//Interface pública.
 		public:
-		Controlador_juego& cj;
-		Stuff(Controlador_juego& c, Espaciable& e):cj(c), jugador(e),  {}
+		Visitante_bonus(
+			App_Interfaces::Logica_bonus_I& b, 
+			App_Interfaces::Espaciable& e)
+			:lb(b), es(e)
+		{}
 
-		virtual void visitar(Bonus_tiempo& b) {if(b.en_colision_con(e)) c.recoger_bonus_tiempo(b);}
-	}vis(Logica_bonus(), jugador);
+		virtual void 			visitar(App_Juego_ObjetoJuego::Bonus_tiempo& b) {if(b.en_colision_con(es)) lb.recoger_bonus_tiempo(b);}
+		virtual void 			visitar(App_Juego_ObjetoJuego::Bonus_escudo& b) {/*if(b.en_colision_con(e)) lb.recoger_bonus_escudo(b);*/}
 
-	for(auto& o : objetos_juego) vis.visitar(o);
-	*/
+		////////////
+		//Propiedades.
+		private:
+		App_Interfaces::Logica_bonus_I& lb;
+		App_Interfaces::Espaciable& 	es;
+	}vis(lb, jugador);
+
+	sala_actual->procesar_visitante_objetos_juego(vis);
 
 	//Ahora podríamos evaluar enemigos y proyectiles.
 	//TODO.
@@ -262,4 +277,9 @@ void Controlador_juego::iniciar_automapa()
 
 
 	refrescar_automapa();
+}
+
+void Controlador_juego::logica_mundo()
+{
+	sala_actual->limpiar_objetos_juego_para_borrar();
 }

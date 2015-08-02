@@ -9,6 +9,6 @@ class Bonus_escudo
 	//TODO: Rellenar	//TODO: Rellenar..
 };
 
-};
+}
 
 #endif

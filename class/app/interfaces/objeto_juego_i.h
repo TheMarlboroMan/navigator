@@ -1,5 +1,5 @@
-#ifndef OBJETO_JUEGO_INTERFACE_H
-#define OBJETO_JUEGO_INTERFACE_H
+#ifndef OBJETO_JUEGO_I_H
+#define OBJETO_JUEGO_I_H
 
 #include "../visitantes/visitante_objeto_juego.h"
 
@@ -12,7 +12,7 @@
 
 namespace App_Interfaces
 {
-class Objeto_juego_interface
+class Objeto_juego_I
 {
 	private:
 
@@ -20,7 +20,8 @@ class Objeto_juego_interface
 
 	public:
 
-	virtual ~Objeto_juego_interface() {}
+			Objeto_juego_I():borrar(false) {}
+	virtual 	~Objeto_juego_I() {}
 
 	virtual void 	recibir_visitante(App_Visitantes::Visitante_objeto_juego& v)=0;
 	virtual void 	recibir_visitante(App_Visitantes::Visitante_objeto_juego_const& v)const=0;

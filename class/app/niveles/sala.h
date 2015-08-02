@@ -27,7 +27,7 @@ class Sala
 	std::vector<Entrada> 				entradas;
 	App_Definiciones::direcciones 			direcciones_entradas;
 
-	std::vector<std::shared_ptr<App_Interfaces::Objeto_juego_interface> >		objetos_juego;	//Todos los objetos de juego van aquí.
+	std::vector<std::shared_ptr<App_Interfaces::Objeto_juego_I> >		objetos_juego;	//Todos los objetos de juego van aquí.
 
 	///////////
 	// Interface pública.
@@ -108,8 +108,10 @@ class Sala
 
 	const Entrada& obtener_entrada_posicion(App_Definiciones::direcciones p);
 
-	void 		insertar_objeto_juego(std::shared_ptr<App_Interfaces::Objeto_juego_interface> obj);
+	void 		insertar_objeto_juego(std::shared_ptr<App_Interfaces::Objeto_juego_I> obj);
 	size_t 		limpiar_objetos_juego_para_borrar();
+	void		procesar_visitante_objetos_juego(App_Visitantes::Visitante_objeto_juego& v);
+	void		procesar_visitante_objetos_juego_const(App_Visitantes::Visitante_objeto_juego_const& v) const;
 };
 
 }

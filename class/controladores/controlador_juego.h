@@ -34,6 +34,7 @@ class Controlador_juego:public Controlador_base
 	void controlar_salida_sala(App_Juego::Jugador& j);
 	void iniciar_automapa();
 	void refrescar_automapa();
+	void logica_mundo();
 
 	///////////////
 	//Interface pública.

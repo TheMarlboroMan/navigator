@@ -45,8 +45,8 @@ std::vector<const App_Graficos::Representable *> Sala::obtener_vector_representa
 	
 		virtual void visitar(const App_Juego_ObjetoJuego::Bonus_tiempo& o) {v.push_back(&o);}
 	}v(obt.r);
-
-	for(const auto& oj : objetos_juego) oj->recibir_visitante(v);
+	
+	procesar_visitante_objetos_juego_const(v);
 
 	return obt.r;
 }
@@ -68,7 +68,7 @@ const Entrada& Sala::obtener_entrada_posicion(App_Definiciones::direcciones p)
 	throw std::logic_error("No hay entrada en la posición establecida");
 }
 
-void Sala::insertar_objeto_juego(std::shared_ptr<App_Interfaces::Objeto_juego_interface> obj)
+void Sala::insertar_objeto_juego(std::shared_ptr<App_Interfaces::Objeto_juego_I> obj)
 {
 	objetos_juego.push_back(obj);
 }
@@ -82,18 +82,16 @@ void Sala::insertar_objeto_juego(std::shared_ptr<App_Interfaces::Objeto_juego_in
 size_t Sala::limpiar_objetos_juego_para_borrar()
 {
 	size_t	res=0;
-	auto 	ini=objetos_juego.begin(),
-		fin=objetos_juego.end();
+
+	auto 	ini=std::begin(objetos_juego),
+		fin=std::end(objetos_juego);
 
 	while(ini < fin)
 	{
 		if( (*ini)->es_borrar() )
 		{
-//			delete *ini;
-			//Supuestamente esto libera la memoria...
-			//TODO: Comprobar.
 			ini=objetos_juego.erase(ini);
-		
+			fin=std::end(objetos_juego);
 			++res;
 		}
 		else
@@ -103,4 +101,14 @@ size_t Sala::limpiar_objetos_juego_para_borrar()
 	}
 
 	return res;
+}
+
+void Sala::procesar_visitante_objetos_juego(App_Visitantes::Visitante_objeto_juego& v)
+{
+	for(auto& o : objetos_juego) o.get()->recibir_visitante(v);
+}
+
+void Sala::procesar_visitante_objetos_juego_const(App_Visitantes::Visitante_objeto_juego_const& v) const
+{
+	for(const auto& o : objetos_juego) o.get()->recibir_visitante(v);
 }

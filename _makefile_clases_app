@@ -38,12 +38,20 @@ $(DIR_JUEGO)actor_movil.h \
 $(DIR_JUEGO)actor_movil.cpp
 	$(CC) $(CFLAGS) $(INCLUDES) $(DIR_JUEGO)actor_movil.cpp -o $(DIR_O)actor_movil.o
 
+$(DIR_O)logica_bonus.o:\
+$(DIR_O)bonus_tiempo.o\
+$(DIR_O)contador_tiempo.o\
+$(DIR_INTERFACES)logica_bonus_i.h\
+$(DIR_JUEGO)logica_bonus.h\
+$(DIR_JUEGO)logica_bonus.cpp
+	$(CC) $(CFLAGS) $(INCLUDES) $(DIR_JUEGO)logica_bonus.cpp -o $(DIR_O)logica_bonus.o
+
 ################################################################################
 #Objetos juego
 $(DIR_O)bonus_tiempo.o:\
 $(DIR_O)actor.o\
 $(DIR_VISITANTES)visitante_objeto_juego.h\
-$(DIR_INTERFACES)objeto_juego_interface.h\
+$(DIR_INTERFACES)objeto_juego_i.h\
 $(DIR_JUEGO_OBJETOS)bonus_tiempo.h\
 $(DIR_JUEGO_OBJETOS)bonus_tiempo.cpp
 	$(CC) $(CFLAGS) $(INCLUDES) $(DIR_JUEGO_OBJETOS)bonus_tiempo.cpp -o $(DIR_O)bonus_tiempo.o

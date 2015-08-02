@@ -5,6 +5,12 @@
 
 using namespace App_Juego_Sistemas;
 
+Contador_tiempo::Contador_tiempo(float c)
+	:tiempo_restante(c)
+{
+
+}
+
 void Contador_tiempo::turno(float delta)
 {
 	tiempo_restante-=delta;

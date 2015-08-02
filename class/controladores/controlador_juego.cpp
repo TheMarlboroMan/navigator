@@ -153,6 +153,33 @@ void Controlador_juego::procesar_jugador(Jugador& j, float delta, Input_usuario 
 		std::vector<const Celda *> celdas=CC.celdas_en_caja(jugador.copia_caja(), *sala_actual);
 		if(celdas.size()) CC.ajustar_colisiones_actor_movil_x_con_celdas(jugador, celdas);
 	}
+
+	//Las colisiones con objetos de juego se evaluan en la posición final.
+
+	//En primer lugar evaluamos los items.
+
+	/*
+	class Stuff:public algo no const
+	{
+		//TODO: Los métodos de recogida los podríamos tener en otras
+		//clases, para aligerar el controlador y no pasar la referencia
+		//al mismo al visitante, que es un poco raro.
+
+		public:
+		Controlador_juego& cj;
+		Stuff(Controlador_juego& c, Espaciable& e):cj(c), jugador(e),  {}
+
+		virtual void visitar(Bonus_tiempo& b) {if(b.en_colision_con(e)) c.recoger_bonus_tiempo(b);}
+	}vis(Logica_bonus(), jugador);
+
+	for(auto& o : objetos_juego) vis.visitar(o);
+	*/
+
+	//Ahora podríamos evaluar enemigos y proyectiles.
+	//TODO.
+
+	//TODO: ¿Cómo evaluar cosas que detengan el movimiento?.	
+
 }
 
 /**

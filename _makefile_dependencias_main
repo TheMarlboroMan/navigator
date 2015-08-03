@@ -23,6 +23,8 @@ $(DIR_O)automapa.o\
 $(DIR_O)contador_tiempo.o\
 $(DIR_O)bonus_tiempo.o\
 $(DIR_O)logica_bonus.o\
+$(DIR_O)proyectil_base.o\
+$(DIR_O)proyectil_normal.o\
 
 DEP_CONTROLADORES=$(DIR_O)controlador_base.o \
 $(DIR_O)controlador_juego.o \

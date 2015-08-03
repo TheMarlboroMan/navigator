@@ -8,6 +8,7 @@ DIR_INPUT=$(DIR_CLASES_APP)input/
 DIR_GRAFICOS=$(DIR_CLASES_APP)graficos/
 DIR_JUEGO=$(DIR_CLASES_APP)juego/
 DIR_VISITANTES=$(DIR_CLASES_APP)visitantes/
+DIR_JUEGO_PROYECTILES=$(DIR_JUEGO)proyectiles/
 DIR_JUEGO_AUTOMAPA=$(DIR_JUEGO)automapa/
 DIR_JUEGO_SISTEMAS=$(DIR_JUEGO)sistemas/
 DIR_JUEGO_OBJETOS=$(DIR_JUEGO)objetos_juego/
@@ -52,11 +53,28 @@ $(DIR_O)bonus_tiempo.o:\
 $(DIR_O)actor.o\
 $(DIR_VISITANTES)visitante_objeto_juego.h\
 $(DIR_INTERFACES)objeto_juego_i.h\
+$(DIR_INTERFACES)borrable_i.h\
 $(DIR_JUEGO_OBJETOS)bonus_tiempo.h\
 $(DIR_JUEGO_OBJETOS)bonus_tiempo.cpp
 	$(CC) $(CFLAGS) $(INCLUDES) $(DIR_JUEGO_OBJETOS)bonus_tiempo.cpp -o $(DIR_O)bonus_tiempo.o
 
+################################################################################
+#Juego proyectiles
 
+$(DIR_O)proyectil_normal.o:\
+$(DIR_O)proyectil_base.o\
+$(DIR_JUEGO_PROYECTILES)proyectil_normal.h\
+$(DIR_JUEGO_PROYECTILES)proyectil_normal.cpp
+	$(CC) $(CFLAGS) $(INCLUDES) $(DIR_JUEGO_PROYECTILES)proyectil_normal.cpp -o $(DIR_O)proyectil_normal.o
+
+$(DIR_O)proyectil_base.o:\
+$(DIR_O)actor.o\
+$(DIR_O)actor_movil.o\
+$(DIR_O)representable.o\
+$(DIR_INTERFACES)borrable_i.h\
+$(DIR_JUEGO_PROYECTILES)proyectil_base.h\
+$(DIR_JUEGO_PROYECTILES)proyectil_base.cpp
+	$(CC) $(CFLAGS) $(INCLUDES) $(DIR_JUEGO_PROYECTILES)proyectil_base.cpp -o $(DIR_O)proyectil_base.o
 
 ################################################################################
 #Juego sistemas

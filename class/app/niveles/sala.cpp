@@ -77,6 +77,10 @@ void Sala::insertar_objeto_juego(std::shared_ptr<App_Interfaces::Objeto_juego_I>
 * @return size_t : indicando el número de elementos eliminados.
 * Recorre el vector de objetos juego elíminando de forma definitiva todos los
 * actores que puedan estar para borrar.
+* Todos los objetos_juego no son borrables, de modo que necesitaremos algún
+* tipo de visitante que extraiga lo que necesitamos. Como no podemos sacar
+* un vector de borrables y eliminarlos del vector de objetos_juego usamos un 
+* visitante que extrae la faceta deseada.
 */
 
 size_t Sala::limpiar_objetos_juego_para_borrar()
@@ -86,9 +90,18 @@ size_t Sala::limpiar_objetos_juego_para_borrar()
 	auto 	ini=std::begin(objetos_juego),
 		fin=std::end(objetos_juego);
 
+	//Visitante específico para sacar la faceta "borrable" de los objetos juego.
+	struct Visitante_faceta_borrable:public App_Visitantes::Visitante_objeto_juego
+	{
+		bool borrar;
+		Visitante_faceta_borrable():borrar(false){}
+		virtual void visitar(App_Juego_ObjetoJuego::Bonus_tiempo& o) {borrar=o.es_borrar();}
+	}v;
+
 	while(ini < fin)
 	{
-		if( (*ini)->es_borrar() )
+		(*ini)->recibir_visitante(v);
+		if(v.borrar)
 		{
 			ini=objetos_juego.erase(ini);
 			fin=std::end(objetos_juego);

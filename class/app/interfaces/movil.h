@@ -35,6 +35,7 @@ class Movil
 	float integrar_vector(float delta, float& vector, float factor);
 	void sumar_vector(float, t_vector);
 	void establecer_vector(float, t_vector);
+	void establecer_vector(const DLibH::Vector_2d v) {vector=v;}
 	float& ref_vector_x() {return vector.x;}
 	float& ref_vector_y() {return vector.y;}
 

@@ -5,6 +5,7 @@
 #include "../../graficos/representable.h"
 #include "../../recursos.h"
 #include "../../interfaces/objeto_juego_i.h"
+#include "../../interfaces/borrable_i.h"
 
 namespace App_Juego_ObjetoJuego
 {
@@ -12,7 +13,8 @@ namespace App_Juego_ObjetoJuego
 class Bonus_tiempo:
 		public App_Juego::Actor, 
 		public App_Interfaces::Objeto_juego_I, 
-		public App_Graficos::Representable
+		public App_Graficos::Representable,
+		public App_Interfaces::Borrable_I
 {
 	////////////////
 	// Interface pública:

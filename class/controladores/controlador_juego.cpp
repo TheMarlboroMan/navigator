@@ -68,6 +68,15 @@ void Controlador_juego::loop(Input_base& input, float delta)
 		Recogedor_input RI;
 		Input_usuario iu=RI.recoger_input_usuario(input);
 
+		//TODO TODO TODO: Terrible terrible terrible... Mejor un objeto de lógica sólo para esto y dejamos el controlador limpio.
+		//Le pasamos el jugador y el vector de proyectiles, y que se busque la vida.
+		if(iu.usar)
+		{
+			using namespace App_Juego_Proyectiles;
+			std::shared_ptr<Proyectil_normal> pr(new Proyectil_normal(jugador.acc_espaciable_x(), jugador.acc_espaciable_y(), 8, 8));
+			proyectiles_jugador.push_back(pr);
+		}
+
 		procesar_jugador(jugador, delta, iu);
 
 		//TODO TODO TODO...
@@ -83,7 +92,7 @@ void Controlador_juego::loop(Input_base& input, float delta)
 		}
 	
 		controlar_salida_sala(jugador);
-		logica_mundo();
+		logica_mundo(delta);
 	}
 }
 
@@ -146,7 +155,7 @@ void Controlador_juego::procesar_jugador(Jugador& j, float delta, Input_usuario 
 	auto v=j.acc_vector();
 	if(v.y) 
 	{
-		jugador.desplazar_caja(0.0, v.y * delta);		
+		jugador.desplazar_caja(0.0, v.y * delta);
 		Calculador_colisiones CC;
 		std::vector<const Celda *> celdas=CC.celdas_en_caja(jugador.copia_caja(), *sala_actual);
 		if(celdas.size()) CC.ajustar_colisiones_actor_movil_y_con_celdas(jugador, celdas);
@@ -205,9 +214,15 @@ void Controlador_juego::dibujar(DLibV::Pantalla& pantalla)
 {
 	//Pantalla...
 	pantalla.limpiar(128, 128, 128, 255);
+
+	//Recolectar representables...
 	std::vector<const Representable *> vr=(*sala_actual).obtener_vector_representables();
-	
 	vr.push_back(&jugador);
+	for(const auto& p : proyectiles_jugador) vr.push_back(p.get());
+
+	//TODO: Ordenar.
+	
+	//Generar vista.
 	representador.generar_vista(pantalla, vr);
 
 	//Hud
@@ -279,7 +294,8 @@ void Controlador_juego::iniciar_automapa()
 	refrescar_automapa();
 }
 
-void Controlador_juego::logica_mundo()
+void Controlador_juego::logica_mundo(float delta)
 {
+	for(auto& p : proyectiles_jugador) p->turno(delta);
 	sala_actual->limpiar_objetos_juego_para_borrar();
 }

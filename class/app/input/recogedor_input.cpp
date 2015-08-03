@@ -6,6 +6,8 @@ Input_usuario Recogedor_input::recoger_input_usuario(Input_base& input) const
 {
 	Input_usuario resultado;
 
+	if(input.es_input_down(Input::I_ESPACIO)) resultado.usar=true;
+
 	if(input.es_input_pulsado(Input::I_DERECHA)) resultado.mov_horizontal=1;
 	else if(input.es_input_pulsado(Input::I_IZQUIERDA)) resultado.mov_horizontal=-1;
 	else if(input.es_input_up(Input::I_DERECHA)) resultado.keyup_horizontal=1;

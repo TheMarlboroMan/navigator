@@ -27,6 +27,8 @@ namespace App_Visitantes
 * derivados que vayamos a escribir.
 */
 
+//TODO: Quizás los métodos deberían ser abstractos, para que no se nos olvide implementar nada.
+
 class Visitante_objeto_juego_const
 {
 	public:

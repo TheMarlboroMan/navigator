@@ -9,6 +9,7 @@ const float Bonus_tiempo::CANTIDAD_TIEMPO_DEFECTO=10.0f;
 
 Bonus_tiempo::Bonus_tiempo():
 	Actor(),
+	Borrable_I(),
 	tiempo(CANTIDAD_TIEMPO_DEFECTO)
 {
 

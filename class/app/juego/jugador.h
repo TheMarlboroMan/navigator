@@ -6,6 +6,7 @@
 #include "../graficos/representable.h"
 #include "../recursos.h"
 #include "../input/input_usuario.h"
+#include "../definiciones/definiciones.h"
 //#include "../../herramientas_proyecto/tabla_sprites.h"
 //#include "jugador_estados.h"
 
@@ -41,53 +42,53 @@ class Jugador:public Actor_movil, public App_Graficos::Representable
 
 	private:
 
-	App_Input::Input_usuario input;
+	App_Input::Input_usuario 		input;
 
-	float salud;
-	float escudo;
+	float 					salud;
+	float 					escudo;
 
 //	Tabla_sprites TREC;
-//	t_direcciones direccion;
+	App_Definiciones::direcciones 		direccion;
 
 	/////////////////
 	//Implementación de Movil/Actor_Movil
 
-	virtual float obtener_peso() const {return 100.0;}
-	virtual float obtener_max_velocidad_caida() const {return MAXIMA_VELOCIDAD_CAIDA;}
-	virtual void callback_ajuste(float pos, Actor_movil::posiciones_ajuste tipo);
+	virtual float 				obtener_peso() const {return 100.0;}
+	virtual float 				obtener_max_velocidad_caida() const {return MAXIMA_VELOCIDAD_CAIDA;}
+	virtual void 				callback_ajuste(float pos, Actor_movil::posiciones_ajuste tipo);
 
 	///////////////////////
 	// Implementación de Representable.
 
 	public:
 
-	virtual unsigned short int obtener_profundidad_ordenacion() const {return 20;}
-	virtual void transformar_bloque(App_Graficos::Bloque_transformacion_representable &b) const;
+	virtual unsigned short int 		obtener_profundidad_ordenacion() const {return 20;}
+	virtual void 				transformar_bloque(App_Graficos::Bloque_transformacion_representable &b) const;
 
 	/////////////////////////
 	// Métodos internos.
 	
 	private:
 
-	void recibir_impacto(float val);
+	void 					recibir_impacto(float val);
 
 	////////////////////////
 	// Interfaz pública...
 
 	public:
+						Jugador(float x=0.0, float y=0.0);
+						~Jugador();
 
-	Jugador(float x=0.0, float y=0.0);
-	~Jugador();
+	void 					recoger_input(App_Input::Input_usuario iu) {input=iu;}
+	void 					turno(float delta);
 
-	void recoger_input(App_Input::Input_usuario iu) {input=iu;}
-	void turno(float delta);
+	void 					procesar_estado(float delta);
 
-	void procesar_estado(float delta);
+	int 					acc_salud() const {return salud;}
+	int 					acc_escudo() const {return escudo;}
 
-	int acc_salud() const {return salud;}
-	int acc_escudo() const {return escudo;}
-
-//	bool es_encarando_direccion(t_direcciones dir) const {return direccion==dir;}
+	App_Definiciones::direcciones 		acc_direccion() const {return direccion;}
+	bool 					es_encarando_direccion(App_Definiciones::direcciones dir) const {return direccion==dir;}
 };
 
 }

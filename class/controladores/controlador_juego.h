@@ -39,6 +39,7 @@ class Controlador_juego:public Controlador_base
 	void iniciar_automapa();
 	void refrescar_automapa();
 	void logica_mundo(float delta);
+	void logica_proyectiles(float delta);
 
 	///////////////
 	//Interface pública.

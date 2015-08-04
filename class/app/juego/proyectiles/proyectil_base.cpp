@@ -9,3 +9,8 @@ Proyectil_base::Proyectil_base(float x, float y, unsigned int w, unsigned int h)
 {
 
 }
+
+void Proyectil_base::establecer_vector(const DLibH::Vector_2d& v)
+{
+	Movil::establecer_vector(v);
+}

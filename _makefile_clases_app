@@ -39,6 +39,13 @@ $(DIR_JUEGO)actor_movil.h \
 $(DIR_JUEGO)actor_movil.cpp
 	$(CC) $(CFLAGS) $(INCLUDES) $(DIR_JUEGO)actor_movil.cpp -o $(DIR_O)actor_movil.o
 
+$(DIR_O)logica_proyectiles.o:\
+$(DIR_O)proyectil_normal.o\
+$(DIR_O)jugador.o\
+$(DIR_JUEGO)logica_proyectiles.h\
+$(DIR_JUEGO)logica_proyectiles.cpp
+	$(CC) $(CFLAGS) $(INCLUDES) $(DIR_JUEGO)logica_proyectiles.cpp -o $(DIR_O)logica_proyectiles.o
+
 $(DIR_O)logica_bonus.o:\
 $(DIR_O)bonus_tiempo.o\
 $(DIR_O)contador_tiempo.o\

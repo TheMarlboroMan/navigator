@@ -14,9 +14,9 @@ const float Jugador::VELOCIDAD_MINIMA_IMPACTO=100.0;
 
 Jugador::Jugador(float x, float y)
 	:Actor_movil(x, y, W, H),
-	salud(MAX_SALUD), escudo(MAX_ESCUDO)
+	salud(MAX_SALUD), escudo(MAX_ESCUDO),
 //	TREC("data/recortes/jugador.dat"),	
-//	direccion(t_direcciones::DERECHA),
+	direccion(App_Definiciones::direcciones::derecha)
 {
 	establecer_vector(100.0, Movil::t_vector::V_X);
 }
@@ -93,6 +93,7 @@ void Jugador::transformar_bloque(Bloque_transformacion_representable &b) const
 	b.establecer_recurso(Recursos_graficos::RT_DEFECTO);
 	b.establecer_recorte(32, 0, 27, 16);
 	b.establecer_posicion(acc_espaciable_x()-1, acc_espaciable_y()-1, 27, 16);
+	b.invertir_horizontal(direccion==App_Definiciones::direcciones::izquierda);
 }
 
 void Jugador::turno(float delta)
@@ -114,6 +115,10 @@ void Jugador::turno(float delta)
 		else if(v < -MAXIMA_VELOCIDAD_HORIZONTAL) v=-MAXIMA_VELOCIDAD_HORIZONTAL;
 
 		establecer_vector(v, Movil::t_vector::V_X);
+
+		if(input.mov_horizontal < 0) direccion=App_Definiciones::direcciones::izquierda;
+		else direccion=App_Definiciones::direcciones::derecha;
+
 	}
 	else
 	{

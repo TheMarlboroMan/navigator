@@ -171,3 +171,19 @@ void Calculador_colisiones::ajustar_colisiones_actor_movil_x_con_celdas(Actor_mo
 		}
 	}
 }
+
+/**
+* @return bool : Devuelve verdadero cuando no hay colisión entre las cajas.
+* @param t_caja : Caja espaciable.
+* @param Sala : Sala.
+*
+* Comprueba si el objeto está fuera de la sala. Devuelve true si es así.
+*/
+
+bool Calculador_colisiones::es_fuera_de_sala(const App_Interfaces::Espaciable::t_caja& caja, const App_Niveles::Sala& sala) const
+{
+	using namespace App_Definiciones;
+	Espaciable::t_caja caja_sala(0, 0, sala.acc_w()*tipos::DIM_CELDA, sala.acc_h()*tipos::DIM_CELDA);
+
+	return !caja_sala.es_en_colision_con(caja);
+}

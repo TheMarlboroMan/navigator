@@ -3,11 +3,15 @@
 
 using namespace App_Juego_Proyectiles;
 
-Proyectil_normal::Proyectil_normal(float x, float y, unsigned int w, unsigned int h)
+/*Proyectil_normal::Proyectil_normal(float x, float y, unsigned int w, unsigned int h)
 	:Proyectil_base(x, y, w, h)
 {
-	//TODO TODO TODO
-	establecer_vector(DLibH::Vector_2d(160.0f, 0.0f));
+}*/
+
+Proyectil_normal::Proyectil_normal(const Propiedades_proyectil& pp)
+	:Proyectil_base(pp.x, pp.y, pp.w, pp.h)
+{
+
 }
 
 void Proyectil_normal::turno(float delta)

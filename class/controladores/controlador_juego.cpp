@@ -1,3 +1,5 @@
+#include <algorithm>
+
 #include "controlador_juego.h"
 #include "../app/recursos.h"
 #include "../app/definiciones/definiciones.h"
@@ -6,6 +8,7 @@
 
 #include "../app/visitantes/visitante_objeto_juego.h"
 #include "../app/juego/logica_bonus.h"
+#include "../app/juego/logica_proyectiles.h"
 #include "../app/juego/objetos_juego/bonus_tiempo.h"
 #include "../app/juego/objetos_juego/bonus_escudo.h"
 
@@ -68,13 +71,10 @@ void Controlador_juego::loop(Input_base& input, float delta)
 		Recogedor_input RI;
 		Input_usuario iu=RI.recoger_input_usuario(input);
 
-		//TODO TODO TODO: Terrible terrible terrible... Mejor un objeto de lógica sólo para esto y dejamos el controlador limpio.
-		//Le pasamos el jugador y el vector de proyectiles, y que se busque la vida.
 		if(iu.usar)
 		{
-			using namespace App_Juego_Proyectiles;
-			std::shared_ptr<Proyectil_normal> pr(new Proyectil_normal(jugador.acc_espaciable_x(), jugador.acc_espaciable_y(), 8, 8));
-			proyectiles_jugador.push_back(pr);
+			Logica_proyectiles lp;
+			lp.insertar_disparo_jugador(proyectiles_jugador, jugador);
 		}
 
 		procesar_jugador(jugador, delta, iu);
@@ -92,6 +92,8 @@ void Controlador_juego::loop(Input_base& input, float delta)
 		}
 	
 		controlar_salida_sala(jugador);
+
+		logica_proyectiles(delta);
 		logica_mundo(delta);
 	}
 }
@@ -128,6 +130,8 @@ void Controlador_juego::controlar_salida_sala(Jugador& j)
 		
 		try
 		{
+			//TODO: Mover a otro método todo el tema de cargar una nueva sala.
+			proyectiles_jugador.clear();
 			sala_actual=&mapa.obtener_sala(ax, ay);
 			const auto& s=sala_actual->obtener_entrada_posicion(obtener_direccion_contraria(salida));
 			j.establecer_en_posicion(s);
@@ -199,11 +203,7 @@ void Controlador_juego::procesar_jugador(Jugador& j, float delta, Input_usuario 
 
 	sala_actual->procesar_visitante_objetos_juego(vis);
 
-	//Ahora podríamos evaluar enemigos y proyectiles.
-	//TODO.
-
 	//TODO: ¿Cómo evaluar cosas que detengan el movimiento?.	
-
 }
 
 /**
@@ -294,8 +294,29 @@ void Controlador_juego::iniciar_automapa()
 	refrescar_automapa();
 }
 
+void Controlador_juego::logica_proyectiles(float delta)
+{
+	for(auto& p : proyectiles_jugador) 
+	{
+		p->turno(delta);
+
+		//Comprobar que choquen o no con algo.
+		Calculador_colisiones CC;
+		auto cc=p->copia_caja();
+
+		if(CC.es_fuera_de_sala(cc, *sala_actual)) p->mut_borrar(true);
+		else
+		{
+			std::vector<const Celda *> celdas=CC.celdas_en_caja(cc, *sala_actual);
+			if(celdas.size()) p->mut_borrar(true);
+		}
+	}
+
+	auto it=std::remove_if(std::begin(proyectiles_jugador), std::end(proyectiles_jugador), [](std::shared_ptr<App_Juego_Proyectiles::Proyectil_base> p) {return p->es_borrar();});
+	if(it!=std::end(proyectiles_jugador)) proyectiles_jugador.erase(it, std::end(proyectiles_jugador));
+}
+
 void Controlador_juego::logica_mundo(float delta)
 {
-	for(auto& p : proyectiles_jugador) p->turno(delta);
 	sala_actual->limpiar_objetos_juego_para_borrar();
 }

@@ -24,6 +24,7 @@ class Proyectil_base:public App_Juego::Actor_movil, public App_Graficos::Represe
 	float 				acc_potencia() const {return potencia;}
 	void 				mut_potencia(float v) {potencia=v;}
 	virtual	void			turno(float delta)=0;
+	void				establecer_vector(const DLibH::Vector_2d& v);
 
 	/////////////////////
 	//Implementación de Representable.

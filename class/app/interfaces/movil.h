@@ -29,6 +29,7 @@ class Movil
 	///////////////////////
 	// Para clases derivadas...
 
+	//TODO: Quizás ganaríamos algo si fueran públic...
 	protected:
 
 	//delta: tiempo que ha pasado, vector: referencia a la parte del vector, factor: cantidad de fuerza a aplicar al vector.

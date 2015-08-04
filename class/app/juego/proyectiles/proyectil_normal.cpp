@@ -37,6 +37,6 @@ void Proyectil_normal::transformar_bloque(App_Graficos::Bloque_transformacion_re
 	b.establecer_tipo(Bloque_transformacion_representable::tipos::TR_BITMAP);
 	b.establecer_alpha(255);
 	b.establecer_recurso(Recursos_graficos::RT_DEFECTO);
-	b.establecer_recorte(32, 0, acc_espaciable_w(), acc_espaciable_h());
+	b.establecer_recorte(32, 16, acc_espaciable_w(), acc_espaciable_h());
 	b.establecer_posicion(acc_espaciable_x(), acc_espaciable_y(), acc_espaciable_w(), acc_espaciable_h());
 }

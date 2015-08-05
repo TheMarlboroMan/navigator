@@ -4,7 +4,8 @@
 //Incluir los diversos tipos de objetos de mapa...
 #include "../juego/objetos_juego/bonus_tiempo.h"
 #include "../juego/objetos_juego/bonus_salud.h"
-
+#include "../juego/objetos_juego/enemigo_basico.h"
+#include "../juego/conversor_facetas_objeto_juego.h"
 
 using namespace App_Niveles;
 using namespace HerramientasProyecto;
@@ -54,28 +55,23 @@ void Sala::erase(App_Definiciones::tipos::t_dim px, App_Definiciones::tipos::t_d
 
 std::vector<const App_Graficos::Representable *> Sala::obtener_vector_representables() const
 {
+	typedef std::vector<const App_Graficos::Representable *> t_res;
+	t_res resultado;
+
 	struct obtener
-	{
-		std::vector<const App_Graficos::Representable *> r;
+	{		
+		obtener(t_res& res):r(res) {}
+		t_res& r;
 		void operator()(const Celda& c) {r.push_back(&c);}
-	}obt;
+	}obt(resultado);
+
+	//Recolectar las celdas.
 	celdas.aplicar(obt);
 
-	//Visitante específico para sacar la face "representable" de los objetos juego.
-	struct Visitante_objeto_juego_vector_representable:public App_Visitantes::Visitante_objeto_juego_const
-	{
-		std::vector<const App_Graficos::Representable *>& v;
-		Visitante_objeto_juego_vector_representable(std::vector<const App_Graficos::Representable *>& pv)
-			:v(pv)
-		{}
-	
-		virtual void visitar(const App_Juego_ObjetoJuego::Bonus_tiempo& o) {v.push_back(&o);}
-		virtual void visitar(const App_Juego_ObjetoJuego::Bonus_salud& o) {v.push_back(&o);}
-	}v(obt.r);
-	
-	procesar_visitante_objetos_juego_const(v);
+	//Recolectar los objetos juego.
+	App_Juego::Conversor_facetas_objeto_juego::extraer_representables(objetos_juego, resultado);
 
-	return obt.r;
+	return resultado;
 }
 
 /**
@@ -88,7 +84,7 @@ std::vector<const App_Graficos::Representable *> Sala::obtener_vector_representa
 
 void Sala::insertar_entrada(const Entrada& e)
 {
-	if(direcciones_entradas & e.acc_posicion())
+	if( (direcciones_entradas & e.acc_posicion() ) != direcciones::nada)
 	{
 		throw std::logic_error("Ya existe una entrada en la posición indicada");
 	}
@@ -128,10 +124,11 @@ void Sala::insertar_objeto_juego(std::shared_ptr<App_Interfaces::Objeto_juego_I>
 
 size_t Sala::limpiar_objetos_juego_para_borrar()
 {
-	size_t	res=0;
-
-	auto 	ini=std::begin(objetos_juego),
-		fin=std::end(objetos_juego);
+	//TODO TODO TODO: Cambiar, esto es una mieeeeerda.... A ver si podemos hacerlo de otra forma...
+	//De momento no podemos sacar un vector de punteros a borrables porque lo que tenemos
+	//que borrar está en "objetos_juego".
+//	std::vector<App_Interfaces::Borrable_I *> borrables;
+//	App_Juego::Conversor_facetas_objeto_juego::extraer_borrables(objetos_juego, resultado);
 
 	//Visitante específico para sacar la faceta "borrable" de los objetos juego.
 	struct Visitante_faceta_borrable:public App_Visitantes::Visitante_objeto_juego
@@ -140,7 +137,12 @@ size_t Sala::limpiar_objetos_juego_para_borrar()
 		Visitante_faceta_borrable():borrar(false){}
 		virtual void visitar(App_Juego_ObjetoJuego::Bonus_tiempo& o) {borrar=o.es_borrar();}
 		virtual void visitar(App_Juego_ObjetoJuego::Bonus_salud& o) {borrar=o.es_borrar();}
+		virtual void visitar(App_Juego_ObjetoJuego::Enemigo_basico& o) {borrar=o.es_borrar();}
 	}v;
+
+	size_t	res=0;
+	auto 	ini=std::begin(objetos_juego),
+		fin=std::end(objetos_juego);
 
 	while(ini < fin)
 	{

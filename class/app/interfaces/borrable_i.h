@@ -1,6 +1,9 @@
 #ifndef BORRABLE_I_H
 #define BORRABLE_I_H
 
+////
+//TODO: No es tanto una "interface" como una "faceta".
+
 namespace App_Interfaces
 {
 class Borrable_I

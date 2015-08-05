@@ -1,7 +1,6 @@
 #ifndef LOGICA_BONUS_H
 #define LOGICA_BONUS_H
 
-#include "../interfaces/logica_bonus_i.h"
 #include "sistemas/contador_tiempo.h"
 #include "jugador.h"
 
@@ -9,9 +8,15 @@
 * Clase que controla la lógica de recoger los objetos del juego.
 */
 
+namespace App_Juego_ObjetoJuego
+{
+class Bonus_tiempo;
+class Bonus_salud;
+}
+
 namespace App_Juego
 {
-class Logica_bonus:public App_Interfaces::Logica_bonus_I
+class Logica_bonus
 {
 	/////////////////
 	//Interface pública.

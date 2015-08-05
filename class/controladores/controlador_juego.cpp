@@ -207,24 +207,36 @@ void Controlador_juego::procesar_jugador(Jugador& j, float delta, Input_usuario 
 	using namespace App_Visitantes;
 	Logica_bonus lb(contador_tiempo, jugador);
 
+	/*
+TODO TODO TODO: Cambiar: extraer todos los que tengan la faceta "bonus" y 
+aplicarla. Habrá que crear la interface y tal. 
+El problema es un poco más grande: cuando tengamos la faceta "bonus" tendremos
+que resolver el tipo de bonus mediante double dispatch para enviarlo a la lógica
+de bonus. Una posibilidad es crear un visitante para la faceta bonus, pero no 
+me convence porque no podría derivar del visitante_objeto_juego y habría que
+implementar los métodos aceptar_visitante_bonus.
+	*/
+
 	class Visitante_bonus:public Visitante_objeto_juego
 	{
 		///////////
 		//Interface pública.
 		public:
 		Visitante_bonus(
-			App_Interfaces::Logica_bonus_I& b, 
+			Logica_bonus& b, 
 			App_Interfaces::Espaciable& e)
 			:lb(b), es(e)
 		{}
 
 		virtual void 			visitar(App_Juego_ObjetoJuego::Bonus_tiempo& b) {if(b.en_colision_con(es)) lb.recoger_bonus_tiempo(b);}
 		virtual void 			visitar(App_Juego_ObjetoJuego::Bonus_salud& b) {if(b.en_colision_con(es)) lb.recoger_bonus_salud(b);}
+		//TODO Esto es... un problema. Un error de planteamiento en toda regla: el enemigo básico NO ES UN BONUS.
+		virtual void 			visitar(App_Juego_ObjetoJuego::Enemigo_basico& b) {}
 
 		////////////
 		//Propiedades.
 		private:
-		App_Interfaces::Logica_bonus_I& lb;
+		Logica_bonus& lb;
 		App_Interfaces::Espaciable& 	es;
 	}vis(lb, jugador);
 

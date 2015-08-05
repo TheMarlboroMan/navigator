@@ -6,6 +6,7 @@
 #include "../../recursos.h"
 #include "../../interfaces/objeto_juego_i.h"
 #include "../../interfaces/borrable_i.h"
+#include "../../interfaces/bonus_i.h"
 
 namespace App_Juego_ObjetoJuego
 {
@@ -14,7 +15,8 @@ class Bonus_tiempo:
 		public App_Juego::Actor, 
 		public App_Interfaces::Objeto_juego_I, 
 		public App_Graficos::Representable,
-		public App_Interfaces::Borrable_I
+		public App_Interfaces::Borrable_I,
+		public App_Interfaces::Bonus_I
 {
 	////////////////
 	// Interface pública:
@@ -36,6 +38,11 @@ class Bonus_tiempo:
 	public:
 	virtual void 			recibir_visitante(App_Visitantes::Visitante_objeto_juego& v) {v.visitar(*this);}
 	virtual void 			recibir_visitante(App_Visitantes::Visitante_objeto_juego_const& v)const {v.visitar(*this);}
+
+	///////////////
+	// Implementación de Bonus_I.
+	public:
+	virtual void 			recibir_visitante(App_Visitantes::Visitante_bonus& v) {v.visitar(*this);}
 
 	///////////////
 	// Propiedades y definiciones.

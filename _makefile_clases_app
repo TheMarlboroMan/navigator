@@ -19,6 +19,11 @@ DIR_GENERADOR=$(DIR_CLASES_APP)generador/
 ################################################################################
 #Juego
 
+$(DIR_O)conversor_facetas_objeto_juego.o:\
+$(DIR_JUEGO)conversor_facetas_objeto_juego.h \
+$(DIR_JUEGO)conversor_facetas_objeto_juego.cpp
+	$(CC) $(CFLAGS) $(INCLUDES) $(DIR_JUEGO)conversor_facetas_objeto_juego.cpp -o $(DIR_O)conversor_facetas_objeto_juego.o
+
 $(DIR_O)jugador.o:\
 $(DIR_O)actor.o \
 $(DIR_INPUT)input_usuario.h \
@@ -49,7 +54,6 @@ $(DIR_JUEGO)logica_proyectiles.cpp
 $(DIR_O)logica_bonus.o:\
 $(DIR_O)bonus_tiempo.o\
 $(DIR_O)contador_tiempo.o\
-$(DIR_INTERFACES)logica_bonus_i.h\
 $(DIR_JUEGO)logica_bonus.h\
 $(DIR_JUEGO)logica_bonus.cpp
 	$(CC) $(CFLAGS) $(INCLUDES) $(DIR_JUEGO)logica_bonus.cpp -o $(DIR_O)logica_bonus.o
@@ -57,11 +61,22 @@ $(DIR_JUEGO)logica_bonus.cpp
 ################################################################################
 #Objetos juego
 
-$(DIR_O)bonus_salud.o:\
+$(DIR_O)enemigo_basico.o:\
 $(DIR_O)actor.o\
-$(DIR_VISITANTES)visitante_objeto_juego.h\
+#$(DIR_VISITANTES)visitante_objeto_juego.h\
 $(DIR_INTERFACES)objeto_juego_i.h\
 $(DIR_INTERFACES)borrable_i.h\
+$(DIR_INTERFACES)con_turno_i.h\
+$(DIR_JUEGO_OBJETOS)enemigo_basico.h\
+$(DIR_JUEGO_OBJETOS)enemigo_basico.cpp
+	$(CC) $(CFLAGS) $(INCLUDES) $(DIR_JUEGO_OBJETOS)enemigo_basico.cpp -o $(DIR_O)enemigo_basico.o
+
+$(DIR_O)bonus_salud.o:\
+$(DIR_O)actor.o\
+#$(DIR_VISITANTES)visitante_objeto_juego.h\
+$(DIR_INTERFACES)objeto_juego_i.h\
+$(DIR_INTERFACES)borrable_i.h\
+$(DIR_INTERFACES)bonus_i.h\
 $(DIR_JUEGO_OBJETOS)bonus_salud.h\
 $(DIR_JUEGO_OBJETOS)bonus_salud.cpp
 	$(CC) $(CFLAGS) $(INCLUDES) $(DIR_JUEGO_OBJETOS)bonus_salud.cpp -o $(DIR_O)bonus_salud.o
@@ -71,6 +86,7 @@ $(DIR_O)actor.o\
 $(DIR_VISITANTES)visitante_objeto_juego.h\
 $(DIR_INTERFACES)objeto_juego_i.h\
 $(DIR_INTERFACES)borrable_i.h\
+$(DIR_INTERFACES)bonus_i.h\
 $(DIR_JUEGO_OBJETOS)bonus_tiempo.h\
 $(DIR_JUEGO_OBJETOS)bonus_tiempo.cpp
 	$(CC) $(CFLAGS) $(INCLUDES) $(DIR_JUEGO_OBJETOS)bonus_tiempo.cpp -o $(DIR_O)bonus_tiempo.o
@@ -119,6 +135,7 @@ $(DIR_NIVELES)mapa.cpp
 	$(CC) $(CFLAGS) $(INCLUDES) $(DIR_NIVELES)mapa.cpp -o $(DIR_O)mapa.o
 
 $(DIR_O)sala.o:\
+$(DIR_O)conversor_facetas_objeto_juego.o \
 $(DIR_O)celda.o \
 $(DIR_O)entrada.o \
 $(DIR_O)definiciones.o \

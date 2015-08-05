@@ -3,6 +3,7 @@
 
 #include "../juego/objetos_juego/bonus_tiempo.h"
 #include "../juego/objetos_juego/bonus_salud.h"
+#include "../juego/objetos_juego/enemigo_basico.h"
 
 using namespace App_Generador;
 using namespace App_Niveles;
@@ -138,6 +139,9 @@ void Traductor_mapas::obstaculos_sala(Sala& sala)
 	//De forma super cutre, vamos a volcar unos bonus.
 	std::shared_ptr<Bonus_tiempo> bt(new Bonus_tiempo(GX()*App_Definiciones::tipos::DIM_CELDA, GY()*App_Definiciones::tipos::DIM_CELDA));
 	std::shared_ptr<Bonus_salud> bs(new Bonus_salud(GX()*App_Definiciones::tipos::DIM_CELDA, GY()*App_Definiciones::tipos::DIM_CELDA));
+	std::shared_ptr<Enemigo_basico> enem(new Enemigo_basico(GX()*App_Definiciones::tipos::DIM_CELDA, GY()*App_Definiciones::tipos::DIM_CELDA));
+
 	sala.insertar_objeto_juego(bt);
 	sala.insertar_objeto_juego(bs);
+	sala.insertar_objeto_juego(enem);
 }

@@ -15,7 +15,7 @@ class Objeto_juego_I
 {
 	public:
 
-			Objeto_juego_I() {}
+	//		Objeto_juego_I() {}
 	virtual 	~Objeto_juego_I() {}
 
 	virtual void 	recibir_visitante(App_Visitantes::Visitante_objeto_juego& v)=0;

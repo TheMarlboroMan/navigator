@@ -40,7 +40,7 @@ class Espaciable
 	public:
 
 	Espaciable();
-	~Espaciable();
+	virtual ~Espaciable();
 
 	float acc_espaciable_x() const {return copia_caja().origen.x;}
 	float acc_espaciable_y() const {return copia_caja().origen.y;}

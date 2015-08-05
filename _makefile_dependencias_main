@@ -25,8 +25,10 @@ $(DIR_O)bonus_tiempo.o\
 $(DIR_O)bonus_salud.o\
 $(DIR_O)logica_bonus.o\
 $(DIR_O)logica_proyectiles.o\
+$(DIR_O)enemigo_basico.o\
 $(DIR_O)proyectil_base.o\
 $(DIR_O)proyectil_normal.o\
+$(DIR_O)conversor_facetas_objeto_juego.o\
 
 DEP_CONTROLADORES=$(DIR_O)controlador_base.o \
 $(DIR_O)controlador_juego.o \

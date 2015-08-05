@@ -48,11 +48,13 @@ class Sala
 	void 							insertar_celda(App_Definiciones::tipos::t_dim px, App_Definiciones::tipos::t_dim py, Celda::tipo_celda pt); /** @throw Matriz_2d_excepcion_item_existe cuando la celda está ocupada. */
 	void 							erase(App_Definiciones::tipos::t_dim px, App_Definiciones::tipos::t_dim py); /** @throw Matriz_2d_excepcion_item_invalido cuando no existe la celda. */
 	std::vector<const App_Graficos::Representable *> 	obtener_vector_representables() const;
+	Vsptr_Objeto_juego_I&					acc_objetos_juego() {return objetos_juego;}
 	void 							insertar_entrada(const Entrada& e); /** std::logic_error cuando existe una entrada en la posición. */
 	const HerramientasProyecto::Matriz_2d<Celda>& 		acc_matriz() const {return celdas;}
 	const Entrada& 						obtener_entrada_posicion(App_Definiciones::direcciones p); /** @throw std::logic_error cuando no hay entrada en esa posición. */
 	void 							insertar_objeto_juego(std::shared_ptr<App_Interfaces::Objeto_juego_I> obj);
 	size_t 							limpiar_objetos_juego_para_borrar();
+	//TODO: Poner en cuarentena...
 	void							procesar_visitante_objetos_juego(App_Visitantes::Visitante_objeto_juego& v);
 	void							procesar_visitante_objetos_juego_const(App_Visitantes::Visitante_objeto_juego_const& v) const;
 };

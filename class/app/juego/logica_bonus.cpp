@@ -12,6 +12,9 @@ Logica_bonus::Logica_bonus(Contador_tiempo& ct, Jugador& j)
 
 }
 
+//TODO: Estas acciones deberían representar la recogida en si. Debería haber
+//una fase de evaluación previa.
+
 void Logica_bonus::recoger_bonus_tiempo(App_Juego_ObjetoJuego::Bonus_tiempo& b)
 {
 	contador_tiempo.sumar_tiempo(b.acc_tiempo());

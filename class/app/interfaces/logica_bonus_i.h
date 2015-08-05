@@ -4,7 +4,7 @@
 //Forward declarations.
 namespace App_Juego_ObjetoJuego
 {
-class Bonus_escudo;
+class Bonus_salud;
 class Bonus_tiempo;
 }
 
@@ -24,7 +24,7 @@ class Logica_bonus_I
 	public:
 
 	virtual void recoger_bonus_tiempo(App_Juego_ObjetoJuego::Bonus_tiempo&)=0;
-//	virtual void recoger_bonus_escudo(App_Juego_ObjetoJuego::Bonus_escudo&)=0;
+	virtual void recoger_bonus_salud(App_Juego_ObjetoJuego::Bonus_salud&)=0;
 };
 
 }

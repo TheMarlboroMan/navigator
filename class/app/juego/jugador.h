@@ -17,9 +17,52 @@ class Jugador:public Actor_movil, public App_Graficos::Representable
 {
 	////////////////////////
 	// Definiciones...
-
 	public:
 
+	////////////////////////
+	// Interfaz pública...
+	public:
+						Jugador(float x=0.0, float y=0.0);
+						~Jugador();
+
+	void 					recoger_input(App_Input::Input_usuario iu) {input=iu;}
+	void 					turno(float delta);
+
+	void 					procesar_estado(float delta);
+
+	int 					acc_salud() const {return salud;}
+	int 					acc_escudo() const {return escudo;}
+
+	void					sumar_salud(float v);
+
+	App_Definiciones::direcciones 		acc_direccion() const {return direccion;}
+	bool 					es_encarando_direccion(App_Definiciones::direcciones dir) const {return direccion==dir;}
+	bool					puede_recoger_salud() {return salud < MAX_SALUD;}
+	
+
+	/////////////////
+	//Implementación de Movil/Actor_Movil
+	public:
+
+	virtual float 				obtener_peso() const {return 100.0;}
+	virtual float 				obtener_max_velocidad_caida() const {return MAXIMA_VELOCIDAD_CAIDA;}
+	virtual void 				callback_ajuste(float pos, Actor_movil::posiciones_ajuste tipo);
+
+	///////////////////////
+	// Implementación de Representable.
+	public:
+
+	virtual unsigned short int 		obtener_profundidad_ordenacion() const {return 20;}
+	virtual void 				transformar_bloque(App_Graficos::Bloque_transformacion_representable &b) const;
+
+	/////////////////////////
+	// Métodos internos.
+	private:
+
+	void 					recibir_impacto(float val);	
+
+	////////////////////////
+	// Definiciones internas.
 	private:
 
 	static const int W=25;
@@ -36,10 +79,8 @@ class Jugador:public Actor_movil, public App_Graficos::Representable
 	static const float MAXIMA_VELOCIDAD_CAIDA;
 	static const float VELOCIDAD_MINIMA_IMPACTO;
 
-
 	/////////////////////////
 	// Propiedades...
-
 	private:
 
 	App_Input::Input_usuario 		input;
@@ -50,45 +91,6 @@ class Jugador:public Actor_movil, public App_Graficos::Representable
 //	Tabla_sprites TREC;
 	App_Definiciones::direcciones 		direccion;
 
-	/////////////////
-	//Implementación de Movil/Actor_Movil
-
-	virtual float 				obtener_peso() const {return 100.0;}
-	virtual float 				obtener_max_velocidad_caida() const {return MAXIMA_VELOCIDAD_CAIDA;}
-	virtual void 				callback_ajuste(float pos, Actor_movil::posiciones_ajuste tipo);
-
-	///////////////////////
-	// Implementación de Representable.
-
-	public:
-
-	virtual unsigned short int 		obtener_profundidad_ordenacion() const {return 20;}
-	virtual void 				transformar_bloque(App_Graficos::Bloque_transformacion_representable &b) const;
-
-	/////////////////////////
-	// Métodos internos.
-	
-	private:
-
-	void 					recibir_impacto(float val);
-
-	////////////////////////
-	// Interfaz pública...
-
-	public:
-						Jugador(float x=0.0, float y=0.0);
-						~Jugador();
-
-	void 					recoger_input(App_Input::Input_usuario iu) {input=iu;}
-	void 					turno(float delta);
-
-	void 					procesar_estado(float delta);
-
-	int 					acc_salud() const {return salud;}
-	int 					acc_escudo() const {return escudo;}
-
-	App_Definiciones::direcciones 		acc_direccion() const {return direccion;}
-	bool 					es_encarando_direccion(App_Definiciones::direcciones dir) const {return direccion==dir;}
 };
 
 }

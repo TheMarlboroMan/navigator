@@ -12,6 +12,7 @@ class Objeto_juego_interface;
 namespace App_Juego_ObjetoJuego
 {
 class Bonus_tiempo;
+class Bonus_salud;
 }
 
 
@@ -27,20 +28,24 @@ namespace App_Visitantes
 * derivados que vayamos a escribir.
 */
 
-//TODO: Quizás los métodos deberían ser abstractos, para que no se nos olvide implementar nada.
-
 class Visitante_objeto_juego_const
 {
 	public:
 //	virtual void visitar(const App_Interfaces::Objeto_juego_interface&) {std::cout<<"VISITANTE CONST OBJ BASE"<<std::endl;}
-	virtual void visitar(const App_Juego_ObjetoJuego::Bonus_tiempo&) {std::cout<<"VISITANTE CONST OBJ BONUS"<<std::endl;}
+//	virtual void visitar(const App_Juego_ObjetoJuego::Bonus_tiempo&) {std::cout<<"VISITANTE CONST OBJ BONUS TIEMPO"<<std::endl;}
+//	virtual void visitar(const App_Juego_ObjetoJuego::Bonus_salud&) {std::cout<<"VISITANTE CONST OBJ BONUS SALUD"<<std::endl;}
+	virtual void visitar(const App_Juego_ObjetoJuego::Bonus_tiempo&)=0;
+	virtual void visitar(const App_Juego_ObjetoJuego::Bonus_salud&)=0;
 };
 
 class Visitante_objeto_juego
 {
 	public:
 //	virtual void visitar(App_Interfaces::Objeto_juego_interface&) {std::cout<<"VISITANTE OBJ BASE"<<std::endl;}	
-	virtual void visitar(App_Juego_ObjetoJuego::Bonus_tiempo&) {std::cout<<"VISITANTE OBJ BONUS"<<std::endl;}
+//	virtual void visitar(App_Juego_ObjetoJuego::Bonus_tiempo&)=0; {std::cout<<"VISITANTE OBJ BONUS TIEMPO"<<std::endl;}
+//	virtual void visitar(App_Juego_ObjetoJuego::Bonus_salud&)=0; {std::cout<<"VISITANTE OBJ BONUS SALUD"<<std::endl;}
+	virtual void visitar(App_Juego_ObjetoJuego::Bonus_tiempo&)=0;
+	virtual void visitar(App_Juego_ObjetoJuego::Bonus_salud&)=0;
 };
 
 }

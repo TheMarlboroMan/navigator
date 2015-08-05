@@ -1,10 +1,33 @@
 #include "sala.h"
 #include "../visitantes/visitante_objeto_juego.h"
 
+//Incluir los diversos tipos de objetos de mapa...
+#include "../juego/objetos_juego/bonus_tiempo.h"
+#include "../juego/objetos_juego/bonus_salud.h"
+
+
 using namespace App_Niveles;
 using namespace HerramientasProyecto;
+using namespace App_Definiciones;
 
 /**
+* @param t_dim pw 
+* @param t_dim ph
+* @param t_dim px
+* @param t_dim py
+*/
+
+Sala::Sala(tipos::t_dim pw, tipos::t_dim ph, tipos::t_dim px, tipos::t_dim py)
+	:pos(px, py), w(pw), h(ph), celdas(pw, ph),
+	direcciones_entradas(App_Definiciones::direcciones::nada)
+{
+
+}
+
+/**
+* @param t_dim x
+* @param t_dim y
+* @param tipo_celda t
 * @throw Matriz_2d_excepcion_item_existe cuando la celda está ocupada.
 */
 
@@ -14,6 +37,8 @@ void Sala::insertar_celda(App_Definiciones::tipos::t_dim px, App_Definiciones::t
 }
 
 /**
+* @param t_dim x
+* @param t_dim_y
 * @throw Matriz_2d_excepcion_item_invalido cuando no existe la celda.
 */
 
@@ -23,7 +48,8 @@ void Sala::erase(App_Definiciones::tipos::t_dim px, App_Definiciones::tipos::t_d
 }
 
 /**
-* Devuelve un vector con punteros a las celdas representables.
+* @return std::vector<const Representable *>
+* Devuelve un vector con punteros a los objetos representables que contiene representables.
 */
 
 std::vector<const App_Graficos::Representable *> Sala::obtener_vector_representables() const
@@ -44,6 +70,7 @@ std::vector<const App_Graficos::Representable *> Sala::obtener_vector_representa
 		{}
 	
 		virtual void visitar(const App_Juego_ObjetoJuego::Bonus_tiempo& o) {v.push_back(&o);}
+		virtual void visitar(const App_Juego_ObjetoJuego::Bonus_salud& o) {v.push_back(&o);}
 	}v(obt.r);
 	
 	procesar_visitante_objetos_juego_const(v);
@@ -51,14 +78,30 @@ std::vector<const App_Graficos::Representable *> Sala::obtener_vector_representa
 	return obt.r;
 }
 
+/**
+* @param Entrada e
+* @throws std::logic_error cuando existe una entrada en la posición.
+* Inserta una entrada en el vector de entradas. Se comprueba si se ha
+* intentado insertar una entrada para la misma posición antes, lo que
+* lanzaría la excepción.
+*/
+
 void Sala::insertar_entrada(const Entrada& e)
 {
-	//TODO: Comprobar que no existe una entrada para la misma posición.
-	//TODO: Lanzar excepción si ya existe.
+	if(direcciones_entradas & e.acc_posicion())
+	{
+		throw std::logic_error("Ya existe una entrada en la posición indicada");
+	}
+	
 	entradas.push_back(e);
-
 	direcciones_entradas=direcciones_entradas | e.acc_posicion();
 }
+
+/**
+* @return Entrada
+* @throw std::logic_error cuando no hay entrada en esa posición.
+*/
+
 const Entrada& Sala::obtener_entrada_posicion(App_Definiciones::direcciones p)
 {
 	for(const auto& e : entradas)
@@ -96,6 +139,7 @@ size_t Sala::limpiar_objetos_juego_para_borrar()
 		bool borrar;
 		Visitante_faceta_borrable():borrar(false){}
 		virtual void visitar(App_Juego_ObjetoJuego::Bonus_tiempo& o) {borrar=o.es_borrar();}
+		virtual void visitar(App_Juego_ObjetoJuego::Bonus_salud& o) {borrar=o.es_borrar();}
 	}v;
 
 	while(ini < fin)

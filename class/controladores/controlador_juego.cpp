@@ -10,7 +10,7 @@
 #include "../app/juego/logica_bonus.h"
 #include "../app/juego/logica_proyectiles.h"
 #include "../app/juego/objetos_juego/bonus_tiempo.h"
-#include "../app/juego/objetos_juego/bonus_escudo.h"
+#include "../app/juego/objetos_juego/bonus_salud.h"
 
 using namespace App_Niveles;
 using namespace App_Juego;
@@ -91,7 +91,7 @@ void Controlador_juego::loop(Input_base& input, float delta)
 			abandonar_aplicacion();
 		}
 	
-		controlar_salida_sala(jugador);
+		controlar_y_efectuar_salida_sala(jugador);
 
 		logica_proyectiles(delta);
 		logica_mundo(delta);
@@ -100,12 +100,11 @@ void Controlador_juego::loop(Input_base& input, float delta)
 
 /**
 * @param Jugador j
-*
+* @return bool : true si se ha efectuado una salida.
 * TODO: Ajustar coordenadas para que sea menos instantáneo.
-* Controla que el jugador ha salido de una sala.
 */
 
-void Controlador_juego::controlar_salida_sala(Jugador& j)
+bool Controlador_juego::controlar_y_efectuar_salida_sala(Jugador& j)
 {
 	using namespace App_Definiciones;
 
@@ -127,22 +126,50 @@ void Controlador_juego::controlar_salida_sala(Jugador& j)
 			case direcciones::abajo: ++ay; break;
 			case direcciones::nada: break;
 		}
-		
-		try
-		{
-			//TODO: Mover a otro método todo el tema de cargar una nueva sala.
-			proyectiles_jugador.clear();
-			sala_actual=&mapa.obtener_sala(ax, ay);
-			const auto& s=sala_actual->obtener_entrada_posicion(obtener_direccion_contraria(salida));
-			j.establecer_en_posicion(s);
-			refrescar_automapa();
-		}
-		catch(std::logic_error& e)
-		{
-			LOG<<"ERROR AL CAMBIAR DE SALA: "<<e.what()<<std::endl;
-			abandonar_aplicacion();
-		}
+
+		cargar_sala(ax, ay, salida, j);
+		return true;
 	}
+	
+	return false;
+}
+
+/**
+* @param int ax : Coordenada x de la sala en el nivel.
+* @param int ay : Coordenada y de la sala en el nivel.
+* @param direcciones : Dirección de la salida que el jugador ha tomado.
+* @param Jugador : Jugador al que colocamos en la salida.
+*/
+
+void Controlador_juego::cargar_sala(int ax, int ay, App_Definiciones::direcciones salida, Jugador& j)
+{
+	try
+	{
+		limpiar_pre_cambio_sala();
+
+		//TODO: Revisar si esto lanza y se está comprobando.
+		sala_actual=&mapa.obtener_sala(ax, ay);
+
+		//TODO: Revisar si esto lanza y se está comprobando.
+		const auto& entrada=sala_actual->obtener_entrada_posicion(obtener_direccion_contraria(salida));
+		j.establecer_en_posicion(entrada);
+		refrescar_automapa();
+	}
+	catch(std::logic_error& e)
+	{
+		LOG<<"ERROR AL CAMBIAR DE SALA: "<<e.what()<<std::endl;
+		abandonar_aplicacion();
+	}
+}
+
+/**
+* Ejecuta todos los procesos de limpieza que sean necesarios antes de abandonar
+* una sala.
+*/
+
+void Controlador_juego::limpiar_pre_cambio_sala()
+{
+	proyectiles_jugador.clear();
 }
 
 /**
@@ -178,7 +205,7 @@ void Controlador_juego::procesar_jugador(Jugador& j, float delta, Input_usuario 
 	//En primer lugar evaluamos los items.
 
 	using namespace App_Visitantes;
-	Logica_bonus lb(contador_tiempo);
+	Logica_bonus lb(contador_tiempo, jugador);
 
 	class Visitante_bonus:public Visitante_objeto_juego
 	{
@@ -192,7 +219,7 @@ void Controlador_juego::procesar_jugador(Jugador& j, float delta, Input_usuario 
 		{}
 
 		virtual void 			visitar(App_Juego_ObjetoJuego::Bonus_tiempo& b) {if(b.en_colision_con(es)) lb.recoger_bonus_tiempo(b);}
-		virtual void 			visitar(App_Juego_ObjetoJuego::Bonus_escudo& b) {/*if(b.en_colision_con(e)) lb.recoger_bonus_escudo(b);*/}
+		virtual void 			visitar(App_Juego_ObjetoJuego::Bonus_salud& b) {if(b.en_colision_con(es)) lb.recoger_bonus_salud(b);}
 
 		////////////
 		//Propiedades.
@@ -203,7 +230,7 @@ void Controlador_juego::procesar_jugador(Jugador& j, float delta, Input_usuario 
 
 	sala_actual->procesar_visitante_objetos_juego(vis);
 
-	//TODO: ¿Cómo evaluar cosas que detengan el movimiento?.	
+	//TODO: ¿Cómo evaluar cosas que detengan el movimiento con las que el jugador pueda chocar????.	
 }
 
 /**
@@ -312,7 +339,7 @@ void Controlador_juego::logica_proyectiles(float delta)
 		}
 	}
 
-	auto it=std::remove_if(std::begin(proyectiles_jugador), std::end(proyectiles_jugador), [](std::shared_ptr<App_Juego_Proyectiles::Proyectil_base> p) {return p->es_borrar();});
+	auto it=std::remove_if(std::begin(proyectiles_jugador), std::end(proyectiles_jugador), [](sptr_Proyectil_base p) {return p->es_borrar();});
 	if(it!=std::end(proyectiles_jugador)) proyectiles_jugador.erase(it, std::end(proyectiles_jugador));
 }
 

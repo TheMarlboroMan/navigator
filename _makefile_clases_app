@@ -56,6 +56,16 @@ $(DIR_JUEGO)logica_bonus.cpp
 
 ################################################################################
 #Objetos juego
+
+$(DIR_O)bonus_salud.o:\
+$(DIR_O)actor.o\
+$(DIR_VISITANTES)visitante_objeto_juego.h\
+$(DIR_INTERFACES)objeto_juego_i.h\
+$(DIR_INTERFACES)borrable_i.h\
+$(DIR_JUEGO_OBJETOS)bonus_salud.h\
+$(DIR_JUEGO_OBJETOS)bonus_salud.cpp
+	$(CC) $(CFLAGS) $(INCLUDES) $(DIR_JUEGO_OBJETOS)bonus_salud.cpp -o $(DIR_O)bonus_salud.o
+
 $(DIR_O)bonus_tiempo.o:\
 $(DIR_O)actor.o\
 $(DIR_VISITANTES)visitante_objeto_juego.h\

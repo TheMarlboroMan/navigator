@@ -143,3 +143,13 @@ void Jugador::turno(float delta)
 		establecer_vector(v, Movil::t_vector::V_Y);
 	}
 }
+
+/**
+* @param float v : Cantidad de salud a sumar.
+*/
+
+void Jugador::sumar_salud(float v)
+{
+	salud+=v;
+	if(salud > MAX_SALUD) salud=MAX_SALUD;
+}

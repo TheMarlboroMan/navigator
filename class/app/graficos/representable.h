@@ -138,6 +138,8 @@ struct Bloque_transformacion_representable
 //Ahora mismo que lo estoy haciendo me parece una buena idea. Ya veremos más
 //adelante...
 
+//TODO: Mover a "Representable_I"...
+
 class Representable
 {
 	public:
@@ -146,7 +148,6 @@ class Representable
 	virtual void transformar_bloque(Bloque_transformacion_representable &b)const=0;
 
 	Representable() {}
-
 	virtual ~Representable() {}
 };
 

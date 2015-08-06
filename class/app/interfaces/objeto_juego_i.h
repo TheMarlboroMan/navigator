@@ -3,6 +3,8 @@
 
 #include "../visitantes/visitante_objeto_juego.h"
 
+#include <vector>
+
 /**
 * Interface que define un objeto de juego. Su objetivo es definir una clase
 * base en la que meter todos los objetos de juego que luego puedan
@@ -20,6 +22,10 @@ class Objeto_juego_I
 
 	virtual void 	recibir_visitante(App_Visitantes::Visitante_objeto_juego& v)=0;
 	virtual void 	recibir_visitante(App_Visitantes::Visitante_objeto_juego_const& v)const=0;
+
+//Esto tampoco...
+//	template <typename T> a_vector_por_faceta(std::vector<T>& v) {v.push_back(*this);
+
 };
 
 }

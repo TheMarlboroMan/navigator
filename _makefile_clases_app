@@ -215,6 +215,15 @@ $(DIR_INPUT)recogedor_input.cpp
 	$(CC) $(CFLAGS) $(INCLUDES) $(DIR_INPUT)recogedor_input.cpp -o $(DIR_O)recogedor_input.o
 
 ################################################################################
+#Visitantes
+
+$(DIR_O)visitante_objeto_juego_facetas.o:\
+$(DIR_VISITANTES)visitante_objeto_juego.h \
+$(DIR_VISITANTES)visitante_objeto_juego_facetas.h \
+$(DIR_VISITANTES)visitante_objeto_juego_facetas.cpp
+	$(CC) $(CFLAGS) $(INCLUDES) $(DIR_VISITANTES)visitante_objeto_juego_facetas.cpp -o $(DIR_O)visitante_objeto_juego_facetas.o
+
+################################################################################
 #Interfaces
 
 $(DIR_O)espaciable.o:\

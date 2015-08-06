@@ -346,8 +346,28 @@ void Controlador_juego::logica_proyectiles(float delta)
 
 void Controlador_juego::logica_mundo(float delta)
 {
-	//TODO: Lógica de los objetos "con_turno".
-	
+	/** 
+	* Objeto para procesar la lógica de los turnos... Bien podría ser
+	* una clase aparte si es necesario.
+	*/
+
+	class POJ:public App_Interfaces::Procesador_objetos_juego_I
+	{
+		public:
+		POJ(float pd) :delta(pd) {}
+
+		virtual void procesar(vector_oj v)
+		{
+			std::vector<App_Interfaces::Con_turno_I *> con_turno;
+			Conversor_facetas_objeto_juego::extraer_con_turno(v, con_turno);
+			for(auto c : con_turno) c->turno(delta);
+		}
+
+		private:
+		float delta;
+	}procesador(delta);
+
+	sala_actual->procesar_objetos_juego(procesador);
 
 	sala_actual->limpiar_objetos_juego_para_borrar();
 

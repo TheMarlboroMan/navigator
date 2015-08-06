@@ -3,11 +3,13 @@
 using namespace App_Juego_ObjetoJuego;
 
 const float Enemigo_basico::SALUD_DEFECTO=30.0f;
+const float Enemigo_basico::TIEMPO_PROXIMO_DISPARO_DEFECTO=3.0f;
 
 Enemigo_basico::Enemigo_basico(float px, float py, float s)
 	:Actor(px, py, W, H),
 	Borrable_I(),
 	salud(s),
+	tiempo_proximo_disparo(TIEMPO_PROXIMO_DISPARO_DEFECTO),
 	direccion(App_Definiciones::direcciones::derecha)
 {
 
@@ -32,5 +34,10 @@ void Enemigo_basico::transformar_bloque(App_Graficos::Bloque_transformacion_repr
 
 void Enemigo_basico::turno(float delta)
 {
-	//TODO:
+	tiempo_proximo_disparo-=delta;
+	if(tiempo_proximo_disparo < 0.0f) 
+	{
+		tiempo_proximo_disparo=TIEMPO_PROXIMO_DISPARO_DEFECTO;
+		direccion=direccion==App_Definiciones::direcciones::izquierda ? App_Definiciones::direcciones::derecha : App_Definiciones::direcciones::izquierda;
+	}
 }

@@ -52,12 +52,14 @@ class Enemigo_basico:
 	static const int 		W=20;
 	static const int 		H=20;
 	static const float		SALUD_DEFECTO;
+	static const float		TIEMPO_PROXIMO_DISPARO_DEFECTO;
 
 	////////////////////////////
 	// Propiedades.
 	private:
 
 	float salud;
+	float tiempo_proximo_disparo;
 	App_Definiciones::direcciones direccion;
 };
 

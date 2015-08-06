@@ -17,18 +17,12 @@ enum class objeto_juego_facetas
 	nada=0, 
 	representable=1, 
 	borrable=2, 
-	bonus=4
+	bonus=4,
+	con_turno=8
 };
 
-objeto_juego_facetas operator|(objeto_juego_facetas a, objeto_juego_facetas b)
-{
-	return static_cast<objeto_juego_facetas>(static_cast<int>(a) | static_cast<int>(b));
-}
-
-objeto_juego_facetas operator&(objeto_juego_facetas a, objeto_juego_facetas b)
-{
-	return static_cast<objeto_juego_facetas>(static_cast<int>(a) & static_cast<int>(b));
-}
+objeto_juego_facetas operator|(objeto_juego_facetas a, objeto_juego_facetas b);
+objeto_juego_facetas operator&(objeto_juego_facetas a, objeto_juego_facetas b);
 
 /*
 * El visitante que interpreta las facetas. Como vamos a tener visitante 
@@ -36,18 +30,17 @@ objeto_juego_facetas operator&(objeto_juego_facetas a, objeto_juego_facetas b)
 * que extraigan las facetas y ambos las llamarán a esa.
 */
 
-objeto_juego_facetas extraer(const App_Juego_ObjetoJuego::Bonus_tiempo)
-{
-	return objeto_juego_facetas::representable | objeto_juego_facetas::colisionable;
-}
 
-class Visitante_objeto_juego_facetas_base:public Visitante_objeto_juego
+class Visitante_objeto_juego_facetas_base
 {
 	public:	
+	objeto_juego_facetas 		facetas;
 					Visitante_objeto_juego_facetas_base(): facetas(objeto_juego_facetas::nada) {}
 	void				reset() {facetas=objeto_juego_facetas::nada;}
-	objeto_juego_facetas 		facetas;
-}
+	objeto_juego_facetas 		extraer(const App_Juego_ObjetoJuego::Bonus_tiempo&) 	{return objeto_juego_facetas::representable | objeto_juego_facetas::borrable | objeto_juego_facetas::bonus;}
+	objeto_juego_facetas 		extraer(const App_Juego_ObjetoJuego::Bonus_salud&) 	{return objeto_juego_facetas::representable | objeto_juego_facetas::borrable | objeto_juego_facetas::bonus;}
+	objeto_juego_facetas 		extraer(const App_Juego_ObjetoJuego::Enemigo_basico&) 	{return objeto_juego_facetas::representable | objeto_juego_facetas::borrable | objeto_juego_facetas::con_turno;}
+};
 
 class Visitante_objeto_juego_facetas:
 	public Visitante_objeto_juego, 
@@ -59,7 +52,7 @@ class Visitante_objeto_juego_facetas:
 	
 					Visitante_objeto_juego_facetas():Visitante_objeto_juego_facetas_base() {}
 	virtual void 			visitar(App_Juego_ObjetoJuego::Bonus_tiempo& o) {facetas=extraer(o);}
-	virtual void 			visitar(App_Juego_ObjetoJuego::Bonus_Salud& o) {facetas=extraer(o);}
+	virtual void 			visitar(App_Juego_ObjetoJuego::Bonus_salud& o) {facetas=extraer(o);}
 	virtual void 			visitar(App_Juego_ObjetoJuego::Enemigo_basico& o) {facetas=extraer(o);}
 };
 

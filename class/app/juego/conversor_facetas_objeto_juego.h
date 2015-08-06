@@ -6,6 +6,7 @@
 #include "../interfaces/objeto_juego_i.h"
 #include "../interfaces/borrable_i.h"
 #include "../interfaces/bonus_i.h"
+#include "../interfaces/con_turno_i.h"
 #include "../graficos/representable.h"
 
 namespace App_Juego
@@ -38,9 +39,10 @@ class Conversor_facetas_objeto_juego
 	public:
 
 	//TODO: Quizás separar en dos métodos, uno que devuelva y otro 
-	static void	extraer_representables(const std::vector<std::shared_ptr<App_Interfaces::Objeto_juego_I> >, std::vector<const App_Graficos::Representable *>&);
-	static void	extraer_borrables(const std::vector<std::shared_ptr<App_Interfaces::Objeto_juego_I> >, std::vector<App_Interfaces::Borrable_I *>&);
-	static void	extraer_bonus(const std::vector<std::shared_ptr<App_Interfaces::Objeto_juego_I> >, std::vector<App_Interfaces::Bonus_I *>&);
+	static void	extraer_representables(const std::vector<std::shared_ptr<App_Interfaces::Objeto_juego_I> >, 	std::vector<const App_Graficos::Representable *>&);
+	static void	extraer_borrables(const std::vector<std::shared_ptr<App_Interfaces::Objeto_juego_I> >, 		std::vector<App_Interfaces::Borrable_I *>&);
+	static void	extraer_bonus(const std::vector<std::shared_ptr<App_Interfaces::Objeto_juego_I> >, 		std::vector<App_Interfaces::Bonus_I *>&);
+	static void	extraer_con_turno(const std::vector<std::shared_ptr<App_Interfaces::Objeto_juego_I> >, 		std::vector<App_Interfaces::Con_turno_I *>&);
 
 	/////////////////////////////////////
 	//Privados:

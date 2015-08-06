@@ -29,6 +29,8 @@ $(DIR_O)enemigo_basico.o\
 $(DIR_O)proyectil_base.o\
 $(DIR_O)proyectil_normal.o\
 $(DIR_O)conversor_facetas_objeto_juego.o\
+$(DIR_O)visitante_objeto_juego_facetas.o\
+
 
 DEP_CONTROLADORES=$(DIR_O)controlador_base.o \
 $(DIR_O)controlador_juego.o \

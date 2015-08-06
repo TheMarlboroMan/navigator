@@ -133,7 +133,7 @@ size_t Sala::limpiar_objetos_juego_para_borrar()
 
 	//Visitante específico para sacar la faceta "borrable" de los objetos juego.
 
-/*
+
 	struct Visitante_faceta_borrable:public App_Visitantes::Visitante_objeto_juego
 	{
 		bool 			borrar;
@@ -142,18 +142,19 @@ size_t Sala::limpiar_objetos_juego_para_borrar()
 		virtual void 		visitar(App_Juego_ObjetoJuego::Bonus_salud& o) {borrar=o.es_borrar();}
 		virtual void 		visitar(App_Juego_ObjetoJuego::Enemigo_basico& o) {borrar=o.es_borrar();}
 	}v;
-*/
+
 	size_t	res=0;
 	auto 	ini=std::begin(objetos_juego),
 		fin=std::end(objetos_juego);
 	
-	App_Visitantes::Visitante_objeto_juego_facetas v;
+//	App_Visitantes::Visitante_objeto_juego_facetas v;
 
 	while(ini < fin)
 	{
-		v.reset();
+//		v.reset();
 		(*ini)->recibir_visitante(v);
-		if(v.facetas & App_Visitantes::objeto_juego_facetas::borrable)
+//		if( (v.facetas & App_Visitantes::objeto_juego_facetas::borrable) != App_Visitantes::objeto_juego_facetas::nada)
+		if(v.borrar)
 		{
 			ini=objetos_juego.erase(ini);
 			fin=std::end(objetos_juego);

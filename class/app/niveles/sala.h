@@ -7,6 +7,7 @@
 #include "../definiciones/definiciones.h"
 #include <memory>
 #include "../interfaces/objeto_juego_i.h"
+#include "../interfaces/procesador_objetos_juego_i.h"
 
 namespace App_Niveles
 {
@@ -54,9 +55,13 @@ class Sala
 	const Entrada& 						obtener_entrada_posicion(App_Definiciones::direcciones p); /** @throw std::logic_error cuando no hay entrada en esa posición. */
 	void 							insertar_objeto_juego(std::shared_ptr<App_Interfaces::Objeto_juego_I> obj);
 	size_t 							limpiar_objetos_juego_para_borrar();
-	//TODO: Poner en cuarentena...
+	void							procesar_objetos_juego(App_Interfaces::Procesador_objetos_juego_I&);
+
+	/*
 	void							procesar_visitante_objetos_juego(App_Visitantes::Visitante_objeto_juego& v);
 	void							procesar_visitante_objetos_juego_const(App_Visitantes::Visitante_objeto_juego_const& v) const;
+	*/
+	
 };
 
 }

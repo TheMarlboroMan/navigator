@@ -12,7 +12,13 @@ namespace App_Visitantes
 * un visitante.
 */
 
-enum class objeto_juego_facetas {nada=0, representable=1, colisionable=2};
+enum class objeto_juego_facetas 
+{
+	nada=0, 
+	representable=1, 
+	borrable=2, 
+	bonus=4
+};
 
 objeto_juego_facetas operator|(objeto_juego_facetas a, objeto_juego_facetas b)
 {
@@ -35,50 +41,40 @@ objeto_juego_facetas extraer(const App_Juego_ObjetoJuego::Bonus_tiempo)
 	return objeto_juego_facetas::representable | objeto_juego_facetas::colisionable;
 }
 
-class Visitante_objeto_juego_facetas:public Visitante_objeto_juego
+class Visitante_objeto_juego_facetas_base:public Visitante_objeto_juego
+{
+	public:	
+					Visitante_objeto_juego_facetas_base(): facetas(objeto_juego_facetas::nada) {}
+	void				reset() {facetas=objeto_juego_facetas::nada;}
+	objeto_juego_facetas 		facetas;
+}
+
+class Visitante_objeto_juego_facetas:
+	public Visitante_objeto_juego, 
+	public Visitante_objeto_juego_facetas_base
 {
 	////////////////////
 	//Interface pública.
 	public:
 	
-	Visitante_objeto_juego_facetas()
-		:facetas(objeto_juego_facetas::nada)
-	{}
-
-//	virtual void 			visitar(App_Interfaces::Objeto_juego_interface&) {std::cout<<"VISITANTE CONST OBJ BASE"<<std::endl;}
+					Visitante_objeto_juego_facetas():Visitante_objeto_juego_facetas_base() {}
 	virtual void 			visitar(App_Juego_ObjetoJuego::Bonus_tiempo& o) {facetas=extraer(o);}
-
-	objeto_juego_facetas		acc_facetas() const {return facetas;}
-	void				reset() {facetas=objeto_juego_facetas::nada;}
-
-	///////////////////
-	//Propiedades.
-	private:
-	objeto_juego_facetas 		facetas;
-
+	virtual void 			visitar(App_Juego_ObjetoJuego::Bonus_Salud& o) {facetas=extraer(o);}
+	virtual void 			visitar(App_Juego_ObjetoJuego::Enemigo_basico& o) {facetas=extraer(o);}
 };
 
-class Visitante_objeto_juego_facetas_const:public Visitante_objeto_juego_const
+class Visitante_objeto_juego_facetas_const:
+	public Visitante_objeto_juego_const, 
+	public Visitante_objeto_juego_facetas_base
 {
 	////////////////////
 	//Interface pública.
 	public:
 	
-	Visitante_objeto_juego_facetas_const()
-		:facetas(objeto_juego_facetas::nada)
-	{}
-
-//	virtual void 			visitar(const App_Interfaces::Objeto_juego_interface&) {std::cout<<"VISITANTE CONST OBJ BASE"<<std::endl;}
+					Visitante_objeto_juego_facetas_const():Visitante_objeto_juego_facetas_base() {}
 	virtual void 			visitar(const App_Juego_ObjetoJuego::Bonus_tiempo& o) {facetas=extraer(o);}
-
-	objeto_juego_facetas		acc_facetas() const {return facetas;}
-	void				reset() {facetas=objeto_juego_facetas::nada;}
-
-	///////////////////
-	//Propiedades.
-	private:
-	objeto_juego_facetas 		facetas;
-
+	virtual void 			visitar(const App_Juego_ObjetoJuego::Bonus_salud& o) {facetas=extraer(o);}
+	virtual void 			visitar(const App_Juego_ObjetoJuego::Enemigo_basico& o) {facetas=extraer(o);}
 };
 }
 #endif

@@ -12,16 +12,19 @@ Logica_bonus::Logica_bonus(Contador_tiempo& ct, Jugador& j)
 
 }
 
-//TODO: Estas acciones deberían representar la recogida en si. Debería haber
-//una fase de evaluación previa.
+/**
+* Cuando estamos llamando a cualquiera de estas fases hemos llegado al punto
+* en que la colisión con el bonus está verificada y sólo tenemos que correr
+* la lógica de turno.
+*/
 
-void Logica_bonus::recoger_bonus_tiempo(App_Juego_ObjetoJuego::Bonus_tiempo& b)
+void Logica_bonus::visitar(App_Juego_ObjetoJuego::Bonus_tiempo& b)
 {
 	contador_tiempo.sumar_tiempo(b.acc_tiempo());
 	b.mut_borrar(true);
 }
 
-void Logica_bonus::recoger_bonus_salud(App_Juego_ObjetoJuego::Bonus_salud& b)
+void Logica_bonus::visitar(App_Juego_ObjetoJuego::Bonus_salud& b)
 {
 	if(jugador.puede_recoger_salud())
 	{

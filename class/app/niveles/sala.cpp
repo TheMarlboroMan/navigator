@@ -1,5 +1,6 @@
 #include "sala.h"
 #include "../visitantes/visitante_objeto_juego.h"
+#include "../visitantes/visitante_objeto_juego_facetas.h"
 
 //Incluir los diversos tipos de objetos de mapa...
 #include "../juego/objetos_juego/bonus_tiempo.h"
@@ -131,23 +132,28 @@ size_t Sala::limpiar_objetos_juego_para_borrar()
 //	App_Juego::Conversor_facetas_objeto_juego::extraer_borrables(objetos_juego, resultado);
 
 	//Visitante específico para sacar la faceta "borrable" de los objetos juego.
+
+/*
 	struct Visitante_faceta_borrable:public App_Visitantes::Visitante_objeto_juego
 	{
-		bool borrar;
-		Visitante_faceta_borrable():borrar(false){}
-		virtual void visitar(App_Juego_ObjetoJuego::Bonus_tiempo& o) {borrar=o.es_borrar();}
-		virtual void visitar(App_Juego_ObjetoJuego::Bonus_salud& o) {borrar=o.es_borrar();}
-		virtual void visitar(App_Juego_ObjetoJuego::Enemigo_basico& o) {borrar=o.es_borrar();}
+		bool 			borrar;
+					Visitante_faceta_borrable():borrar(false){}
+		virtual void 		visitar(App_Juego_ObjetoJuego::Bonus_tiempo& o) {borrar=o.es_borrar();}
+		virtual void 		visitar(App_Juego_ObjetoJuego::Bonus_salud& o) {borrar=o.es_borrar();}
+		virtual void 		visitar(App_Juego_ObjetoJuego::Enemigo_basico& o) {borrar=o.es_borrar();}
 	}v;
-
+*/
 	size_t	res=0;
 	auto 	ini=std::begin(objetos_juego),
 		fin=std::end(objetos_juego);
+	
+	App_Visitantes::Visitante_objeto_juego_facetas v;
 
 	while(ini < fin)
 	{
+		v.reset();
 		(*ini)->recibir_visitante(v);
-		if(v.borrar)
+		if(v.facetas & App_Visitantes::objeto_juego_facetas::borrable)
 		{
 			ini=objetos_juego.erase(ini);
 			fin=std::end(objetos_juego);
@@ -161,7 +167,7 @@ size_t Sala::limpiar_objetos_juego_para_borrar()
 
 	return res;
 }
-
+/*
 void Sala::procesar_visitante_objetos_juego(App_Visitantes::Visitante_objeto_juego& v)
 {
 	for(auto& o : objetos_juego) o.get()->recibir_visitante(v);
@@ -170,4 +176,9 @@ void Sala::procesar_visitante_objetos_juego(App_Visitantes::Visitante_objeto_jue
 void Sala::procesar_visitante_objetos_juego_const(App_Visitantes::Visitante_objeto_juego_const& v) const
 {
 	for(const auto& o : objetos_juego) o.get()->recibir_visitante(v);
+}
+*/
+void Sala::procesar_objetos_juego(App_Interfaces::Procesador_objetos_juego_I& p)
+{
+	p.procesar(objetos_juego);
 }

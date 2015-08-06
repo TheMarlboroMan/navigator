@@ -6,6 +6,7 @@
 #include "../app/generador/traductor_mapas.h"
 #include "../app/generador/generador_estructura_niveles.h"
 
+#include "../app/interfaces/procesador_objetos_juego_i.h"
 #include "../app/visitantes/visitante_objeto_juego.h"
 #include "../app/juego/logica_bonus.h"
 #include "../app/juego/logica_proyectiles.h"
@@ -204,101 +205,32 @@ void Controlador_juego::procesar_jugador(Jugador& j, float delta, Input_usuario 
 	//Las colisiones con objetos de juego se evaluan en la posición final.
 
 	//En primer lugar evaluamos los items.
-	using namespace App_Visitantes;
-	using namespace App_Interfaces;
-
-//	std::vector<Bonus_I *> bonuses;
-//	Conversor_facetas_objeto_juego::extraer_bonus(sala_actual->acc_objetos_juego(), bonuses);
-
-/*
-
-<<<<<<<<<<<<<<<<<<<<<<<<
-
-//TODO: Crear interface Procesador_objetos_juego_I: Con conocimiento de "Objeto_juego_I".
-
-class Procesador_objetos_juego_I
-{
-	public:
-	virtual void procesar(std::vector<std::shared_ptr<Objeto_juego_I>> v)=0;
-}	
-
-//TODO: Crear interface Logica_bonus_I: Con conocimiento de "Bonus_I" y todos los tipos 
-
-	"A todos los efectos esto es "Visitante_bonus_juego"!!!!!!.
-
-//TODO: Implementar en sala procesar_objetos_juego(Procesador_objetos_juego_I&);
-
-void Sala::procesar_objetos_juego(Procesador_objetos_juego_I& p)
-{
-	p.procesar(objetos_juego);
-}
-
-//TODO: Reimplementar Logica_bonus como algo con la interface Logica_bonus_I.
-
-	A todos los efectos es implementar Visitante_bonus_juego!!!!. Por un lado el set de recibir
-	visitantes y por otro el set de acciones.
-
-	//TODO: Hay algo interesante en la idea de mandar un visitante a la sala por un único
-	//método y que la sala haga lo que sea necesario: encapsulando las funcionalidades en
-	//un único objeto... Vamos a intentar eso.
-
-	class A:public Procesador_objetos_juego_I
-	{
-		A(logic_object)
-		{
-
-		}
-
-		//TODO: Aquí la parte del código personalizada para cada cosa.
-		virtual void procesar(std::vector<std::unique_ptr<Objeto_juego_I>> v)
-		{
-			//Separar los bonus...
-			std::vector<Bonus_I *> bonuses;
-			Conversor_facetas_objeto_juego::extraer_bonus(v, bonuses);
-
-			//TODO: Filtrar sólo aquellos que están en contacto con el Jugador.
-			//TODO: Problema: Bonus_I no es "espaciable". Todos los bonus son espaciables
-			//pero en "bonuses" no tenemos ese comportamiento. Podemos hacer derivar Bonus_I
-			//de espaciable, por ejemplo, o podemos exigir la reimplementación como
-			//bool puede_ser_recogido(Jugador&) o como en_colision_con(Espaciable&).
-			//TODO: También podemos solucionarlo implementando todo eso en el objeto
-			//lógica de bonus, donde ya se conoce el tipo a la hora de hacer dispatch,
-			//que es justo como lo estamos haciendo ahora.
-
-			for(auto b : bonuses) b->recibir_visitante(logic_object);
-		}
-	}procesador(Logica_bonus(contador_tiempo, jugador));
-
-	sala_actual->procesar_objetos_juego(procesador);
-
->>>>>>>>>>>>>>>>>>>>>>>>>>>
-
 	Logica_bonus lb(contador_tiempo, jugador);
-	class Visitante_bonus:public Visitante_objeto_juego
+
+	class POJ:public App_Interfaces::Procesador_objetos_juego_I
 	{
-		///////////
-		//Interface pública.
 		public:
-		Visitante_bonus(
-			Logica_bonus& b, 
-			App_Interfaces::Espaciable& e)
-			:lb(b), es(e)
+
+		POJ(Logica_bonus& plb, const Jugador& pj)
+			:lb(plb), j(pj) 
 		{}
 
-		virtual void 			visitar(App_Juego_ObjetoJuego::Bonus_tiempo& b) {if(b.en_colision_con(es)) lb.recoger_bonus_tiempo(b);}
-		virtual void 			visitar(App_Juego_ObjetoJuego::Bonus_salud& b) {if(b.en_colision_con(es)) lb.recoger_bonus_salud(b);}
-		//TODO Esto es... un problema. Un error de planteamiento en toda regla: el enemigo básico NO ES UN BONUS.
-		virtual void 			visitar(App_Juego_ObjetoJuego::Enemigo_basico& b) {}
+		//Podemos pensar que esto se ejecuta dentro de "Sala" :P.
+		virtual void procesar(vector_oj v)
+		{
+			//Separar los bonus... En este momento no se sabe si están o no en contacto con el jugador o no.
+			std::vector<App_Interfaces::Bonus_I *> bonuses;
+			Conversor_facetas_objeto_juego::extraer_bonus(v, bonuses);
+			for(auto b : bonuses) if(b->bonus_en_colision_con(j)) b->recibir_visitante(lb);
+		}
 
-		////////////
-		//Propiedades.
 		private:
-		Logica_bonus& lb;
-		App_Interfaces::Espaciable& 	es;
-	}vis(lb, jugador);
 
-	sala_actual->procesar_visitante_objetos_juego(vis);
-*/
+		Logica_bonus& lb;
+		const Jugador& j;
+	}procesador(lb, jugador);
+
+	sala_actual->procesar_objetos_juego(procesador);
 	//TODO: ¿Cómo evaluar cosas que detengan el movimiento con las que el jugador pueda chocar????.	
 }
 
@@ -414,5 +346,10 @@ void Controlador_juego::logica_proyectiles(float delta)
 
 void Controlador_juego::logica_mundo(float delta)
 {
+	//TODO: Lógica de los objetos "con_turno".
+	
+
 	sala_actual->limpiar_objetos_juego_para_borrar();
+
+
 }

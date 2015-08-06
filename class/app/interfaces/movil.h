@@ -33,16 +33,6 @@ class Movil
 
 	void 					accion_gravedad(float delta, float valor_gravedad);
 
-	///////////////////////
-	//A implementar.
-	virtual float 				obtener_peso() const=0;
-	virtual float 				obtener_max_velocidad_caida() const=0;
-
-	///////////////////////
-	// Para clases derivadas...
-	//TODO: Quizás ganaríamos algo si fueran públic...
-	protected:
-
 	//delta: tiempo que ha pasado, vector: referencia a la parte del vector, factor: cantidad de fuerza a aplicar al vector.
 	float 					integrar_vector(float delta, float& vector, float factor);
 	void 					sumar_vector(float, t_vector);
@@ -50,6 +40,11 @@ class Movil
 	void 					establecer_vector(const DLibH::Vector_2d v) {vector=v;}
 	float& 					ref_vector_x() {return vector.x;}
 	float& 					ref_vector_y() {return vector.y;}
+
+	///////////////////////
+	//A implementar.
+	virtual float 				obtener_peso() const=0;
+	virtual float 				obtener_max_velocidad_caida() const=0;
 
 	//////////////////////
 	// Propiedades...

@@ -20,6 +20,7 @@ DIR_GENERADOR=$(DIR_CLASES_APP)generador/
 #Juego
 
 $(DIR_O)conversor_facetas_objeto_juego.o:\
+#$(DIR_VISITANTES)visitante_objeto_juego_facetas.h \
 $(DIR_JUEGO)conversor_facetas_objeto_juego.h \
 $(DIR_JUEGO)conversor_facetas_objeto_juego.cpp
 	$(CC) $(CFLAGS) $(INCLUDES) $(DIR_JUEGO)conversor_facetas_objeto_juego.cpp -o $(DIR_O)conversor_facetas_objeto_juego.o
@@ -140,6 +141,8 @@ $(DIR_O)celda.o \
 $(DIR_O)entrada.o \
 $(DIR_O)definiciones.o \
 $(DIR_VISITANTES)visitante_objeto_juego.h\
+$(DIR_VISITANTES)visitante_objeto_juego_facetas.h\
+$(DIR_INTERFACES)procesador_objetos_juego_i.h\
 $(DIR_NIVELES)sala.h \
 $(DIR_NIVELES)sala.cpp
 	$(CC) $(CFLAGS) $(INCLUDES) $(DIR_NIVELES)sala.cpp -o $(DIR_O)sala.o

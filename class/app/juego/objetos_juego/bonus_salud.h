@@ -43,6 +43,7 @@ class Bonus_salud:
 	// Implementación de Bonus_I.
 	public:
 	virtual void 			recibir_visitante(App_Visitantes::Visitante_bonus& v) {v.visitar(*this);}
+	virtual bool			bonus_en_colision_con(const Espaciable& e) {return en_colision_con(e);}
 
 	///////////////
 	// Propiedades y definiciones.

@@ -40,7 +40,8 @@ class Jugador:
 
 	App_Definiciones::direcciones 		acc_direccion() const {return direccion;}
 	bool 					es_encarando_direccion(App_Definiciones::direcciones dir) const {return direccion==dir;}
-	bool					puede_recoger_salud() {return salud < MAX_SALUD;}
+	bool					puede_recoger_salud() const {return salud < MAX_SALUD;}
+	void 					recibir_impacto(float val);
 	
 
 	/////////////////
@@ -61,8 +62,6 @@ class Jugador:
 	/////////////////////////
 	// Métodos internos.
 	private:
-
-	void 					recibir_impacto(float val);	
 
 	////////////////////////
 	// Definiciones internas.

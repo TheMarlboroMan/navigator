@@ -24,11 +24,11 @@ class Proyectil_base:
 	/////////////////////
 	//Interface pública.
 	public:
-							Proyectil_base(float x, float y, unsigned int w, unsigned int h, const App_Interfaces::Facetador& f);
 							Proyectil_base(float x, float y, unsigned int w, unsigned int h);
 	virtual						~Proyectil_base() {}
 	float 						acc_potencia() const {return potencia;}
-	void 						mut_potencia(float v) {potencia=v;}
+	float 						acc_potencia_original() const {return potencia_original;}
+	void 						mut_potencia(float v);
 	void						establecer_vector(const DLibH::Vector_2d& v);
 
 	//TODO: Como parte de una interface con turno.
@@ -43,7 +43,8 @@ class Proyectil_base:
 
 	///////////////
 	// Implementación de Con_turno_I
-	virtual void turno(float)=0;
+	virtual void 					turno(float)=0;
+	virtual void 					recibir_visitante(App_Visitantes::Visitante_con_turno& v)=0;
 
 	///////////////
 	// Implementación de Representable_i.
@@ -63,6 +64,7 @@ class Proyectil_base:
 	//Propiedades
 	private:
 	float 						potencia;
+	float						potencia_original;
 };
 
 }

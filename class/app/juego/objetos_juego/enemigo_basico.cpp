@@ -6,9 +6,10 @@ const float Enemigo_basico::SALUD_DEFECTO=30.0f;
 const float Enemigo_basico::TIEMPO_PROXIMO_DISPARO_DEFECTO=3.0f;
 
 Enemigo_basico::Enemigo_basico(float px, float py, float s)
-	:Actor(px, py, W, H),
+	:Actor_movil(px, py, W, H),
 //	Objeto_juego_I(App_Interfaces::Facetador(this, this, nullptr, this)),
 	Objeto_juego_I(),
+	Disparador_I(),
 	salud(s),
 	tiempo_proximo_disparo(TIEMPO_PROXIMO_DISPARO_DEFECTO),
 	direccion(App_Definiciones::direcciones::derecha)
@@ -17,7 +18,11 @@ Enemigo_basico::Enemigo_basico(float px, float py, float s)
 	f.mut_objeto_juego(this).
 		mut_representable(this).
 		mut_con_turno(this).
+		mut_disparable(this).
+		mut_disparador(this).
 		mut_espaciable(this);
+
+	establecer_vector(DLibH::Vector_2d(0.0f, 60.0));
 }
 
 unsigned short int Enemigo_basico::obtener_profundidad_ordenacion()const
@@ -48,7 +53,13 @@ void Enemigo_basico::turno(float delta)
 	tiempo_proximo_disparo-=delta;
 	if(tiempo_proximo_disparo < 0.0f) 
 	{
+		Disparador_I::mut_disparar(true);
 		tiempo_proximo_disparo=TIEMPO_PROXIMO_DISPARO_DEFECTO;
-		direccion=direccion==App_Definiciones::direcciones::izquierda ? App_Definiciones::direcciones::derecha : App_Definiciones::direcciones::izquierda;
 	}
+}
+
+void Enemigo_basico::recibir_disparo(float potencia)
+{
+	salud-=potencia;
+	if(salud <= 0.0) mut_borrar(true);
 }

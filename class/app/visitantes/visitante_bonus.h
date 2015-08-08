@@ -11,6 +11,8 @@ namespace App_Visitantes
 {
 class Visitante_bonus
 {
+	/////////////////////////
+	//Interface pública.
 	public:
 
 	virtual void visitar(App_Juego_ObjetoJuego::Bonus_tiempo&)=0;

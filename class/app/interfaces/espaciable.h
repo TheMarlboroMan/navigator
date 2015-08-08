@@ -49,6 +49,16 @@ class Espaciable
 	unsigned int acc_espaciable_w() const {return copia_caja().w;}
 	unsigned int acc_espaciable_h() const {return copia_caja().h;}
 	DLibH::Punto_2d<float> acc_espaciable_posicion() const {return copia_caja().origen;}
+	DLibH::Vector_2d obtener_vector_para(const Espaciable& e) {return obtener_vector_para(*this, e);}
+	DLibH::Vector_2d obtener_vector_para(const Espaciable& a, const Espaciable& b) 
+	{
+		float ax=a.acc_espaciable_x() + (a.acc_espaciable_w() / 2);
+		float ay=a.acc_espaciable_y() + (a.acc_espaciable_h() / 2);
+		float bx=b.acc_espaciable_x() + (b.acc_espaciable_w() / 2);
+		float by=b.acc_espaciable_y() + (b.acc_espaciable_h() / 2);
+
+		return Vector_2d::obtener_para_puntos(bx, by, ax, ay);
+	}
 
 	bool en_colision_con(const Espaciable&, bool=false) const;
 

@@ -8,10 +8,12 @@
 
 #include "../app/interfaces/procesador_objetos_juego_i.h"
 #include "../app/visitantes/visitante_objeto_juego.h"
-#include "../app/juego/logica_bonus.h"
-#include "../app/juego/logica_proyectiles.h"
 #include "../app/juego/objetos_juego/bonus_tiempo.h"
 #include "../app/juego/objetos_juego/bonus_salud.h"
+#include "../app/juego/logica_bonus.h"
+#include "../app/juego/logica_disparador.h"
+#include "../app/juego/logica_con_turno.h"
+#include "../app/juego/logica_disparable.h"
 
 using namespace App_Niveles;
 using namespace App_Juego;
@@ -74,8 +76,8 @@ void Controlador_juego::loop(Input_base& input, float delta)
 
 		if(iu.usar)
 		{
-			Logica_proyectiles lp;
-			lp.insertar_disparo_jugador(proyectiles_jugador, jugador);
+			Logica_disparador lp(proyectiles_enemigos, jugador);
+			lp.insertar_disparo_jugador(proyectiles_jugador);
 		}
 
 		procesar_jugador(jugador, delta, iu);
@@ -203,44 +205,27 @@ void Controlador_juego::procesar_jugador(Jugador& j, float delta, Input_usuario 
 
 	//Las colisiones con objetos de juego se evaluan en la posición final.
 
-	//En primer lugar evaluamos los items.
-
+	//En primer lugar evaluamos los bonus que se pueden recoger.
 	Logica_bonus lb(contador_tiempo, jugador);
+	sala_actual->procesar_objetos_juego(lb);
 
-	class POJ:public App_Interfaces::Procesador_objetos_juego_I
+	//Ahora evaluamos el choque con los proyectiles enemigos...
+	if(proyectiles_enemigos.size())
 	{
-		public:
-
-		POJ(Logica_bonus& plb, const Jugador& pj)
-			:lb(plb), j(pj) 
-		{}
-
-		//Podemos pensar que esto se ejecuta dentro de "Sala" :P.
-		virtual void procesar(vector_oj v)
+		for(auto& p : proyectiles_enemigos)
 		{
-			for(auto& o : v)
+			if(p->en_colision_con(jugador))
 			{
-				//Uso super estrafalario de las facetas, pero legal...
-				if(es_bonus(*o) && es_espaciable(*o)) 
-				{
-					if(o->como_facetador().espaciable->en_colision_con(j))
-					{
-						std::cout<<o->como_facetador().bonus<<std::endl;
-						o->como_facetador().bonus->recibir_visitante(lb);
-					}
-				}
+				jugador.recibir_impacto(p->acc_potencia());
+				p->mut_borrar(true);
 			}
 		}
+	}
 
-		private:
+	/*TODO: ¿Cómo evaluar cosas que detengan el movimiento con las que el jugador pueda chocar????.	
+	* Un vector de Espaciables que implementen cierta interface y poco más, no?.
+	*/
 
-		Logica_bonus& lb;
-		const Jugador& j;
-	}procesador(lb, jugador);
-
-	sala_actual->procesar_objetos_juego(procesador);
-
-	//TODO: ¿Cómo evaluar cosas que detengan el movimiento con las que el jugador pueda chocar????.	
 }
 
 /**
@@ -259,8 +244,9 @@ void Controlador_juego::dibujar(DLibV::Pantalla& pantalla)
 	vr.push_back(&jugador);
 
 	for(const auto& p : proyectiles_jugador) vr.push_back(p.get());
+	for(const auto& p : proyectiles_enemigos) vr.push_back(p.get());
 
-	//TODO: Ordenar.
+	//TODO: Ordenar la vista.
 	
 	//Generar vista.
 	representador.generar_vista(pantalla, vr);
@@ -336,57 +322,81 @@ void Controlador_juego::iniciar_automapa()
 
 void Controlador_juego::logica_proyectiles(float delta)
 {
-
-	for(auto& p : proyectiles_jugador) 
+	auto procesar=[](Vsptr_Proyectil_base& proy, float delta, const Sala& sala)
 	{
-		p->turno(delta);
-
-		//Comprobar que choquen o no con algo.
-		Calculador_colisiones CC;
-		auto cc=p->copia_caja();
-
-		if(CC.es_fuera_de_sala(cc, *sala_actual)) p->mut_borrar(true);
-		else
+		for(auto& p : proy) 
 		{
-			std::vector<const Celda *> celdas=CC.celdas_en_caja(cc, *sala_actual);
-			if(celdas.size()) p->mut_borrar(true);
-		}
-	}
+			//Comprobar la salida de la sala.
+			Calculador_colisiones CC;
+			auto cc=p->copia_caja();
 
-	auto it=std::remove_if(std::begin(proyectiles_jugador), std::end(proyectiles_jugador), [](sptr_Proyectil_base p) {return p->es_borrar();});
-	if(it!=std::end(proyectiles_jugador)) proyectiles_jugador.erase(it, std::end(proyectiles_jugador));
+			if(CC.es_fuera_de_sala(cc, sala)) p->mut_borrar(true);
+			else
+			{
+				std::vector<const Celda *> celdas=CC.celdas_en_caja(cc, sala);
+				if(celdas.size()) p->mut_borrar(true);
+			}
+		}
+
+		auto it=std::remove_if(std::begin(proy), std::end(proy), [](sptr_Proyectil_base p) {return p->es_borrar();});
+		if(it!=std::end(proy)) proy.erase(it, std::end(proy));
+
+	};
+
+	/**
+	* Proyectiles del jugador y enemigos, proceso normal con borrado si procede.
+	*/
+	
+	if(proyectiles_jugador.size()) procesar(proyectiles_jugador, delta, *sala_actual);
+	if(proyectiles_enemigos.size()) procesar(proyectiles_enemigos, delta, *sala_actual);
 }
 
 void Controlador_juego::logica_mundo(float delta)
 {
-	/** 
-	* Objeto para procesar la lógica de los turnos... Bien podría ser
-	* una clase aparte si es necesario.
+	/**
+	* Cosas a las que les podemos disparar: controlar si cualquier proyectil
+	* del jugador ha hecho impacto con ellas.
 	*/
 
-	class POJ:public App_Interfaces::Procesador_objetos_juego_I
+	if(proyectiles_jugador.size()) 
 	{
-		public:
-		POJ(float pd) :delta(pd) {}
+		Logica_disparable ld(proyectiles_jugador);
+		sala_actual->procesar_objetos_juego(ld);
+	}
 
-		virtual void procesar(vector_oj v)
-		{
-			for(auto& o : v)
-			{
-				if(es_con_turno(*o)) 
-				{
-					o->como_facetador().con_turno->turno(delta);
-				}
-			}
-		}
 
-		private:
-		float delta;
-	}procesador(delta);
+	/**
+	* Cosas que pueden añadir disparos al mundo... Básicamente controlar si
+	* ha llegado el momento de disparar y hacer lo que sea. 
+	* Aquí tenemos una mezcla interesante entre un visitante de Disparador y 
+	* la clase lógica proyectiles, que controla la inserción de los mismos. 
+	* Podemos convertir la lógica proyectiles en "procesador" para por hacer 
+	* "procesar" de todos los objetos juego y, posteriormente, separar los 
+	* "disparadores" y llamar a los visitantes propios.
+	*/
 
-	sala_actual->procesar_objetos_juego(procesador);
+	Logica_disparador lp(proyectiles_enemigos, jugador);
+	sala_actual->procesar_objetos_juego(lp);
+
+	
+
+	/** 
+	* Objeto para procesar la lógica de los turnos... Bien podría ser
+	* una clase aparte si es necesario. Por un lado se procesan los objetos
+	* de la sala y por otro los que quedan fuera.
+	*/
+
+	Logica_con_turno lct(jugador, *sala_actual, delta);
+	sala_actual->procesar_objetos_juego(lct);
+
+	App_Interfaces::Procesador_objetos_juego_I::vector_oj vpr;
+	for(auto &p : proyectiles_jugador) vpr.push_back(p);
+	for(auto &p : proyectiles_enemigos) vpr.push_back(p);
+	lct.procesar(vpr);
+
+	/**
+	* Limpiar cualquier cosa que pueda haber desaparecido...
+	*/
 
 	sala_actual->limpiar_objetos_juego_para_borrar();
-
-
 }

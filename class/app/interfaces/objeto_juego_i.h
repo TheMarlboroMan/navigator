@@ -8,10 +8,6 @@
 * Interface que define un objeto de juego. Su objetivo es definir una clase
 * base en la que meter todos los objetos de juego que luego puedan
 * separarse usando un visitante.
-* Dado el fracaso absoluto a la hora de usar un planteamiento por interfaces
-* vamos a hacer que el objeto juego tenga todo lo que necesitamos (se puede
-* borrar?, se puede representar?, tiene turno?) y otras películas más.
-* Esto implica conocimiento de temas de representables y demás, pero bueno.
 */
 
 namespace App_Graficos
@@ -21,16 +17,6 @@ class Bloque_transformacion_representable;
 
 namespace App_Interfaces
 {
-/**
-* Facetas...
-*/
-
-/*
-enum class objeto_juego_facetas {nada=0, representable=1, __NADA__=2, espaciable=4, con_turno=8, bonus=16};
-objeto_juego_facetas operator|(objeto_juego_facetas a, objeto_juego_facetas b);
-objeto_juego_facetas operator&(objeto_juego_facetas a, objeto_juego_facetas b);
-*/
-
 
 /**
 * Facetador
@@ -41,6 +27,8 @@ class Representable_I;
 class Con_turno_I;
 class Bonus_I;
 class Espaciable;
+class Disparable_I;
+class Disparador_I;
 
 struct Facetador
 {
@@ -49,13 +37,17 @@ struct Facetador
 	Con_turno_I * 		con_turno;
 	Bonus_I * 		bonus;
 	Espaciable * 		espaciable;
+	Disparable_I * 		disparable;
+	Disparador_I * 		disparador;
 
 	Facetador()
 		:objeto_juego(nullptr), 
 		representable(nullptr),
 		con_turno(nullptr),
 		bonus(nullptr),
-		espaciable(nullptr)
+		espaciable(nullptr),
+		disparable(nullptr),
+		disparador(nullptr)
 	{}
 
 	Facetador& mut_objeto_juego(Objeto_juego_I * v)
@@ -87,6 +79,18 @@ struct Facetador
 		espaciable=v;
 		return *this;
 	}
+
+	Facetador& mut_disparable(Disparable_I * v)
+	{
+		disparable=v;
+		return *this;
+	}
+
+	Facetador& mut_disparador(Disparador_I * v)
+	{
+		disparador=v;
+		return *this;
+	}
 };
 
 /**
@@ -115,19 +119,26 @@ class Objeto_juego_I
 
 	virtual void 			recibir_visitante(App_Visitantes::Visitante_objeto_juego& v)=0;
 	virtual void 			recibir_visitante(App_Visitantes::Visitante_objeto_juego_const& v)const=0;
-//	virtual objeto_juego_facetas	obtener_facetas()const=0;
 
 	private:
 
-	Facetador facetador;
-	bool borrar;
+	Facetador 			facetador;
+	bool 				borrar;
+
+	friend bool 			es_representable(const Objeto_juego_I&);
+	friend bool 			es_espaciable(const Objeto_juego_I&);
+	friend bool 			es_con_turno(const Objeto_juego_I&);
+	friend bool 			es_bonus(const Objeto_juego_I&);
+	friend bool 			es_disparable(const Objeto_juego_I&);
+	friend bool 			es_disparador(const Objeto_juego_I&);
 };
 
 bool es_representable(const Objeto_juego_I&);
 bool es_espaciable(const Objeto_juego_I&);
-//bool es_borrable(const Objeto_juego_I&);
 bool es_con_turno(const Objeto_juego_I&);
 bool es_bonus(const Objeto_juego_I&);
+bool es_disparable(const Objeto_juego_I&);
+bool es_disparador(const Objeto_juego_I&);
 
 }
 

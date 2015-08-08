@@ -10,6 +10,7 @@
 #include "../app/juego/sistemas/contador_tiempo.h"
 #include "../app/juego/objetos_juego/proyectil_base.h"
 #include "../app/juego/objetos_juego/proyectil_normal.h"
+#include "../app/juego/objetos_juego/enemigo_basico.h"
 #include "../app/niveles/mapa.h"
 #include "../app/graficos/representador.h"
 #include "../app/colisiones/calculador_colisiones.h"
@@ -36,6 +37,7 @@ class Controlador_juego:public Controlador_base
 	App_Niveles::Sala * 			sala_actual;
 	
 	Vsptr_Proyectil_base		 	proyectiles_jugador;
+	Vsptr_Proyectil_base		 	proyectiles_enemigos;
 
 	///////////////
 	//Métodos internos.

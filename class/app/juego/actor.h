@@ -11,7 +11,8 @@ en el espacio, pero bueno, no es importante.
 namespace App_Juego
 {
 
-class Actor:public App_Interfaces::Espaciable
+class Actor:
+	public App_Interfaces::Espaciable
 {
 	////////////////////////
 	// Propiedades.

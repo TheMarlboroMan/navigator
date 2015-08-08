@@ -18,6 +18,9 @@ class Proyectil_normal:
 	/////////////////////
 	//Definiciones:
 	public:
+
+	enum class colores {rojo, azul};
+
 	class Propiedades_proyectil
 	{
 		private:
@@ -41,10 +44,12 @@ class Proyectil_normal:
 //							Proyectil_normal(float x, float y, unsigned int w, unsigned int h);
 							Proyectil_normal(const Propiedades_proyectil& pp);
 	virtual						~Proyectil_normal() {}
+	void						mut_color(colores c) {color=c;}
 
 	///////////////
 	// Implementación de Con_turno_I, por medio de Proyectil_base
-	virtual void turno(float);
+	virtual void 					turno(float);
+	virtual void 					recibir_visitante(App_Visitantes::Visitante_con_turno& v) {v.visitar(*this);}
 
 	///////////////////////////////////
 	//Implementación de Objeto_juego_I
@@ -70,6 +75,10 @@ class Proyectil_normal:
 	/////////////////////
 	//Propiedades
 	private:
+
+	static const float FACTOR_DEBILITAR;
+	 
+	colores color;
 };
 }
 

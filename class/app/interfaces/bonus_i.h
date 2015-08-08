@@ -3,6 +3,10 @@
 
 #include "../visitantes/visitante_bonus.h"
 
+/**
+* Interface para objetos susceptibles de recibir un visitante de bonus.
+*/
+
 namespace App_Interfaces
 {
 class Bonus_I

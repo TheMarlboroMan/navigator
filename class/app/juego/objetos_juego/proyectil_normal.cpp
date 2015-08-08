@@ -3,8 +3,11 @@
 
 using namespace App_Juego_ObjetoJuego;
 
+const float Proyectil_normal::FACTOR_DEBILITAR=9.0f;
+
 Proyectil_normal::Proyectil_normal(const Propiedades_proyectil& pp)
-	:Proyectil_base(pp.x, pp.y, pp.w, pp.h)
+	:Proyectil_base(pp.x, pp.y, pp.w, pp.h),
+	color(colores::rojo)
 {
 	App_Interfaces::Facetador& f=como_facetador();
 	f.mut_objeto_juego(this).
@@ -15,15 +18,21 @@ Proyectil_normal::Proyectil_normal(const Propiedades_proyectil& pp)
 
 void Proyectil_normal::turno(float delta)
 {
-	auto v=acc_vector();
-	if(v.y) desplazar_caja(0.0, v.y * delta); 
-	if(v.x) desplazar_caja(v.x * delta, 0.0);
+	float p=acc_potencia();
+	mut_potencia(p - (delta * FACTOR_DEBILITAR));
+
+	if(acc_potencia() < 0.0f) 
+	{
+		mut_potencia(0.0f);
+		mut_borrar(true);
+	}
+
+	//El movimiento está en el visitante de turno.
 }
 
 unsigned short int Proyectil_normal::obtener_profundidad_ordenacion()const
 {
 	return 10;
-
 }
 
 void Proyectil_normal::transformar_bloque(App_Graficos::Bloque_transformacion_representable &b)const
@@ -31,11 +40,17 @@ void Proyectil_normal::transformar_bloque(App_Graficos::Bloque_transformacion_re
 	using namespace App_Graficos;
 	using namespace App;
 
-	//TODO...
-	//Se asume que todos los frames van mirando a la derecha.
+	unsigned int alpha=(acc_potencia() * 255.0f) / acc_potencia_original();
+
 	b.establecer_tipo(Bloque_transformacion_representable::tipos::TR_BITMAP);
-	b.establecer_alpha(255);
+	b.establecer_alpha(alpha);
 	b.establecer_recurso(Recursos_graficos::RT_DEFECTO);
-	b.establecer_recorte(32, 16, acc_espaciable_w(), acc_espaciable_h());
+	
+	switch(color)
+	{
+		case colores::rojo: b.establecer_recorte(32, 16, acc_espaciable_w(), acc_espaciable_h()); break;
+		case colores::azul: b.establecer_recorte(40, 16, acc_espaciable_w(), acc_espaciable_h()); break;
+	}
+
 	b.establecer_posicion(acc_espaciable_x(), acc_espaciable_y(), acc_espaciable_w(), acc_espaciable_h());
 }

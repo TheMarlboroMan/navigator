@@ -8,6 +8,8 @@
 * sus objetos de juego.
 */
 
+#include <vector>
+#include <memory>
 #include "objeto_juego_i.h"
 
 namespace App_Interfaces
@@ -22,7 +24,14 @@ class Procesador_objetos_juego_I
 				~Procesador_objetos_juego_I() {}
 
 	virtual void 		procesar(vector_oj v)=0;
-	//TODO: Quizás podamos añadir un overload para vectores sin shared_ptr. Sería trivial, básicamente llamar de uno a otro.
+//TODO: Quizás podamos añadir un overload para vectores sin shared_ptr. Sería trivial, básicamente llamar de uno a otro.
+/*	virtual void 		procesar(std::vector<Objeto_juego_I *>& i)
+	{
+		vector_oj v;
+		for(auto o : i) v.push_back(std::shared_ptr<Objeto_juego_I>(o)); 
+		procesar(v);
+	}
+*/	
 };
 }
 

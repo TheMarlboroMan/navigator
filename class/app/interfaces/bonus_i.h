@@ -1,21 +1,16 @@
-#ifndef BONUS_I
-#define BONUS_I
+#ifndef BONUS_I_H
+#define BONUS_I_H
 
 #include "../visitantes/visitante_bonus.h"
 
 namespace App_Interfaces
 {
-
-//Forward declaration de espaciable.
-class Espaciable;
-
 class Bonus_I
 {
 	public:
-	virtual ~Bonus_I() {}
 
-	virtual void 	recibir_visitante(App_Visitantes::Visitante_bonus& v)=0;
-	virtual bool	bonus_en_colision_con(const Espaciable&)=0;
+				~Bonus_I() {}
+	virtual void 		recibir_visitante(App_Visitantes::Visitante_bonus& v)=0;
 };
 }
 

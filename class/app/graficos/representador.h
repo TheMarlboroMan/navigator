@@ -1,8 +1,10 @@
 #ifndef REPRESENTADOR_H
 #define REPRESENTADOR_H
 
-#include "representable.h"
+#include "bloque_transformacion_representable.h"
 #include "../definiciones/definiciones.h"
+#include "../interfaces/representable_i.h"
+
 
 /*El representador funciona de la siguiente forma: desde el controlador 
 generamos un array de punteros a "Representables". Se le pasa el array al 
@@ -42,8 +44,8 @@ class Representador
 
 	public:
 
-	unsigned int generar_vista(DLibV::Pantalla&, DLibV::Camara&, const std::vector<const Representable *>&);
-	unsigned int generar_vista(DLibV::Pantalla&, const std::vector<const Representable *>&);
+	unsigned int generar_vista(DLibV::Pantalla&, DLibV::Camara&, const std::vector<const App_Interfaces::Representable_I *>&);
+	unsigned int generar_vista(DLibV::Pantalla&, const std::vector<const App_Interfaces::Representable_I *>&);
 
 	void dibujar_marco_automapa(DLibV::Pantalla&);
 	void dibujar_pieza_automapa(DLibV::Pantalla&, int x, int y, App_Definiciones::direcciones t);
@@ -51,6 +53,5 @@ class Representador
 	Representador();
 	~Representador();
 };
-
 }
 #endif

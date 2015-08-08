@@ -7,13 +7,24 @@ const float Enemigo_basico::TIEMPO_PROXIMO_DISPARO_DEFECTO=3.0f;
 
 Enemigo_basico::Enemigo_basico(float px, float py, float s)
 	:Actor(px, py, W, H),
-	Borrable_I(),
+//	Objeto_juego_I(App_Interfaces::Facetador(this, this, nullptr, this)),
+	Objeto_juego_I(),
 	salud(s),
 	tiempo_proximo_disparo(TIEMPO_PROXIMO_DISPARO_DEFECTO),
 	direccion(App_Definiciones::direcciones::derecha)
 {
-
+	App_Interfaces::Facetador& f=como_facetador();
+	f.mut_objeto_juego(this).
+		mut_representable(this).
+		mut_con_turno(this).
+		mut_espaciable(this);
 }
+
+unsigned short int Enemigo_basico::obtener_profundidad_ordenacion()const
+{
+	return 10;
+}
+
 
 void Enemigo_basico::transformar_bloque(App_Graficos::Bloque_transformacion_representable &b) const
 {

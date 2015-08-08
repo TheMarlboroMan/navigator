@@ -8,7 +8,6 @@ DIR_INPUT=$(DIR_CLASES_APP)input/
 DIR_GRAFICOS=$(DIR_CLASES_APP)graficos/
 DIR_JUEGO=$(DIR_CLASES_APP)juego/
 DIR_VISITANTES=$(DIR_CLASES_APP)visitantes/
-DIR_JUEGO_PROYECTILES=$(DIR_JUEGO)proyectiles/
 DIR_JUEGO_AUTOMAPA=$(DIR_JUEGO)automapa/
 DIR_JUEGO_SISTEMAS=$(DIR_JUEGO)sistemas/
 DIR_JUEGO_OBJETOS=$(DIR_JUEGO)objetos_juego/
@@ -18,12 +17,6 @@ DIR_GENERADOR=$(DIR_CLASES_APP)generador/
 
 ################################################################################
 #Juego
-
-$(DIR_O)conversor_facetas_objeto_juego.o:\
-#$(DIR_VISITANTES)visitante_objeto_juego_facetas.h \
-$(DIR_JUEGO)conversor_facetas_objeto_juego.h \
-$(DIR_JUEGO)conversor_facetas_objeto_juego.cpp
-	$(CC) $(CFLAGS) $(INCLUDES) $(DIR_JUEGO)conversor_facetas_objeto_juego.cpp -o $(DIR_O)conversor_facetas_objeto_juego.o
 
 $(DIR_O)jugador.o:\
 $(DIR_O)actor.o \
@@ -54,7 +47,9 @@ $(DIR_JUEGO)logica_proyectiles.cpp
 
 $(DIR_O)logica_bonus.o:\
 $(DIR_O)bonus_tiempo.o\
+$(DIR_O)bonus_salud.o\
 $(DIR_O)contador_tiempo.o\
+$(DIR_VISITANTES)visitante_bonus.h\
 $(DIR_JUEGO)logica_bonus.h\
 $(DIR_JUEGO)logica_bonus.cpp
 	$(CC) $(CFLAGS) $(INCLUDES) $(DIR_JUEGO)logica_bonus.cpp -o $(DIR_O)logica_bonus.o
@@ -64,9 +59,8 @@ $(DIR_JUEGO)logica_bonus.cpp
 
 $(DIR_O)enemigo_basico.o:\
 $(DIR_O)actor.o\
-#$(DIR_VISITANTES)visitante_objeto_juego.h\
-$(DIR_INTERFACES)objeto_juego_i.h\
-$(DIR_INTERFACES)borrable_i.h\
+$(DIR_O)objeto_juego_i.o\
+$(DIR_O)representable_i.o\
 $(DIR_INTERFACES)con_turno_i.h\
 $(DIR_JUEGO_OBJETOS)enemigo_basico.h\
 $(DIR_JUEGO_OBJETOS)enemigo_basico.cpp
@@ -74,41 +68,40 @@ $(DIR_JUEGO_OBJETOS)enemigo_basico.cpp
 
 $(DIR_O)bonus_salud.o:\
 $(DIR_O)actor.o\
-#$(DIR_VISITANTES)visitante_objeto_juego.h\
-$(DIR_INTERFACES)objeto_juego_i.h\
-$(DIR_INTERFACES)borrable_i.h\
+$(DIR_O)objeto_juego_i.o\
+$(DIR_O)representable_i.o\
 $(DIR_INTERFACES)bonus_i.h\
+$(DIR_GRAFICOS)bloque_transformacion_representable.h\
 $(DIR_JUEGO_OBJETOS)bonus_salud.h\
 $(DIR_JUEGO_OBJETOS)bonus_salud.cpp
 	$(CC) $(CFLAGS) $(INCLUDES) $(DIR_JUEGO_OBJETOS)bonus_salud.cpp -o $(DIR_O)bonus_salud.o
 
 $(DIR_O)bonus_tiempo.o:\
 $(DIR_O)actor.o\
-$(DIR_VISITANTES)visitante_objeto_juego.h\
-$(DIR_INTERFACES)objeto_juego_i.h\
-$(DIR_INTERFACES)borrable_i.h\
+$(DIR_O)objeto_juego_i.o\
+$(DIR_O)representable_i.o\
 $(DIR_INTERFACES)bonus_i.h\
+$(DIR_GRAFICOS)bloque_transformacion_representable.h\
 $(DIR_JUEGO_OBJETOS)bonus_tiempo.h\
 $(DIR_JUEGO_OBJETOS)bonus_tiempo.cpp
 	$(CC) $(CFLAGS) $(INCLUDES) $(DIR_JUEGO_OBJETOS)bonus_tiempo.cpp -o $(DIR_O)bonus_tiempo.o
 
-################################################################################
-#Juego proyectiles
-
 $(DIR_O)proyectil_normal.o:\
 $(DIR_O)proyectil_base.o\
-$(DIR_JUEGO_PROYECTILES)proyectil_normal.h\
-$(DIR_JUEGO_PROYECTILES)proyectil_normal.cpp
-	$(CC) $(CFLAGS) $(INCLUDES) $(DIR_JUEGO_PROYECTILES)proyectil_normal.cpp -o $(DIR_O)proyectil_normal.o
+$(DIR_JUEGO_OBJETOS)proyectil_normal.h\
+$(DIR_JUEGO_OBJETOS)proyectil_normal.cpp
+	$(CC) $(CFLAGS) $(INCLUDES) $(DIR_JUEGO_OBJETOS)proyectil_normal.cpp -o $(DIR_O)proyectil_normal.o
 
 $(DIR_O)proyectil_base.o:\
 $(DIR_O)actor.o\
 $(DIR_O)actor_movil.o\
-$(DIR_O)representable.o\
-$(DIR_INTERFACES)borrable_i.h\
-$(DIR_JUEGO_PROYECTILES)proyectil_base.h\
-$(DIR_JUEGO_PROYECTILES)proyectil_base.cpp
-	$(CC) $(CFLAGS) $(INCLUDES) $(DIR_JUEGO_PROYECTILES)proyectil_base.cpp -o $(DIR_O)proyectil_base.o
+$(DIR_O)representable_i.o\
+$(DIR_O)objeto_juego_i.o\
+$(DIR_INTERFACES)con_turno_i.h\
+$(DIR_JUEGO_OBJETOS)proyectil_base.h\
+$(DIR_JUEGO_OBJETOS)proyectil_base.cpp
+	$(CC) $(CFLAGS) $(INCLUDES) $(DIR_JUEGO_OBJETOS)proyectil_base.cpp -o $(DIR_O)proyectil_base.o
+
 
 ################################################################################
 #Juego sistemas
@@ -136,12 +129,10 @@ $(DIR_NIVELES)mapa.cpp
 	$(CC) $(CFLAGS) $(INCLUDES) $(DIR_NIVELES)mapa.cpp -o $(DIR_O)mapa.o
 
 $(DIR_O)sala.o:\
-$(DIR_O)conversor_facetas_objeto_juego.o \
 $(DIR_O)celda.o \
 $(DIR_O)entrada.o \
 $(DIR_O)definiciones.o \
-$(DIR_VISITANTES)visitante_objeto_juego.h\
-$(DIR_VISITANTES)visitante_objeto_juego_facetas.h\
+$(DIR_O)objeto_juego_i.o \
 $(DIR_INTERFACES)procesador_objetos_juego_i.h\
 $(DIR_NIVELES)sala.h \
 $(DIR_NIVELES)sala.cpp
@@ -165,15 +156,10 @@ $(DIR_NIVELES)celda.cpp
 #Graficos
 
 $(DIR_O)representador.o :\
-$(DIR_O)representable.o \
+$(DIR_O)representable_i.o \
 $(DIR_GRAFICOS)representador.h \
 $(DIR_GRAFICOS)representador.cpp
 	$(CC) $(CFLAGS) $(INCLUDES) $(DIR_GRAFICOS)representador.cpp -o $(DIR_O)representador.o
-
-$(DIR_O)representable.o :\
-$(DIR_GRAFICOS)representable.h \
-$(DIR_GRAFICOS)representable.cpp
-	$(CC) $(CFLAGS) $(INCLUDES) $(DIR_GRAFICOS)representable.cpp -o $(DIR_O)representable.o
 
 ################################################################################
 #Colisiones
@@ -217,14 +203,18 @@ $(DIR_INPUT)recogedor_input.cpp
 ################################################################################
 #Visitantes
 
-$(DIR_O)visitante_objeto_juego_facetas.o:\
-$(DIR_VISITANTES)visitante_objeto_juego.h \
-$(DIR_VISITANTES)visitante_objeto_juego_facetas.h \
-$(DIR_VISITANTES)visitante_objeto_juego_facetas.cpp
-	$(CC) $(CFLAGS) $(INCLUDES) $(DIR_VISITANTES)visitante_objeto_juego_facetas.cpp -o $(DIR_O)visitante_objeto_juego_facetas.o
-
 ################################################################################
 #Interfaces
+
+$(DIR_O)objeto_juego_i.o:\
+$(DIR_INTERFACES)objeto_juego_i.h \
+$(DIR_INTERFACES)objeto_juego_i.cpp
+	$(CC) $(CFLAGS) $(INCLUDES) $(DIR_INTERFACES)objeto_juego_i.cpp -o $(DIR_O)objeto_juego_i.o
+
+$(DIR_O)representable_i.o:\
+$(DIR_INTERFACES)representable_i.h \
+$(DIR_INTERFACES)representable_i.cpp
+	$(CC) $(CFLAGS) $(INCLUDES) $(DIR_INTERFACES)representable_i.cpp -o $(DIR_O)representable_i.o
 
 $(DIR_O)espaciable.o:\
 $(DIR_INTERFACES)espaciable.h \

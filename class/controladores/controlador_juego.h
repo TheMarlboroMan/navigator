@@ -8,8 +8,8 @@
 #include "../app/juego/jugador.h"
 #include "../app/juego/automapa/automapa.h"
 #include "../app/juego/sistemas/contador_tiempo.h"
-#include "../app/juego/proyectiles/proyectil_base.h"
-#include "../app/juego/proyectiles/proyectil_normal.h"
+#include "../app/juego/objetos_juego/proyectil_base.h"
+#include "../app/juego/objetos_juego/proyectil_normal.h"
 #include "../app/niveles/mapa.h"
 #include "../app/graficos/representador.h"
 #include "../app/colisiones/calculador_colisiones.h"
@@ -20,8 +20,8 @@ class Controlador_juego:public Controlador_base
 	//////////////
 	//Definiciones.
 	public:
-	typedef std::shared_ptr<App_Juego_Proyectiles::Proyectil_base> sptr_Proyectil_base;
-	typedef std::vector<std::shared_ptr<App_Juego_Proyectiles::Proyectil_base> > Vsptr_Proyectil_base;
+	typedef std::shared_ptr<App_Juego_ObjetoJuego::Proyectil_base> sptr_Proyectil_base;
+	typedef std::vector<std::shared_ptr<App_Juego_ObjetoJuego::Proyectil_base> > Vsptr_Proyectil_base;
 
 	//////////////
 	//Propiedades

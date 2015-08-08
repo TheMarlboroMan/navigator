@@ -1,8 +1,6 @@
 #ifndef VISITANTE_OBJETO_JUEGO
 #define VISITANTE_OBJETO_JUEGO
 
-#include <iostream>
-
 //Forward declarations de todos los objetos.
 namespace App_Interfaces
 {
@@ -14,8 +12,8 @@ namespace App_Juego_ObjetoJuego
 class Bonus_tiempo;
 class Bonus_salud;
 class Enemigo_basico;
+class Proyectil_normal;
 }
-
 
 namespace App_Visitantes
 {
@@ -33,6 +31,7 @@ class Visitante_objeto_juego_const
 	virtual void visitar(const App_Juego_ObjetoJuego::Bonus_tiempo&)=0;
 	virtual void visitar(const App_Juego_ObjetoJuego::Bonus_salud&)=0;
 	virtual void visitar(const App_Juego_ObjetoJuego::Enemigo_basico&)=0;
+	virtual void visitar(const App_Juego_ObjetoJuego::Proyectil_normal&)=0;
 };
 
 class Visitante_objeto_juego
@@ -42,6 +41,7 @@ class Visitante_objeto_juego
 	virtual void visitar(App_Juego_ObjetoJuego::Bonus_tiempo&)=0;
 	virtual void visitar(App_Juego_ObjetoJuego::Bonus_salud&)=0;
 	virtual void visitar(App_Juego_ObjetoJuego::Enemigo_basico&)=0;
+	virtual void visitar(App_Juego_ObjetoJuego::Proyectil_normal&)=0;
 
 };
 

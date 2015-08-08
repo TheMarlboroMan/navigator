@@ -1,24 +1,10 @@
-#ifndef REPRESENTABLE_H
-#define REPRESENTABLE_H
+#ifndef BLOQUE_TRANSFORMACION_REPRESENTABLE_H
+#define BLOQUE_TRANSFORMACION_REPRESENTABLE_H
 
 #include <libDan2.h>
 
-extern DLibH::Log_base LOG;
-
 namespace App_Graficos
 {
-
-class Representador;
-
-/*Todos los elementos que vayan a ser representados como parte de un nivel
-deben implementar la interface "representable". Uno de los métodos de la
-misma consiste en recibir un Bloque_transformacion_representable y modificarlo
-para luego pasarlo al representador.
-
-El Bloque_transformacion_representable es una entidad que existe sólo una vez
-para todas las cosas que se representan: es la alternativa a que cada entidad
-representable tenga una copia de su representación.
-*/
 
 struct Bloque_transformacion_representable
 {
@@ -134,32 +120,6 @@ struct Bloque_transformacion_representable
 	friend class Representador;
 };
 
-//La interface promete que no vas a cambiar nada cuando la representes. 
-//Ahora mismo que lo estoy haciendo me parece una buena idea. Ya veremos más
-//adelante...
-
-//TODO: Mover a "Representable_I"...
-
-class Representable
-{
-	public:
-
-	virtual unsigned short int obtener_profundidad_ordenacion()const=0;
-	virtual void transformar_bloque(Bloque_transformacion_representable &b)const=0;
-
-	Representable() {}
-	virtual ~Representable() {}
-};
-
-class Ordenador_representables
-{
-	public: 
-
-	bool operator()(const Representable* a, const Representable* b) const
-	{
-		return a->obtener_profundidad_ordenacion() < b->obtener_profundidad_ordenacion();
-	}
-};
-
 }
+
 #endif

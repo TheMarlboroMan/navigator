@@ -13,12 +13,13 @@ Logica_proyectiles::Logica_proyectiles()
 * @param Jugador j : el jugador que ejecuta el disparo.
 */
 
-bool Logica_proyectiles::insertar_disparo_jugador(std::vector<std::shared_ptr<App_Juego_Proyectiles::Proyectil_base> >&v, Jugador& j)
+bool Logica_proyectiles::insertar_disparo_jugador(std::vector<std::shared_ptr<App_Juego_ObjetoJuego::Proyectil_base> >&v, Jugador& j)
 {
 	//TODO: Evaluar si puede ejecutar el disparo.
+
 	bool resultado=true;
 
-	using namespace App_Juego_Proyectiles;
+	using namespace App_Juego_ObjetoJuego;
 	float x=j.acc_espaciable_x();
 	float y=j.acc_espaciable_y();
 	std::shared_ptr<Proyectil_normal> pr(new Proyectil_normal(Proyectil_normal::Propiedades_proyectil_jugador(x, y)));

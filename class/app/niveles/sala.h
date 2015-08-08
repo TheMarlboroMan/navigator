@@ -48,7 +48,7 @@ class Sala
 	App_Definiciones::direcciones 				acc_direcciones_entradas() const 	{return direcciones_entradas;}
 	void 							insertar_celda(App_Definiciones::tipos::t_dim px, App_Definiciones::tipos::t_dim py, Celda::tipo_celda pt); /** @throw Matriz_2d_excepcion_item_existe cuando la celda está ocupada. */
 	void 							erase(App_Definiciones::tipos::t_dim px, App_Definiciones::tipos::t_dim py); /** @throw Matriz_2d_excepcion_item_invalido cuando no existe la celda. */
-	std::vector<const App_Graficos::Representable *> 	obtener_vector_representables() const;
+	std::vector<const App_Interfaces::Representable_I *> 	obtener_vector_representables() const;
 	Vsptr_Objeto_juego_I&					acc_objetos_juego() {return objetos_juego;}
 	void 							insertar_entrada(const Entrada& e); /** std::logic_error cuando existe una entrada en la posición. */
 	const HerramientasProyecto::Matriz_2d<Celda>& 		acc_matriz() const {return celdas;}

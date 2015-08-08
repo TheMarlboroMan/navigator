@@ -8,7 +8,6 @@ $(DIR_O)celda.o\
 $(DIR_O)mapa.o\
 $(DIR_O)espaciable.o\
 $(DIR_O)representador.o\
-$(DIR_O)representable.o\
 $(DIR_O)actor.o\
 $(DIR_O)actor_movil.o\
 $(DIR_O)movil.o\
@@ -21,6 +20,8 @@ $(DIR_O)traductor_mapas.o\
 $(DIR_O)proto_sala.o\
 $(DIR_O)automapa.o\
 $(DIR_O)contador_tiempo.o\
+$(DIR_O)objeto_juego_i.o\
+$(DIR_O)representable_i.o\
 $(DIR_O)bonus_tiempo.o\
 $(DIR_O)bonus_salud.o\
 $(DIR_O)logica_bonus.o\
@@ -28,9 +29,6 @@ $(DIR_O)logica_proyectiles.o\
 $(DIR_O)enemigo_basico.o\
 $(DIR_O)proyectil_base.o\
 $(DIR_O)proyectil_normal.o\
-$(DIR_O)conversor_facetas_objeto_juego.o\
-$(DIR_O)visitante_objeto_juego_facetas.o\
-
 
 DEP_CONTROLADORES=$(DIR_O)controlador_base.o \
 $(DIR_O)controlador_juego.o \

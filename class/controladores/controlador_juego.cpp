@@ -12,7 +12,6 @@
 #include "../app/juego/logica_proyectiles.h"
 #include "../app/juego/objetos_juego/bonus_tiempo.h"
 #include "../app/juego/objetos_juego/bonus_salud.h"
-#include "../app/juego/conversor_facetas_objeto_juego.h"
 
 using namespace App_Niveles;
 using namespace App_Juego;
@@ -205,6 +204,7 @@ void Controlador_juego::procesar_jugador(Jugador& j, float delta, Input_usuario 
 	//Las colisiones con objetos de juego se evaluan en la posición final.
 
 	//En primer lugar evaluamos los items.
+
 	Logica_bonus lb(contador_tiempo, jugador);
 
 	class POJ:public App_Interfaces::Procesador_objetos_juego_I
@@ -218,10 +218,18 @@ void Controlador_juego::procesar_jugador(Jugador& j, float delta, Input_usuario 
 		//Podemos pensar que esto se ejecuta dentro de "Sala" :P.
 		virtual void procesar(vector_oj v)
 		{
-			//Separar los bonus... En este momento no se sabe si están o no en contacto con el jugador o no.
-			std::vector<App_Interfaces::Bonus_I *> bonuses;
-			Conversor_facetas_objeto_juego::extraer_bonus(v, bonuses);
-			for(auto b : bonuses) if(b->bonus_en_colision_con(j)) b->recibir_visitante(lb);
+			for(auto& o : v)
+			{
+				//Uso super estrafalario de las facetas, pero legal...
+				if(es_bonus(*o) && es_espaciable(*o)) 
+				{
+					if(o->como_facetador().espaciable->en_colision_con(j))
+					{
+						std::cout<<o->como_facetador().bonus<<std::endl;
+						o->como_facetador().bonus->recibir_visitante(lb);
+					}
+				}
+			}
 		}
 
 		private:
@@ -231,6 +239,7 @@ void Controlador_juego::procesar_jugador(Jugador& j, float delta, Input_usuario 
 	}procesador(lb, jugador);
 
 	sala_actual->procesar_objetos_juego(procesador);
+
 	//TODO: ¿Cómo evaluar cosas que detengan el movimiento con las que el jugador pueda chocar????.	
 }
 
@@ -240,12 +249,15 @@ void Controlador_juego::procesar_jugador(Jugador& j, float delta, Input_usuario 
 
 void Controlador_juego::dibujar(DLibV::Pantalla& pantalla)
 {
+	using namespace App_Interfaces;
+
 	//Pantalla...
 	pantalla.limpiar(128, 128, 128, 255);
 
 	//Recolectar representables...
-	std::vector<const Representable *> vr=(*sala_actual).obtener_vector_representables();
+	std::vector<const Representable_I *> vr=(*sala_actual).obtener_vector_representables();
 	vr.push_back(&jugador);
+
 	for(const auto& p : proyectiles_jugador) vr.push_back(p.get());
 
 	//TODO: Ordenar.
@@ -324,6 +336,7 @@ void Controlador_juego::iniciar_automapa()
 
 void Controlador_juego::logica_proyectiles(float delta)
 {
+
 	for(auto& p : proyectiles_jugador) 
 	{
 		p->turno(delta);
@@ -358,9 +371,13 @@ void Controlador_juego::logica_mundo(float delta)
 
 		virtual void procesar(vector_oj v)
 		{
-			std::vector<App_Interfaces::Con_turno_I *> con_turno;
-			Conversor_facetas_objeto_juego::extraer_con_turno(v, con_turno);
-			for(auto c : con_turno) c->turno(delta);
+			for(auto& o : v)
+			{
+				if(es_con_turno(*o)) 
+				{
+					o->como_facetador().con_turno->turno(delta);
+				}
+			}
 		}
 
 		private:

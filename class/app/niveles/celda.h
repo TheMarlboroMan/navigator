@@ -2,14 +2,17 @@
 #define CELDA_H
 
 #include "../interfaces/espaciable.h"
-#include "../graficos/representable.h"
+#include "../interfaces/representable_i.h"
+#include "../graficos/representador.h"
 #include "../recursos.h"
 #include "../definiciones/definiciones.h"
 
 namespace App_Niveles
 {
 
-class Celda:public App_Interfaces::Espaciable, public App_Graficos::Representable
+class Celda:
+	public App_Interfaces::Espaciable, 
+	public App_Interfaces::Representable_I
 {
 	//////////
 	//Definiciones...
@@ -40,7 +43,7 @@ class Celda:public App_Interfaces::Espaciable, public App_Graficos::Representabl
 	{}
 
 	//////////////////////////////
-	//Implementación de Representable.
+	//Implementación de Representable_I.
 	public:
 	virtual unsigned short int obtener_profundidad_ordenacion()const {return 0;}
 	virtual void transformar_bloque(App_Graficos::Bloque_transformacion_representable &b) const

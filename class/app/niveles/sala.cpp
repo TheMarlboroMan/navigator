@@ -1,12 +1,10 @@
 #include "sala.h"
 #include "../visitantes/visitante_objeto_juego.h"
-#include "../visitantes/visitante_objeto_juego_facetas.h"
 
 //Incluir los diversos tipos de objetos de mapa...
 #include "../juego/objetos_juego/bonus_tiempo.h"
 #include "../juego/objetos_juego/bonus_salud.h"
 #include "../juego/objetos_juego/enemigo_basico.h"
-#include "../juego/conversor_facetas_objeto_juego.h"
 
 using namespace App_Niveles;
 using namespace HerramientasProyecto;
@@ -54,9 +52,11 @@ void Sala::erase(App_Definiciones::tipos::t_dim px, App_Definiciones::tipos::t_d
 * Devuelve un vector con punteros a los objetos representables que contiene representables.
 */
 
-std::vector<const App_Graficos::Representable *> Sala::obtener_vector_representables() const
+std::vector<const App_Interfaces::Representable_I *> Sala::obtener_vector_representables() const
 {
-	typedef std::vector<const App_Graficos::Representable *> t_res;
+	using namespace App_Interfaces;
+
+	typedef std::vector<const App_Interfaces::Representable_I *> t_res;
 	t_res resultado;
 
 	struct obtener
@@ -70,7 +70,13 @@ std::vector<const App_Graficos::Representable *> Sala::obtener_vector_representa
 	celdas.aplicar(obt);
 
 	//Recolectar los objetos juego.
-	App_Juego::Conversor_facetas_objeto_juego::extraer_representables(objetos_juego, resultado);
+	for(auto& o : objetos_juego)
+	{
+		if(es_representable(*o)) 
+		{
+			resultado.push_back(o->como_facetador().representable);
+		}
+	}
 
 	return resultado;
 }
@@ -125,36 +131,14 @@ void Sala::insertar_objeto_juego(std::shared_ptr<App_Interfaces::Objeto_juego_I>
 
 size_t Sala::limpiar_objetos_juego_para_borrar()
 {
-	//TODO TODO TODO: Cambiar, esto es una mieeeeerda.... A ver si podemos hacerlo de otra forma...
-	//De momento no podemos sacar un vector de punteros a borrables porque lo que tenemos
-	//que borrar está en "objetos_juego".
-//	std::vector<App_Interfaces::Borrable_I *> borrables;
-//	App_Juego::Conversor_facetas_objeto_juego::extraer_borrables(objetos_juego, resultado);
-
-	//Visitante específico para sacar la faceta "borrable" de los objetos juego.
-
-
-	struct Visitante_faceta_borrable:public App_Visitantes::Visitante_objeto_juego
-	{
-		bool 			borrar;
-					Visitante_faceta_borrable():borrar(false){}
-		virtual void 		visitar(App_Juego_ObjetoJuego::Bonus_tiempo& o) {borrar=o.es_borrar();}
-		virtual void 		visitar(App_Juego_ObjetoJuego::Bonus_salud& o) {borrar=o.es_borrar();}
-		virtual void 		visitar(App_Juego_ObjetoJuego::Enemigo_basico& o) {borrar=o.es_borrar();}
-	}v;
-
 	size_t	res=0;
+
 	auto 	ini=std::begin(objetos_juego),
 		fin=std::end(objetos_juego);
 	
-//	App_Visitantes::Visitante_objeto_juego_facetas v;
-
 	while(ini < fin)
 	{
-//		v.reset();
-		(*ini)->recibir_visitante(v);
-//		if( (v.facetas & App_Visitantes::objeto_juego_facetas::borrable) != App_Visitantes::objeto_juego_facetas::nada)
-		if(v.borrar)
+		if(ini->get()->es_borrar())
 		{
 			ini=objetos_juego.erase(ini);
 			fin=std::end(objetos_juego);

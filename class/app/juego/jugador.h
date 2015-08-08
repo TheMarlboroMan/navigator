@@ -3,7 +3,8 @@
 
 #include <memory>
 #include "actor_movil.h"
-#include "../graficos/representable.h"
+#include "../interfaces/representable_i.h"
+#include "../graficos/bloque_transformacion_representable.h"
 #include "../recursos.h"
 #include "../input/input_usuario.h"
 #include "../definiciones/definiciones.h"
@@ -13,7 +14,9 @@
 namespace App_Juego
 {
 
-class Jugador:public Actor_movil, public App_Graficos::Representable
+class Jugador:
+	public Actor_movil, 
+	public App_Interfaces::Representable_I
 {
 	////////////////////////
 	// Definiciones...
@@ -49,7 +52,7 @@ class Jugador:public Actor_movil, public App_Graficos::Representable
 	virtual void 				callback_ajuste(float pos, Actor_movil::posiciones_ajuste tipo);
 
 	///////////////////////
-	// Implementación de Representable.
+	// Implementación de Representable_I.
 	public:
 
 	virtual unsigned short int 		obtener_profundidad_ordenacion() const {return 20;}

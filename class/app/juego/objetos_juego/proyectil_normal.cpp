@@ -1,17 +1,16 @@
 #include "proyectil_normal.h"
 #include "../../recursos.h"
 
-using namespace App_Juego_Proyectiles;
-
-/*Proyectil_normal::Proyectil_normal(float x, float y, unsigned int w, unsigned int h)
-	:Proyectil_base(x, y, w, h)
-{
-}*/
+using namespace App_Juego_ObjetoJuego;
 
 Proyectil_normal::Proyectil_normal(const Propiedades_proyectil& pp)
 	:Proyectil_base(pp.x, pp.y, pp.w, pp.h)
 {
-
+	App_Interfaces::Facetador& f=como_facetador();
+	f.mut_objeto_juego(this).
+		mut_representable(this).
+		mut_con_turno(this).
+		mut_espaciable(this);
 }
 
 void Proyectil_normal::turno(float delta)

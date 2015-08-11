@@ -20,15 +20,22 @@ para luego pasarlo al representador.
 El Bloque_transformacion_representable es una entidad que existe sólo una vez
 para todas las cosas que se representan: es la alternativa a que cada entidad
 representable tenga una copia de su representación.
+
+El método "es_representable_borrar" está ahí para saber si el objeto debe
+ser borrado de un hipotético vector de "representables". La implementación 
+dependerá de la clase derivada.
 */
 
 class Representable_I
 {
 	public:
 
-	virtual unsigned short int obtener_profundidad_ordenacion()const=0;
-	virtual void transformar_bloque(App_Graficos::Bloque_transformacion_representable &b)const=0;
-	virtual ~Representable_I() {}
+	virtual 				~Representable_I() {}
+	virtual unsigned short int 		obtener_profundidad_ordenacion()const=0;
+	virtual void 				transformar_bloque(App_Graficos::Bloque_transformacion_representable &b)const=0;
+	virtual bool				es_representable_borrar()const=0;
+
+
 };
 
 class Ordenador_representables

@@ -136,12 +136,29 @@ void Traductor_mapas::obstaculos_sala(Sala& sala)
 		}
 	}
 
-	//De forma super cutre, vamos a volcar unos bonus.
-	std::shared_ptr<Bonus_tiempo> bt(new Bonus_tiempo(GX()*App_Definiciones::tipos::DIM_CELDA, GY()*App_Definiciones::tipos::DIM_CELDA));
-	std::shared_ptr<Bonus_salud> bs(new Bonus_salud(GX()*App_Definiciones::tipos::DIM_CELDA, GY()*App_Definiciones::tipos::DIM_CELDA));
-	std::shared_ptr<Enemigo_basico> enem(new Enemigo_basico(GX()*App_Definiciones::tipos::DIM_CELDA, GY()*App_Definiciones::tipos::DIM_CELDA));
+	auto& contenedor=sala.acc_contenedor_objetos();
 
-	sala.insertar_objeto_juego(bt);
-	sala.insertar_objeto_juego(bs);
-	sala.insertar_objeto_juego(enem);
+	using namespace App_Interfaces;
+
+	//De forma super cutre, vamos a volcar unos bonus.
+
+	//TODO: Buscar otra forma, una factoría o algo.
+
+	std::shared_ptr<Bonus_tiempo> bt(new Bonus_tiempo(GX()*App_Definiciones::tipos::DIM_CELDA, GY()*App_Definiciones::tipos::DIM_CELDA));
+	contenedor.objetos_juego.push_back(bt);
+	contenedor.representables.push_back( std::shared_ptr<Representable_I>(bt, static_cast<Representable_I*>(bt.get())));
+	contenedor.bonus.push_back(std::shared_ptr<Bonus_I>(bt, static_cast<Bonus_I*>(bt.get())));
+
+	std::shared_ptr<Bonus_salud> bs(new Bonus_salud(GX()*App_Definiciones::tipos::DIM_CELDA, GY()*App_Definiciones::tipos::DIM_CELDA));
+	contenedor.objetos_juego.push_back(bs);
+	contenedor.representables.push_back(std::shared_ptr<Representable_I>(bs, static_cast<Representable_I*>(bs.get())));
+	contenedor.bonus.push_back(std::shared_ptr<Bonus_I>(bs, static_cast<Bonus_I*>(bs.get())));
+
+	std::shared_ptr<Enemigo_basico> enem(new Enemigo_basico(GX()*App_Definiciones::tipos::DIM_CELDA, GY()*App_Definiciones::tipos::DIM_CELDA));
+	contenedor.objetos_juego.push_back(enem);
+	contenedor.colisionables.push_back(std::shared_ptr<Colisionable_I>(enem, static_cast<Colisionable_I*>(enem.get())));
+	contenedor.representables.push_back(std::shared_ptr<Representable_I>(enem, static_cast<Representable_I*>(enem.get())));
+	contenedor.con_turno.push_back(std::shared_ptr<Con_turno_I>(enem, static_cast<Con_turno_I*>(enem.get())));
+	contenedor.disparables.push_back(std::shared_ptr<Disparable_I>(enem, static_cast<Disparable_I*>(enem.get())));
+	contenedor.disparadores.push_back(std::shared_ptr<Disparador_I>(enem, static_cast<Disparador_I*>(enem.get())));
 }

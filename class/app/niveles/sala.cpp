@@ -1,10 +1,4 @@
 #include "sala.h"
-#include "../visitantes/visitante_objeto_juego.h"
-
-//Incluir los diversos tipos de objetos de mapa...
-#include "../juego/objetos_juego/bonus_tiempo.h"
-#include "../juego/objetos_juego/bonus_salud.h"
-#include "../juego/objetos_juego/enemigo_basico.h"
 
 using namespace App_Niveles;
 using namespace HerramientasProyecto;
@@ -70,13 +64,7 @@ std::vector<const App_Interfaces::Representable_I *> Sala::obtener_vector_repres
 	celdas.aplicar(obt);
 
 	//Recolectar los objetos juego.
-	for(auto& o : objetos_juego)
-	{
-		if(es_representable(*o)) 
-		{
-			resultado.push_back(o->como_facetador().representable);
-		}
-	}
+	for(auto& o : objetos.representables) resultado.push_back(o.get());
 
 	return resultado;
 }
@@ -114,11 +102,6 @@ const Entrada& Sala::obtener_entrada_posicion(App_Definiciones::direcciones p)
 	throw std::logic_error("No hay entrada en la posición establecida");
 }
 
-void Sala::insertar_objeto_juego(std::shared_ptr<App_Interfaces::Objeto_juego_I> obj)
-{
-	objetos_juego.push_back(obj);
-}
-
 /**
 * @return size_t : indicando el número de elementos eliminados.
 * Recorre el vector de objetos juego elíminando de forma definitiva todos los
@@ -131,39 +114,37 @@ void Sala::insertar_objeto_juego(std::shared_ptr<App_Interfaces::Objeto_juego_I>
 
 size_t Sala::limpiar_objetos_juego_para_borrar()
 {
-	size_t	res=0;
+	size_t	res=ayudante_borrar(objetos.objetos_juego);
 
-	auto 	ini=std::begin(objetos_juego),
-		fin=std::end(objetos_juego);
-	
-	while(ini < fin)
+	/**	
+	* Si hay algo para borrar buscaremos en el resto de vectores...
+	*/
+
+	if(res)
 	{
-		if(ini->get()->es_borrar())
+		ayudante_borrar(objetos.bonus);
+		ayudante_borrar(objetos.con_turno);
+		ayudante_borrar(objetos.disparables);
+		ayudante_borrar(objetos.disparadores);
+		ayudante_borrar(objetos.colisionables);
+
+		//Y la especialización malvada.
+		auto 	ini=std::begin(objetos.representables),
+			fin=std::end(objetos.representables);
+	
+		while(ini < fin)
 		{
-			ini=objetos_juego.erase(ini);
-			fin=std::end(objetos_juego);
-			++res;
+			if(ini->get()->es_representable_borrar())
+			{
+				ini=objetos.representables.erase(ini);
+				fin=std::end(objetos.representables);
+			}
+			else
+			{
+				++ini;
+			}
 		}
-		else
-		{
-			++ini;
-		}		
 	}
 
 	return res;
-}
-/*
-void Sala::procesar_visitante_objetos_juego(App_Visitantes::Visitante_objeto_juego& v)
-{
-	for(auto& o : objetos_juego) o.get()->recibir_visitante(v);
-}
-
-void Sala::procesar_visitante_objetos_juego_const(App_Visitantes::Visitante_objeto_juego_const& v) const
-{
-	for(const auto& o : objetos_juego) o.get()->recibir_visitante(v);
-}
-*/
-void Sala::procesar_objetos_juego(App_Interfaces::Procesador_objetos_juego_I& p)
-{
-	p.procesar(objetos_juego);
 }

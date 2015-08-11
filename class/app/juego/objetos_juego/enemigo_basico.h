@@ -9,19 +9,19 @@
 #include "../../interfaces/disparable_i.h"
 #include "../../interfaces/con_turno_i.h"
 #include "../../interfaces/disparador_i.h"
+#include "../../interfaces/colisionable_i.h"
 #include "../../graficos/bloque_transformacion_representable.h"
 
 namespace App_Juego_ObjetoJuego
 {
 
 class Enemigo_basico:
-//		public App_Juego::Actor, 
 		public App_Juego::Actor_movil, 
-		public App_Interfaces::Objeto_juego_I,
 		public App_Interfaces::Representable_I,
 		public App_Interfaces::Con_turno_I,
 		public App_Interfaces::Disparable_I,
-		public App_Interfaces::Disparador_I
+		public App_Interfaces::Disparador_I,
+		public App_Interfaces::Colisionable_I
 {
 	////////////////////////////
 	// Interface pública.
@@ -48,8 +48,9 @@ class Enemigo_basico:
 	// Implementación de Representable_i.
 	public:
 
-	virtual unsigned short int obtener_profundidad_ordenacion()const;
-	virtual void transformar_bloque(App_Graficos::Bloque_transformacion_representable &b)const;
+	virtual unsigned short int 			obtener_profundidad_ordenacion()const;
+	virtual void 					transformar_bloque(App_Graficos::Bloque_transformacion_representable &b)const;
+	virtual bool					es_representable_borrar() const {return es_borrar();}
 
 	///////////////
 	//Implementación de Con_turno_I
@@ -63,6 +64,15 @@ class Enemigo_basico:
 	public:
 
 	virtual void 		recibir_disparo(float potencia);
+	virtual void 		recibir_visitante(App_Visitantes::Visitante_disparable& v) {v.visitar(*this);}
+	virtual bool		es_colision_proyectil(const Espaciable& e)const {return en_colision_con(e);}
+
+	///////////////
+	//Implementación de Colisionable_I
+	public:
+
+	virtual void 		recibir_visitante(App_Visitantes::Visitante_colisionable& v) {v.visitar(*this);}
+	virtual bool		es_colision_para(const Espaciable& e)const {return en_colision_con(e);}
 
 	///////////////
 	//Implementación de Disparador_I

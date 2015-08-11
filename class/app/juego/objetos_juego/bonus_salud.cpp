@@ -8,16 +8,11 @@ using namespace App;
 const float Bonus_salud::CANTIDAD_SALUD_DEFECTO=15.0f;
 
 Bonus_salud::Bonus_salud(float x, float y, float s):
-	Actor(x, y, W, H),
 	Objeto_juego_I(),
+	Actor(x, y, W, H),
 	salud(s)
 {
-	//TODO: Repeticiones...
-	App_Interfaces::Facetador& f=como_facetador();
-	f.mut_objeto_juego(this).
-		mut_bonus(this).
-		mut_representable(this).
-		mut_espaciable(this);
+
 }
 
 unsigned short int Bonus_salud::obtener_profundidad_ordenacion()const

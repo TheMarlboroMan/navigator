@@ -41,7 +41,6 @@ class Proyectil_normal:
 	/////////////////////
 	//Interface pública.
 	public:
-//							Proyectil_normal(float x, float y, unsigned int w, unsigned int h);
 							Proyectil_normal(const Propiedades_proyectil& pp);
 	virtual						~Proyectil_normal() {}
 	void						mut_color(colores c) {color=c;}
@@ -62,8 +61,8 @@ class Proyectil_normal:
 	// Implementación de Representable_i.
 	public:
 
-	virtual unsigned short int obtener_profundidad_ordenacion()const;
-	virtual void transformar_bloque(App_Graficos::Bloque_transformacion_representable &b)const;
+	virtual unsigned short int 			obtener_profundidad_ordenacion()const;
+	virtual void 					transformar_bloque(App_Graficos::Bloque_transformacion_representable &b)const;
 
 	/////////////////////
 	//Implementación de Actor_movil

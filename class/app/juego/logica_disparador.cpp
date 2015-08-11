@@ -38,25 +38,13 @@ bool Logica_disparador::insertar_disparo_jugador(std::vector<std::shared_ptr<App
 	return resultado;
 }
 
-/**
-* @param std::vector<std::shared_ptr<Objeto_juego_I>> v 
-* representando a un vector de objetos de juego, para separarlos por la faceta
-* que nos interesa.
-*
-* Separa los disparadores, pregunta si puede disparar y ejecuta la acción.
-*/
-
-void Logica_disparador::procesar(vector_oj v)
+void Logica_disparador::procesar(std::vector<std::shared_ptr<App_Interfaces::Disparador_I>>& v)
 {
 	for(auto& o : v)
 	{
-		if(es_disparador(*o) && !o->es_borrar()) 
+		if(o->es_disparar())
 		{
-			auto& f=o->como_facetador();
-			if(f.disparador->es_disparar())
-			{
-				f.disparador->recibir_visitante(*this);
-			}
+			o->recibir_visitante(*this);
 		}
 	}
 }
@@ -68,6 +56,8 @@ void Logica_disparador::visitar(App_Juego_ObjetoJuego::Enemigo_basico& e)
 
 	float x=e.acc_espaciable_x();
 	float y=e.acc_espaciable_y();
+
+
 	std::shared_ptr<Proyectil_normal> pr(new Proyectil_normal(Proyectil_normal::Propiedades_proyectil_jugador(x, y)));
 
 	pr->establecer_vector(e.obtener_vector_para(jugador) * 200.0f);

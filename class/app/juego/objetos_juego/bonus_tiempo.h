@@ -13,7 +13,6 @@ namespace App_Juego_ObjetoJuego
 
 class Bonus_tiempo:
 		public App_Juego::Actor, 
-		public App_Interfaces::Objeto_juego_I,
 		public App_Interfaces::Representable_I,
 		public App_Interfaces::Bonus_I
 {
@@ -26,7 +25,7 @@ class Bonus_tiempo:
 	void						mut_tiempo(float v) {tiempo=v;}
 
 	///////////////
-	// Implementación de Objeto_juego_i.
+	// Implementación de Objeto_juego_i, por medio del resto de facetas.
 	public:
 
 	virtual void 					recibir_visitante(App_Visitantes::Visitante_objeto_juego& v) {v.visitar(*this);}
@@ -37,13 +36,15 @@ class Bonus_tiempo:
 	public:
 
 	virtual void 					recibir_visitante(App_Visitantes::Visitante_bonus& v) {v.visitar(*this);}
+	bool						es_bonus_para(const Espaciable& e)const {return en_colision_con(e);}
 
 	///////////////
 	// Implementación de Representable_i.
 	public:
 
-	virtual unsigned short int obtener_profundidad_ordenacion()const;
-	virtual void transformar_bloque(App_Graficos::Bloque_transformacion_representable &b)const;
+	virtual unsigned short int 			obtener_profundidad_ordenacion()const;
+	virtual void 					transformar_bloque(App_Graficos::Bloque_transformacion_representable &b)const;
+	virtual bool					es_representable_borrar() const {return es_borrar();}
 
 	///////////////
 	// Propiedades y definiciones.
@@ -51,12 +52,7 @@ class Bonus_tiempo:
 	static const int 				W=16;
 	static const int 				H=16;
 	static const float				CANTIDAD_TIEMPO_DEFECTO;
-	float						tiempo;
-
-	////////////////
-	// Métodos privados:
-	private:
-	
+	float						tiempo;	
 };
 
 }

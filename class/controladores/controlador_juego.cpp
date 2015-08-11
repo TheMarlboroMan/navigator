@@ -6,7 +6,6 @@
 #include "../app/generador/traductor_mapas.h"
 #include "../app/generador/generador_estructura_niveles.h"
 
-#include "../app/interfaces/procesador_objetos_juego_i.h"
 #include "../app/visitantes/visitante_objeto_juego.h"
 #include "../app/juego/objetos_juego/bonus_tiempo.h"
 #include "../app/juego/objetos_juego/bonus_salud.h"
@@ -14,6 +13,7 @@
 #include "../app/juego/logica_disparador.h"
 #include "../app/juego/logica_con_turno.h"
 #include "../app/juego/logica_disparable.h"
+#include "../app/juego/logica_colisionable.h"
 
 using namespace App_Niveles;
 using namespace App_Juego;
@@ -206,8 +206,9 @@ void Controlador_juego::procesar_jugador(Jugador& j, float delta, Input_usuario 
 	//Las colisiones con objetos de juego se evaluan en la posición final.
 
 	//En primer lugar evaluamos los bonus que se pueden recoger.
+
 	Logica_bonus lb(contador_tiempo, jugador);
-	sala_actual->procesar_objetos_juego(lb);
+	sala_actual->procesar_bonus(lb);
 
 	//Ahora evaluamos el choque con los proyectiles enemigos...
 	if(proyectiles_enemigos.size())
@@ -222,10 +223,12 @@ void Controlador_juego::procesar_jugador(Jugador& j, float delta, Input_usuario 
 		}
 	}
 
-	/*TODO: ¿Cómo evaluar cosas que detengan el movimiento con las que el jugador pueda chocar????.	
-	* Un vector de Espaciables que implementen cierta interface y poco más, no?.
+	/*
+	* Cosas con las que se pueden chocar que no son bonus.
 	*/
 
+	Logica_colisionable lc(jugador);
+	sala_actual->procesar_colisionables(lc);
 }
 
 /**
@@ -361,9 +364,8 @@ void Controlador_juego::logica_mundo(float delta)
 	if(proyectiles_jugador.size()) 
 	{
 		Logica_disparable ld(proyectiles_jugador);
-		sala_actual->procesar_objetos_juego(ld);
+		sala_actual->procesar_disparables(ld);
 	}
-
 
 	/**
 	* Cosas que pueden añadir disparos al mundo... Básicamente controlar si
@@ -376,9 +378,7 @@ void Controlador_juego::logica_mundo(float delta)
 	*/
 
 	Logica_disparador lp(proyectiles_enemigos, jugador);
-	sala_actual->procesar_objetos_juego(lp);
-
-	
+	sala_actual->procesar_disparadores(lp);
 
 	/** 
 	* Objeto para procesar la lógica de los turnos... Bien podría ser
@@ -387,12 +387,13 @@ void Controlador_juego::logica_mundo(float delta)
 	*/
 
 	Logica_con_turno lct(jugador, *sala_actual, delta);
-	sala_actual->procesar_objetos_juego(lct);
+	sala_actual->procesar_con_turno(lct);
 
-	App_Interfaces::Procesador_objetos_juego_I::vector_oj vpr;
+	std::vector<std::shared_ptr<App_Interfaces::Con_turno_I>> vpr;
 	for(auto &p : proyectiles_jugador) vpr.push_back(p);
 	for(auto &p : proyectiles_enemigos) vpr.push_back(p);
 	lct.procesar(vpr);
+
 
 	/**
 	* Limpiar cualquier cosa que pueda haber desaparecido...

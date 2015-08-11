@@ -33,17 +33,13 @@ void Logica_bonus::visitar(App_Juego_ObjetoJuego::Bonus_salud& b)
 	}
 }
 
-void Logica_bonus::procesar(vector_oj v)
+void Logica_bonus::procesar(std::vector<std::shared_ptr<App_Interfaces::Bonus_I>>& v)
 {
 	for(auto& o : v)
-	{
-		//Uso super estrafalario de las facetas, pero legal...
-		if(es_bonus(*o) && es_espaciable(*o)) 
+	{		
+		if(o->es_bonus_para(jugador))
 		{
-			if(o->como_facetador().espaciable->en_colision_con(jugador))
-			{
-				o->como_facetador().bonus->recibir_visitante(*this);
-			}
+			o->recibir_visitante(*this);
 		}
 	}
 }

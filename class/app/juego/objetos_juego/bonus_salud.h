@@ -13,7 +13,6 @@ namespace App_Juego_ObjetoJuego
 
 class Bonus_salud:
 		public App_Juego::Actor, 
-		public App_Interfaces::Objeto_juego_I,
 		public App_Interfaces::Representable_I,
 		public App_Interfaces::Bonus_I
 {
@@ -37,13 +36,15 @@ class Bonus_salud:
 	public:
 
 	virtual void 					recibir_visitante(App_Visitantes::Visitante_bonus& v) {v.visitar(*this);}
+	bool						es_bonus_para(const Espaciable& e)const {return en_colision_con(e);}
 
 	///////////////
 	// Implementación de Representable_i.
 	public:
 
-	virtual unsigned short int obtener_profundidad_ordenacion()const;
-	virtual void transformar_bloque(App_Graficos::Bloque_transformacion_representable &b)const;
+	virtual unsigned short int 			obtener_profundidad_ordenacion()const;
+	virtual void 					transformar_bloque(App_Graficos::Bloque_transformacion_representable &b)const;
+	virtual bool					es_representable_borrar() const {return es_borrar();}
 
 	///////////////
 	// Propiedades y definiciones.

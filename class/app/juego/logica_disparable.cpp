@@ -8,20 +8,16 @@ Logica_disparable::Logica_disparable(std::vector<std::shared_ptr<App_Juego_Objet
 
 }
 
-void Logica_disparable::procesar(vector_oj v)
+void Logica_disparable::procesar(std::vector<std::shared_ptr<App_Interfaces::Disparable_I>>& v)
 {
 	for(auto& o : v)
 	{
-		if(es_disparable(*o) && es_espaciable(*o) && !o->es_borrar()) 
+		for(auto& p : proyectiles_jugador)
 		{
-			for(auto& p : proyectiles_jugador)
+			if(!(p->es_borrar()) && o->es_colision_proyectil(*p))
 			{
-				auto &f=o->como_facetador();
-				if(!(p->es_borrar()) && f.espaciable->en_colision_con(*p))
-				{
-					f.disparable->recibir_disparo(p->acc_potencia());
-					p->mut_borrar(true);
-				}
+				o->recibir_disparo(p->acc_potencia());
+				p->mut_borrar(true);
 			}
 		}
 	}

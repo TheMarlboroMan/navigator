@@ -19,7 +19,9 @@ DIR_GENERADOR=$(DIR_CLASES_APP)generador/
 #Juego
 
 $(DIR_O)jugador.o:\
-$(DIR_O)actor.o \
+$(DIR_O)actor_movil.o \
+$(DIR_O)representable_i.o \
+$(DIR_GRAFICOS)bloque_transformacion_representable.h\
 $(DIR_INPUT)input_usuario.h \
 $(DIR_JUEGO)jugador.h \
 $(DIR_JUEGO)jugador.cpp
@@ -41,7 +43,6 @@ $(DIR_JUEGO)actor_movil.cpp
 $(DIR_O)logica_disparador.o:\
 $(DIR_O)proyectil_normal.o\
 $(DIR_O)jugador.o\
-$(DIR_INTERFACES)procesador_objetos_juego_i.h\
 $(DIR_VISITANTES)visitante_disparador.h\
 $(DIR_JUEGO)logica_disparador.h\
 $(DIR_JUEGO)logica_disparador.cpp
@@ -50,9 +51,9 @@ $(DIR_JUEGO)logica_disparador.cpp
 $(DIR_O)logica_bonus.o:\
 $(DIR_O)bonus_tiempo.o\
 $(DIR_O)bonus_salud.o\
+$(DIR_O)jugador.o\
 $(DIR_O)contador_tiempo.o\
 $(DIR_VISITANTES)visitante_bonus.h\
-$(DIR_INTERFACES)procesador_objetos_juego_i.h\
 $(DIR_JUEGO)logica_bonus.h\
 $(DIR_JUEGO)logica_bonus.cpp
 	$(CC) $(CFLAGS) $(INCLUDES) $(DIR_JUEGO)logica_bonus.cpp -o $(DIR_O)logica_bonus.o
@@ -63,29 +64,36 @@ $(DIR_O)jugador.o\
 $(DIR_O)enemigo_basico.o\
 $(DIR_O)proyectil_normal.o\
 $(DIR_VISITANTES)visitante_con_turno.h\
-$(DIR_INTERFACES)procesador_objetos_juego_i.h\
 $(DIR_JUEGO)logica_con_turno.h\
 $(DIR_JUEGO)logica_con_turno.cpp
 	$(CC) $(CFLAGS) $(INCLUDES) $(DIR_JUEGO)logica_con_turno.cpp -o $(DIR_O)logica_con_turno.o
 
 $(DIR_O)logica_disparable.o:\
 $(DIR_O)proyectil_base.o\
-$(DIR_INTERFACES)procesador_objetos_juego_i.h\
-$(DIR_INTERFACES)disparable_i.h\
+$(DIR_O)disparable_i.o\
 $(DIR_JUEGO)logica_disparable.h\
 $(DIR_JUEGO)logica_disparable.cpp
 	$(CC) $(CFLAGS) $(INCLUDES) $(DIR_JUEGO)logica_disparable.cpp -o $(DIR_O)logica_disparable.o
+
+$(DIR_O)logica_colisionable.o:\
+$(DIR_O)enemigo_basico.o\
+$(DIR_O)jugador.o\
+$(DIR_O)colisionable_i.o\
+$(DIR_JUEGO)logica_colisionable.h\
+$(DIR_JUEGO)logica_colisionable.cpp
+	$(CC) $(CFLAGS) $(INCLUDES) $(DIR_JUEGO)logica_colisionable.cpp -o $(DIR_O)logica_colisionable.o
 
 ################################################################################
 #Objetos juego
 
 $(DIR_O)enemigo_basico.o:\
 $(DIR_O)actor_movil.o\
+$(DIR_O)colisionable_i.o\
 $(DIR_O)objeto_juego_i.o\
 $(DIR_O)representable_i.o\
 $(DIR_O)disparador_i.o\
-$(DIR_INTERFACES)disparable_i.h\
-$(DIR_INTERFACES)con_turno_i.h\
+$(DIR_O)con_turno_i.o\
+$(DIR_O)disparable_i.o\
 $(DIR_JUEGO_OBJETOS)enemigo_basico.h\
 $(DIR_JUEGO_OBJETOS)enemigo_basico.cpp
 	$(CC) $(CFLAGS) $(INCLUDES) $(DIR_JUEGO_OBJETOS)enemigo_basico.cpp -o $(DIR_O)enemigo_basico.o
@@ -94,7 +102,7 @@ $(DIR_O)bonus_salud.o:\
 $(DIR_O)actor.o\
 $(DIR_O)objeto_juego_i.o\
 $(DIR_O)representable_i.o\
-$(DIR_INTERFACES)bonus_i.h\
+$(DIR_O)bonus_i.o\
 $(DIR_GRAFICOS)bloque_transformacion_representable.h\
 $(DIR_JUEGO_OBJETOS)bonus_salud.h\
 $(DIR_JUEGO_OBJETOS)bonus_salud.cpp
@@ -104,13 +112,14 @@ $(DIR_O)bonus_tiempo.o:\
 $(DIR_O)actor.o\
 $(DIR_O)objeto_juego_i.o\
 $(DIR_O)representable_i.o\
-$(DIR_INTERFACES)bonus_i.h\
+$(DIR_O)bonus_i.o\
 $(DIR_GRAFICOS)bloque_transformacion_representable.h\
 $(DIR_JUEGO_OBJETOS)bonus_tiempo.h\
 $(DIR_JUEGO_OBJETOS)bonus_tiempo.cpp
 	$(CC) $(CFLAGS) $(INCLUDES) $(DIR_JUEGO_OBJETOS)bonus_tiempo.cpp -o $(DIR_O)bonus_tiempo.o
 
 $(DIR_O)proyectil_normal.o:\
+$(DIR_O)proyectil_base.o\
 $(DIR_O)proyectil_base.o\
 $(DIR_JUEGO_OBJETOS)proyectil_normal.h\
 $(DIR_JUEGO_OBJETOS)proyectil_normal.cpp
@@ -121,7 +130,7 @@ $(DIR_O)actor.o\
 $(DIR_O)actor_movil.o\
 $(DIR_O)representable_i.o\
 $(DIR_O)objeto_juego_i.o\
-$(DIR_INTERFACES)con_turno_i.h\
+$(DIR_O)con_turno_i.o\
 $(DIR_JUEGO_OBJETOS)proyectil_base.h\
 $(DIR_JUEGO_OBJETOS)proyectil_base.cpp
 	$(CC) $(CFLAGS) $(INCLUDES) $(DIR_JUEGO_OBJETOS)proyectil_base.cpp -o $(DIR_O)proyectil_base.o
@@ -157,7 +166,6 @@ $(DIR_O)celda.o \
 $(DIR_O)entrada.o \
 $(DIR_O)definiciones.o \
 $(DIR_O)objeto_juego_i.o \
-$(DIR_INTERFACES)procesador_objetos_juego_i.h\
 $(DIR_NIVELES)sala.h \
 $(DIR_NIVELES)sala.cpp
 	$(CC) $(CFLAGS) $(INCLUDES) $(DIR_NIVELES)sala.cpp -o $(DIR_O)sala.o
@@ -235,7 +243,36 @@ $(DIR_INTERFACES)objeto_juego_i.h \
 $(DIR_INTERFACES)objeto_juego_i.cpp
 	$(CC) $(CFLAGS) $(INCLUDES) $(DIR_INTERFACES)objeto_juego_i.cpp -o $(DIR_O)objeto_juego_i.o
 
+$(DIR_O)colisionable_i.o:\
+$(DIR_O)objeto_juego_i.o\
+$(DIR_VISITANTES)visitante_colisionable.h \
+$(DIR_INTERFACES)colisionable_i.h \
+$(DIR_INTERFACES)colisionable_i.cpp
+	$(CC) $(CFLAGS) $(INCLUDES) $(DIR_INTERFACES)colisionable_i.cpp -o $(DIR_O)colisionable_i.o
+
+$(DIR_O)bonus_i.o:\
+$(DIR_O)objeto_juego_i.o\
+$(DIR_VISITANTES)visitante_bonus.h \
+$(DIR_INTERFACES)bonus_i.h \
+$(DIR_INTERFACES)bonus_i.cpp
+	$(CC) $(CFLAGS) $(INCLUDES) $(DIR_INTERFACES)bonus_i.cpp -o $(DIR_O)bonus_i.o
+
+$(DIR_O)con_turno_i.o:\
+$(DIR_O)objeto_juego_i.o\
+$(DIR_VISITANTES)visitante_con_turno.h \
+$(DIR_INTERFACES)con_turno_i.h \
+$(DIR_INTERFACES)con_turno_i.cpp
+	$(CC) $(CFLAGS) $(INCLUDES) $(DIR_INTERFACES)con_turno_i.cpp -o $(DIR_O)con_turno_i.o
+
+$(DIR_O)disparable_i.o:\
+$(DIR_O)objeto_juego_i.o\
+$(DIR_VISITANTES)visitante_disparable.h \
+$(DIR_INTERFACES)disparable_i.h \
+$(DIR_INTERFACES)disparable_i.cpp
+	$(CC) $(CFLAGS) $(INCLUDES) $(DIR_INTERFACES)disparable_i.cpp -o $(DIR_O)disparable_i.o
+
 $(DIR_O)disparador_i.o:\
+$(DIR_O)objeto_juego_i.o\
 $(DIR_VISITANTES)visitante_disparador.h \
 $(DIR_INTERFACES)disparador_i.h \
 $(DIR_INTERFACES)disparador_i.cpp

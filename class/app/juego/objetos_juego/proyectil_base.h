@@ -17,7 +17,6 @@ namespace App_Juego_ObjetoJuego
 
 class Proyectil_base:
 	public App_Juego::Actor_movil, 
-	public App_Interfaces::Objeto_juego_I,
 	public App_Interfaces::Representable_I,
 	public App_Interfaces::Con_turno_I
 {
@@ -30,9 +29,6 @@ class Proyectil_base:
 	float 						acc_potencia_original() const {return potencia_original;}
 	void 						mut_potencia(float v);
 	void						establecer_vector(const DLibH::Vector_2d& v);
-
-	//TODO: Como parte de una interface con turno.
-//	virtual void 					turno(float)=0;
 
 	////////////////////////////
 	//Implementación de Objeto_juego_I
@@ -50,8 +46,9 @@ class Proyectil_base:
 	// Implementación de Representable_i.
 	public:
 
-	virtual unsigned short int obtener_profundidad_ordenacion()const=0;
-	virtual void transformar_bloque(App_Graficos::Bloque_transformacion_representable &b)const=0;
+	virtual unsigned short int 			obtener_profundidad_ordenacion()const=0;
+	virtual void 					transformar_bloque(App_Graficos::Bloque_transformacion_representable &b)const=0;
+	virtual bool					es_representable_borrar()const{return es_borrar();}
 
 	/////////////////////
 	//Implementación de Actor_movil

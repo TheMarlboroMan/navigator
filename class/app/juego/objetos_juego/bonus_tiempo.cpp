@@ -8,16 +8,11 @@ using namespace App;
 const float Bonus_tiempo::CANTIDAD_TIEMPO_DEFECTO=10.0f;
 
 Bonus_tiempo::Bonus_tiempo(float x, float y, float t):
-	Actor(x, y, W, H),
 	Objeto_juego_I(),
+	Actor(x, y, W, H),
 	tiempo(t)
 {
-	//TODO: Fuck repeticiones.
-	App_Interfaces::Facetador& f=como_facetador();
-	f.mut_objeto_juego(this).
-		mut_bonus(this).
-		mut_representable(this).
-		mut_espaciable(this);
+
 }
 
 unsigned short int Bonus_tiempo::obtener_profundidad_ordenacion()const

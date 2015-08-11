@@ -2,16 +2,20 @@
 #define DISPARADOR_I_H
 
 #include "../visitantes/visitante_disparador.h"
+#include "objeto_juego_i.h"
 
 /**
 * La interface para todos aquellos objetos del juego que pueden disparar. 
 * Tendrán una bandera que indica si deben disparar y el método para recibir
 * su visitante específico.
+*
+* Ojo a la herencia de Objeto_juego_I.
 */
 
 namespace App_Interfaces
 {
-class Disparador_I
+class Disparador_I:
+	public virtual Objeto_juego_I
 {
 	////////////////
 	//Interface pública.

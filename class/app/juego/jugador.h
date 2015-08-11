@@ -35,6 +35,7 @@ class Jugador:
 
 	int 					acc_salud() const {return salud;}
 	int 					acc_escudo() const {return escudo;}
+	App_Interfaces::Espaciable::t_caja	acc_posicion_anterior() const {return posicion_anterior;}
 
 	void					sumar_salud(float v);
 
@@ -58,6 +59,7 @@ class Jugador:
 
 	virtual unsigned short int 		obtener_profundidad_ordenacion() const {return 20;}
 	virtual void 				transformar_bloque(App_Graficos::Bloque_transformacion_representable &b) const;
+	virtual bool				es_representable_borrar() const {return false;}
 
 	/////////////////////////
 	// Métodos internos.
@@ -80,15 +82,18 @@ class Jugador:
 	static const float MAXIMA_VELOCIDAD_VERTICAL;
 	static const float MAXIMA_VELOCIDAD_CAIDA;
 	static const float VELOCIDAD_MINIMA_IMPACTO;
+	static const float COOLOFF_RECUPERAR_ESCUDO;
 
 	/////////////////////////
 	// Propiedades...
 	private:
 
 	App_Input::Input_usuario 		input;
+	App_Interfaces::Espaciable::t_caja			posicion_anterior;
 
 	float 					salud;
 	float 					escudo;
+	float					cooloff_escudo;
 
 //	Tabla_sprites TREC;
 	App_Definiciones::direcciones 		direccion;

@@ -70,6 +70,11 @@ class Espaciable
 	bool es_a_la_izquierda_de(const Espaciable& otra) const {return es_a_la_izquierda_de(copia_caja(), otra.copia_caja());}
 	bool es_a_la_derecha_de(const Espaciable& otra) const {return es_a_la_derecha_de(copia_caja(), otra.copia_caja());}
 
+	bool es_sobre(const t_caja& otra) const {return es_sobre(copia_caja(), otra);}
+	bool es_bajo(const t_caja& otra) const {return es_bajo(copia_caja(), otra);}
+	bool es_a_la_izquierda_de(const t_caja& otra) const {return es_a_la_izquierda_de(copia_caja(), otra);}
+	bool es_a_la_derecha_de(const t_caja& otra) const {return es_a_la_derecha_de(copia_caja(), otra);}
+
 	static bool es_sobre(const t_caja& una, const t_caja& otra) {return una.origen.y+una.h <= otra.origen.y;}
 	static bool es_bajo(const t_caja& una, const t_caja& otra) {return una.origen.y >= otra.origen.y+otra.h;}
 	static bool es_a_la_izquierda_de(const t_caja& una, const t_caja& otra) {return una.origen.x+una.w <= otra.origen.x;}

@@ -14,7 +14,7 @@ class Actor_movil:public Actor, public App_Interfaces::Movil
 
 	public:
 
-	enum class posiciones_ajuste {arriba, abajo, izquierda, derecha};
+	enum class posiciones_ajuste {nada, arriba, abajo, izquierda, derecha};
 
 	/////////////////
 	//Interface pública
@@ -26,6 +26,7 @@ class Actor_movil:public Actor, public App_Interfaces::Movil
 	{}
 
 	void ajustar(float pos, posiciones_ajuste tipo);
+	void ajustar(const Espaciable& e, posiciones_ajuste tipo);
 
 	/////////////////
 	//Implementación de Movil

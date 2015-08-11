@@ -8,19 +8,17 @@ Logica_con_turno::Logica_con_turno(const Jugador& j, const App_Niveles::Sala& s,
 
 }
 
-void Logica_con_turno::procesar(vector_oj v)
+void Logica_con_turno::procesar(std::vector<std::shared_ptr<App_Interfaces::Con_turno_I>>& v)
 {
 	for(auto& o : v)
 	{
-		if(es_con_turno(*o) && !o->es_borrar()) 
+		if(!o->es_borrar()) 
 		{
-			auto &f=o->como_facetador();
-			f.con_turno->turno(delta);
-			f.con_turno->recibir_visitante(*this);
+			o->turno(delta);
+			o->recibir_visitante(*this);
 		}
 	}
 }
-
 
 void Logica_con_turno::visitar(App_Juego_ObjetoJuego::Enemigo_basico& o)
 {

@@ -21,6 +21,9 @@ $(DIR_O)proto_sala.o\
 $(DIR_O)automapa.o\
 $(DIR_O)contador_tiempo.o\
 $(DIR_O)objeto_juego_i.o\
+$(DIR_O)bonus_i.o\
+$(DIR_O)colisionable_i.o\
+$(DIR_O)con_turno_i.o\
 $(DIR_O)disparador_i.o\
 $(DIR_O)representable_i.o\
 $(DIR_O)bonus_tiempo.o\
@@ -29,6 +32,7 @@ $(DIR_O)logica_con_turno.o\
 $(DIR_O)logica_disparable.o\
 $(DIR_O)logica_bonus.o\
 $(DIR_O)logica_disparador.o\
+$(DIR_O)logica_colisionable.o\
 $(DIR_O)enemigo_basico.o\
 $(DIR_O)proyectil_base.o\
 $(DIR_O)proyectil_normal.o\

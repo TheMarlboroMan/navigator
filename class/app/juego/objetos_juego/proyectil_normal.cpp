@@ -9,11 +9,7 @@ Proyectil_normal::Proyectil_normal(const Propiedades_proyectil& pp)
 	:Proyectil_base(pp.x, pp.y, pp.w, pp.h),
 	color(colores::rojo)
 {
-	App_Interfaces::Facetador& f=como_facetador();
-	f.mut_objeto_juego(this).
-		mut_representable(this).
-		mut_con_turno(this).
-		mut_espaciable(this);
+
 }
 
 void Proyectil_normal::turno(float delta)

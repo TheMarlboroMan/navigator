@@ -11,10 +11,12 @@ const float Jugador::MAXIMA_VELOCIDAD_HORIZONTAL=200.0;
 const float Jugador::MAXIMA_VELOCIDAD_VERTICAL=150.0;
 const float Jugador::MAXIMA_VELOCIDAD_CAIDA=150.0;
 const float Jugador::VELOCIDAD_MINIMA_IMPACTO=100.0;
+const float Jugador::COOLOFF_RECUPERAR_ESCUDO=0.8f;
 
 Jugador::Jugador(float x, float y)
 	:Actor_movil(x, y, W, H),
-	salud(MAX_SALUD), escudo(MAX_ESCUDO),
+	posicion_anterior(copia_caja()),
+	salud(MAX_SALUD), escudo(MAX_ESCUDO), cooloff_escudo(0.0f),
 //	TREC("data/recortes/jugador.dat"),	
 	direccion(App_Definiciones::direcciones::derecha)
 {
@@ -59,6 +61,9 @@ void Jugador::callback_ajuste(float pos, Actor_movil::posiciones_ajuste tipo)
 			establecer_vector(nv, Movil::t_vector::V_X);
 		}
 		break;
+		case Actor_movil::posiciones_ajuste::nada:
+			//Noop.
+		break;
 	}
 }
 
@@ -82,6 +87,7 @@ void Jugador::recibir_impacto(float val)
 
 	if(escudo < 0.0) escudo=0.0;
 	if(salud < 0.0) salud=0.0;
+	cooloff_escudo=COOLOFF_RECUPERAR_ESCUDO;
 
 }
 
@@ -98,8 +104,13 @@ void Jugador::transformar_bloque(Bloque_transformacion_representable &b) const
 
 void Jugador::turno(float delta)
 {
+//	salud=100.0f;
+	posicion_anterior=copia_caja();
+	cooloff_escudo-=delta;
+	if(cooloff_escudo < 0.0f) cooloff_escudo=0.0;
+
 	//Recuperación del escudo.
-	if(escudo < MAX_ESCUDO)
+	if(escudo < MAX_ESCUDO && !cooloff_escudo)
 	{
 		escudo+=(delta * ESCUDO_RECUPERADO_POR_SEGUNDO);
 		if(escudo > MAX_ESCUDO) escudo=MAX_ESCUDO;

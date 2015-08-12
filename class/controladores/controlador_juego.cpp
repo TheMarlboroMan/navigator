@@ -74,14 +74,9 @@ void Controlador_juego::loop(Input_base& input, float delta)
 		Recogedor_input RI;
 		Input_usuario iu=RI.recoger_input_usuario(input);
 
-		if(iu.usar)
-		{
-			Logica_disparador lp(proyectiles_enemigos, jugador);
-			lp.insertar_disparo_jugador(proyectiles_jugador);
-		}
-
 		procesar_jugador(jugador, delta, iu);
 
+		//TODO: Agrupar bajo condicion game over única.
 		//TODO TODO TODO...
 		if(jugador.acc_salud() <= 0.0)
 		{
@@ -182,9 +177,17 @@ void Controlador_juego::limpiar_pre_cambio_sala()
 
 void Controlador_juego::procesar_jugador(Jugador& j, float delta, Input_usuario iu)
 {
+	if(iu.usar)
+	{
+		if(jugador.disparar())
+		{
+			Logica_disparador lp(proyectiles_enemigos, jugador);
+			lp.insertar_disparo_jugador(proyectiles_jugador);
+		}
+	}
+
 	j.recoger_input(iu);
 	j.turno(delta);
-	j.accion_gravedad(delta, 1.0);
 
 	auto v=j.acc_vector();
 	if(v.y) 
@@ -256,7 +259,7 @@ void Controlador_juego::dibujar(DLibV::Pantalla& pantalla)
 
 	//Hud
 	std::stringstream ss;
-	ss<<jugador.acc_espaciable_x()<<","<<jugador.acc_espaciable_y()<<std::endl<<" HULL: "<<jugador.acc_salud()<<" SHIELD: "<<jugador.acc_escudo();
+	ss<<jugador.acc_espaciable_x()<<","<<jugador.acc_espaciable_y()<<std::endl<<"HULL: "<<jugador.acc_salud()<<std::endl<<"ENERGY: "<<jugador.acc_energia()<<std::endl<<"SHIELD: "<<jugador.acc_escudo();
 
 	DLibV::Representacion_texto_auto_estatica rep_hud(pantalla.acc_renderer(), DLibV::Gestor_superficies::obtener(App::Recursos_graficos::RS_FUENTE_BASE), ss.str());
 	rep_hud.establecer_posicion(16, 16);
@@ -264,7 +267,7 @@ void Controlador_juego::dibujar(DLibV::Pantalla& pantalla)
 
 	//Contador de tiempo...
 	rep_hud.asignar(contador_tiempo.formatear_tiempo_restante());
-	rep_hud.establecer_posicion(16, 32);
+	rep_hud.establecer_posicion(16, 52);
 	rep_hud.volcar(pantalla);
 
 	//Automapa	

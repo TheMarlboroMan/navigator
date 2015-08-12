@@ -11,8 +11,11 @@ struct Input_usuario
 	short int keyup_horizontal;
 	short int keyup_vertical;
 	bool usar;
+	bool recargar_escudo;
+	bool estasis;
 
-	Input_usuario():mov_horizontal(0), mov_vertical(0), keyup_horizontal(0), keyup_vertical(0), usar(false)
+	Input_usuario():mov_horizontal(0), mov_vertical(0), keyup_horizontal(0), keyup_vertical(0), 
+		usar(false), recargar_escudo(false), estasis(false)
 	{}
 };
 

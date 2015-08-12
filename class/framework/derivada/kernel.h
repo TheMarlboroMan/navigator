@@ -30,8 +30,8 @@ class Kernel_app:public Kernel_base
 	virtual void postloop() {}	//Idem, pero despúes.
 	virtual std::string acc_titulo_inicial() const {return std::string(" -- SDL 2 -- ");}
 	virtual bool acc_mostrar_cursor_inicial() const {return true;}
-	virtual int acc_w_pantalla_inicial() const {return 800;}
-	virtual int acc_h_pantalla_inicial() const {return 600;}
+	virtual int acc_w_pantalla_inicial() const {return 640;}
+	virtual int acc_h_pantalla_inicial() const {return 480;}
 	virtual Input_base& acc_input() {return input;}
 	virtual Configuracion_base& acc_configuracion() {return configuracion;}
 	virtual Cargador_recursos_base& acc_cargador_recursos() {return cargador_recursos;}

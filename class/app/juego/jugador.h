@@ -35,6 +35,7 @@ class Jugador:
 
 	int 					acc_salud() const {return salud;}
 	int 					acc_escudo() const {return escudo;}
+	int 					acc_energia() const {return energia;}
 	App_Interfaces::Espaciable::t_caja	acc_posicion_anterior() const {return posicion_anterior;}
 
 	void					sumar_salud(float v);
@@ -42,6 +43,7 @@ class Jugador:
 	App_Definiciones::direcciones 		acc_direccion() const {return direccion;}
 	bool 					es_encarando_direccion(App_Definiciones::direcciones dir) const {return direccion==dir;}
 	bool					puede_recoger_salud() const {return salud < MAX_SALUD;}
+	bool					disparar();
 	void 					recibir_impacto(float val);
 	
 
@@ -65,6 +67,8 @@ class Jugador:
 	// Métodos internos.
 	private:
 
+	void					consumir_energia(float c);
+
 	////////////////////////
 	// Definiciones internas.
 	private:
@@ -74,7 +78,10 @@ class Jugador:
 
 	static const int MAX_SALUD=100;
 	static const int MAX_ESCUDO=100;
-	static const int ESCUDO_RECUPERADO_POR_SEGUNDO=25;
+	static const int MAX_ENERGIA=100;
+	static const float ESCUDO_RECUPERADO_POR_SEGUNDO;
+	static const float ENERGIA_RECUPERADA_POR_SEGUNDO;
+	static const float ENERGIA_ESTASIS_POR_SEGUNDO;
 	static const float ACELERACION_VERTICAL_SEGUNDO;
 	static const float ACELERACION_HORIZONTAL_SEGUNDO;
 	static const float DECELERACION_HORIZONTAL_SEGUNDO;
@@ -82,7 +89,10 @@ class Jugador:
 	static const float MAXIMA_VELOCIDAD_VERTICAL;
 	static const float MAXIMA_VELOCIDAD_CAIDA;
 	static const float VELOCIDAD_MINIMA_IMPACTO;
-	static const float COOLOFF_RECUPERAR_ESCUDO;
+	static const float TIEMPO_COOLOFF_ENERGIA;
+	static const float UMBRAL_DETENCION_ESTASIS;
+	static const float FACTOR_DETENCION_ESTASIS;
+	static const float VALOR_GRAVEDAD;
 
 	/////////////////////////
 	// Propiedades...
@@ -92,8 +102,10 @@ class Jugador:
 	App_Interfaces::Espaciable::t_caja			posicion_anterior;
 
 	float 					salud;
+	float					energia;
 	float 					escudo;
-	float					cooloff_escudo;
+	float					cooloff_energia;
+
 
 //	Tabla_sprites TREC;
 	App_Definiciones::direcciones 		direccion;

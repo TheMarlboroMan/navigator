@@ -16,6 +16,7 @@ $(DIR_O)calculador_colisiones.o\
 $(DIR_O)recogedor_input.o\
 $(DIR_O)entrada.o\
 $(DIR_O)generador_estructura_niveles.o\
+$(DIR_O)parser_salas.o\
 $(DIR_O)traductor_mapas.o\
 $(DIR_O)proto_sala.o\
 $(DIR_O)automapa.o\

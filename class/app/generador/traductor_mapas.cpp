@@ -1,6 +1,7 @@
 #include "traductor_mapas.h"
 #include "../../herramientas_proyecto/generador_numeros.h"
 
+#include "parser_salas.h"
 #include "../juego/objetos_juego/bonus_tiempo.h"
 #include "../juego/objetos_juego/bonus_salud.h"
 #include "../juego/objetos_juego/enemigo_basico.h"
@@ -37,6 +38,10 @@ LOG<<"Leidos "<<x<<", "<<y<<" de proto salas"<<std::endl;
 	//Generar las salas de turno.
 	for(const Proto_sala& ps : p)
 	{
+		//TODO: Ok, es hora de abrir los ficheros y parsearlos....
+		parsear_sala(ps, resultado);
+
+/*
 		//Crear sala.
 		App_Definiciones::tipos::t_dim x=ps.acc_x(), y=ps.acc_y();
 		//TODO: Esto debería ir en alguna constante, en algún lado.
@@ -57,9 +62,26 @@ LOG<<"Leidos "<<x<<", "<<y<<" de proto salas"<<std::endl;
 			//TODO: No no no... ¿Qué hacemos aquí?.
 			std::cout<<"ERROR AL INSERTAR SALA "<<e.x<<","<<e.y<<" : PARA "<<w<<"x"<<h<<" : "<<e.what()<<std::endl;
 		}
+*/
 	}
 
 	return resultado;
+}
+
+void Traductor_mapas::parsear_sala(const Proto_sala& ps, App_Niveles::Mapa& resultado)
+{
+	Parser_salas parser;
+	parser.parsear_fichero("001.dat", ps.acc_x(), ps.acc_y());
+
+	try
+	{
+		resultado.insertar_sala(ps.acc_x(), ps.acc_y(), parser.acc_sala());
+	}
+	catch(Matriz_2d_excepcion& e)
+	{
+		//TODO: No no no... ¿Qué hacemos aquí?.
+		std::cout<<"ERROR AL INSERTAR SALA "<<e.x<<","<<e.y<<" : PARA "<<w<<"x"<<h<<" : "<<e.what()<<std::endl;
+	}
 }
 
 void Traductor_mapas::muros_sala(Sala& sala, direcciones salidas)

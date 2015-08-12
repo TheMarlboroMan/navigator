@@ -57,6 +57,7 @@ class Sala
 	App_Definiciones::direcciones 				acc_direcciones_entradas() const 	{return direcciones_entradas;}
 	void 							insertar_celda(App_Definiciones::tipos::t_dim px, App_Definiciones::tipos::t_dim py, Celda::tipo_celda pt); /** @throw Matriz_2d_excepcion_item_existe cuando la celda está ocupada. */
 	void 							erase(App_Definiciones::tipos::t_dim px, App_Definiciones::tipos::t_dim py); /** @throw Matriz_2d_excepcion_item_invalido cuando no existe la celda. */
+	void 							modificar_posicion_y_dimensiones(App_Definiciones::tipos::t_dim px, App_Definiciones::tipos::t_dim py, App_Definiciones::tipos::t_dim pw, App_Definiciones::tipos::t_dim ph);
 	std::vector<const App_Interfaces::Representable_I *> 	obtener_vector_representables() const;
 	Contenedor_objetos&					acc_contenedor_objetos() {return objetos;}
 	const Contenedor_objetos&				acc_contenedor_objetos_const() const {return objetos;}

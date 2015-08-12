@@ -148,3 +148,12 @@ size_t Sala::limpiar_objetos_juego_para_borrar()
 
 	return res;
 }
+
+void Sala::modificar_posicion_y_dimensiones(App_Definiciones::tipos::t_dim px, App_Definiciones::tipos::t_dim py, App_Definiciones::tipos::t_dim pw, App_Definiciones::tipos::t_dim ph)
+{
+	pos.x=px;
+	pos.y=py;
+	w=pw;
+	h=ph;
+	celdas=celdas.copiar_con_dimensiones(w, h);
+}

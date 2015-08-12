@@ -207,10 +207,18 @@ $(DIR_COLISIONES)calculador_colisiones.cpp
 
 $(DIR_O)traductor_mapas.o:\
 $(DIR_O)proto_sala.o\
+$(DIR_O)parser_salas.o\
 $(DIR_O)mapa.o\
 $(DIR_GENERADOR)traductor_mapas.h \
 $(DIR_GENERADOR)traductor_mapas.cpp
 	$(CC) $(CFLAGS) $(INCLUDES) $(DIR_GENERADOR)traductor_mapas.cpp -o $(DIR_O)traductor_mapas.o
+
+$(DIR_O)parser_salas.o:\
+$(DIR_O)sala.o\
+$(DIR_O)definiciones.o\
+$(DIR_GENERADOR)parser_salas.h\
+$(DIR_GENERADOR)parser_salas.cpp
+	$(CC) $(CFLAGS) $(INCLUDES) $(DIR_GENERADOR)parser_salas.cpp -o $(DIR_O)parser_salas.o
 
 $(DIR_O)generador_estructura_niveles.o:\
 $(DIR_O)proto_sala.o\

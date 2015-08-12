@@ -4,6 +4,8 @@
 #include "../interfaces/espaciable.h"
 #include "../definiciones/definiciones.h"
 
+//TODO: Pasar a objeto juego, con su propia interface si fuera necesario, "Conector_I".
+
 namespace App_Niveles
 {
 class Entrada:public App_Interfaces::Espaciable

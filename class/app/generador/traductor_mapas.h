@@ -14,25 +14,6 @@ namespace App_Generador
 {
 class Traductor_mapas
 {
-	//////////////////
-	//Métodos privados
-	private:
-
-	/**
-	* @param Sala& sala
-	* @param App_Definiciones::direcciones salida
-	* Excava las salidas indicadas y rodea la sala con un muro.
-	*/	
-
-	static void muros_sala(App_Niveles::Sala& sala, App_Definiciones::direcciones salidas);
-
-	/*
-	* @param Sal& sala
-	* Añade bloques aleatoriamente a la sala...
-	*/
-
-	static void obstaculos_sala(App_Niveles::Sala& sala);
-
 	///////////////////
 	//Interface pública
 	public:
@@ -46,7 +27,29 @@ class Traductor_mapas
 	* el fallo que puede dar es de categoría.
 	*/
 
-	App_Niveles::Mapa traducir_mapa(const std::vector<Proto_sala>& p);
+	App_Niveles::Mapa 		traducir_mapa(const std::vector<Proto_sala>& p);
+
+	//////////////////
+	//Métodos privados
+	private:
+
+	void				parsear_sala(const Proto_sala&, App_Niveles::Mapa&);
+
+	/**
+	* @param Sala& sala
+	* @param App_Definiciones::direcciones salida
+	* Excava las salidas indicadas y rodea la sala con un muro.
+	*/	
+
+	static void 			muros_sala(App_Niveles::Sala& sala, App_Definiciones::direcciones salidas);
+
+	/*
+	* @param Sal& sala
+	* Añade bloques aleatoriamente a la sala...
+	*/
+
+	static void 			obstaculos_sala(App_Niveles::Sala& sala);
+
 };
 
 }

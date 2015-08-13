@@ -1,5 +1,7 @@
 #include "definiciones.h"
 
+using namespace App_Definiciones;
+
 App_Definiciones::direcciones App_Definiciones::obtener_direccion_contraria(App_Definiciones::direcciones s)
 {
 	switch(s)
@@ -22,3 +24,15 @@ App_Definiciones::direcciones App_Definiciones::operator&(App_Definiciones::dire
 	return static_cast<App_Definiciones::direcciones>(static_cast<int>(a) & static_cast<int>(b));
 }
 
+
+App_Definiciones::direcciones App_Definiciones::convertir_en_direccion(int v)
+{
+	switch(v)
+	{
+		case 1: return direcciones::arriba; break;
+		case 2: return direcciones::derecha; break;
+		case 4: return direcciones::abajo; break;
+		case 8: return direcciones::izquierda; break;
+		default: return direcciones::nada; break;
+	}
+}

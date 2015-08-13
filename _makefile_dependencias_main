@@ -15,12 +15,15 @@ $(DIR_O)jugador.o\
 $(DIR_O)calculador_colisiones.o\
 $(DIR_O)recogedor_input.o\
 $(DIR_O)entrada.o\
+$(DIR_O)posicion_inicial.o\
 $(DIR_O)generador_estructura_niveles.o\
 $(DIR_O)parser_salas.o\
 $(DIR_O)traductor_mapas.o\
 $(DIR_O)proto_sala.o\
 $(DIR_O)automapa.o\
 $(DIR_O)contador_tiempo.o\
+$(DIR_O)factoria_objetos_juego.o\
+$(DIR_O)contenedor_objetos_juego.o\
 $(DIR_O)objeto_juego_i.o\
 $(DIR_O)bonus_i.o\
 $(DIR_O)colisionable_i.o\

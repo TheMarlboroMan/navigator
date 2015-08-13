@@ -12,8 +12,7 @@ using namespace App_Definiciones;
 */
 
 Sala::Sala(tipos::t_dim pw, tipos::t_dim ph, tipos::t_dim px, tipos::t_dim py)
-	:pos(px, py), w(pw), h(ph), celdas(pw, ph),
-	direcciones_entradas(App_Definiciones::direcciones::nada)
+	:pos(px, py), w(pw), h(ph), celdas(pw, ph)
 {
 
 }
@@ -70,32 +69,13 @@ std::vector<const App_Interfaces::Representable_I *> Sala::obtener_vector_repres
 }
 
 /**
-* @param Entrada e
-* @throws std::logic_error cuando existe una entrada en la posición.
-* Inserta una entrada en el vector de entradas. Se comprueba si se ha
-* intentado insertar una entrada para la misma posición antes, lo que
-* lanzaría la excepción.
-*/
-
-void Sala::insertar_entrada(const Entrada& e)
-{
-	if( (direcciones_entradas & e.acc_posicion() ) != direcciones::nada)
-	{
-		throw std::logic_error("Ya existe una entrada en la posición indicada");
-	}
-	
-	entradas.push_back(e);
-	direcciones_entradas=direcciones_entradas | e.acc_posicion();
-}
-
-/**
 * @return Entrada
 * @throw std::logic_error cuando no hay entrada en esa posición.
 */
 
-const Entrada& Sala::obtener_entrada_posicion(App_Definiciones::direcciones p)
+const App_Juego_ObjetoJuego::Entrada& Sala::obtener_entrada_posicion(App_Definiciones::direcciones p)
 {
-	for(const auto& e : entradas)
+	for(const auto& e : objetos.entradas)
 	{
 		if(e.acc_posicion()==p) return e;
 	}
@@ -156,4 +136,10 @@ void Sala::modificar_posicion_y_dimensiones(App_Definiciones::tipos::t_dim px, A
 	w=pw;
 	h=ph;
 	celdas=celdas.copiar_con_dimensiones(w, h);
+}
+
+void Sala::implantar_objetos_juego(App_Juego_ObjetoJuego::Contenedor_objetos&& co)
+{
+	objetos=co;
+	//TODO: SALIDAS
 }

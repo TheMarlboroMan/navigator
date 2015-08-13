@@ -21,8 +21,6 @@ App_Niveles::Mapa Traductor_mapas::traducir_mapa(const std::vector<Proto_sala>& 
 		unsigned int x=ps.acc_x();
 		unsigned int y=ps.acc_y();
 
-LOG<<"Leidos "<<x<<", "<<y<<" de proto salas"<<std::endl;
-
 		if(x > w) w=x;
 		if(y > h) h=y;
 	}
@@ -30,10 +28,11 @@ LOG<<"Leidos "<<x<<", "<<y<<" de proto salas"<<std::endl;
 	//Of course, convertimos de indice 0.
 	++w;++h;
 	Mapa resultado(w, h);
-	LOG<<"Traduciendo a mapa de "<<w<<" x "<<h<<std::endl;
 
 	//Indicar al nivel cuál es la celda inicial, que es la primera que tenemos.
 	resultado.establecer_coordenadas_sala_inicial(p[0].acc_x(), p[0].acc_y());
+
+	LOG<<"Iniciando parseo de salas"<<std::endl;
 
 	//Generar las salas de turno.
 	for(const Proto_sala& ps : p)
@@ -80,7 +79,7 @@ void Traductor_mapas::parsear_sala(const Proto_sala& ps, App_Niveles::Mapa& resu
 	catch(Matriz_2d_excepcion& e)
 	{
 		//TODO: No no no... ¿Qué hacemos aquí?.
-		std::cout<<"ERROR AL INSERTAR SALA "<<e.x<<","<<e.y<<" : PARA "<<w<<"x"<<h<<" : "<<e.what()<<std::endl;
+		//std::cout<<"ERROR AL INSERTAR SALA "<<e.x<<","<<e.y<<" : PARA "<<w<<"x"<<h<<" : "<<e.what()<<std::endl;
 	}
 }
 
@@ -103,7 +102,7 @@ void Traductor_mapas::muros_sala(Sala& sala, direcciones salidas)
 
 	auto ie=[&sala](direcciones pos, unsigned int x, unsigned int y)
 	{
-		sala.insertar_entrada( Entrada(pos, x, y));	
+	//	sala.insertar_entrada( Entrada(pos, x*32, y*32));	
 	};
 
 	if( (salidas & direcciones::arriba) != direcciones::nada)
@@ -157,7 +156,7 @@ void Traductor_mapas::obstaculos_sala(Sala& sala)
 			//Nada, simplemente no decrementamos el contador.
 		}
 	}
-
+/*
 	auto& contenedor=sala.acc_contenedor_objetos();
 
 	using namespace App_Interfaces;
@@ -183,4 +182,5 @@ void Traductor_mapas::obstaculos_sala(Sala& sala)
 	contenedor.con_turno.push_back(std::shared_ptr<Con_turno_I>(enem, static_cast<Con_turno_I*>(enem.get())));
 	contenedor.disparables.push_back(std::shared_ptr<Disparable_I>(enem, static_cast<Disparable_I*>(enem.get())));
 	contenedor.disparadores.push_back(std::shared_ptr<Disparador_I>(enem, static_cast<Disparador_I*>(enem.get())));
+*/
 }

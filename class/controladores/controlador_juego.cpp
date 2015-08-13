@@ -44,6 +44,9 @@ Controlador_juego::Controlador_juego(Director_estados &DI, DLibV::Pantalla& pant
 
 	iniciar_automapa();
 
+	const auto& pi=sala_actual->obtener_posicion_inicial_jugador();
+	jugador.establecer_posicion(pi.acc_espaciable_x(), pi.acc_espaciable_y());
+
 	contador_tiempo.mut_tiempo_restante(180.0);
 }
 

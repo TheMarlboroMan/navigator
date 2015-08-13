@@ -22,8 +22,6 @@ extern DLibH::Log_base LOG;
 
 void Generador_estructura_niveles::construir_sala(int x, int y, direcciones salidas, bool principal, Proto_sala::tipos tipo)
 {
-	LOG<<"Construyendo sala en "<<x<<","<<y<<std::endl;
-
 	if(!es_pos_libre(x, y))
 	{
 		throw SalaExisteException(x, y, "La sala en posición ya existe");
@@ -145,9 +143,6 @@ void Generador_estructura_niveles::normalizar()
 	}f{0, 0};
 
 	for(Proto_sala& p : salas) f(p);
-
-	LOG<<"Iniciando normalizado con "<<abs(f.minx)<<" y "<<abs(f.miny)<<std::endl;
-
 	for(Proto_sala& p : salas) p.normalizar(abs(f.minx), abs(f.miny));	
 }
 

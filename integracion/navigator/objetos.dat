@@ -1,6 +1,9 @@
-1	Bonus salud	16	16	64,64,64
+1	Entrada	32	32	192,192,192
+	posicion[arr=1,der=2,aba=4,izq=8]	1
+2	Inicio	32	32	192,192,192
+10	Bonus salud	16	16	64,64,64
 	salud	15
-2	Bonus tiempo	16	16	64,64,44
+11	Bonus tiempo	16	16	64,64,44
 	tiempo	10
-3	Enemigo basico	20	20	128,0,0
+30	Enemigo basico	20	20	128,0,0
 	salud	30

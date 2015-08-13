@@ -40,6 +40,8 @@ struct tipos
 
 enum class direcciones {nada=0, arriba=1, derecha=2, abajo=4, izquierda=8};
 
+direcciones convertir_en_direccion(int);
+
 direcciones obtener_direccion_contraria(direcciones s);
 /*constexpr*/ direcciones operator|(direcciones a, direcciones b);
 /*constexpr*/ direcciones operator&(direcciones a, direcciones b);

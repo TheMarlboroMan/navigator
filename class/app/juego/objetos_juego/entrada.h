@@ -1,12 +1,12 @@
 #ifndef ENTRADA_H
 #define ENTRADA_H
 
-#include "../interfaces/espaciable.h"
-#include "../definiciones/definiciones.h"
+#include "../../interfaces/espaciable.h"
+#include "../../definiciones/definiciones.h"
 
 //TODO: Pasar a objeto juego, con su propia interface si fuera necesario, "Conector_I".
 
-namespace App_Niveles
+namespace App_Juego_ObjetoJuego
 {
 class Entrada:public App_Interfaces::Espaciable
 {
@@ -22,7 +22,7 @@ class Entrada:public App_Interfaces::Espaciable
 	virtual Espaciable::t_caja copia_caja() const 
 	{
 		using namespace App_Definiciones;
-		return Espaciable::t_caja(tipos::DIM_CELDA*x,tipos::DIM_CELDA*y,tipos::DIM_CELDA,tipos::DIM_CELDA);
+		return Espaciable::t_caja(x, y,tipos::DIM_CELDA,tipos::DIM_CELDA);
 	}
 
 	//Ninguna de estas funciones hace nada porque la entrada es inamovible.

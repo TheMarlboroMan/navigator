@@ -86,6 +86,18 @@ $(DIR_JUEGO)logica_colisionable.cpp
 ################################################################################
 #Objetos juego
 
+$(DIR_O)contenedor_objetos_juego.o:\
+$(DIR_O)objeto_juego_i.o\
+$(DIR_O)bonus_i.o\
+$(DIR_O)con_turno_i.o\
+$(DIR_O)disparable_i.o\
+$(DIR_O)disparador_i.o\
+$(DIR_O)representable_i.o\
+$(DIR_O)colisionable_i.o\
+$(DIR_JUEGO_OBJETOS)contenedor_objetos_juego.h\
+$(DIR_JUEGO_OBJETOS)contenedor_objetos_juego.cpp
+	$(CC) $(CFLAGS) $(INCLUDES) $(DIR_JUEGO_OBJETOS)contenedor_objetos_juego.cpp -o $(DIR_O)contenedor_objetos_juego.o
+
 $(DIR_O)enemigo_basico.o:\
 $(DIR_O)actor_movil.o\
 $(DIR_O)colisionable_i.o\
@@ -135,6 +147,20 @@ $(DIR_JUEGO_OBJETOS)proyectil_base.h\
 $(DIR_JUEGO_OBJETOS)proyectil_base.cpp
 	$(CC) $(CFLAGS) $(INCLUDES) $(DIR_JUEGO_OBJETOS)proyectil_base.cpp -o $(DIR_O)proyectil_base.o
 
+$(DIR_O)entrada.o:\
+$(DIR_O)espaciable.o\
+$(DIR_O)definiciones.o \
+$(DIR_JUEGO_OBJETOS)entrada.h \
+$(DIR_JUEGO_OBJETOS)entrada.cpp
+	$(CC) $(CFLAGS) $(INCLUDES) $(DIR_JUEGO_OBJETOS)entrada.cpp -o $(DIR_O)entrada.o
+
+$(DIR_O)posicion_inicial.o:\
+$(DIR_O)espaciable.o\
+$(DIR_O)definiciones.o \
+$(DIR_JUEGO_OBJETOS)posicion_inicial.h \
+$(DIR_JUEGO_OBJETOS)posicion_inicial.cpp
+	$(CC) $(CFLAGS) $(INCLUDES) $(DIR_JUEGO_OBJETOS)posicion_inicial.cpp -o $(DIR_O)posicion_inicial.o
+
 
 ################################################################################
 #Juego sistemas
@@ -165,17 +191,10 @@ $(DIR_O)sala.o:\
 $(DIR_O)celda.o \
 $(DIR_O)entrada.o \
 $(DIR_O)definiciones.o \
-$(DIR_O)objeto_juego_i.o \
+$(DIR_O)contenedor_objetos_juego.o \
 $(DIR_NIVELES)sala.h \
 $(DIR_NIVELES)sala.cpp
 	$(CC) $(CFLAGS) $(INCLUDES) $(DIR_NIVELES)sala.cpp -o $(DIR_O)sala.o
-
-$(DIR_O)entrada.o:\
-$(DIR_O)espaciable.o\
-$(DIR_O)definiciones.o \
-$(DIR_NIVELES)entrada.h \
-$(DIR_NIVELES)entrada.cpp
-	$(CC) $(CFLAGS) $(INCLUDES) $(DIR_NIVELES)entrada.cpp -o $(DIR_O)entrada.o
 
 $(DIR_O)celda.o:\
 $(DIR_O)espaciable.o\
@@ -205,6 +224,15 @@ $(DIR_COLISIONES)calculador_colisiones.cpp
 ################################################################################
 #Generador
 
+$(DIR_O)factoria_objetos_juego.o:\
+$(DIR_O)contenedor_objetos_juego.o\
+$(DIR_O)bonus_salud.o\
+$(DIR_O)bonus_tiempo.o\
+$(DIR_O)enemigo_basico.o\
+$(DIR_GENERADOR)factoria_objetos_juego.h \
+$(DIR_GENERADOR)factoria_objetos_juego.cpp
+	$(CC) $(CFLAGS) $(INCLUDES) $(DIR_GENERADOR)factoria_objetos_juego.cpp -o $(DIR_O)factoria_objetos_juego.o
+
 $(DIR_O)traductor_mapas.o:\
 $(DIR_O)proto_sala.o\
 $(DIR_O)parser_salas.o\
@@ -215,6 +243,7 @@ $(DIR_GENERADOR)traductor_mapas.cpp
 
 $(DIR_O)parser_salas.o:\
 $(DIR_O)sala.o\
+$(DIR_O)factoria_objetos_juego.o\
 $(DIR_O)definiciones.o\
 $(DIR_GENERADOR)parser_salas.h\
 $(DIR_GENERADOR)parser_salas.cpp

@@ -1,2 +1,2 @@
-T	integracion/navigator/logic_tiles.dat	#	|	integracion/navigator/logic_tiles.png	0	0	0	0
-O	integracion/navigator/objetos.dat
+T	../navigator/integracion/navigator/logic_tiles.dat	#	|	../navigator/integracion/navigator/logic_tiles.png	0	0	0	0
+O	../navigator/integracion/navigator/objetos.dat

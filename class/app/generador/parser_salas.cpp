@@ -31,6 +31,10 @@ void Parser_salas::parsear_fichero(const std::string& ruta, App_Definiciones::ti
 	{	
 		std::string linea;
 
+		//La factoría contendrá los objetos de juego hasta que finalmente
+		//se implanten en la sala.
+		Factoria_objetos_juego factoria;
+
 		while(true)
 		{
 			linea=L.leer_linea();
@@ -51,8 +55,11 @@ void Parser_salas::parsear_fichero(const std::string& ruta, App_Definiciones::ti
 					break;
 					case t_estados::rejilla: interpretar_linea_como_rejilla(linea, pos_x, pos_y); break;
 					case t_estados::celdas: interpretar_linea_como_celdas(linea); break;
-					case t_estados::objetos: interpretar_linea_como_objeto(linea); break;
-					case t_estados::fin:
+					case t_estados::objetos: interpretar_linea_como_objeto(linea, factoria); break;
+
+					//Poblar la sala. La factoría queda inútil tras esto.
+					case t_estados::fin: 
+						sala.implantar_objetos_juego(factoria.movible_contenedor_objetos_juego()); 
 					break;
 				}
 			}
@@ -68,12 +75,12 @@ bool Parser_salas::interpretar_estado(const std::string& linea)
 	else if(linea==TIPO_CELDAS) estado=t_estados::celdas;
 	else if(linea==TIPO_LOGICA) estado=t_estados::logica;
 	else if(linea==TIPO_OBJETOS) estado=t_estados::objetos;
-	else if(linea==TIPO_FIN_ESTRUCTURA) estado=t_estados::fin;
-	else
+	else if(linea==TIPO_FIN_ESTRUCTURA) 
 	{
-		return true;
+		estado=t_estados::fin;
+		return true; //Hay que ejecutar una acción al cerrar la estructura.
 	}
-
+	else return true;
 	return false;
 }
 
@@ -82,7 +89,8 @@ void Parser_salas::interpretar_linea_como_rejilla(const std::string& linea, App_
 	//TODO: Validar longitud de la información siempre.
 
 	std::vector<std::string> valores=Herramientas::explotar(linea, ',');
-	sala.modificar_posicion_y_dimensiones(pos_x, pos_y, toi(valores[0]), toi(valores[1]));
+	const auto w=toi(valores[0]), h=toi(valores[1]);
+	sala.modificar_posicion_y_dimensiones(pos_x, pos_y, w, h);
 }
 
 void Parser_salas::interpretar_linea_como_celdas(const std::string& linea)
@@ -93,53 +101,12 @@ void Parser_salas::interpretar_linea_como_celdas(const std::string& linea)
 	for(const auto& v : valores)
 	{
 		const auto& partes=Herramientas::explotar(v, ',');
-		int x=toi(partes[0]), y=toi(partes[1])/*, tipo=toi(partes[2])*/;
+		const int x=toi(partes[0]), y=toi(partes[1])/*, tipo=toi(partes[2])*/;
 		sala.insertar_celda(x, y, App_Niveles::Celda::tipo_celda::solida);
 	}
 }
 
-void Parser_salas::interpretar_linea_como_objeto(const std::string& linea)
+void Parser_salas::interpretar_linea_como_objeto(const std::string& linea, Factoria_objetos_juego& factoria)
 {
-	//TODO: Validar longitud de la información siempre.
-
-	//TODO: Generar una factoría para esto...
-
-/*
-	std::vector<std::string> partes=Herramientas::explotar(linea, ',');
-	int tipo=toi(partes[0]), x=toi(partes[1]), y=toi(partes[2]);
-	switch(tipo)
-	{
-		//Entrada
-		case 1:
-			//TODO: Comprobar que ya existe, etc etc...
-			if(partes.size()!=6)
-			{
-				LOG<<"ERROR: Importando entrada, la linea "<<linea<<" no tiene 6 campos."<<std::endl;
-			}
-			else
-			{
-				unsigned int id=toi(partes[3]);
-				unsigned int direccion=toi(partes[4]);
-				unsigned int estado=toi(partes[5]);
-				entradas.push_back(Entrada_nivel(x, y, id, direccion, estado));
-			}
-		break;
-
-		case 2:
-			if(partes.size()!=5)
-			{
-				LOG<<"ERROR: Importando entrada, la linea "<<linea<<" no tiene 5 campos."<<std::endl;
-			}
-			else
-			{
-				unsigned int nivel=toi(partes[3]);
-				unsigned int id_entrada=toi(partes[4]);
-				salidas.push_back(Salida_nivel(x, y, id_entrada, nivel));
-			}
-		break;
-		
-		default:
-			LOG<<"ERROR: Importando conexiones, la linea "<<linea<<" no es reconocible."<<std::endl;
-		break;
-*/
+	factoria.interpretar_linea(linea);
 }

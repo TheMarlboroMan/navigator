@@ -104,7 +104,6 @@ void Controlador_juego::loop(Input_base& input, float delta)
 /**
 * @param Jugador j
 * @return bool : true si se ha efectuado una salida.
-* TODO: Ajustar coordenadas para que sea menos instantáneo.
 */
 
 bool Controlador_juego::controlar_y_efectuar_salida_sala(Jugador& j)
@@ -114,9 +113,9 @@ bool Controlador_juego::controlar_y_efectuar_salida_sala(Jugador& j)
 	direcciones salida=direcciones::nada;
 
 	if(j.acc_espaciable_x() < 0) salida=direcciones::izquierda;
-	else if(j.acc_espaciable_x() > 630) salida=direcciones::derecha;
+	else if(j.acc_espaciable_fx() >= sala_actual->acc_w()*tipos::DIM_CELDA) salida=direcciones::derecha;
 	else if(j.acc_espaciable_y() < 0) salida=direcciones::arriba;
-	else if(j.acc_espaciable_y() > 320) salida=direcciones::abajo;
+	else if(j.acc_espaciable_fy() > sala_actual->acc_h()*tipos::DIM_CELDA) salida=direcciones::abajo;
 
 	if(salida!=direcciones::nada)
  	{
@@ -130,7 +129,13 @@ bool Controlador_juego::controlar_y_efectuar_salida_sala(Jugador& j)
 			case direcciones::nada: break;
 		}
 
-		cargar_sala(ax, ay, salida, j);
+		//Calcular el offset con respecto a la salida para luego aplicarlo
+		//de nuevo en la entrada. Asume que todas las entradas y salidas
+		//tienen la misma dimensión, rollo Metroid :D.
+		auto& s=sala_actual->obtener_entrada_posicion(salida);
+		DLibH::Punto_2d<int> offset(s.acc_espaciable_x()-j.acc_espaciable_x(), s.acc_espaciable_y()-j.acc_espaciable_y());
+
+		cargar_sala(ax, ay, salida, j, offset);
 		return true;
 	}
 	
@@ -144,18 +149,31 @@ bool Controlador_juego::controlar_y_efectuar_salida_sala(Jugador& j)
 * @param Jugador : Jugador al que colocamos en la salida.
 */
 
-void Controlador_juego::cargar_sala(int ax, int ay, App_Definiciones::direcciones salida, Jugador& j)
+void Controlador_juego::cargar_sala(int ax, int ay, App_Definiciones::direcciones salida, Jugador& j, DLibH::Punto_2d<int> offset)
 {
 	try
 	{
 		limpiar_pre_cambio_sala();
 
-		//TODO: Revisar si esto lanza y se está comprobando.
 		sala_actual=&mapa.obtener_sala(ax, ay);
-
-		//TODO: Revisar si esto lanza y se está comprobando.
 		const auto& entrada=sala_actual->obtener_entrada_posicion(obtener_direccion_contraria(salida));
+
+		//Colocar al jugador en la entrada y aplicar el offset.
+		using namespace App_Definiciones;
 		j.establecer_en_posicion(entrada);
+		switch(salida)
+		{
+			case direcciones::izquierda:
+			case direcciones::derecha:
+				j.desplazar_caja(0.0f, -offset.y);
+			break;
+			case direcciones::arriba:
+			case direcciones::abajo:
+				j.desplazar_caja(-offset.x, 0.0f);
+			break;
+			case direcciones::nada: break;
+		}
+			
 		refrescar_automapa();
 	}
 	catch(std::logic_error& e)
@@ -173,6 +191,7 @@ void Controlador_juego::cargar_sala(int ax, int ay, App_Definiciones::direccione
 void Controlador_juego::limpiar_pre_cambio_sala()
 {
 	proyectiles_jugador.clear();
+	proyectiles_enemigos.clear();
 }
 
 /**
@@ -246,6 +265,8 @@ void Controlador_juego::procesar_jugador(Jugador& j, float delta, Input_usuario 
 void Controlador_juego::dibujar(DLibV::Pantalla& pantalla)
 {
 	using namespace App_Interfaces;
+
+	//TODO: Usar cámara.
 
 	//Pantalla...
 	pantalla.limpiar(128, 128, 128, 255);

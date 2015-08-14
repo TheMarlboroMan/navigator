@@ -40,6 +40,8 @@ $(DIR_O)logica_colisionable.o\
 $(DIR_O)enemigo_basico.o\
 $(DIR_O)proyectil_base.o\
 $(DIR_O)proyectil_normal.o\
+$(DIR_O)item_repositorio.o\
+$(DIR_O)repositorio_salas.o\
 
 DEP_CONTROLADORES=$(DIR_O)controlador_base.o \
 $(DIR_O)controlador_juego.o \

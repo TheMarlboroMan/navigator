@@ -17,13 +17,13 @@ class Parser_salas
 	public:
 
 					Parser_salas();
-	void 				parsear_fichero(const std::string& ruta, App_Definiciones::tipos::t_dim pos_x, App_Definiciones::tipos::t_dim pos_y);
+	void 				parsear_fichero(const std::string& ruta);
 	App_Niveles::Sala&		acc_sala() {return sala;}
 
 	private:
 
 	bool				interpretar_estado(const std::string& linea);
-	void 				interpretar_linea_como_rejilla(const std::string& linea, App_Definiciones::tipos::t_dim pos_x, App_Definiciones::tipos::t_dim pos_y);
+	void 				interpretar_linea_como_rejilla(const std::string& linea);
 	void				interpretar_linea_como_celdas(const std::string& linea);
 	void				interpretar_linea_como_objeto(const std::string& linea, Factoria_objetos_juego&);
 	int				toi(const std::string& s) {return std::atoi(s.c_str());};

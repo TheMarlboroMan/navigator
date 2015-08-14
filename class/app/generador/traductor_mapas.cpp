@@ -11,7 +11,7 @@ using namespace App_Niveles;
 using namespace App_Definiciones;
 using namespace HerramientasProyecto;
 
-App_Niveles::Mapa Traductor_mapas::traducir_mapa(const std::vector<Proto_sala>& p)
+App_Niveles::Mapa Traductor_mapas::traducir_mapa(const std::vector<Proto_sala>& p, App_RepositorioSalas::Repositorio_salas& repo)
 {
 	//TODO: Teh suckage...
 	tipos::t_dim w=0, h=0;
@@ -38,7 +38,7 @@ App_Niveles::Mapa Traductor_mapas::traducir_mapa(const std::vector<Proto_sala>& 
 	for(const Proto_sala& ps : p)
 	{
 		//TODO: Ok, es hora de abrir los ficheros y parsearlos....
-		parsear_sala(ps, resultado);
+		parsear_sala(ps, resultado, repo);
 
 /*
 		//Crear sala.
@@ -67,13 +67,15 @@ App_Niveles::Mapa Traductor_mapas::traducir_mapa(const std::vector<Proto_sala>& 
 	return resultado;
 }
 
-void Traductor_mapas::parsear_sala(const Proto_sala& ps, App_Niveles::Mapa& resultado)
+void Traductor_mapas::parsear_sala(const Proto_sala& ps, App_Niveles::Mapa& resultado, App_RepositorioSalas::Repositorio_salas& repo)
 {
 	Parser_salas parser;
-	parser.parsear_fichero("001.dat", ps.acc_x(), ps.acc_y());
+
+	parser.parsear_fichero(repo.obtener_ruta_sala(ps.acc_salidas()));
 
 	try
 	{
+		parser.acc_sala().modificar_posicion(ps.acc_x(), ps.acc_y());
 		resultado.insertar_sala(ps.acc_x(), ps.acc_y(), parser.acc_sala());
 	}
 	catch(Matriz_2d_excepcion& e)

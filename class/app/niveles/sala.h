@@ -32,10 +32,9 @@ class Sala
 	App_Definiciones::direcciones 				acc_direcciones_entradas() const 	{return objetos.direcciones_entradas;}
 	void 							insertar_celda(App_Definiciones::tipos::t_dim px, App_Definiciones::tipos::t_dim py, Celda::tipo_celda pt); /** @throw Matriz_2d_excepcion_item_existe cuando la celda está ocupada. */
 	void 							erase(App_Definiciones::tipos::t_dim px, App_Definiciones::tipos::t_dim py); /** @throw Matriz_2d_excepcion_item_invalido cuando no existe la celda. */
-	void 							modificar_posicion_y_dimensiones(App_Definiciones::tipos::t_dim px, App_Definiciones::tipos::t_dim py, App_Definiciones::tipos::t_dim pw, App_Definiciones::tipos::t_dim ph);
+	void 							modificar_posicion(App_Definiciones::tipos::t_dim px, App_Definiciones::tipos::t_dim py);
+	void 							modificar_dimensiones(App_Definiciones::tipos::t_dim px, App_Definiciones::tipos::t_dim py);
 	std::vector<const App_Interfaces::Representable_I *> 	obtener_vector_representables() const;
-//	App_Juego_ObjetoJuego::Contenedor_objetos&		acc_contenedor_objetos() {return objetos;}
-//	const App_Juego_ObjetoJuego::Contenedor_objetos&	acc_contenedor_objetos_const() const {return objetos;}
 	void							implantar_objetos_juego(App_Juego_ObjetoJuego::Contenedor_objetos&&);
 	const HerramientasProyecto::Matriz_2d<Celda>& 		acc_matriz() const {return celdas;}
 	const App_Juego_ObjetoJuego::Entrada& 			obtener_entrada_posicion(App_Definiciones::direcciones p); /** @throw std::logic_error cuando no hay entrada en esa posición. */

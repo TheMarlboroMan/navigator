@@ -16,8 +16,25 @@
 #include "../app/colisiones/calculador_colisiones.h"
 #include "../app/input/recogedor_input.h"
 
+namespace App_RepositorioSalas
+{
+class Repositorio_salas;
+}
+
 class Controlador_juego:public Controlador_base
 {
+	///////////////
+	//Interface pública.
+	public:
+	
+						Controlador_juego(Director_estados &DI, DLibV::Pantalla&, App_RepositorioSalas::Repositorio_salas&);
+						~Controlador_juego();
+
+	virtual void 				preloop(Input_base& input, float delta);
+	virtual void 				postloop(Input_base& input, float delta);
+	virtual void 				loop(Input_base& input, float delta);
+	virtual void 				dibujar(DLibV::Pantalla& pantalla);
+
 	//////////////
 	//Definiciones.
 	public:
@@ -28,16 +45,17 @@ class Controlador_juego:public Controlador_base
 	//Propiedades
 	private:
 
-	App_Graficos::Representador 		representador;
-	App_Niveles::Mapa 			mapa;
-	App_Juego::Jugador 			jugador;
+	App_RepositorioSalas::Repositorio_salas&	repo_salas;
+	App_Graficos::Representador 			representador;
+	App_Niveles::Mapa 				mapa;
+	App_Juego::Jugador 				jugador;
 
-	App_Juego_Automapa::Automapa 		automapa;
-	App_Juego_Sistemas::Contador_tiempo 	contador_tiempo;
-	App_Niveles::Sala * 			sala_actual;
+	App_Juego_Automapa::Automapa 			automapa;
+	App_Juego_Sistemas::Contador_tiempo 		contador_tiempo;
+	App_Niveles::Sala * 				sala_actual;
 	
-	Vsptr_Proyectil_base		 	proyectiles_jugador;
-	Vsptr_Proyectil_base		 	proyectiles_enemigos;
+	Vsptr_Proyectil_base		 		proyectiles_jugador;
+	Vsptr_Proyectil_base		 		proyectiles_enemigos;
 
 	///////////////
 	//Métodos internos.
@@ -50,18 +68,6 @@ class Controlador_juego:public Controlador_base
 	void 					logica_proyectiles(float delta);
 	void 					limpiar_pre_cambio_sala();
 	void					cargar_sala(int ax, int ay, App_Definiciones::direcciones salida, App_Juego::Jugador& j);
-
-	///////////////
-	//Interface pública.
-	public:
-	
-						Controlador_juego(Director_estados &DI, DLibV::Pantalla&);
-						~Controlador_juego();
-
-	virtual void 				preloop(Input_base& input, float delta);
-	virtual void 				postloop(Input_base& input, float delta);
-	virtual void 				loop(Input_base& input, float delta);
-	virtual void 				dibujar(DLibV::Pantalla& pantalla);
 };
 
 #endif

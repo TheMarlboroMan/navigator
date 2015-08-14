@@ -19,7 +19,7 @@ Parser_salas::Parser_salas()
 
 }
 
-void Parser_salas::parsear_fichero(const std::string& ruta, App_Definiciones::tipos::t_dim pos_x, App_Definiciones::tipos::t_dim pos_y)
+void Parser_salas::parsear_fichero(const std::string& ruta)
 {
 	DLibH::Lector_txt L(ruta, '#');
 
@@ -53,7 +53,7 @@ void Parser_salas::parsear_fichero(const std::string& ruta, App_Definiciones::ti
 					case t_estados::logica: 
 
 					break;
-					case t_estados::rejilla: interpretar_linea_como_rejilla(linea, pos_x, pos_y); break;
+					case t_estados::rejilla: interpretar_linea_como_rejilla(linea); break;
 					case t_estados::celdas: interpretar_linea_como_celdas(linea); break;
 					case t_estados::objetos: interpretar_linea_como_objeto(linea, factoria); break;
 
@@ -84,13 +84,12 @@ bool Parser_salas::interpretar_estado(const std::string& linea)
 	return false;
 }
 
-void Parser_salas::interpretar_linea_como_rejilla(const std::string& linea, App_Definiciones::tipos::t_dim pos_x, App_Definiciones::tipos::t_dim pos_y)
+void Parser_salas::interpretar_linea_como_rejilla(const std::string& linea)
 {
 	//TODO: Validar longitud de la información siempre.
-
 	std::vector<std::string> valores=Herramientas::explotar(linea, ',');
 	const auto w=toi(valores[0]), h=toi(valores[1]);
-	sala.modificar_posicion_y_dimensiones(pos_x, pos_y, w, h);
+	sala.modificar_dimensiones(w, h);
 }
 
 void Parser_salas::interpretar_linea_como_celdas(const std::string& linea)

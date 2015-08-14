@@ -14,6 +14,7 @@ DIR_JUEGO_OBJETOS=$(DIR_JUEGO)objetos_juego/
 DIR_COLISIONES=$(DIR_CLASES_APP)colisiones/
 DIR_DEFINICIONES=$(DIR_CLASES_APP)definiciones/
 DIR_GENERADOR=$(DIR_CLASES_APP)generador/
+DIR_REPOSITORIO_SALAS=$(DIR_CLASES_APP)repositorio_salas/
 
 ################################################################################
 #Juego
@@ -179,6 +180,22 @@ $(DIR_JUEGO_AUTOMAPA)automapa.cpp
 	$(CC) $(CFLAGS) $(INCLUDES) $(DIR_JUEGO_AUTOMAPA)automapa.cpp -o $(DIR_O)automapa.o
 
 ################################################################################
+#Repositorio salas
+
+$(DIR_O)repositorio_salas.o:\
+$(DIR_O)definiciones.o\
+$(DIR_O)item_repositorio.o\
+$(DIR_REPOSITORIO_SALAS)repositorio_salas.h \
+$(DIR_REPOSITORIO_SALAS)repositorio_salas.cpp
+	$(CC) $(CFLAGS) $(INCLUDES) $(DIR_REPOSITORIO_SALAS)repositorio_salas.cpp -o $(DIR_O)repositorio_salas.o
+
+$(DIR_O)item_repositorio.o:\
+$(DIR_REPOSITORIO_SALAS)item_repositorio.h \
+$(DIR_REPOSITORIO_SALAS)item_repositorio.cpp
+	$(CC) $(CFLAGS) $(INCLUDES) $(DIR_REPOSITORIO_SALAS)item_repositorio.cpp -o $(DIR_O)item_repositorio.o
+
+
+################################################################################
 #Niveles
 
 $(DIR_O)mapa.o:\
@@ -234,6 +251,7 @@ $(DIR_GENERADOR)factoria_objetos_juego.cpp
 	$(CC) $(CFLAGS) $(INCLUDES) $(DIR_GENERADOR)factoria_objetos_juego.cpp -o $(DIR_O)factoria_objetos_juego.o
 
 $(DIR_O)traductor_mapas.o:\
+$(DIR_O)repositorio_salas.o\
 $(DIR_O)proto_sala.o\
 $(DIR_O)parser_salas.o\
 $(DIR_O)mapa.o\

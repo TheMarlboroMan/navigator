@@ -9,6 +9,7 @@
 #include "proto_sala.h"
 #include "../niveles/mapa.h"
 #include "../definiciones/definiciones.h"
+#include "../repositorio_salas/repositorio_salas.h"
 
 namespace App_Generador
 {
@@ -18,8 +19,6 @@ class Traductor_mapas
 	//Interface pública
 	public:
 
-	Traductor_mapas() {}
-
 	/**
 	* @param std::vector<Proto_sala> p
 	* @return Mapa.
@@ -27,13 +26,15 @@ class Traductor_mapas
 	* el fallo que puede dar es de categoría.
 	*/
 
-	App_Niveles::Mapa 		traducir_mapa(const std::vector<Proto_sala>& p);
+
+
+	App_Niveles::Mapa 		traducir_mapa(const std::vector<Proto_sala>& p, App_RepositorioSalas::Repositorio_salas&);
 
 	//////////////////
 	//Métodos privados
 	private:
 
-	void				parsear_sala(const Proto_sala&, App_Niveles::Mapa&);
+	void				parsear_sala(const Proto_sala&, App_Niveles::Mapa&, App_RepositorioSalas::Repositorio_salas&);
 
 	/**
 	* @param Sala& sala

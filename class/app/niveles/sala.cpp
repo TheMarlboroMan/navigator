@@ -129,10 +129,14 @@ size_t Sala::limpiar_objetos_juego_para_borrar()
 	return res;
 }
 
-void Sala::modificar_posicion_y_dimensiones(App_Definiciones::tipos::t_dim px, App_Definiciones::tipos::t_dim py, App_Definiciones::tipos::t_dim pw, App_Definiciones::tipos::t_dim ph)
+void Sala::modificar_posicion(App_Definiciones::tipos::t_dim px, App_Definiciones::tipos::t_dim py)
 {
 	pos.x=px;
 	pos.y=py;
+}
+
+void Sala::modificar_dimensiones(App_Definiciones::tipos::t_dim pw, App_Definiciones::tipos::t_dim ph)
+{
 	w=pw;
 	h=ph;
 	celdas=celdas.copiar_con_dimensiones(w, h);
@@ -141,5 +145,4 @@ void Sala::modificar_posicion_y_dimensiones(App_Definiciones::tipos::t_dim px, A
 void Sala::implantar_objetos_juego(App_Juego_ObjetoJuego::Contenedor_objetos&& co)
 {
 	objetos=co;
-	//TODO: SALIDAS
 }

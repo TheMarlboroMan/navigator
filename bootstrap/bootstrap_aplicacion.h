@@ -3,6 +3,7 @@
 
 #include "../class/controladores/director_estados.h"
 #include "../class/framework/derivada/kernel.h"
+#include "../class/app/repositorio_salas/repositorio_salas.h"
 
 namespace App
 {

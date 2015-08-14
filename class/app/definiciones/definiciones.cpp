@@ -1,4 +1,6 @@
 #include "definiciones.h"
+#include <stdexcept>
+
 
 using namespace App_Definiciones;
 
@@ -24,9 +26,19 @@ App_Definiciones::direcciones App_Definiciones::operator&(App_Definiciones::dire
 	return static_cast<App_Definiciones::direcciones>(static_cast<int>(a) & static_cast<int>(b));
 }
 
-
 App_Definiciones::direcciones App_Definiciones::convertir_en_direccion(int v)
 {
+	if(v < 0 && v > 15)
+/*		(direcciones::arriba | 
+		direcciones::derecha |
+		direcciones::abajo |
+		direcciones::izquierda))*/
+	{
+		throw std::runtime_error("Casting inválido de enter a App_Definiciones::direcciones");
+	}
+
+	return static_cast<App_Definiciones::direcciones>(v);
+/*
 	switch(v)
 	{
 		case 1: return direcciones::arriba; break;
@@ -35,4 +47,5 @@ App_Definiciones::direcciones App_Definiciones::convertir_en_direccion(int v)
 		case 8: return direcciones::izquierda; break;
 		default: return direcciones::nada; break;
 	}
+*/
 }

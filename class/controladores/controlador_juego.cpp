@@ -21,8 +21,10 @@ using namespace App_Graficos;
 using namespace App_Colisiones;
 using namespace App_Input;
 
-Controlador_juego::Controlador_juego(Director_estados &DI, DLibV::Pantalla& pantalla)
+
+Controlador_juego::Controlador_juego(Director_estados &DI, DLibV::Pantalla&, App_RepositorioSalas::Repositorio_salas& repo)
 	:Controlador_base(DI),
+	repo_salas(repo),
 	mapa(0, 0),
 	jugador(32.0, 32.0),
 	contador_tiempo(),
@@ -38,7 +40,7 @@ Controlador_juego::Controlador_juego(Director_estados &DI, DLibV::Pantalla& pant
 	GEN.normalizar();
 
 	Traductor_mapas TM;
-	mapa=TM.traducir_mapa(GEN.acc_proto_salas());
+	mapa=TM.traducir_mapa(GEN.acc_proto_salas(), repo);
 
 	sala_actual=&(mapa.obtener_sala_inicio());
 

@@ -35,22 +35,6 @@ class Traductor_mapas
 	private:
 
 	void				parsear_sala(const Proto_sala&, App_Niveles::Mapa&, App_RepositorioSalas::Repositorio_salas&);
-
-	/**
-	* @param Sala& sala
-	* @param App_Definiciones::direcciones salida
-	* Excava las salidas indicadas y rodea la sala con un muro.
-	*/	
-
-	static void 			muros_sala(App_Niveles::Sala& sala, App_Definiciones::direcciones salidas);
-
-	/*
-	* @param Sal& sala
-	* Añade bloques aleatoriamente a la sala...
-	*/
-
-	static void 			obstaculos_sala(App_Niveles::Sala& sala);
-
 };
 
 }

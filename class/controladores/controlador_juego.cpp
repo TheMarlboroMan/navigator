@@ -34,8 +34,8 @@ Controlador_juego::Controlador_juego(Director_estados &DI, DLibV::Pantalla& p, A
 
 	using namespace App_Generador;
 	Generador_estructura_niveles GEN;
-	GEN.generar_camino_principal(20);
-	GEN.generar_salas_secundarias(20);
+	GEN.generar_camino_principal(10);
+	GEN.generar_salas_secundarias(5);
 	GEN.normalizar();
 
 	Traductor_mapas TM;
@@ -47,7 +47,15 @@ Controlador_juego::Controlador_juego(Director_estados &DI, DLibV::Pantalla& p, A
 	iniciar_automapa();
 
 	const auto& pi=sala_actual->obtener_posicion_inicial_jugador();
-	jugador.establecer_posicion(pi.acc_espaciable_x(), pi.acc_espaciable_y());
+	if(!pi)
+	{
+		LOG<<"ERROR: No se localiza posición inicial para jugador al iniciar nivel.";
+		abandonar_aplicacion();
+	}
+	else
+	{
+		jugador.establecer_posicion(pi->acc_espaciable_x(), pi->acc_espaciable_y());
+	}
 
 	contador_tiempo.mut_tiempo_restante(180.0);
 }

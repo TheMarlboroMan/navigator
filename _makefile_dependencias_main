@@ -15,6 +15,7 @@ $(DIR_O)jugador.o\
 $(DIR_O)calculador_colisiones.o\
 $(DIR_O)recogedor_input.o\
 $(DIR_O)entrada.o\
+$(DIR_O)salida.o\
 $(DIR_O)posicion_inicial.o\
 $(DIR_O)generador_estructura_niveles.o\
 $(DIR_O)parser_salas.o\

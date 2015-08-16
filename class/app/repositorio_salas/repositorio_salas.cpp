@@ -81,23 +81,27 @@ void Repositorio_salas::iniciar(const std::string& r)
 			App_Generador::Parser_salas p;
 			p.parsear_fichero(linea);
 
-			//TODO: Comprobar que todas las salas tienen un inicio de jugador, of course.
+			if(!p.comprobar_validez_sala())
+			{
+				LOG<<"ERROR: La sala no pasa la validación : "<<linea<<std::endl;
+				throw std::runtime_error("Error al iniciar repositorio de salas: error de validación.");
+			}
 
-			mapa_rutas[p.acc_sala().acc_direcciones_entradas()].push_back(linea);
+			mapa_rutas[p.acc_direcciones_entradas()].push_back(linea);
 		}
 	}
 
 	//Comprobamos que hay mapas en todos los tipos y los reordenamos al azar.
+	int dir=1;	//Se usará para llevar la cuenta si falla en un directorio concreto.
+
 	for(auto& d : mapa_rutas)
 	{
-		int dir=1;	//Se usará para llevar la cuenta si falla en un directorio concreto.
 		auto& v=d.second;
 		if(! v.size())
 		{
-			LOG<<"ERROR: Al menos una posible dirección no tiene salas "<<dir<<std::endl;
+			LOG<<"ERROR: Al menos una posible dirección no tiene salas ["<<dir<<"]"<<std::endl;
 			throw std::runtime_error("Error al iniciar repositorio de salas: error de integridad.");
 		}
-
 
 		std::random_shuffle(v.begin(), v.end());
 		++dir;

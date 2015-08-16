@@ -38,7 +38,8 @@ class Sala
 	void							implantar_objetos_juego(App_Juego_ObjetoJuego::Contenedor_objetos&&);
 	const HerramientasProyecto::Matriz_2d<Celda>& 		acc_matriz() const {return celdas;}
 	const App_Juego_ObjetoJuego::Entrada& 			obtener_entrada_posicion(App_Definiciones::direcciones p); /** @throw std::logic_error cuando no hay entrada en esa posición. */
-	const App_Juego_ObjetoJuego::Posicion_inicial& 		obtener_posicion_inicial_jugador() {return objetos.posicion_inicial;}
+	const std::shared_ptr<App_Juego_ObjetoJuego::Posicion_inicial>	obtener_posicion_inicial_jugador() {return objetos.posicion_inicial;}
+	const std::shared_ptr<App_Juego_ObjetoJuego::Salida>	obtener_salida() {return objetos.salida;}
 	size_t 							limpiar_objetos_juego_para_borrar();
 
 	template<typename T> void				procesar_objetos_juego(T& p) {p.procesar(objetos.objetos_juego);}
@@ -62,29 +63,6 @@ class Sala
 	///////////
 	// Métodos privados.
 	private:
-
-	template<typename T> size_t ayudante_borrar(std::vector<std::shared_ptr<T>>& v)
-	{
-		size_t	res=0;
-		auto 	ini=std::begin(v),
-			fin=std::end(v);
-	
-		while(ini < fin)
-		{
-			if(ini->get()->es_borrar())
-			{
-				ini=v.erase(ini);
-				fin=std::end(v);
-				++res;
-			}
-			else
-			{
-				++ini;
-			}		
-		}
-		return res;
-	}
-
 };
 
 }

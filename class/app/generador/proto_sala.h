@@ -29,6 +29,9 @@ class Proto_sala
 	int acc_y() const {return y;}
 	App_Definiciones::direcciones acc_salidas() const {return salidas;}
 	bool es_principal() const {return principal;}
+	bool es_inicio() const {return tipo==tipos::inicio;}
+	bool es_fin() const {return tipo==tipos::fin;}
+	bool es_normal() const {return tipo==tipos::normal;}
 	tipos acc_tipo() const {return tipo;}
 
 	bool con_salida_en(App_Definiciones::direcciones pos) {return (salidas & pos) != App_Definiciones::direcciones::nada;}

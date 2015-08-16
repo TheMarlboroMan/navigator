@@ -5,7 +5,8 @@ using namespace App_Juego_ObjetoJuego;
 using namespace App_Interfaces;
 using namespace DLibH;
 
-void Factoria_objetos_juego::interpretar_linea(const std::string& linea)
+
+void Factoria_objetos_juego::interpretar_linea(const std::string& linea, App_Juego_ObjetoJuego::Contenedor_objetos& contenedor)
 {
 	const auto params=Herramientas::explotar(linea, ',');
 	const int tipo=toi(params[0]);
@@ -14,11 +15,12 @@ void Factoria_objetos_juego::interpretar_linea(const std::string& linea)
 	{
 		switch(tipo)
 		{
-			case bonus_tiempo: 	interpretar_como_bonus_tiempo(params); break;
-			case bonus_salud:	interpretar_como_bonus_salud(params); break;
-			case enemigo_basico:	interpretar_como_enemigo_basico(params); break;
-			case entrada:		interpretar_como_entrada(params); break;
-			case posicion_inicial:	interpretar_como_posicion_inicial(params); break;
+			case bonus_tiempo: 	interpretar_como_bonus_tiempo(params, contenedor); break;
+			case bonus_salud:	interpretar_como_bonus_salud(params, contenedor); break;
+			case enemigo_basico:	interpretar_como_enemigo_basico(params, contenedor); break;
+			case entrada:		interpretar_como_entrada(params, contenedor); break;
+			case salida:		interpretar_como_salida(params, contenedor); break;
+			case posicion_inicial:	interpretar_como_posicion_inicial(params, contenedor); break;
 			default:
 				LOG<<"No se ha interpretado la línea "<<linea<<" por ser de tipo ["<<tipo<<"] desconocido."<<std::endl;
 			break;
@@ -31,7 +33,7 @@ void Factoria_objetos_juego::interpretar_linea(const std::string& linea)
 }
 
 
-void Factoria_objetos_juego::interpretar_como_bonus_tiempo(const std::vector<std::string>& params)
+void Factoria_objetos_juego::interpretar_como_bonus_tiempo(const std::vector<std::string>& params, App_Juego_ObjetoJuego::Contenedor_objetos& contenedor)
 {
 	if(params.size() != lp_bonus_tiempo)
 	{
@@ -51,7 +53,7 @@ void Factoria_objetos_juego::interpretar_como_bonus_tiempo(const std::vector<std
 	}
 }
 
-void Factoria_objetos_juego::interpretar_como_bonus_salud(const std::vector<std::string>& params)
+void Factoria_objetos_juego::interpretar_como_bonus_salud(const std::vector<std::string>& params, App_Juego_ObjetoJuego::Contenedor_objetos& contenedor)
 {
 	if(params.size() != lp_bonus_tiempo)
 	{
@@ -70,7 +72,7 @@ void Factoria_objetos_juego::interpretar_como_bonus_salud(const std::vector<std:
 	}
 }
 
-void Factoria_objetos_juego::interpretar_como_enemigo_basico(const std::vector<std::string>& params)
+void Factoria_objetos_juego::interpretar_como_enemigo_basico(const std::vector<std::string>& params, App_Juego_ObjetoJuego::Contenedor_objetos& contenedor)
 {
 	if(params.size() != lp_enemigo_basico)
 	{
@@ -92,7 +94,7 @@ void Factoria_objetos_juego::interpretar_como_enemigo_basico(const std::vector<s
 	}
 }
 
-void Factoria_objetos_juego::interpretar_como_entrada(const std::vector<std::string>& params)
+void Factoria_objetos_juego::interpretar_como_entrada(const std::vector<std::string>& params, App_Juego_ObjetoJuego::Contenedor_objetos& contenedor)
 {
 	if(params.size() != lp_entrada)
 	{
@@ -108,7 +110,26 @@ void Factoria_objetos_juego::interpretar_como_entrada(const std::vector<std::str
 	}
 }
 
-void Factoria_objetos_juego::interpretar_como_posicion_inicial(const std::vector<std::string>& params)
+void Factoria_objetos_juego::interpretar_como_salida(const std::vector<std::string>& params, App_Juego_ObjetoJuego::Contenedor_objetos& contenedor)
+{
+	if(params.size() != lp_salida)
+	{
+		throw Factoria_objetos_juego_excepcion(params.size(), lp_salida, "Salida");
+	}
+	else
+	{
+		const int x=toi(params[1]);
+		const int y=toi(params[2]);
+		contenedor.salida.reset( new Salida(x, y));
+
+		auto ob=contenedor.salida.get();
+		contenedor.objetos_juego.push_back(contenedor.salida);
+		contenedor.colisionables.push_back(std::shared_ptr<Colisionable_I>(contenedor.salida, static_cast<Colisionable_I*>(ob)));
+		contenedor.representables.push_back(std::shared_ptr<Representable_I>(contenedor.salida, static_cast<Representable_I*>(ob)));
+	}
+}
+
+void Factoria_objetos_juego::interpretar_como_posicion_inicial(const std::vector<std::string>& params, App_Juego_ObjetoJuego::Contenedor_objetos& contenedor)
 {
 	if(params.size() != lp_posicion_inicial)
 	{
@@ -118,7 +139,6 @@ void Factoria_objetos_juego::interpretar_como_posicion_inicial(const std::vector
 	{
 		const int x=toi(params[1]);
 		const int y=toi(params[2]);
-
-		contenedor.posicion_inicial=Posicion_inicial(x, y);
+		contenedor.posicion_inicial.reset( new Posicion_inicial(x, y));
 	}
 }

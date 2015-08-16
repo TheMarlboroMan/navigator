@@ -83,49 +83,11 @@ const App_Juego_ObjetoJuego::Entrada& Sala::obtener_entrada_posicion(App_Definic
 
 /**
 * @return size_t : indicando el número de elementos eliminados.
-* Recorre el vector de objetos juego elíminando de forma definitiva todos los
-* actores que puedan estar para borrar.
-* Todos los objetos_juego no son borrables, de modo que necesitaremos algún
-* tipo de visitante que extraiga lo que necesitamos. Como no podemos sacar
-* un vector de borrables y eliminarlos del vector de objetos_juego usamos un 
-* visitante que extrae la faceta deseada.
 */
 
 size_t Sala::limpiar_objetos_juego_para_borrar()
 {
-	size_t	res=ayudante_borrar(objetos.objetos_juego);
-
-	/**	
-	* Si hay algo para borrar buscaremos en el resto de vectores...
-	*/
-
-	if(res)
-	{
-		ayudante_borrar(objetos.bonus);
-		ayudante_borrar(objetos.con_turno);
-		ayudante_borrar(objetos.disparables);
-		ayudante_borrar(objetos.disparadores);
-		ayudante_borrar(objetos.colisionables);
-
-		//Y la especialización malvada.
-		auto 	ini=std::begin(objetos.representables),
-			fin=std::end(objetos.representables);
-	
-		while(ini < fin)
-		{
-			if(ini->get()->es_representable_borrar())
-			{
-				ini=objetos.representables.erase(ini);
-				fin=std::end(objetos.representables);
-			}
-			else
-			{
-				++ini;
-			}
-		}
-	}
-
-	return res;
+	return objetos.limpiar_para_borrar();
 }
 
 void Sala::modificar_posicion(App_Definiciones::t_dim px, App_Definiciones::t_dim py)

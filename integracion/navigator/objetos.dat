@@ -1,6 +1,7 @@
-1	Entrada	32	32	192,192,192
+1	Entrada	32	32	180,180,180
 	posicion[arr=1,der=2,aba=4,izq=8]	1
 2	Inicio	32	32	192,192,192
+3	Fin	32	32	160,160,160
 10	Bonus salud	16	16	64,64,64
 	salud	15
 11	Bonus tiempo	16	16	64,64,44

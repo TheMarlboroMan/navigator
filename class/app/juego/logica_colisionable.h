@@ -3,6 +3,7 @@
 
 #include "../visitantes/visitante_colisionable.h"
 #include "objetos_juego/enemigo_basico.h"
+#include "objetos_juego/salida.h"
 #include "jugador.h"
 
 /**
@@ -28,6 +29,7 @@ class Logica_colisionable:
 	public:
 
 	virtual void 		visitar(App_Juego_ObjetoJuego::Enemigo_basico& b);
+	virtual void 		visitar(App_Juego_ObjetoJuego::Salida& b);
 
 	/////////////////
 	//Propiedades.

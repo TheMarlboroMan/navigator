@@ -48,7 +48,7 @@ void Generador_estructura_niveles::generar_camino_principal(unsigned int c)
 
 	while(i < c)
 	{
-		construir_sala(x, y, direcciones::nada, true, Proto_sala::tipos::inicio);
+		construir_sala(x, y, direcciones::nada, true, Proto_sala::tipos::normal);
 
 		//Decidir la siguiente salida...
 		direcciones salida=obtener_salida_aleatoria(obtener_libres_adyacentes_para_posicion(x, y));

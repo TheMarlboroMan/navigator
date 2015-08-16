@@ -78,6 +78,7 @@ $(DIR_JUEGO)logica_disparable.cpp
 
 $(DIR_O)logica_colisionable.o:\
 $(DIR_O)enemigo_basico.o\
+$(DIR_O)salida.o\
 $(DIR_O)jugador.o\
 $(DIR_O)colisionable_i.o\
 $(DIR_JUEGO)logica_colisionable.h\
@@ -154,6 +155,15 @@ $(DIR_O)definiciones.o \
 $(DIR_JUEGO_OBJETOS)entrada.h \
 $(DIR_JUEGO_OBJETOS)entrada.cpp
 	$(CC) $(CFLAGS) $(INCLUDES) $(DIR_JUEGO_OBJETOS)entrada.cpp -o $(DIR_O)entrada.o
+
+$(DIR_O)salida.o:\
+$(DIR_O)espaciable.o\
+$(DIR_O)representable_i.o\
+$(DIR_O)colisionable_i.o\
+$(DIR_O)definiciones.o \
+$(DIR_JUEGO_OBJETOS)salida.h \
+$(DIR_JUEGO_OBJETOS)salida.cpp
+	$(CC) $(CFLAGS) $(INCLUDES) $(DIR_JUEGO_OBJETOS)salida.cpp -o $(DIR_O)salida.o
 
 $(DIR_O)posicion_inicial.o:\
 $(DIR_O)espaciable.o\
@@ -246,11 +256,15 @@ $(DIR_O)contenedor_objetos_juego.o\
 $(DIR_O)bonus_salud.o\
 $(DIR_O)bonus_tiempo.o\
 $(DIR_O)enemigo_basico.o\
+$(DIR_O)entrada.o\
+$(DIR_O)salida.o\
+$(DIR_O)posicion_inicial.o\
 $(DIR_GENERADOR)factoria_objetos_juego.h \
 $(DIR_GENERADOR)factoria_objetos_juego.cpp
 	$(CC) $(CFLAGS) $(INCLUDES) $(DIR_GENERADOR)factoria_objetos_juego.cpp -o $(DIR_O)factoria_objetos_juego.o
 
 $(DIR_O)traductor_mapas.o:\
+$(DIR_O)generador_numeros.o \
 $(DIR_O)repositorio_salas.o\
 $(DIR_O)proto_sala.o\
 $(DIR_O)parser_salas.o\

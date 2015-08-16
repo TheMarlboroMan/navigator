@@ -25,6 +25,11 @@ void Logica_colisionable::visitar(App_Juego_ObjetoJuego::Enemigo_basico& b)
 	jugador.recibir_impacto(2.5f);
 }
 
+void Logica_colisionable::visitar(App_Juego_ObjetoJuego::Salida& b)
+{
+	std::cout<<"SALIDA"<<std::endl;
+}
+
 /*
 	using namespace App_Interfaces;
 

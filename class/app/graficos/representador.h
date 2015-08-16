@@ -22,36 +22,36 @@ namespace App_Graficos
 class Representador
 {
 	/////////////////////////
+	// Interface pública
+
+	public:
+
+	unsigned int 				generar_vista(DLibV::Pantalla&, DLibV::Camara&, const std::vector<const App_Interfaces::Representable_I *>&);
+	unsigned int 				generar_vista(DLibV::Pantalla&, const std::vector<const App_Interfaces::Representable_I *>&);
+	void 					generar_hud(DLibV::Pantalla& pantalla, int salud, int energia, int escudo, std::string tiempo);
+	void 					dibujar_marco_automapa(DLibV::Pantalla&);
+	void 					dibujar_pieza_automapa(DLibV::Pantalla&, int x, int y, App_Definiciones::direcciones t, bool es_actual);
+
+	private:
+
+	/////////////////////////
 	// Definiciones
-	static const int X_AUTOMAPA=400;
-	static const int Y_AUTOMAPA=64;
-	static const int DIM_AUTOMAPA=7;
+
+	static const int 			W_FONDO_HUD=640;
+	static const int 			H_FONDO_HUD=80;
+	static const int 			X_FONDO_HUD=0;
+	static const int 			Y_FONDO_HUD=480;
+
+	static const int 			X_AUTOMAPA=400;
+	static const int 			Y_AUTOMAPA=412;
+	static const int 			DIM_AUTOMAPA=7;
 
 	/////////////////////////
 	// Propiedades
 	
 	private:
 
-	Bloque_transformacion_representable bloque_transformacion;
-
-	/////////////////////////
-	// Internos...
-
-	private:
-
-	/////////////////////////
-	// Interface pública
-
-	public:
-
-	unsigned int generar_vista(DLibV::Pantalla&, DLibV::Camara&, const std::vector<const App_Interfaces::Representable_I *>&);
-	unsigned int generar_vista(DLibV::Pantalla&, const std::vector<const App_Interfaces::Representable_I *>&);
-
-	void dibujar_marco_automapa(DLibV::Pantalla&);
-	void dibujar_pieza_automapa(DLibV::Pantalla&, int x, int y, App_Definiciones::direcciones t);
-
-	Representador();
-	~Representador();
+	Bloque_transformacion_representable 	bloque_transformacion;
 };
 }
 #endif

@@ -14,9 +14,9 @@ class Posicion_inicial:
 	///////////////////
 	//Interface pública
 	public:
-						Posicion_inicial(App_Definiciones::tipos::t_dim px, App_Definiciones::tipos::t_dim py);
-	App_Definiciones::tipos::t_dim 		acc_x() const {return x;}
-	App_Definiciones::tipos::t_dim 		acc_y() const {return y;}
+						Posicion_inicial(App_Definiciones::t_dim px, App_Definiciones::t_dim py);
+	App_Definiciones::t_dim 		acc_x() const {return x;}
+	App_Definiciones::t_dim 		acc_y() const {return y;}
 
 	//////////////////////////////
 	//Implementación de Espaciable
@@ -35,7 +35,7 @@ class Posicion_inicial:
 	//Propiedades
 	private:
 	
-	App_Definiciones::tipos::t_dim 		x, y;	
+	App_Definiciones::t_dim 		x, y;	
 };
 }
 

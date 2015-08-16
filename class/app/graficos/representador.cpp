@@ -1,18 +1,10 @@
 #include "representador.h"
 #include "../recursos.h"
 
+#include <sstream>
+
 using namespace App_Graficos;
 using namespace App_Interfaces;
-
-Representador::Representador()
-{
-
-}
-
-Representador::~Representador()
-{
-
-}
 
 unsigned int Representador::generar_vista(
 	DLibV::Pantalla& pantalla, 
@@ -50,7 +42,7 @@ void Representador::dibujar_marco_automapa(DLibV::Pantalla&)
 	//TODO...
 }
 
-void Representador::dibujar_pieza_automapa(DLibV::Pantalla& pantalla, int x, int y, App_Definiciones::direcciones t)
+void Representador::dibujar_pieza_automapa(DLibV::Pantalla& pantalla, int x, int y, App_Definiciones::direcciones t, bool es_actual)
 {
 	using namespace App;
 	using namespace App_Definiciones;
@@ -63,7 +55,9 @@ void Representador::dibujar_pieza_automapa(DLibV::Pantalla& pantalla, int x, int
 			DIM_AUTOMAPA, DIM_AUTOMAPA);
 
 	//El fondo...
-	rep_bmp.establecer_recorte(0, 0, DIM_AUTOMAPA, DIM_AUTOMAPA);
+
+	int xfondo=es_actual ? 5 * DIM_AUTOMAPA : 0;
+	rep_bmp.establecer_recorte(xfondo, 0, DIM_AUTOMAPA, DIM_AUTOMAPA);
 	rep_bmp.volcar(pantalla);
 	std::vector<direcciones> v {direcciones::arriba, direcciones::derecha, direcciones::abajo, direcciones::izquierda};
 
@@ -87,3 +81,23 @@ void Representador::dibujar_pieza_automapa(DLibV::Pantalla& pantalla, int x, int
 	}
 }
 
+void Representador::generar_hud(DLibV::Pantalla& pantalla, int salud, int energia, int escudo, std::string tiempo)
+{
+	//Dibujar caja HUD...
+	SDL_Rect cp=DLibH::Herramientas_SDL::nuevo_sdl_rect(X_FONDO_HUD, Y_FONDO_HUD, W_FONDO_HUD, H_FONDO_HUD);
+	DLibV::Representacion_primitiva_caja_estatica CAJA(cp, 0, 0, 0);
+	CAJA.volcar(pantalla);
+
+	//Dibujar información.
+	std::stringstream ss;
+/*	ss<<jugador.acc_espaciable_x()<<","<<jugador.acc_espaciable_y()<<std::endl<<*/
+	ss<<"HULL: "<<salud<<"\nENERGY: "<<energia<<"\nSHIELD: "<<escudo;
+
+	DLibV::Representacion_texto_auto_estatica rep_hud(pantalla.acc_renderer(), DLibV::Gestor_superficies::obtener(App::Recursos_graficos::RS_FUENTE_BASE), ss.str());
+	rep_hud.establecer_posicion(16, 416);
+	rep_hud.volcar(pantalla);
+
+	rep_hud.asignar(tiempo);
+	rep_hud.establecer_posicion(16, 464);
+	rep_hud.volcar(pantalla);
+}

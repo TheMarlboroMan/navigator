@@ -9,6 +9,7 @@
 #include "../derivada/localizador.h"
 
 #include "../../app/recursos.h"
+#include "../../app/definiciones/definiciones.h"
 
 class Kernel_app:public Kernel_base
 {
@@ -30,8 +31,8 @@ class Kernel_app:public Kernel_base
 	virtual void postloop() {}	//Idem, pero despúes.
 	virtual std::string acc_titulo_inicial() const {return std::string(" -- SDL 2 -- ");}
 	virtual bool acc_mostrar_cursor_inicial() const {return true;}
-	virtual int acc_w_pantalla_inicial() const {return 640;}
-	virtual int acc_h_pantalla_inicial() const {return 480;}
+	virtual int acc_w_pantalla_inicial() const {return App_Definiciones::definiciones::w_pantalla;}
+	virtual int acc_h_pantalla_inicial() const {return App_Definiciones::definiciones::h_pantalla;}
 	virtual Input_base& acc_input() {return input;}
 	virtual Configuracion_base& acc_configuracion() {return configuracion;}
 	virtual Cargador_recursos_base& acc_cargador_recursos() {return cargador_recursos;}

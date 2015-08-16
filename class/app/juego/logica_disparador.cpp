@@ -28,8 +28,8 @@ bool Logica_disparador::insertar_disparo_jugador(std::vector<std::shared_ptr<App
 
 	//Establecer el vector según la dirección del jugador.
 	DLibH::Vector_2d vector(0.0f, 0.0f);
-	if(jugador.es_encarando_direccion(App_Definiciones::direcciones::derecha))  vector.x=200.0f;
-	else vector.x=-200.0f;
+	if(jugador.es_encarando_direccion(App_Definiciones::direcciones::derecha))  vector.x=350.0f;
+	else vector.x=-350.0f;
 
 	pr->establecer_vector(vector);
 	pr->mut_potencia(25.0f);

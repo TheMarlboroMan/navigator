@@ -25,7 +25,7 @@ class Celda:
 
 	public:
 
-						Celda(App_Definiciones::tipos::t_dim px, App_Definiciones::tipos::t_dim py, tipo_celda pt);
+						Celda(App_Definiciones::t_dim px, App_Definiciones::t_dim py, tipo_celda pt);
 
 
 	//////////////////////////////
@@ -53,7 +53,7 @@ class Celda:
 	// Propiedades
 	private:
 
-	App_Definiciones::tipos::t_dim 		x, y;
+	App_Definiciones::t_dim	x, y;
 	tipo_celda 				tipo;
 };
 

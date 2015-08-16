@@ -14,7 +14,7 @@ using namespace HerramientasProyecto;
 App_Niveles::Mapa Traductor_mapas::traducir_mapa(const std::vector<Proto_sala>& p, App_RepositorioSalas::Repositorio_salas& repo)
 {
 	//TODO: Teh suckage...
-	tipos::t_dim w=0, h=0;
+	t_dim w=0, h=0;
 
 	for(const auto& ps : p)
 	{
@@ -42,7 +42,7 @@ App_Niveles::Mapa Traductor_mapas::traducir_mapa(const std::vector<Proto_sala>& 
 
 /*
 		//Crear sala.
-		App_Definiciones::tipos::t_dim x=ps.acc_x(), y=ps.acc_y();
+		App_Definiciones::t_dim x=ps.acc_x(), y=ps.acc_y();
 		//TODO: Esto debería ir en alguna constante, en algún lado.
 		Sala sala=Sala(20, 10, x, y);
 
@@ -167,17 +167,17 @@ void Traductor_mapas::obstaculos_sala(Sala& sala)
 
 	//TODO: Buscar otra forma, una factoría o algo.
 
-	std::shared_ptr<Bonus_tiempo> bt(new Bonus_tiempo(GX()*App_Definiciones::tipos::DIM_CELDA, GY()*App_Definiciones::tipos::DIM_CELDA));
+	std::shared_ptr<Bonus_tiempo> bt(new Bonus_tiempo(GX()*App_Definiciones::definiciones::dim_celda, GY()*App_Definiciones::definiciones::dim_celda));
 	contenedor.objetos_juego.push_back(bt);
 	contenedor.representables.push_back( std::shared_ptr<Representable_I>(bt, static_cast<Representable_I*>(bt.get())));
 	contenedor.bonus.push_back(std::shared_ptr<Bonus_I>(bt, static_cast<Bonus_I*>(bt.get())));
 
-	std::shared_ptr<Bonus_salud> bs(new Bonus_salud(GX()*App_Definiciones::tipos::DIM_CELDA, GY()*App_Definiciones::tipos::DIM_CELDA));
+	std::shared_ptr<Bonus_salud> bs(new Bonus_salud(GX()*App_Definiciones::definiciones::dim_celda, GY()*App_Definiciones::definiciones::dim_celda));
 	contenedor.objetos_juego.push_back(bs);
 	contenedor.representables.push_back(std::shared_ptr<Representable_I>(bs, static_cast<Representable_I*>(bs.get())));
 	contenedor.bonus.push_back(std::shared_ptr<Bonus_I>(bs, static_cast<Bonus_I*>(bs.get())));
 
-	std::shared_ptr<Enemigo_basico> enem(new Enemigo_basico(GX()*App_Definiciones::tipos::DIM_CELDA, GY()*App_Definiciones::tipos::DIM_CELDA));
+	std::shared_ptr<Enemigo_basico> enem(new Enemigo_basico(GX()*App_Definiciones::definiciones::dim_celda, GY()*App_Definiciones::definiciones::dim_celda));
 	contenedor.objetos_juego.push_back(enem);
 	contenedor.colisionables.push_back(std::shared_ptr<Colisionable_I>(enem, static_cast<Colisionable_I*>(enem.get())));
 	contenedor.representables.push_back(std::shared_ptr<Representable_I>(enem, static_cast<Representable_I*>(enem.get())));

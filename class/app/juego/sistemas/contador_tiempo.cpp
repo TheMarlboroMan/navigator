@@ -29,11 +29,9 @@ std::string Contador_tiempo::formatear_tiempo_restante()
 
 	std::stringstream ss;
 	ss.fill('0');
-	ss.width(2);
-
-	ss<<minutos<<":"<<segundos<<":";
-	ss.width(3);
-	ss<<decimas;
+	ss<<std::setw(2)<<minutos<<":"<<
+		std::setw(2)<<segundos<<":"<<
+		std::setw(3)<<decimas;
 
 	return ss.str();
 }

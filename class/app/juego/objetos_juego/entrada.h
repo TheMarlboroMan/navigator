@@ -14,7 +14,7 @@ class Entrada:public App_Interfaces::Espaciable
 	//Propiedades
 	private:
 	App_Definiciones::direcciones posicion;
-	App_Definiciones::tipos::t_dim x, y;	
+	App_Definiciones::t_dim x, y;	
 
 	//////////////////////////////
 	//Implementación de Espaciable
@@ -22,7 +22,7 @@ class Entrada:public App_Interfaces::Espaciable
 	virtual Espaciable::t_caja copia_caja() const 
 	{
 		using namespace App_Definiciones;
-		return Espaciable::t_caja(x, y,tipos::DIM_CELDA,tipos::DIM_CELDA);
+		return Espaciable::t_caja(x, y, definiciones::dim_celda, definiciones::dim_celda);
 	}
 
 	//Ninguna de estas funciones hace nada porque la entrada es inamovible.
@@ -35,13 +35,13 @@ class Entrada:public App_Interfaces::Espaciable
 	///////////////////
 	//Interface pública
 	public:
-	Entrada(App_Definiciones::direcciones p, App_Definiciones::tipos::t_dim px, App_Definiciones::tipos::t_dim py)
+	Entrada(App_Definiciones::direcciones p, App_Definiciones::t_dim px, App_Definiciones::t_dim py)
 		:posicion(p), x(px), y(py)
 	{}
 
 	App_Definiciones::direcciones acc_posicion() const {return posicion;}
-	App_Definiciones::tipos::t_dim acc_x() const {return x;}
-	App_Definiciones::tipos::t_dim acc_y() const {return y;}
+	App_Definiciones::t_dim acc_x() const {return x;}
+	App_Definiciones::t_dim acc_y() const {return y;}
 };
 }
 

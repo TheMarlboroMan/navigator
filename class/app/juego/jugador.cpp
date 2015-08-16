@@ -203,6 +203,7 @@ bool Jugador::disparar()
 	if(energia >= 10.0f)
 	{
 		consumir_energia(10.0f);
+		sumar_vector(direccion==App_Definiciones::direcciones::izquierda ? 30.0 : -30.0, Movil::t_vector::V_X);		
 		return true;
 	}
 

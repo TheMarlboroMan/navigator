@@ -17,13 +17,10 @@
 
 using namespace App_Niveles;
 using namespace App_Juego;
-using namespace App_Graficos;
-using namespace App_Colisiones;
-using namespace App_Input;
 
-
-Controlador_juego::Controlador_juego(Director_estados &DI, DLibV::Pantalla&, App_RepositorioSalas::Repositorio_salas& repo)
+Controlador_juego::Controlador_juego(Director_estados &DI, DLibV::Pantalla& p, App_RepositorioSalas::Repositorio_salas& repo)
 	:Controlador_base(DI),
+	camara(0, 0, App_Definiciones::definiciones::w_vista, App_Definiciones::definiciones::h_vista), //TODO: Quitar un poco de altura para el HUD.
 	repo_salas(repo),
 	mapa(0, 0),
 	jugador(32.0, 32.0),
@@ -32,6 +29,8 @@ Controlador_juego::Controlador_juego(Director_estados &DI, DLibV::Pantalla&, App
 {
 	//TODO: Envolver todo esto en una clase que lo haga sólo...
 	//TODO: Hacerlo cuando todo esté listo, claro.
+
+	
 
 	using namespace App_Generador;
 	Generador_estructura_niveles GEN;
@@ -43,6 +42,7 @@ Controlador_juego::Controlador_juego(Director_estados &DI, DLibV::Pantalla&, App
 	mapa=TM.traducir_mapa(GEN.acc_proto_salas(), repo);
 
 	sala_actual=&(mapa.obtener_sala_inicio());
+	ajustar_camara_a_sala(*sala_actual);
 
 	iniciar_automapa();
 
@@ -68,6 +68,8 @@ void Controlador_juego::postloop(Input_base& input, float delta)
 
 void Controlador_juego::loop(Input_base& input, float delta)
 {
+	using namespace App_Input;
+
 	if(input.es_senal_salida() || input.es_input_down(Input::I_ESCAPE))
 	{
 		abandonar_aplicacion();
@@ -113,9 +115,9 @@ bool Controlador_juego::controlar_y_efectuar_salida_sala(Jugador& j)
 	direcciones salida=direcciones::nada;
 
 	if(j.acc_espaciable_x() < 0) salida=direcciones::izquierda;
-	else if(j.acc_espaciable_fx() >= sala_actual->acc_w()*tipos::DIM_CELDA) salida=direcciones::derecha;
+	else if(j.acc_espaciable_fx() >= sala_actual->acc_w()*definiciones::dim_celda) salida=direcciones::derecha;
 	else if(j.acc_espaciable_y() < 0) salida=direcciones::arriba;
-	else if(j.acc_espaciable_fy() > sala_actual->acc_h()*tipos::DIM_CELDA) salida=direcciones::abajo;
+	else if(j.acc_espaciable_fy() > sala_actual->acc_h()*definiciones::dim_celda) salida=direcciones::abajo;
 
 	if(salida!=direcciones::nada)
  	{
@@ -175,6 +177,9 @@ void Controlador_juego::cargar_sala(int ax, int ay, App_Definiciones::direccione
 		}
 			
 		refrescar_automapa();
+		ajustar_camara_a_sala(*sala_actual);
+		
+
 	}
 	catch(std::logic_error& e)
 	{
@@ -199,8 +204,10 @@ void Controlador_juego::limpiar_pre_cambio_sala()
 * @param float : El tiempo delta.
 */
 
-void Controlador_juego::procesar_jugador(Jugador& j, float delta, Input_usuario iu)
+void Controlador_juego::procesar_jugador(Jugador& j, float delta, App_Input::Input_usuario iu)
 {
+	using namespace App_Colisiones;
+
 	if(iu.usar)
 	{
 		if(jugador.disparar())
@@ -264,12 +271,25 @@ void Controlador_juego::procesar_jugador(Jugador& j, float delta, Input_usuario 
 
 void Controlador_juego::dibujar(DLibV::Pantalla& pantalla)
 {
+	using namespace App_Graficos;
 	using namespace App_Interfaces;
 
-	//TODO: Usar cámara.
-
 	//Pantalla...
-	pantalla.limpiar(128, 128, 128, 255);
+	pantalla.limpiar(0, 0, 0, 255);
+	evaluar_enfoque_camara();
+	auto c=camara.acc_caja_pos();
+	
+SDL_Rect cp=DLibH::Herramientas_SDL::nuevo_sdl_rect(c.x, c.y, c.w, c.h);
+DLibV::Representacion_primitiva_caja_estatica CAJA(cp, 128, 128, 128);
+CAJA.volcar(pantalla);
+
+	/**
+	* TODO: Usar foco de la cámara para trimear lo que mostramos si la sala
+	* es más grande que la cámara en un factor de... 1.2?.
+	* const auto& c_foco=camara.acc_caja_foco();
+	* const Espaciable::t_caja caja(c_foco.x, c_foco.y, c_foco.w, c_foco.h);
+	*/
+
 
 	//Recolectar representables...
 	std::vector<const Representable_I *> vr=(*sala_actual).obtener_vector_representables();
@@ -281,30 +301,21 @@ void Controlador_juego::dibujar(DLibV::Pantalla& pantalla)
 	//TODO: Ordenar la vista.
 	
 	//Generar vista.
-	representador.generar_vista(pantalla, vr);
+	representador.generar_vista(pantalla, camara, vr);
 
 	//Hud
-	std::stringstream ss;
-	ss<<jugador.acc_espaciable_x()<<","<<jugador.acc_espaciable_y()<<std::endl<<"HULL: "<<jugador.acc_salud()<<std::endl<<"ENERGY: "<<jugador.acc_energia()<<std::endl<<"SHIELD: "<<jugador.acc_escudo();
-
-	DLibV::Representacion_texto_auto_estatica rep_hud(pantalla.acc_renderer(), DLibV::Gestor_superficies::obtener(App::Recursos_graficos::RS_FUENTE_BASE), ss.str());
-	rep_hud.establecer_posicion(16, 16);
-	rep_hud.volcar(pantalla);
-
-	//Contador de tiempo...
-	rep_hud.asignar(contador_tiempo.formatear_tiempo_restante());
-	rep_hud.establecer_posicion(16, 52);
-	rep_hud.volcar(pantalla);
+	representador.generar_hud(pantalla, jugador.acc_salud(), jugador.acc_energia(), jugador.acc_escudo(), contador_tiempo.formatear_tiempo_restante());
 
 	//Automapa	
-	representador.dibujar_marco_automapa(pantalla);
+	//representador.dibujar_marco_automapa(pantalla);
 
 	const auto& v=automapa.acc_vista();
 	int x=0, y=0;
 
 	for(const auto& u : v)
 	{
-		representador.dibujar_pieza_automapa(pantalla, x, y, u.visitado ? u.tipo : App_Definiciones::direcciones::nada);
+		bool es_actual=static_cast<int>(sala_actual->acc_x())==u.x && static_cast<int>(sala_actual->acc_y())==u.y;
+		representador.dibujar_pieza_automapa(pantalla, x, y, u.visitado ? u.tipo : App_Definiciones::direcciones::nada, es_actual);
 		if(++x==App_Juego_Automapa::Definiciones_automapa::ANCHO)
 		{
 			x=0; ++y;
@@ -354,6 +365,8 @@ void Controlador_juego::iniciar_automapa()
 
 void Controlador_juego::logica_proyectiles(float delta)
 {
+	using namespace App_Colisiones;
+
 	auto procesar=[](Vsptr_Proyectil_base& proy, float delta, const Sala& sala)
 	{
 		for(auto& p : proy) 
@@ -389,7 +402,6 @@ void Controlador_juego::logica_mundo(float delta)
 	* Cosas a las que les podemos disparar: controlar si cualquier proyectil
 	* del jugador ha hecho impacto con ellas.
 	*/
-
 	if(proyectiles_jugador.size()) 
 	{
 		Logica_disparable ld(proyectiles_jugador);
@@ -429,4 +441,51 @@ void Controlador_juego::logica_mundo(float delta)
 	*/
 
 	sala_actual->limpiar_objetos_juego_para_borrar();
+}
+
+
+void Controlador_juego::evaluar_enfoque_camara()
+{
+	const auto& c_foco=camara.acc_caja_foco();
+	int x=jugador.acc_espaciable_x()-(c_foco.w / 2 );
+	int y=jugador.acc_espaciable_y()-(c_foco.h / 2);
+	camara.enfocar_a(x, y);
+}
+
+/**
+* Establece los límites de la cámara según la sala. Adicionalmente puede cambiar
+* el tamaño y la posición de la cámara para salas más pequeñas que la misma.
+*/ 
+
+void Controlador_juego::ajustar_camara_a_sala(const Sala& s)
+{
+	using namespace App_Definiciones;
+	const int w_sala=sala_actual->acc_w()*definiciones::dim_celda;
+	const int h_sala=sala_actual->acc_h()*definiciones::dim_celda;
+
+	camara.establecer_limites(0, 0, w_sala, h_sala);
+
+	//TODO: Todo esto de la cámara es una mierda. Mejorar la librería.
+	int w_pos=definiciones::w_vista, h_pos=definiciones::h_vista, x_pos=0, y_pos=0;
+	if(w_sala < definiciones::w_vista || h_sala < definiciones::h_vista)
+	{
+		if(w_sala < definiciones::w_vista) 
+		{
+			w_pos=w_sala;
+			x_pos=(definiciones::w_vista - w_sala) / 2;
+		}
+
+		if(h_sala < definiciones::h_vista) 
+		{
+			h_pos=h_sala;
+			y_pos=(definiciones::h_vista - h_sala) / 2;
+		}
+	}
+
+	camara.mut_w_pos(w_pos);
+	camara.mut_h_pos(h_pos);
+	camara.mut_pos_x(x_pos);
+	camara.mut_pos_y(y_pos);
+
+	camara.restaurar_enfoque();
 }

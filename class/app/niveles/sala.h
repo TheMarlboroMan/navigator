@@ -23,17 +23,17 @@ class Sala
 	///////////
 	// Interface pública.
 	public:
-								Sala(App_Definiciones::tipos::t_dim pw, App_Definiciones::tipos::t_dim ph, App_Definiciones::tipos::t_dim px, App_Definiciones::tipos::t_dim py);
+								Sala(App_Definiciones::t_dim pw, App_Definiciones::t_dim ph, App_Definiciones::t_dim px, App_Definiciones::t_dim py);
 
-	App_Definiciones::tipos::t_dim 				acc_x() const {return pos.x;}
-	App_Definiciones::tipos::t_dim 				acc_y() const {return pos.y;}
-	App_Definiciones::tipos::t_dim 				acc_w() const {return w;}
-	App_Definiciones::tipos::t_dim 				acc_h() const {return h;}
+	App_Definiciones::t_dim 				acc_x() const {return pos.x;}
+	App_Definiciones::t_dim 				acc_y() const {return pos.y;}
+	App_Definiciones::t_dim 				acc_w() const {return w;}
+	App_Definiciones::t_dim 				acc_h() const {return h;}
 	App_Definiciones::direcciones 				acc_direcciones_entradas() const 	{return objetos.direcciones_entradas;}
-	void 							insertar_celda(App_Definiciones::tipos::t_dim px, App_Definiciones::tipos::t_dim py, Celda::tipo_celda pt); /** @throw Matriz_2d_excepcion_item_existe cuando la celda está ocupada. */
-	void 							erase(App_Definiciones::tipos::t_dim px, App_Definiciones::tipos::t_dim py); /** @throw Matriz_2d_excepcion_item_invalido cuando no existe la celda. */
-	void 							modificar_posicion(App_Definiciones::tipos::t_dim px, App_Definiciones::tipos::t_dim py);
-	void 							modificar_dimensiones(App_Definiciones::tipos::t_dim px, App_Definiciones::tipos::t_dim py);
+	void 							insertar_celda(App_Definiciones::t_dim px, App_Definiciones::t_dim py, Celda::tipo_celda pt); /** @throw Matriz_2d_excepcion_item_existe cuando la celda está ocupada. */
+	void 							erase(App_Definiciones::t_dim px, App_Definiciones::t_dim py); /** @throw Matriz_2d_excepcion_item_invalido cuando no existe la celda. */
+	void 							modificar_posicion(App_Definiciones::t_dim px, App_Definiciones::t_dim py);
+	void 							modificar_dimensiones(App_Definiciones::t_dim px, App_Definiciones::t_dim py);
 	std::vector<const App_Interfaces::Representable_I *> 	obtener_vector_representables() const;
 	void							implantar_objetos_juego(App_Juego_ObjetoJuego::Contenedor_objetos&&);
 	const HerramientasProyecto::Matriz_2d<Celda>& 		acc_matriz() const {return celdas;}
@@ -55,7 +55,7 @@ class Sala
 	private:
 
 	App_Definiciones::tipos::coordenadas_t_dim 		pos; //Posición en una rejilla general.
-	App_Definiciones::tipos::t_dim 				w, h;		//Ancho y alto.
+	App_Definiciones::t_dim 				w, h;		//Ancho y alto.
 	HerramientasProyecto::Matriz_2d<Celda> 			celdas;
 	App_Juego_ObjetoJuego::Contenedor_objetos	 	objetos;
 

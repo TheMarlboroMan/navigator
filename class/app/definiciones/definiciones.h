@@ -8,14 +8,29 @@
 namespace App_Definiciones
 {
 
+typedef unsigned int 				t_dim;
+
+struct definiciones
+{
+	private:
+	definiciones();
+
+	public:
+	static const t_dim 			dim_celda=32;	
+
+	static const int 			w_vista=640;
+	static const int 			h_vista=400;
+
+	static const int 			w_pantalla=640;
+	static const int 			h_pantalla=480;
+};
+
 struct tipos
 {	
 	private:
 	tipos();
 
 	public:
-	typedef unsigned int t_dim;
-	static const t_dim DIM_CELDA=32;	
 
 	struct coordenadas_t_dim
 	{

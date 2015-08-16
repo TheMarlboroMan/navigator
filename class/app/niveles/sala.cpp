@@ -2,7 +2,6 @@
 
 using namespace App_Niveles;
 using namespace HerramientasProyecto;
-using namespace App_Definiciones;
 
 /**
 * @param t_dim pw 
@@ -11,7 +10,7 @@ using namespace App_Definiciones;
 * @param t_dim py
 */
 
-Sala::Sala(tipos::t_dim pw, tipos::t_dim ph, tipos::t_dim px, tipos::t_dim py)
+Sala::Sala(App_Definiciones::t_dim pw, App_Definiciones::t_dim ph, App_Definiciones::t_dim px, App_Definiciones::t_dim py)
 	:pos(px, py), w(pw), h(ph), celdas(pw, ph)
 {
 
@@ -24,7 +23,7 @@ Sala::Sala(tipos::t_dim pw, tipos::t_dim ph, tipos::t_dim px, tipos::t_dim py)
 * @throw Matriz_2d_excepcion_item_existe cuando la celda está ocupada.
 */
 
-void Sala::insertar_celda(App_Definiciones::tipos::t_dim px, App_Definiciones::tipos::t_dim py, Celda::tipo_celda pt)
+void Sala::insertar_celda(App_Definiciones::t_dim px, App_Definiciones::t_dim py, Celda::tipo_celda pt)
 {
 	celdas(px, py, Celda(px, py, pt));
 }
@@ -35,7 +34,7 @@ void Sala::insertar_celda(App_Definiciones::tipos::t_dim px, App_Definiciones::t
 * @throw Matriz_2d_excepcion_item_invalido cuando no existe la celda.
 */
 
-void Sala::erase(App_Definiciones::tipos::t_dim px, App_Definiciones::tipos::t_dim py)
+void Sala::erase(App_Definiciones::t_dim px, App_Definiciones::t_dim py)
 {
 	celdas.erase(px, py);
 }
@@ -129,13 +128,13 @@ size_t Sala::limpiar_objetos_juego_para_borrar()
 	return res;
 }
 
-void Sala::modificar_posicion(App_Definiciones::tipos::t_dim px, App_Definiciones::tipos::t_dim py)
+void Sala::modificar_posicion(App_Definiciones::t_dim px, App_Definiciones::t_dim py)
 {
 	pos.x=px;
 	pos.y=py;
 }
 
-void Sala::modificar_dimensiones(App_Definiciones::tipos::t_dim pw, App_Definiciones::tipos::t_dim ph)
+void Sala::modificar_dimensiones(App_Definiciones::t_dim pw, App_Definiciones::t_dim ph)
 {
 	w=pw;
 	h=ph;

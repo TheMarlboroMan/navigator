@@ -1,7 +1,6 @@
 #ifndef CONTROLADOR_JUEGO
 #define CONTROLADOR_JUEGO
 
-#include <sstream>
 #include <memory>
 
 #include "controlador_base.h"
@@ -45,6 +44,8 @@ class Controlador_juego:public Controlador_base
 	//Propiedades
 	private:
 
+	DLibV::Camara camara;
+
 	App_RepositorioSalas::Repositorio_salas&	repo_salas;
 	App_Graficos::Representador 			representador;
 	App_Niveles::Mapa 				mapa;
@@ -60,6 +61,8 @@ class Controlador_juego:public Controlador_base
 	///////////////
 	//Métodos internos.
 
+	void					ajustar_camara_a_sala(const App_Niveles::Sala&);
+	void					evaluar_enfoque_camara();
 	void 					procesar_jugador(App_Juego::Jugador& j, float delta, App_Input::Input_usuario iu);
 	bool 					controlar_y_efectuar_salida_sala(App_Juego::Jugador& j);
 	void 					iniciar_automapa();

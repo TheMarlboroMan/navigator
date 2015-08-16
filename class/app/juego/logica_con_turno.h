@@ -4,6 +4,7 @@
 #include "../visitantes/visitante_con_turno.h"
 #include "../colisiones/calculador_colisiones.h"
 #include "objetos_juego/enemigo_basico.h"
+#include "objetos_juego/enemigo_rebote.h"
 #include "objetos_juego/proyectil_normal.h"
 #include "jugador.h"
 
@@ -24,6 +25,7 @@ class Logica_con_turno:
 	public:
 
 	virtual void 			visitar(App_Juego_ObjetoJuego::Enemigo_basico&);
+	virtual void 			visitar(App_Juego_ObjetoJuego::Enemigo_rebote&);
 	virtual void 			visitar(App_Juego_ObjetoJuego::Proyectil_normal&);
 
 	///////////////////////

@@ -39,6 +39,7 @@ $(DIR_O)logica_bonus.o\
 $(DIR_O)logica_disparador.o\
 $(DIR_O)logica_colisionable.o\
 $(DIR_O)enemigo_basico.o\
+$(DIR_O)enemigo_rebote.o\
 $(DIR_O)proyectil_base.o\
 $(DIR_O)proyectil_normal.o\
 $(DIR_O)item_repositorio.o\

@@ -2,13 +2,15 @@
 #define REPRESENTABLE_I_H
 
 #include <libDan2.h>
+#include "../graficos/bloque_transformacion_representable.h"
 
 extern DLibH::Log_base LOG;
-
+/*
 namespace App_Graficos
 {
 class Bloque_transformacion_representable;
 }
+*/
 
 namespace App_Interfaces
 {

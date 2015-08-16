@@ -9,6 +9,7 @@
 #include "../juego/objetos_juego/bonus_salud.h"
 #include "../juego/objetos_juego/bonus_tiempo.h"
 #include "../juego/objetos_juego/enemigo_basico.h"
+#include "../juego/objetos_juego/enemigo_rebote.h"
 #include "../juego/objetos_juego/entrada.h"
 #include "../juego/objetos_juego/salida.h"
 #include "../juego/objetos_juego/posicion_inicial.h"
@@ -51,6 +52,7 @@ class Factoria_objetos_juego
 	void						interpretar_como_bonus_tiempo(const std::vector<std::string>&, App_Juego_ObjetoJuego::Contenedor_objetos&);
 	void						interpretar_como_bonus_salud(const std::vector<std::string>&, App_Juego_ObjetoJuego::Contenedor_objetos&);
 	void						interpretar_como_enemigo_basico(const std::vector<std::string>&, App_Juego_ObjetoJuego::Contenedor_objetos&);
+	void						interpretar_como_enemigo_rebote(const std::vector<std::string>&, App_Juego_ObjetoJuego::Contenedor_objetos&);
 	void						interpretar_como_entrada(const std::vector<std::string>&, App_Juego_ObjetoJuego::Contenedor_objetos&);
 	void						interpretar_como_salida(const std::vector<std::string>&, App_Juego_ObjetoJuego::Contenedor_objetos&);
 	void						interpretar_como_posicion_inicial(const std::vector<std::string>&, App_Juego_ObjetoJuego::Contenedor_objetos&);
@@ -70,6 +72,7 @@ class Factoria_objetos_juego
 	static const int				lp_bonus_salud=4;
 	static const int				lp_bonus_tiempo=4;
 	static const int				lp_enemigo_basico=4;
+	static const int				lp_enemigo_rebote=6;
 
 	enum tipos {
 		entrada=1,
@@ -77,7 +80,8 @@ class Factoria_objetos_juego
 		salida=3,
 		bonus_salud=10,
 		bonus_tiempo=11,
-		enemigo_basico=30
+		enemigo_basico=30,
+		enemigo_rebote=31
 	};
 };
 

@@ -45,6 +45,35 @@ void Logica_con_turno::visitar(App_Juego_ObjetoJuego::Enemigo_basico& o)
 	}
 }
 
+void Logica_con_turno::visitar(App_Juego_ObjetoJuego::Enemigo_rebote& o)
+{
+	//Moverse...
+	auto v=o.acc_vector();
+	o.desplazar_caja(v.x * delta, v.y * delta);
+
+	//En caso de colisión o salir fuera del mundo, revertir.
+	App_Colisiones::Calculador_colisiones cc;
+
+	auto caja=o.copia_caja();
+	auto cel=cc.celdas_en_caja(caja, sala);
+	if(cc.es_fuera_de_sala(caja, sala) || cel.size())
+	{
+		if(cel.size())
+		{
+			if(v.x)
+			{
+				o.ajustar(*cel[0], v.x < 0 ? Actor_movil::posiciones_ajuste::izquierda : Actor_movil::posiciones_ajuste::derecha);
+			}
+			else if(v.y)
+			{
+				o.ajustar(*cel[0], v.y < 0 ? Actor_movil::posiciones_ajuste::arriba : Actor_movil::posiciones_ajuste::abajo);
+			}			
+		}
+
+		o.cambiar_direccion();
+	}
+}
+
 void Logica_con_turno::visitar(App_Juego_ObjetoJuego::Proyectil_normal& o)
 {
 	auto v=o.acc_vector();

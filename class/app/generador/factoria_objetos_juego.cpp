@@ -18,6 +18,7 @@ void Factoria_objetos_juego::interpretar_linea(const std::string& linea, App_Jue
 			case bonus_tiempo: 	interpretar_como_bonus_tiempo(params, contenedor); break;
 			case bonus_salud:	interpretar_como_bonus_salud(params, contenedor); break;
 			case enemigo_basico:	interpretar_como_enemigo_basico(params, contenedor); break;
+			case enemigo_rebote:	interpretar_como_enemigo_rebote(params, contenedor); break;
 			case entrada:		interpretar_como_entrada(params, contenedor); break;
 			case salida:		interpretar_como_salida(params, contenedor); break;
 			case posicion_inicial:	interpretar_como_posicion_inicial(params, contenedor); break;
@@ -91,6 +92,36 @@ void Factoria_objetos_juego::interpretar_como_enemigo_basico(const std::vector<s
 		contenedor.con_turno.push_back(std::shared_ptr<Con_turno_I>(ob, static_cast<Con_turno_I*>(ob.get())));
 		contenedor.disparables.push_back(std::shared_ptr<Disparable_I>(ob, static_cast<Disparable_I*>(ob.get())));
 		contenedor.disparadores.push_back(std::shared_ptr<Disparador_I>(ob, static_cast<Disparador_I*>(ob.get())));
+	}
+}
+
+void Factoria_objetos_juego::interpretar_como_enemigo_rebote(const std::vector<std::string>& params, App_Juego_ObjetoJuego::Contenedor_objetos& contenedor)
+{
+	if(params.size() != lp_enemigo_rebote)
+	{
+		throw Factoria_objetos_juego_excepcion(params.size(), lp_enemigo_rebote, "Enemigo rebote");
+	}
+	else
+	{
+		using namespace App_Definiciones;
+
+		const int x=toi(params[1]);
+		const int y=toi(params[2]);
+		const int velocidad=toi(params[3]);
+		const int tr=toi(params[4]);
+		const direcciones dir=convertir_en_direccion(toi(params[5]));
+
+		Enemigo_rebote::tipos_rebote tipo_rebote=Enemigo_rebote::tipos_rebote::invertir;
+		if(tr==1) tipo_rebote=Enemigo_rebote::tipos_rebote::derecha;
+		else if(tr==2) tipo_rebote=Enemigo_rebote::tipos_rebote::izquierda;
+
+		std::shared_ptr<Enemigo_rebote> ob(new Enemigo_rebote(x, y, velocidad, tipo_rebote, dir));
+
+		contenedor.objetos_juego.push_back(ob);
+		contenedor.colisionables.push_back(std::shared_ptr<Colisionable_I>(ob, static_cast<Colisionable_I*>(ob.get())));
+		contenedor.representables.push_back(std::shared_ptr<Representable_I>(ob, static_cast<Representable_I*>(ob.get())));
+		contenedor.con_turno.push_back(std::shared_ptr<Con_turno_I>(ob, static_cast<Con_turno_I*>(ob.get())));
+		contenedor.disparables.push_back(std::shared_ptr<Disparable_I>(ob, static_cast<Disparable_I*>(ob.get())));
 	}
 }
 

@@ -47,6 +47,7 @@ void Traductor_mapas::parsear_sala(const Proto_sala& ps, App_Niveles::Mapa& resu
 {
 	Parser_salas parser;
 	parser.parsear_fichero(repo.obtener_ruta_sala(ps.acc_salidas()));
+//	parser.parsear_fichero("data/salas/1/1_001.dat");
 
 	/**
 	* La sala hay que "compilarla" una vez parseado el fichero. Básicamente

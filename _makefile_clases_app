@@ -63,6 +63,7 @@ $(DIR_O)logica_con_turno.o:\
 $(DIR_O)calculador_colisiones.o\
 $(DIR_O)jugador.o\
 $(DIR_O)enemigo_basico.o\
+$(DIR_O)enemigo_rebote.o\
 $(DIR_O)proyectil_normal.o\
 $(DIR_VISITANTES)visitante_con_turno.h\
 $(DIR_JUEGO)logica_con_turno.h\
@@ -78,6 +79,7 @@ $(DIR_JUEGO)logica_disparable.cpp
 
 $(DIR_O)logica_colisionable.o:\
 $(DIR_O)enemigo_basico.o\
+$(DIR_O)enemigo_rebote.o\
 $(DIR_O)salida.o\
 $(DIR_O)jugador.o\
 $(DIR_O)colisionable_i.o\
@@ -111,6 +113,18 @@ $(DIR_O)disparable_i.o\
 $(DIR_JUEGO_OBJETOS)enemigo_basico.h\
 $(DIR_JUEGO_OBJETOS)enemigo_basico.cpp
 	$(CC) $(CFLAGS) $(INCLUDES) $(DIR_JUEGO_OBJETOS)enemigo_basico.cpp -o $(DIR_O)enemigo_basico.o
+
+$(DIR_O)enemigo_rebote.o:\
+$(DIR_O)definiciones.o \
+$(DIR_O)actor_movil.o\
+$(DIR_O)colisionable_i.o\
+$(DIR_O)objeto_juego_i.o\
+$(DIR_O)representable_i.o\
+$(DIR_O)con_turno_i.o\
+$(DIR_O)disparable_i.o\
+$(DIR_JUEGO_OBJETOS)enemigo_rebote.h\
+$(DIR_JUEGO_OBJETOS)enemigo_rebote.cpp
+	$(CC) $(CFLAGS) $(INCLUDES) $(DIR_JUEGO_OBJETOS)enemigo_rebote.cpp -o $(DIR_O)enemigo_rebote.o
 
 $(DIR_O)bonus_salud.o:\
 $(DIR_O)actor.o\
@@ -256,6 +270,7 @@ $(DIR_O)contenedor_objetos_juego.o\
 $(DIR_O)bonus_salud.o\
 $(DIR_O)bonus_tiempo.o\
 $(DIR_O)enemigo_basico.o\
+$(DIR_O)enemigo_rebote.o\
 $(DIR_O)entrada.o\
 $(DIR_O)salida.o\
 $(DIR_O)posicion_inicial.o\

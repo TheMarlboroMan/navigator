@@ -72,6 +72,9 @@ std::vector<const Celda *> Calculador_colisiones::celdas_en_caja(const Espaciabl
 		if(fin_x > max_x) fin_x=max_x;
 		if(fin_y > max_y) fin_y=max_y;
 
+		//TODO: Realmente no me gusta esto NADA DE NADA DE NADA... 
+		//Lo vamos a quitar y vamos a hacer la rejilla inaccesible,
+		//por un método que saque lo que sea.
 		auto& rejilla=sala.acc_matriz().acc_matriz();	//Si no hacemos esta referencia se va todo a la mierda XD!.
 		auto w=sala.acc_w();
 

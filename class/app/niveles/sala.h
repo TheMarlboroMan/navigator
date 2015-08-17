@@ -2,6 +2,7 @@
 #define SALA_H
 
 #include "celda.h"
+#include "celda_decorativa.h"
 #include "../../herramientas_proyecto/matriz2d.h"
 #include "../definiciones/definiciones.h"
 #include <memory>
@@ -31,11 +32,12 @@ class Sala
 	App_Definiciones::t_dim 				acc_h() const {return h;}
 	App_Definiciones::direcciones 				acc_direcciones_entradas() const 	{return objetos.direcciones_entradas;}
 	void 							insertar_celda(App_Definiciones::t_dim px, App_Definiciones::t_dim py, Celda::tipo_celda pt); /** @throw Matriz_2d_excepcion_item_existe cuando la celda está ocupada. */
-	void 							erase(App_Definiciones::t_dim px, App_Definiciones::t_dim py); /** @throw Matriz_2d_excepcion_item_invalido cuando no existe la celda. */
+	void 							insertar_celda_decorativa(App_Definiciones::t_dim px, App_Definiciones::t_dim py, App_Definiciones::t_dim pi); /** @throw Matriz_2d_excepcion_item_existe cuando la celda está ocupada. */
 	void 							modificar_posicion(App_Definiciones::t_dim px, App_Definiciones::t_dim py);
 	void 							modificar_dimensiones(App_Definiciones::t_dim px, App_Definiciones::t_dim py);
 	std::vector<const App_Interfaces::Representable_I *> 	obtener_vector_representables() const;
 	void							implantar_objetos_juego(App_Juego_ObjetoJuego::Contenedor_objetos&&);
+	//TODO: Elimianr...
 	const HerramientasProyecto::Matriz_2d<Celda>& 		acc_matriz() const {return celdas;}
 	const App_Juego_ObjetoJuego::Entrada& 			obtener_entrada_posicion(App_Definiciones::direcciones p); /** @throw std::logic_error cuando no hay entrada en esa posición. */
 	const std::shared_ptr<App_Juego_ObjetoJuego::Posicion_inicial>	obtener_posicion_inicial_jugador() {return objetos.posicion_inicial;}
@@ -58,6 +60,7 @@ class Sala
 	App_Definiciones::tipos::coordenadas_t_dim 		pos; //Posición en una rejilla general.
 	App_Definiciones::t_dim 				w, h;		//Ancho y alto.
 	HerramientasProyecto::Matriz_2d<Celda> 			celdas;
+	HerramientasProyecto::Matriz_2d<Celda_decorativa> 	celdas_decorativas;
 	App_Juego_ObjetoJuego::Contenedor_objetos	 	objetos;
 
 	///////////

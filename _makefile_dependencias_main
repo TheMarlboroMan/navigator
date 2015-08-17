@@ -4,6 +4,8 @@ $(DIR_O)selector_aleatorio.o \
 
 DEP_CLASES_APP=$(DIR_O)definiciones.o\
 $(DIR_O)sala.o\
+$(DIR_O)celda_decorativa.o\
+$(DIR_O)celda_base.o\
 $(DIR_O)celda.o\
 $(DIR_O)mapa.o\
 $(DIR_O)espaciable.o\

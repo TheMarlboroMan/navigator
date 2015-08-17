@@ -11,7 +11,9 @@ using namespace HerramientasProyecto;
 */
 
 Sala::Sala(App_Definiciones::t_dim pw, App_Definiciones::t_dim ph, App_Definiciones::t_dim px, App_Definiciones::t_dim py)
-	:pos(px, py), w(pw), h(ph), celdas(pw, ph)
+	:pos(px, py), w(pw), h(ph), 
+	//TODO: Esconder estas dos detrás de una clase más...
+	celdas(pw, ph), celdas_decorativas(pw, ph)
 {
 
 }
@@ -28,15 +30,9 @@ void Sala::insertar_celda(App_Definiciones::t_dim px, App_Definiciones::t_dim py
 	celdas(px, py, Celda(px, py, pt));
 }
 
-/**
-* @param t_dim x
-* @param t_dim_y
-* @throw Matriz_2d_excepcion_item_invalido cuando no existe la celda.
-*/
-
-void Sala::erase(App_Definiciones::t_dim px, App_Definiciones::t_dim py)
+void Sala::insertar_celda_decorativa(App_Definiciones::t_dim px, App_Definiciones::t_dim py, App_Definiciones::t_dim pi)
 {
-	celdas.erase(px, py);
+	celdas_decorativas(px, py, Celda_decorativa(px, py, pi));
 }
 
 /**
@@ -55,11 +51,11 @@ std::vector<const App_Interfaces::Representable_I *> Sala::obtener_vector_repres
 	{		
 		obtener(t_res& res):r(res) {}
 		t_res& r;
-		void operator()(const Celda& c) {r.push_back(&c);}
+		void operator()(const Celda_decorativa& c) {r.push_back(&c);}
 	}obt(resultado);
 
 	//Recolectar las celdas.
-	celdas.aplicar(obt);
+	celdas_decorativas.aplicar(obt);
 
 	//Recolectar los objetos juego.
 	for(auto& o : objetos.representables) resultado.push_back(o.get());
@@ -100,7 +96,9 @@ void Sala::modificar_dimensiones(App_Definiciones::t_dim pw, App_Definiciones::t
 {
 	w=pw;
 	h=ph;
+	//TODO: Esconder estas dos detrás de una clase más...
 	celdas=celdas.copiar_con_dimensiones(w, h);
+	celdas_decorativas=celdas_decorativas.copiar_con_dimensiones(w, h);
 }
 
 void Sala::implantar_objetos_juego(App_Juego_ObjetoJuego::Contenedor_objetos&& co)

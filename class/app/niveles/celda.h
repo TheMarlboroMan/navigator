@@ -2,22 +2,19 @@
 #define CELDA_H
 
 #include "../interfaces/espaciable.h"
-#include "../interfaces/representable_i.h"
 #include "../graficos/representador.h"
-#include "../recursos.h"
-#include "../definiciones/definiciones.h"
+#include "celda_base.h"
 
 namespace App_Niveles
 {
 
 class Celda:
-	public App_Interfaces::Espaciable, 
-	public App_Interfaces::Representable_I
+	public Celda_base,
+	public App_Interfaces::Espaciable
 {
 	//////////
 	//Definiciones...
 	public:
-
 	enum class tipo_celda {solida};
 
 	///////////
@@ -26,15 +23,6 @@ class Celda:
 	public:
 
 						Celda(App_Definiciones::t_dim px, App_Definiciones::t_dim py, tipo_celda pt);
-
-
-	//////////////////////////////
-	//Implementación de Representable_I.
-	public:
-
-	virtual unsigned short int 		obtener_profundidad_ordenacion()const {return 0;}
-	virtual void 				transformar_bloque(App_Graficos::Bloque_transformacion_representable &b) const;
-	virtual bool				es_representable_borrar() const {return false;}
 
 	//////////////////////////////
 	//Implementación de Espaciable
@@ -53,7 +41,6 @@ class Celda:
 	// Propiedades
 	private:
 
-	App_Definiciones::t_dim	x, y;
 	tipo_celda 				tipo;
 };
 

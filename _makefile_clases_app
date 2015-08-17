@@ -230,6 +230,7 @@ $(DIR_NIVELES)mapa.cpp
 
 $(DIR_O)sala.o:\
 $(DIR_O)celda.o \
+$(DIR_O)celda_decorativa.o \
 $(DIR_O)entrada.o \
 $(DIR_O)definiciones.o \
 $(DIR_O)contenedor_objetos_juego.o \
@@ -237,12 +238,27 @@ $(DIR_NIVELES)sala.h \
 $(DIR_NIVELES)sala.cpp
 	$(CC) $(CFLAGS) $(INCLUDES) $(DIR_NIVELES)sala.cpp -o $(DIR_O)sala.o
 
-$(DIR_O)celda.o:\
-$(DIR_O)espaciable.o\
+$(DIR_O)celda_base.o:\
 $(DIR_O)definiciones.o \
-$(DIR_NIVELES)celda.h \
+$(DIR_NIVELES)celda_base.h \
+$(DIR_NIVELES)celda_base.cpp
+	$(CC) $(CFLAGS) $(INCLUDES) $(DIR_NIVELES)celda_base.cpp -o $(DIR_O)celda_base.o
+
+$(DIR_O)celda.o:\
+$(DIR_O)celda_base.o\
+$(DIR_O)espaciable.o\
+$(DIR_O)definiciones.o\
+$(DIR_NIVELES)celda.h\
 $(DIR_NIVELES)celda.cpp
 	$(CC) $(CFLAGS) $(INCLUDES) $(DIR_NIVELES)celda.cpp -o $(DIR_O)celda.o
+
+$(DIR_O)celda_decorativa.o:\
+$(DIR_O)celda_base.o\
+$(DIR_O)representable_i.o\
+$(DIR_O)definiciones.o \
+$(DIR_NIVELES)celda_decorativa.h \
+$(DIR_NIVELES)celda_decorativa.cpp
+	$(CC) $(CFLAGS) $(INCLUDES) $(DIR_NIVELES)celda_decorativa.cpp -o $(DIR_O)celda_decorativa.o
 
 ################################################################################
 #Graficos

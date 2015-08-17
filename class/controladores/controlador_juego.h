@@ -58,6 +58,8 @@ class Controlador_juego:public Controlador_base
 	Vsptr_Proyectil_base		 		proyectiles_jugador;
 	Vsptr_Proyectil_base		 		proyectiles_enemigos;
 
+	bool						cambiar_modo_pantalla;
+
 	///////////////
 	//Métodos internos.
 

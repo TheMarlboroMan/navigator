@@ -13,7 +13,7 @@ const std::string Parser_salas::TIPO_OBJETOS="[OBJETOS]";
 		
 
 Parser_salas::Parser_salas()
-	:estado(t_estados::nada),
+	:d_celdas(destino_celdas::nada), estado(t_estados::nada),
 	sala(1,1,0,0)
 {
 
@@ -48,26 +48,11 @@ void Parser_salas::parsear_fichero(const std::string& ruta)
 					case t_estados::estructura: 
 					case t_estados::info: 
 					case t_estados::logica: 
-
+					case t_estados::fin: 
 					break;
 					case t_estados::rejilla: interpretar_linea_como_rejilla(linea); break;
 					case t_estados::celdas: interpretar_linea_como_celdas(linea); break;
 					case t_estados::objetos: interpretar_linea_como_objeto(linea, factoria); break;
-
-					//Poblar la sala. El contenedor de objetos queda inútil tras esto.
-					case t_estados::fin: 
-
-					//TODO: Sería interesante sacar esto de aquí
-					//para poder completar la sala con diferentes variantes
-					//y tal.
-
-					//TODO: La implantación sería mezclar la primera parte, con todo lo obligatorio
-					//con una de las variaciones.
-
-
-
-						//sala.implantar_objetos_juego(movible_contenedor_objetos_juego()); 
-					break;
 				}
 			}
 		}
@@ -79,7 +64,18 @@ bool Parser_salas::interpretar_estado(const std::string& linea)
 	if(linea==TIPO_ESTRUCTURA) estado=t_estados::estructura;
 	else if(linea==TIPO_INFO) estado=t_estados::info;
 	else if(linea==TIPO_REJILLA) estado=t_estados::rejilla;
-	else if(linea==TIPO_CELDAS) estado=t_estados::celdas;
+	else if(linea==TIPO_CELDAS) 
+	{
+		//Cada vez que encuentre una, aumentamos el destino.
+		switch(d_celdas)
+		{
+			case destino_celdas::nada: 	d_celdas=destino_celdas::logica; break;
+			case destino_celdas::logica: 	d_celdas=destino_celdas::decoracion; break;
+			case destino_celdas::decoracion: throw std::runtime_error("Demasiadas secciones de celda en sala."); break;
+		}
+
+		estado=t_estados::celdas;
+	}	
 	else if(linea==TIPO_LOGICA) estado=t_estados::logica;
 	else if(linea==TIPO_OBJETOS) 
 	{
@@ -98,22 +94,42 @@ bool Parser_salas::interpretar_estado(const std::string& linea)
 
 void Parser_salas::interpretar_linea_como_rejilla(const std::string& linea)
 {
-	//TODO: Validar longitud de la información siempre.
 	std::vector<std::string> valores=Herramientas::explotar(linea, ',');
+
+	if(valores.size() < 2)
+	{
+		throw std::runtime_error("ERROR: Al interpretar línea como rejilla hay menos de 2 parámetros");
+	}
+
 	const auto w=toi(valores[0]), h=toi(valores[1]);
 	sala.modificar_dimensiones(w, h);
 }
 
 void Parser_salas::interpretar_linea_como_celdas(const std::string& linea)
 {
-	//TODO: Validar longitud de la información siempre.
-
 	std::vector<std::string> valores=Herramientas::explotar(linea, ' ');
+
 	for(const auto& v : valores)
 	{
 		const auto& partes=Herramientas::explotar(v, ',');
+
+		if(partes.size() != 3)
+		{
+			throw std::runtime_error("ERROR: Al interpretar línea "+v+" como celda hay debe haber 3 parámetros.");
+		}
+
 		const int x=toi(partes[0]), y=toi(partes[1])/*, tipo=toi(partes[2])*/;
-		sala.insertar_celda(x, y, App_Niveles::Celda::tipo_celda::solida);
+
+		switch(d_celdas)
+		{
+			case destino_celdas::nada: break;
+			case destino_celdas::logica: 	
+				sala.insertar_celda(x, y, App_Niveles::Celda::tipo_celda::solida);
+			break;
+			case destino_celdas::decoracion: 
+				sala.insertar_celda_decorativa(x, y, toi(partes[2]));
+			break;
+		}
 	}
 }
 

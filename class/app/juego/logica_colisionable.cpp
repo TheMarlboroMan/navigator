@@ -4,7 +4,7 @@
 using namespace App_Juego;
 
 Logica_colisionable::Logica_colisionable(Jugador& j)
-	:jugador(j)
+	:jugador(j), salida_nivel(false)
 {
 
 }
@@ -32,7 +32,7 @@ void Logica_colisionable::visitar(App_Juego_ObjetoJuego::Enemigo_rebote& b)
 
 void Logica_colisionable::visitar(App_Juego_ObjetoJuego::Salida& b)
 {
-	std::cout<<"SALIDA"<<std::endl;
+	salida_nivel=jugador.es_aterrizado();
 }
 
 /*

@@ -18,12 +18,14 @@ const float Jugador::TIEMPO_COOLOFF_ENERGIA=1.5f;
 const float Jugador::UMBRAL_DETENCION_ESTASIS=1.0f;
 const float Jugador::FACTOR_DETENCION_ESTASIS=1.2f;
 const float Jugador::VALOR_GRAVEDAD=1.0f;
+const float Jugador::TIEMPO_COMPLETAR_ATERRIZAJE=1.2f;
 
 Jugador::Jugador(float x, float y)
 	:Actor_movil(x, y, W, H),
 	posicion_anterior(copia_caja()),
 	salud(MAX_SALUD), energia(MAX_ENERGIA), 
 	escudo(MAX_ESCUDO), cooloff_energia(0.0f),
+	tiempo_aterrizado(0.0),
 //	TREC("data/recortes/jugador.dat"),	
 	direccion(App_Definiciones::direcciones::derecha)
 {
@@ -116,7 +118,8 @@ void Jugador::turno(float delta)
 	}
 	else if(energia < MAX_ENERGIA )
 	{
-		energia+=(delta * ENERGIA_RECUPERADA_POR_SEGUNDO);
+		float factor=es_aterrizado() ? ENERGIA_RECUPERADA_POR_SEGUNDO * 4.0 : ENERGIA_RECUPERADA_POR_SEGUNDO;
+		energia+=(delta * factor);
 		if(energia > MAX_ENERGIA) energia=MAX_ENERGIA;
 	}
 
@@ -186,6 +189,11 @@ void Jugador::turno(float delta)
 	}
 }
 
+/**
+* Esta es la función que usamos para restar energía de donde sea. Activa el 
+* cooloff de energía. Ojo, no se comprueba si tienes energía suficiente!!!!.
+*/
+
 void Jugador::consumir_energia(float c)
 {
 	energia-=c;
@@ -208,4 +216,23 @@ bool Jugador::disparar()
 	}
 
 	return false;
+}
+
+void Jugador::contabilizar_tiempo_aterrizado(float delta)
+{
+	if(!delta)
+	{
+		tiempo_aterrizado=0.0;
+	}
+	else 
+	{
+		tiempo_aterrizado+=delta;
+		if(tiempo_aterrizado > TIEMPO_COMPLETAR_ATERRIZAJE) tiempo_aterrizado=TIEMPO_COMPLETAR_ATERRIZAJE;
+	}
+}
+
+bool Jugador::es_aterrizado() const 
+{
+	const auto& v=acc_vector();
+	return tiempo_aterrizado >= TIEMPO_COMPLETAR_ATERRIZAJE && !v.x && !v.y;
 }

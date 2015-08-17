@@ -5,6 +5,7 @@
 #include "../interfaces/representable_i.h"
 #include "../definiciones/definiciones.h"
 #include "../recursos.h"
+#include "../../herramientas_proyecto/tabla_sprites.h"
 
 namespace App_Niveles
 {
@@ -30,9 +31,12 @@ class Celda_decorativa:
 
 	//////////
 	// Propiedades
-	protected:
+	private:
+
+	static HerramientasProyecto::Tabla_sprites tabla_sprites;
 
 	App_Definiciones::t_dim	indice;
+
 };
 
 }

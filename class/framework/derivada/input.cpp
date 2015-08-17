@@ -10,6 +10,8 @@ void Input::configurar()
 	mapa_teclado.insert(std::make_pair(I_ARRIBA, SDL_SCANCODE_UP));
 	mapa_teclado.insert(std::make_pair(I_ABAJO, SDL_SCANCODE_DOWN));
 
+	mapa_teclado.insert(std::make_pair(I_CAMBIAR_MODO_PANTALLA, SDL_SCANCODE_F));
+
 	mapa_teclado.insert(std::make_pair(I_USAR_SELECCION, SDL_SCANCODE_LCTRL));
 	mapa_teclado.insert(std::make_pair(I_ESTASIS, SDL_SCANCODE_SPACE));
 	mapa_teclado.insert(std::make_pair(I_RECARGA_ESCUDO, SDL_SCANCODE_LSHIFT));

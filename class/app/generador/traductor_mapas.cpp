@@ -46,6 +46,9 @@ App_Niveles::Mapa Traductor_mapas::traducir_mapa(const std::vector<Proto_sala>& 
 void Traductor_mapas::parsear_sala(const Proto_sala& ps, App_Niveles::Mapa& resultado, App_RepositorioSalas::Repositorio_salas& repo)
 {
 	Parser_salas parser;
+
+	//TODO: Faltan las excepciones que esto puede tirar, que no son pocas.
+
 	parser.parsear_fichero(repo.obtener_ruta_sala(ps.acc_salidas()));
 //	parser.parsear_fichero("data/salas/1/1_001.dat");
 

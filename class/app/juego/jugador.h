@@ -37,6 +37,7 @@ class Jugador:
 	int 					acc_escudo() const {return escudo;}
 	int 					acc_energia() const {return energia;}
 	App_Interfaces::Espaciable::t_caja	acc_posicion_anterior() const {return posicion_anterior;}
+	bool					es_aterrizado() const;
 
 	void					sumar_salud(float v);
 
@@ -44,6 +45,7 @@ class Jugador:
 	bool 					es_encarando_direccion(App_Definiciones::direcciones dir) const {return direccion==dir;}
 	bool					puede_recoger_salud() const {return salud < MAX_SALUD;}
 	bool					disparar();
+	void					contabilizar_tiempo_aterrizado(float v);
 	void 					recibir_impacto(float val);
 	
 
@@ -93,6 +95,7 @@ class Jugador:
 	static const float UMBRAL_DETENCION_ESTASIS;
 	static const float FACTOR_DETENCION_ESTASIS;
 	static const float VALOR_GRAVEDAD;
+	static const float TIEMPO_COMPLETAR_ATERRIZAJE;
 
 	/////////////////////////
 	// Propiedades...
@@ -105,6 +108,7 @@ class Jugador:
 	float					energia;
 	float 					escudo;
 	float					cooloff_energia;
+	float					tiempo_aterrizado;
 
 
 //	Tabla_sprites TREC;

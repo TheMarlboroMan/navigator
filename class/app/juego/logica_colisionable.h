@@ -23,6 +23,7 @@ class Logica_colisionable:
 	public:
 
 	Logica_colisionable(Jugador& j);
+	bool			es_salida_nivel() const {return salida_nivel;}
 	virtual void 		procesar(std::vector<std::shared_ptr<App_Interfaces::Colisionable_I>>&);
 
 	/////////////////
@@ -37,7 +38,8 @@ class Logica_colisionable:
 	//Propiedades.
 	private:
 
-	Jugador& jugador;
+	Jugador& 		jugador;
+	bool			salida_nivel;
 };
 
 }

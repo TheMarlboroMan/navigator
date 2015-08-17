@@ -49,6 +49,9 @@ class Parser_salas
 
 	enum class 						t_estados {nada, estructura, info, rejilla, celdas, logica, objetos, fin};
 	
+	enum class destino_celdas {nada, logica, decoracion};
+
+	destino_celdas						d_celdas;
 	t_estados 						estado;
 	static const std::string 				TIPO_ESTRUCTURA;
 	static const std::string 				TIPO_FIN_ESTRUCTURA;

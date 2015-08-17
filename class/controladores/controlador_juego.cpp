@@ -25,7 +25,8 @@ Controlador_juego::Controlador_juego(Director_estados &DI, DLibV::Pantalla& p, A
 	mapa(0, 0),
 	jugador(32.0, 32.0),
 	contador_tiempo(),
-	sala_actual(nullptr)
+	sala_actual(nullptr),
+	cambiar_modo_pantalla(false)
 {
 	//TODO: Envolver todo esto en una clase que lo haga sólo...
 	//TODO: Hacerlo cuando todo esté listo, claro.
@@ -66,7 +67,13 @@ Controlador_juego::~Controlador_juego()
 
 void Controlador_juego::preloop(Input_base& input, float delta)
 {
+	/**
+	* Almacenamos la orden para poder enviarla allá donde haya 
+	* información de pantalla.
+	* TODO: Sacarlo de dibujar y llevarlo al bootstrap.
+	*/
 
+	cambiar_modo_pantalla=input.es_input_down(Input::I_CAMBIAR_MODO_PANTALLA);
 }
 
 void Controlador_juego::postloop(Input_base& input, float delta)
@@ -170,7 +177,7 @@ void Controlador_juego::cargar_sala(int ax, int ay, App_Definiciones::direccione
 
 		//Colocar al jugador en la entrada y aplicar el offset.
 		using namespace App_Definiciones;
-		j.establecer_en_posicion(entrada);
+		j.establecer_posicion(entrada);
 		switch(salida)
 		{
 			case direcciones::izquierda:
@@ -265,12 +272,26 @@ void Controlador_juego::procesar_jugador(Jugador& j, float delta, App_Input::Inp
 		}
 	}
 
+	/**
+	* Comprobar si está "aterrizado...".
+	*/
+
+	auto c=jugador.copia_caja_desplazada(0.0, 1.0);
+	Calculador_colisiones CC;
+	jugador.contabilizar_tiempo_aterrizado(CC.celdas_en_caja(c, *sala_actual).size() ? delta : 0.0);
+
 	/*
-	* Cosas con las que se pueden chocar que no son bonus.
+	* Cosas con las que se pueden chocar que no son bonus. El objeto de 
+	* salida puede provocar el fin del nivel si el jugador aterriza al lado.
 	*/
 
 	Logica_colisionable lc(jugador);
 	sala_actual->procesar_colisionables(lc);
+	if(lc.es_salida_nivel())
+	{
+		//TODO...
+		abandonar_aplicacion();
+	}
 }
 
 /**
@@ -279,17 +300,27 @@ void Controlador_juego::procesar_jugador(Jugador& j, float delta, App_Input::Inp
 
 void Controlador_juego::dibujar(DLibV::Pantalla& pantalla)
 {
+	//TODO: Quitar esto de aquí, no pertenece. Llevarlo al bootstrap.
+	if(cambiar_modo_pantalla)
+	{
+		pantalla.establecer_modo_ventana(pantalla.acc_modo_ventana()==DLibV::Pantalla::M_VENTANA ? DLibV::Pantalla::M_PANTALLA_COMPLETA_RESOLUCION : DLibV::Pantalla::M_VENTANA);
+
+		//TODO: Además, jode la cámara... Habría que establecer la cámara en otro zoom o algo así???.
+
+		cambiar_modo_pantalla=false;
+	}
+
 	using namespace App_Graficos;
 	using namespace App_Interfaces;
 
 	//Pantalla...
 	pantalla.limpiar(0, 0, 0, 255);
 	evaluar_enfoque_camara();
-	auto c=camara.acc_caja_pos();
+//	auto c=camara.acc_caja_pos();
 	
-SDL_Rect cp=DLibH::Herramientas_SDL::nuevo_sdl_rect(c.x, c.y, c.w, c.h);
-DLibV::Representacion_primitiva_caja_estatica CAJA(cp, 128, 128, 128);
-CAJA.volcar(pantalla);
+//SDL_Rect cp=DLibH::Herramientas_SDL::nuevo_sdl_rect(c.x, c.y, c.w, c.h);
+//DLibV::Representacion_primitiva_caja_estatica CAJA(cp, 128, 128, 128);
+//CAJA.volcar(pantalla);
 
 	/**
 	* TODO: Usar foco de la cámara para trimear lo que mostramos si la sala
@@ -366,7 +397,6 @@ void Controlador_juego::iniciar_automapa()
 	automapa.inicializar(mapa.acc_w(), mapa.acc_h());
 	mapa.para_cada_sala(ls);
 	for(const auto& i : ls.v) automapa.configurar(i.x, i.y, i.dir);
-
 
 	refrescar_automapa();
 }

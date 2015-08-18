@@ -96,6 +96,7 @@ bool Kernel_base::loop(Interface_controlador& IC)
 	Input_base& input=acc_input();
 
 	preloop();
+	//TODO: El preloop no debería tener el input: consume sin haber hecho input.turno!!!!!...
 	IC.preloop(input, paso_delta);
 
 	//Aquí se consume el tiempo desde el último paso en bloques de "paso_delta".

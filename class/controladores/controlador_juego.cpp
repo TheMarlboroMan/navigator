@@ -67,18 +67,10 @@ Controlador_juego::~Controlador_juego()
 
 void Controlador_juego::preloop(Input_base& input, float delta)
 {
-	/**
-	* Almacenamos la orden para poder enviarla allá donde haya 
-	* información de pantalla.
-	* TODO: Sacarlo de dibujar y llevarlo al bootstrap.
-	*/
-
-	cambiar_modo_pantalla=input.es_input_down(Input::I_CAMBIAR_MODO_PANTALLA);
 }
 
 void Controlador_juego::postloop(Input_base& input, float delta)
 {
-
 }
 
 void Controlador_juego::loop(Input_base& input, float delta)
@@ -91,6 +83,16 @@ void Controlador_juego::loop(Input_base& input, float delta)
 	}
 	else
 	{
+	/**
+	* Almacenamos la orden para poder enviarla allá donde haya 
+	* información de pantalla.
+	* TODO: Sacarlo de dibujar y llevarlo al bootstrap.
+	*/
+	if(!cambiar_modo_pantalla) 
+	{
+		cambiar_modo_pantalla=input.es_input_down(Input::I_CAMBIAR_MODO_PANTALLA);
+	}
+
 		contador_tiempo.turno(delta);
 
 		Recogedor_input RI;
@@ -303,10 +305,11 @@ void Controlador_juego::dibujar(DLibV::Pantalla& pantalla)
 	//TODO: Quitar esto de aquí, no pertenece. Llevarlo al bootstrap.
 	if(cambiar_modo_pantalla)
 	{
-		pantalla.establecer_modo_ventana(pantalla.acc_modo_ventana()==DLibV::Pantalla::M_VENTANA ? DLibV::Pantalla::M_PANTALLA_COMPLETA_RESOLUCION : DLibV::Pantalla::M_VENTANA);
-
-		//TODO: Además, jode la cámara... Habría que establecer la cámara en otro zoom o algo así???.
-
+		//TODO: El cambio jode. For real.
+		auto mv=pantalla.acc_modo_ventana();
+		++mv;
+		if(mv >= DLibV::Pantalla::M_MAX_MODO) mv=0;
+		pantalla.establecer_modo_ventana(mv);
 		cambiar_modo_pantalla=false;
 	}
 

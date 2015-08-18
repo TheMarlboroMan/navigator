@@ -29,7 +29,7 @@ class Kernel_app:public Kernel_base
 	virtual void paso() {}		//Se llamará una vez por cada consumo de delta en el loop del kernel base.
 	virtual void preloop() {}	//Se llamará antes del consumo de delta en el loop del kernel base.
 	virtual void postloop() {}	//Idem, pero despúes.
-	virtual std::string acc_titulo_inicial() const {return std::string(" -- SDL 2 -- ");}
+	virtual std::string acc_titulo_inicial() const {return std::string(" -- Navigator -- ");}
 	virtual bool acc_mostrar_cursor_inicial() const {return true;}
 	virtual int acc_w_pantalla_inicial() const {return App_Definiciones::definiciones::w_pantalla;}
 	virtual int acc_h_pantalla_inicial() const {return App_Definiciones::definiciones::h_pantalla;}

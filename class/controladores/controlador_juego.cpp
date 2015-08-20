@@ -3,8 +3,6 @@
 #include "controlador_juego.h"
 #include "../app/recursos.h"
 #include "../app/definiciones/definiciones.h"
-#include "../app/generador/traductor_mapas.h"
-#include "../app/generador/generador_estructura_niveles.h"
 
 #include "../app/visitantes/visitante_objeto_juego.h"
 #include "../app/juego/objetos_juego/bonus_tiempo.h"
@@ -18,30 +16,15 @@
 using namespace App_Niveles;
 using namespace App_Juego;
 
-Controlador_juego::Controlador_juego(Director_estados &DI, DLibV::Pantalla& p, App_RepositorioSalas::Repositorio_salas& repo)
+Controlador_juego::Controlador_juego(Director_estados &DI, App_Niveles::Mapa& p_mapa)
 	:Controlador_base(DI),
-	camara(0, 0, App_Definiciones::definiciones::w_vista, App_Definiciones::definiciones::h_vista), //TODO: Quitar un poco de altura para el HUD.
-	repo_salas(repo),
-	mapa(0, 0),
+	camara(0, 0, App_Definiciones::definiciones::w_vista, App_Definiciones::definiciones::h_vista),
+	mapa(p_mapa),
 	jugador(32.0, 32.0),
 	contador_tiempo(),
 	sala_actual(nullptr),
 	cambiar_modo_pantalla(false)
 {
-	//TODO: Envolver todo esto en una clase que lo haga sólo...
-	//TODO: Hacerlo cuando todo esté listo, claro.
-
-	
-
-	using namespace App_Generador;
-	Generador_estructura_niveles GEN;
-	GEN.generar_camino_principal(10);
-	GEN.generar_salas_secundarias(5);
-	GEN.normalizar();
-
-	Traductor_mapas TM;
-	mapa=TM.traducir_mapa(GEN.acc_proto_salas(), repo);
-
 	sala_actual=&(mapa.obtener_sala_inicio());
 	ajustar_camara_a_sala(*sala_actual);
 

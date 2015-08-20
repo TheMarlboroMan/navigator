@@ -15,18 +15,13 @@
 #include "../app/colisiones/calculador_colisiones.h"
 #include "../app/input/recogedor_input.h"
 
-namespace App_RepositorioSalas
-{
-class Repositorio_salas;
-}
-
 class Controlador_juego:public Controlador_base
 {
 	///////////////
 	//Interface pública.
 	public:
 	
-						Controlador_juego(Director_estados &DI, DLibV::Pantalla&, App_RepositorioSalas::Repositorio_salas&);
+						Controlador_juego(Director_estados &DI, App_Niveles::Mapa&);
 						~Controlador_juego();
 
 	virtual void 				preloop(Input_base& input, float delta);
@@ -46,9 +41,8 @@ class Controlador_juego:public Controlador_base
 
 	DLibV::Camara camara;
 
-	App_RepositorioSalas::Repositorio_salas&	repo_salas;
 	App_Graficos::Representador 			representador;
-	App_Niveles::Mapa 				mapa;
+	App_Niveles::Mapa& 				mapa;
 	App_Juego::Jugador 				jugador;
 
 	App_Juego_Automapa::Automapa 			automapa;

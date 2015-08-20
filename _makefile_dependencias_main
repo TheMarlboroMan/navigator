@@ -19,6 +19,7 @@ $(DIR_O)recogedor_input.o\
 $(DIR_O)entrada.o\
 $(DIR_O)salida.o\
 $(DIR_O)posicion_inicial.o\
+$(DIR_O)motor_mapas.o\
 $(DIR_O)generador_estructura_niveles.o\
 $(DIR_O)parser_salas.o\
 $(DIR_O)traductor_mapas.o\
@@ -49,6 +50,7 @@ $(DIR_O)repositorio_salas.o\
 
 DEP_CONTROLADORES=$(DIR_O)controlador_base.o \
 $(DIR_O)controlador_juego.o \
+$(DIR_O)controlador_pausa.o \
 
 DEP_FRAMEWORK_BASE=$(DIR_O)input_base.o \
 $(DIR_O)configuracion_base.o \

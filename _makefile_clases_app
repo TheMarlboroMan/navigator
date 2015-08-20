@@ -323,6 +323,13 @@ $(DIR_GENERADOR)proto_sala.h \
 $(DIR_GENERADOR)proto_sala.cpp
 	$(CC) $(CFLAGS) $(INCLUDES) $(DIR_GENERADOR)proto_sala.cpp -o $(DIR_O)proto_sala.o
 
+$(DIR_O)motor_mapas.o:\
+$(DIR_O)traductor_mapas.o\
+$(DIR_O)generador_estructura_niveles.o\
+$(DIR_O)repositorio_salas.o
+	$(CC) $(CFLAGS) $(INCLUDES) $(DIR_GENERADOR)motor_mapas.cpp -o $(DIR_O)motor_mapas.o
+
+
 ################################################################################
 #Input
 

@@ -3,6 +3,8 @@
 
 #include "controlador_base.h"
 #include "../app/niveles/mapa.h"
+#include "../app/juego/automapa/automapa.h"
+#include "../app/graficos/representador.h"
 
 class Controlador_pausa:
 	public Controlador_base
@@ -22,7 +24,11 @@ class Controlador_pausa:
 	//Internas
 	private:
 
+	App_Graficos::Representador 		representador;	
 	App_Niveles::Mapa&			mapa;
+	App_Juego_Automapa::Automapa 		automapa;
+
+	int 					x_mapa, y_mapa;
 };
 
 #endif

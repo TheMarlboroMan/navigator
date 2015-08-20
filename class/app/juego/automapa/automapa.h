@@ -16,21 +16,14 @@
 #include <algorithm>
 #include "../../definiciones/definiciones.h"
 
+//TODO: Actualizar makefile.
+#include "../../interfaces/representable_i.h"
+#include "../../graficos/bloque_transformacion_representable.h"
+#include "../../recursos.h"
+#include "../../definiciones/definiciones.h"
+
 namespace App_Juego_Automapa
 {
-
-struct Definiciones_automapa
-{
-	private:
-	Definiciones_automapa();
-
-	public:
-	static const int ANCHO=5;
-	static const int ALTO=5;
-	static const int MARGEN_ANCHO=2;
-	static const int MARGEN_ALTO=2;
-};
-
 struct Unidad_automapa
 {
 	int x, y;
@@ -47,64 +40,60 @@ struct Unidad_automapa
 	Unidad_automapa(int px, int py)
 		:x(px), y(py), tipo(App_Definiciones::direcciones::nada), visitado(false)
 	{}
+
+	Unidad_automapa(const Unidad_automapa& o)
+		:x(o.x), y(o.y), tipo(o.tipo), visitado(o.visitado)
+	{}
+};
+
+struct Vista_unidad_automapa:
+	public Unidad_automapa,
+	public App_Interfaces::Representable_I
+{
+	static int pos_x_automapa;
+	static int pos_y_automapa;
+	static int dim_celda_automapa;
+	mutable bool actual;
+
+	Vista_unidad_automapa(const Unidad_automapa& u)
+		:Unidad_automapa(u), actual(false)
+	{}
+
+	virtual unsigned short int 		obtener_profundidad_ordenacion() const {return 0;}
+	virtual void 				transformar_bloque(App_Graficos::Bloque_transformacion_representable &b) const;
+	virtual bool				es_representable_borrar() const {return false;}
 };
 
 class Automapa
 {
 	/////////////
+	//Interface pública
+	public:
+
+						Automapa(int w, int h);
+	void 					inicializar(int pw, int ph);
+	void 					descubrir(int px, int py);
+	void					configurar(int px, int py, App_Definiciones::direcciones pt);
+	void 					refrescar_vista(int px, int py);
+	void 					refrescar_vista();
+	void					establecer_posicion_actual(int px, int py);
+	std::vector<const App_Interfaces::Representable_I *>	obtener_vista(int px, int py, int pdim) const;
+
+	/////////////
 	//Propiedades
 	private:
-	std::vector<Unidad_automapa> unidades;
-	std::vector<Unidad_automapa> vista;
+	std::vector<Unidad_automapa> 		unidades;
+	std::vector<Vista_unidad_automapa> 	vista;
+	
+	int					w_vista, h_vista;
+	int					x_actual, y_actual;
+	int					margen_w, margen_h;
 
 	/////////////
 	//Métodos privados...
 
-	Unidad_automapa& localizar(int x, int y);
+	Unidad_automapa& 			localizar(int x, int y);
 
-	/////////////
-	//Interface pública
-	public:
-
-	/**
-	* @param int pw
-	* @param int ph
-	* Prerellena el vector con casillas vacías, simplemente
-	* para que estén ahí, en función del ancho y alto. Luego lo ordena.
-	* Mete más casillas del ancho real del mapa con la finalidad de acomodar
-	* espacios en blanco.
-	*/
-
-	void inicializar(int pw, int ph);
-
-	/**
-	* @param int px
-	* @param int py
-	* Marca como descubierta la casilla en la posición dada. A partir de
-	* ese momento la casilla es ya visible.
-	*/
-
-	void descubrir(int px, int py);
-
-	/**
-	* @param int px
-	* @param int py
-	* @param App_Definiciones::direcciones pt
-	* Especifica el tipo de la celda indicada.
-	*/
-
-	void configurar(int px, int py, App_Definiciones::direcciones pt);
-
-	/**
-	* @param int px	
-	* @param int py
-	* Genera un vector que representa la vista de ANCHO * ALTO casillas 
-	* centradas en px, py. El vector se almacena en la clase como "vista".
-	*/
-
-	void refrescar_vista(int px, int py);
-
-	const std::vector<Unidad_automapa>& acc_vista() const {return vista;} 
 };
 }
 #endif

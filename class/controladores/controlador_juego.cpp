@@ -21,14 +21,15 @@ Controlador_juego::Controlador_juego(Director_estados &DI, App_Niveles::Mapa& p_
 	camara(0, 0, App_Definiciones::definiciones::w_vista, App_Definiciones::definiciones::h_vista),
 	mapa(p_mapa),
 	jugador(32.0, 32.0),
+	automapa(5, 5),
 	contador_tiempo(),
 	sala_actual(nullptr),
 	cambiar_modo_pantalla(false)
 {
 	sala_actual=&(mapa.obtener_sala_inicio());
 	ajustar_camara_a_sala(*sala_actual);
-
 	iniciar_automapa();
+	
 
 	const auto& pi=sala_actual->obtener_posicion_inicial_jugador();
 	if(!pi)
@@ -66,15 +67,22 @@ void Controlador_juego::loop(Input_base& input, float delta)
 	}
 	else
 	{
-	/**
-	* Almacenamos la orden para poder enviarla allá donde haya 
-	* información de pantalla.
-	* TODO: Sacarlo de dibujar y llevarlo al bootstrap.
-	*/
-	if(!cambiar_modo_pantalla) 
-	{
-		cambiar_modo_pantalla=input.es_input_down(Input::I_CAMBIAR_MODO_PANTALLA);
-	}
+		if(input.es_input_down(Input::I_INTERCAMBIAR_PANTALLA_PAUSA))
+		{
+			solicitar_cambio_estado(Director_estados::t_estados::pausa);
+			return;
+		}
+		
+
+		/**
+		* Almacenamos la orden para poder enviarla allá donde haya 
+		* información de pantalla.
+		* TODO: Sacarlo de dibujar y llevarlo al bootstrap.
+		*/
+		if(!cambiar_modo_pantalla) 
+		{
+			cambiar_modo_pantalla=input.es_input_down(Input::I_CAMBIAR_MODO_PANTALLA);
+		}
 
 		contador_tiempo.turno(delta);
 
@@ -150,7 +158,6 @@ bool Controlador_juego::controlar_y_efectuar_salida_sala(Jugador& j)
 * @param direcciones : Dirección de la salida que el jugador ha tomado.
 * @param Jugador : Jugador al que colocamos en la salida.
 */
-
 void Controlador_juego::cargar_sala(int ax, int ay, App_Definiciones::direcciones salida, Jugador& j, DLibH::Punto_2d<int> offset)
 {
 	try
@@ -331,32 +338,22 @@ void Controlador_juego::dibujar(DLibV::Pantalla& pantalla)
 	//Hud
 	representador.generar_hud(pantalla, jugador.acc_salud(), jugador.acc_energia(), jugador.acc_escudo(), contador_tiempo.formatear_tiempo_restante());
 
-	//Automapa	
-	//representador.dibujar_marco_automapa(pantalla);
-
-	const auto& v=automapa.acc_vista();
-	int x=0, y=0;
-
-	for(const auto& u : v)
-	{
-		bool es_actual=static_cast<int>(sala_actual->acc_x())==u.x && static_cast<int>(sala_actual->acc_y())==u.y;
-		representador.dibujar_pieza_automapa(pantalla, x, y, u.visitado ? u.tipo : App_Definiciones::direcciones::nada, es_actual);
-		if(++x==App_Juego_Automapa::Definiciones_automapa::ANCHO)
-		{
-			x=0; ++y;
-		}
-	}
+	//Automapa
+	representador.generar_vista(pantalla, automapa.obtener_vista(400, 412, 7));
 }
 
 void Controlador_juego::refrescar_automapa()
 {
 	int x=sala_actual->acc_x(), y=sala_actual->acc_y();
 	automapa.descubrir(x, y);
+	automapa.establecer_posicion_actual(x, y);
 	automapa.refrescar_vista(x, y);
 }
 
 void Controlador_juego::iniciar_automapa()
 {
+	//TODO: Código repetido con el controller de pausa... Quizás podamos llevarlo a otro sitio...
+
 	//Llegados a este punto podríamos usar de nuevo la información que
 	//sacó el generador, mucho más legible, pero nos vamos a quedar con
 	//esto, rápidamente...

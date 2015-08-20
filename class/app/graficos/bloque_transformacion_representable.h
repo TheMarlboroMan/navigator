@@ -13,7 +13,8 @@ struct Bloque_transformacion_representable
 
 	enum class tipos{
 		TR_BITMAP=1,
-		TR_GRUPO=2
+		TR_GRUPO_DINAMICO=2,
+		TR_GRUPO_ESTATICO=3
 	};
 
 	///////////////////////////////////
@@ -22,8 +23,10 @@ struct Bloque_transformacion_representable
 	private:
 
 	DLibV::Representacion_bitmap_dinamica rep_bmp;
-	DLibV::Representacion_agrupada_dinamica rep_agr;
+	DLibV::Representacion_agrupada_dinamica rep_agr_din;
+	DLibV::Representacion_agrupada_estatica rep_agr_est;
 	DLibV::Representacion * rep;
+	tipos tipo_actual;
 	
 	///////////////////////////////////
 	// Interfaz pública
@@ -32,16 +35,22 @@ struct Bloque_transformacion_representable
 
 	Bloque_transformacion_representable()
 		:rep_bmp(), 
-		rep_agr(true),
-		rep(&rep_bmp)
+		rep_agr_din(true),
+		rep_agr_est(true),
+		rep(&rep_bmp),
+		tipo_actual(tipos::TR_BITMAP)
 	{
-		rep_agr.imponer_alpha();
-		rep_agr.imponer_modo_blend();
+		rep_agr_din.imponer_alpha();
+		rep_agr_din.imponer_modo_blend();
+
+		rep_agr_est.imponer_alpha();
+		rep_agr_est.imponer_modo_blend();
 	}
 
 	~Bloque_transformacion_representable()
 	{
-		rep_agr.vaciar_grupo();
+		rep_agr_din.vaciar_grupo();
+		rep_agr_est.vaciar_grupo();
 	}
 
 	void establecer_recorte(unsigned int x, unsigned int y, unsigned int w, unsigned int h) 
@@ -64,14 +73,21 @@ struct Bloque_transformacion_representable
 		switch(t)
 		{
 			case tipos::TR_BITMAP: 
-			default:
+				tipo_actual=tipos::TR_BITMAP;
 				rep_bmp.reiniciar_transformacion();
 				rep=&rep_bmp;
 			break;
 
-			case tipos::TR_GRUPO:
-				rep_agr.vaciar_grupo();
-				rep=&rep_agr;
+			case tipos::TR_GRUPO_DINAMICO:
+				rep_agr_din.vaciar_grupo();
+				tipo_actual=tipos::TR_GRUPO_DINAMICO;
+				rep=&rep_agr_din;
+			break;
+
+			case tipos::TR_GRUPO_ESTATICO:
+				rep_agr_est.vaciar_grupo();
+				tipo_actual=tipos::TR_GRUPO_ESTATICO;
+				rep=&rep_agr_est;
 			break;
 		}
 
@@ -92,7 +108,15 @@ struct Bloque_transformacion_representable
 	///////////////////
 	// Metodos para manipular el grupo de representaciones...
 
-	void insertar_en_grupo(DLibV::Representacion * r) {rep_agr.insertar_representacion(r);}
+	void insertar_en_grupo(DLibV::Representacion * r) 
+	{
+		switch(tipo_actual)
+		{
+			case tipos::TR_BITMAP: 	break;
+			case tipos::TR_GRUPO_DINAMICO:	rep_agr_din.insertar_representacion(r);	break;
+			case tipos::TR_GRUPO_ESTATICO:	rep_agr_est.insertar_representacion(r);	break;
+		}
+	}
 
 	///////////////////
 	// Métodos para manipular la representación de bitmap...

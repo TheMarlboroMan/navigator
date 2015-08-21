@@ -15,6 +15,7 @@ struct Vista_unidad_automapa:
 	static int pos_x_automapa;
 	static int pos_y_automapa;
 	static int dim_celda_automapa;
+	static const int DIM_RECORTE=7;
 	mutable bool actual;
 
 	int vista_x, vista_y;

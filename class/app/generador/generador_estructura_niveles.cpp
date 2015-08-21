@@ -5,7 +5,6 @@
 
 /**
 * TODO: Notas para el generador de salas:
-* - Cada sala tendría que tener un spawn point además de sus salidas.
 * - El algoritmo no detecta dead ends para darles buenas cosas. Se podría 
 * calcular la distancia a las salas que tienen una única salida con respecto
 * al inicio para darles unos niveles de bonus o algo. Con respecto a la salida
@@ -151,10 +150,9 @@ std::vector<App_Definiciones::tipos::coordenadas_t_dim> Generador_estructura_niv
 	using namespace App_Definiciones;
 	std::vector<tipos::coordenadas_t_dim> resultado;
 
-	auto f=[this, &resultado](unsigned int x, unsigned int y)
+	auto f=[this, &resultado](int x, int y)
 	{
 		if(es_pos_libre(x, y)) resultado.push_back(tipos::coordenadas_t_dim(x, y)); 
-
 	};
 
 	for(Proto_sala& p : salas)

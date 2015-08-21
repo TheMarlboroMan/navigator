@@ -331,7 +331,8 @@ void Controlador_juego::dibujar(DLibV::Pantalla& pantalla)
 	for(const auto& p : proyectiles_jugador) vr.push_back(p.get());
 	for(const auto& p : proyectiles_enemigos) vr.push_back(p.get());
 
-	//TODO: Ordenar la vista.
+	App_Interfaces::Ordenador_representables ord;
+	std::sort(std::begin(vr), std::end(vr), ord);
 	
 	//Generar vista.
 	representador.generar_vista(pantalla, camara, vr);
@@ -340,8 +341,7 @@ void Controlador_juego::dibujar(DLibV::Pantalla& pantalla)
 	representador.generar_hud(pantalla, jugador.acc_salud(), jugador.acc_energia(), jugador.acc_escudo(), contador_tiempo.formatear_tiempo_restante());
 
 	//Automapa
-	//TODO TODO TODO
-	//representador.generar_vista(pantalla, vista_automapa.obtener_vista(400, 412, 7));
+	representador.generar_vista(pantalla, vista_automapa.obtener_vista(400, 412, 7));
 }
 
 void Controlador_juego::refrescar_automapa()
@@ -349,8 +349,7 @@ void Controlador_juego::refrescar_automapa()
 	int x=sala_actual->acc_x(), y=sala_actual->acc_y();
 	automapa.descubrir(x, y);
 	vista_automapa.establecer_posicion_jugador(x, y);
-	//TODO TODO TODO
-	//vista_automapa.refrescar_vista(x, y);
+	vista_automapa.refrescar_vista(automapa, x, y);
 }
 
 void Controlador_juego::logica_proyectiles(float delta)

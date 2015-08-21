@@ -18,8 +18,8 @@ App_Niveles::Mapa Traductor_mapas::traducir_mapa(const std::vector<Proto_sala>& 
 
 	for(const auto& ps : p)
 	{
-		unsigned int x=ps.acc_x();
-		unsigned int y=ps.acc_y();
+		int x=ps.acc_x();
+		int y=ps.acc_y();
 
 		if(x > w) w=x;
 		if(y > h) h=y;
@@ -27,6 +27,7 @@ App_Niveles::Mapa Traductor_mapas::traducir_mapa(const std::vector<Proto_sala>& 
 
 	//Of course, convertimos de indice 0.
 	++w;++h;
+	LOG<<"Creando mapa de "<<w<<"x"<<h<<std::endl;
 	Mapa resultado(w, h);
 
 	//Indicar al nivel cuál es la celda inicial, que es la primera que tenemos.

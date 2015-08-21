@@ -18,7 +18,7 @@ void App::loop_aplicacion(Kernel_app& kernel)
 	try
 	{
 		MS.iniciar_repo();
-		MS.generar_mapa(30, 40);
+		MS.generar_mapa(10, 10);
 
 		//Controladores.
 		Controlador_juego C_J(DI, MS.acc_mapa(), MS.acc_automapa());

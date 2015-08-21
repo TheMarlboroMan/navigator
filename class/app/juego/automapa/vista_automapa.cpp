@@ -37,7 +37,7 @@ std::vector<const App_Interfaces::Representable_I *> Vista_automapa::obtener_vis
 	return res;
 }
 
-void Vista_automapa::refrescar_vista(const App_Niveles::Mapa& m,int px, int py)
+void Vista_automapa::refrescar_vista(const Automapa& am,int px, int py)
 {
 	vista.clear();
 
@@ -55,8 +55,7 @@ void Vista_automapa::refrescar_vista(const App_Niveles::Mapa& m,int px, int py)
 		vx=0;
 		for(int x=ini_x; x <=fin_x; ++x, ++vx)
 		{
-			//TODO: esto puede lanzar excepciones.
-			vista.push_back(Vista_unidad_automapa(m.obtener_unidad(x, y), vx, vy));
+			vista.push_back(Vista_unidad_automapa(am.copia_unidad(x, y), vx, vy));
 		}
 	}
 }

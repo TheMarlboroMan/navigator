@@ -29,8 +29,8 @@ void Vista_unidad_automapa::transformar_bloque(App_Graficos::Bloque_transformaci
 
 	//En primer lugar, el fondo...
 	auto fondo=preparar(x, y);
-	int xfondo=actual ? 16 * dim_celda_automapa : 0;
-	fondo->establecer_recorte(xfondo, 0, dim_celda_automapa, dim_celda_automapa);
+	int xfondo=actual ? 16 * DIM_RECORTE : 0;
+	fondo->establecer_recorte(xfondo, 0, DIM_RECORTE, DIM_RECORTE);
 	b.insertar_en_grupo(fondo);
 
 	int pos=0;
@@ -43,7 +43,7 @@ void Vista_unidad_automapa::transformar_bloque(App_Graficos::Bloque_transformaci
 	{
 		//Y ahora el frente.
 		auto frente=preparar(x, y);
-		frente->establecer_recorte(pos * dim_celda_automapa, 0, dim_celda_automapa, dim_celda_automapa);
+		frente->establecer_recorte(pos * DIM_RECORTE, 0, DIM_RECORTE, DIM_RECORTE);
 		b.insertar_en_grupo(frente);
 	}
 }

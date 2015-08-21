@@ -28,7 +28,7 @@ void Proyectil_normal::turno(float delta)
 
 unsigned short int Proyectil_normal::obtener_profundidad_ordenacion()const
 {
-	return 10;
+	return 40;
 }
 
 void Proyectil_normal::transformar_bloque(App_Graficos::Bloque_transformacion_representable &b)const
@@ -36,10 +36,10 @@ void Proyectil_normal::transformar_bloque(App_Graficos::Bloque_transformacion_re
 	using namespace App_Graficos;
 	using namespace App;
 
-	unsigned int alpha=(acc_potencia() * 255.0f) / acc_potencia_original();
+//	unsigned int alpha=(acc_potencia() * 255.0f) / acc_potencia_original();
 
 	b.establecer_tipo(Bloque_transformacion_representable::tipos::TR_BITMAP);
-	b.establecer_alpha(alpha);
+//	b.establecer_alpha(alpha);
 	b.establecer_recurso(Recursos_graficos::RT_DEFECTO);
 	
 	switch(color)

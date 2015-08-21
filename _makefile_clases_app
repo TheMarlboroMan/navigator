@@ -205,7 +205,6 @@ $(DIR_JUEGO_AUTOMAPA)unidad_automapa.cpp
 
 $(DIR_O)vista_unidad_automapa.o:\
 $(DIR_O)automapa.o\
-$(DIR_O)vista_unidad_automapa.o\
 $(DIR_JUEGO_AUTOMAPA)vista_unidad_automapa.h \
 $(DIR_JUEGO_AUTOMAPA)vista_unidad_automapa.cpp
 	$(CC) $(CFLAGS) $(INCLUDES) $(DIR_JUEGO_AUTOMAPA)vista_unidad_automapa.cpp -o $(DIR_O)vista_unidad_automapa.o

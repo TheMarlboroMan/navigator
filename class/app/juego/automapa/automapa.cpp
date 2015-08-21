@@ -1,15 +1,18 @@
 #include "automapa.h"
 #include <stdexcept>
+#include <sstream>
 
 using namespace App_Juego_Automapa;
 
+#include <herramientas/log_base/log_base.h>
+extern DLibH::Log_base LOG;
+
 /**
-* @param int pw : ancho del mapa
-* @param int ph : alto del mapa
+* @param int pw : ancho del mapa con índice 0.
+* @param int ph : alto del mapa con índice 0.
 * Prerellena el vector con casillas vacías, simplemente
-* para que estén ahí, en función del ancho y alto. Luego lo ordena.
-* Mete más casillas del ancho real del mapa con la finalidad de acomodar
-* espacios en blanco.
+* para que estén ahí, en función del ancho y alto. 
+* Cuando se busque uno que queda fuera va a dar excepciones...
 */
 
 void Automapa::inicializar(int pw, int ph)
@@ -17,24 +20,13 @@ void Automapa::inicializar(int pw, int ph)
 	//Vaciar las unidades...
 	unidades.clear();
 
-/*
-TODO: Inicializar el automapa no funcionaría porque no tenemos márgen.
-
-	//Calcular los límites...
-	int ini_x=-margen_w;
-	int fin_x=pw+margen_w;
-
-	int ini_y=-margen_h;
-	int fin_y=ph+margen_h;
-
-	for(int y=ini_y; y <= fin_y; ++y)
+	for(int y=0; y < ph; ++y)
 	{
-		for(int x=ini_x; x <=fin_x; ++x)
+		for(int x=0; x < pw; ++x)
 		{
 			unidades.push_back(Unidad_automapa(x, y));
 		}
 	}
-*/
 }
 
 /**
@@ -56,16 +48,20 @@ Unidad_automapa& Automapa::localizar(int x, int y)
 	{
 		if(u.x==x && u.y==y) return u;
 	}
-	throw std::logic_error("No se localiza la unidad de automapa");
+
+	std::stringstream ss;
+	ss<<"No se localiza la unidad de automapa "<<x<<","<<y;
+	throw std::logic_error(ss.str());
 }
 
-const Unidad_automapa& Automapa::obtener_unidad(int x, int y)
+Unidad_automapa Automapa::copia_unidad(int x, int y) const
 {
-	for(Unidad_automapa& u : unidades)
+	for(const Unidad_automapa& u : unidades)
 	{
 		if(u.x==x && u.y==y) return u;
 	}
-	throw std::logic_error("No se puede obtener la unidad de automapa");
+
+	return Unidad_automapa(x, y);
 }
 
 /**

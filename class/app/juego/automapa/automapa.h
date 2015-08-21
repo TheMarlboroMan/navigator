@@ -27,7 +27,7 @@ class Automapa
 	void 					inicializar(int pw, int ph);
 	void 					descubrir(int px, int py);
 	void					configurar(int px, int py, App_Definiciones::direcciones pt);
-	const Unidad_automapa& 			obtener_unidad(int x, int y);
+	Unidad_automapa 			copia_unidad(int x, int y)const;
 
 	/////////////
 	//Privados...

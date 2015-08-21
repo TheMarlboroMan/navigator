@@ -8,7 +8,7 @@
 namespace App_Definiciones
 {
 
-typedef unsigned int 				t_dim;
+typedef int	 				t_dim;
 
 struct definiciones
 {

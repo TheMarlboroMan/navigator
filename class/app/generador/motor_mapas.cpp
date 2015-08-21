@@ -3,7 +3,7 @@
 using namespace App_Generador;
 
 Motor_mapas::Motor_mapas()
-	:mapa(0,0), automapa(5,5)
+	:mapa(0,0), automapa()
 {
 
 }
@@ -47,6 +47,7 @@ void Motor_mapas::generar_mapa(int principales, int secundarias)
 	}ls;
 
 	//Iniciar automapa y llenarlo de la información de mapa...
+	LOG<<"Inicializando automapa para "<<mapa.acc_w()<<" x "<<mapa.acc_h()<<std::endl;
 	automapa.inicializar(mapa.acc_w(), mapa.acc_h());
 	mapa.para_cada_sala(ls);
 	for(const auto& i : ls.v) automapa.configurar(i.x, i.y, i.dir);

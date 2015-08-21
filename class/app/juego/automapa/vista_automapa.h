@@ -20,7 +20,7 @@ class Vista_automapa
 
 						Vista_automapa(int, int);
 
-	void 					refrescar_vista(const App_Niveles::Mapa& m,int px, int py);
+	void 					refrescar_vista(const Automapa& a,int px, int py);
 	void					establecer_posicion_jugador(int px, int py);
 	std::vector<const App_Interfaces::Representable_I *>	obtener_vista(int px, int py, int pdim) const;
 

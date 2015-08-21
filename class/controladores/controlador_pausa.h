@@ -3,6 +3,7 @@
 
 #include <tuple>
 #include "controlador_base.h"
+#include "../app/juego/automapa/vista_automapa.h"
 #include "../app/juego/automapa/automapa.h"
 #include "../app/graficos/representador.h"
 
@@ -28,6 +29,7 @@ class Controlador_pausa:
 
 	App_Graficos::Representador 		representador;
 	App_Juego_Automapa::Automapa& 		automapa;
+	App_Juego_Automapa::Vista_automapa	vista_automapa;
 
 	int 					x_mapa, y_mapa;
 };

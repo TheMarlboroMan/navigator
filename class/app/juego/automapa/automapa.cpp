@@ -17,6 +17,9 @@ void Automapa::inicializar(int pw, int ph)
 	//Vaciar las unidades...
 	unidades.clear();
 
+/*
+TODO: Inicializar el automapa no funcionaría porque no tenemos márgen.
+
 	//Calcular los límites...
 	int ini_x=-margen_w;
 	int fin_x=pw+margen_w;
@@ -31,6 +34,7 @@ void Automapa::inicializar(int pw, int ph)
 			unidades.push_back(Unidad_automapa(x, y));
 		}
 	}
+*/
 }
 
 /**

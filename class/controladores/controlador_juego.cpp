@@ -22,6 +22,7 @@ Controlador_juego::Controlador_juego(Director_estados &DI, App_Niveles::Mapa& ma
 	mapa(mapa),
 	jugador(32.0, 32.0),
 	automapa(am),
+	vista_automapa(5, 5),
 	contador_tiempo(),
 	sala_actual(nullptr),
 	cambiar_modo_pantalla(false)
@@ -339,15 +340,17 @@ void Controlador_juego::dibujar(DLibV::Pantalla& pantalla)
 	representador.generar_hud(pantalla, jugador.acc_salud(), jugador.acc_energia(), jugador.acc_escudo(), contador_tiempo.formatear_tiempo_restante());
 
 	//Automapa
-	representador.generar_vista(pantalla, automapa.obtener_vista(400, 412, 7));
+	//TODO TODO TODO
+	//representador.generar_vista(pantalla, vista_automapa.obtener_vista(400, 412, 7));
 }
 
 void Controlador_juego::refrescar_automapa()
 {
 	int x=sala_actual->acc_x(), y=sala_actual->acc_y();
 	automapa.descubrir(x, y);
-	automapa.establecer_posicion_jugador(x, y);
-	automapa.refrescar_vista(x, y);
+	vista_automapa.establecer_posicion_jugador(x, y);
+	//TODO TODO TODO
+	//vista_automapa.refrescar_vista(x, y);
 }
 
 void Controlador_juego::logica_proyectiles(float delta)

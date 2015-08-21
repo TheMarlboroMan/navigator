@@ -7,6 +7,7 @@
 #include "controlador_base.h"
 #include "../app/juego/jugador.h"
 #include "../app/juego/automapa/automapa.h"
+#include "../app/juego/automapa/vista_automapa.h"
 #include "../app/juego/sistemas/contador_tiempo.h"
 #include "../app/juego/objetos_juego/proyectil_base.h"
 #include "../app/juego/objetos_juego/proyectil_normal.h"
@@ -49,6 +50,7 @@ class Controlador_juego:public Controlador_base
 	App_Juego::Jugador 				jugador;
 
 	App_Juego_Automapa::Automapa& 			automapa;
+	App_Juego_Automapa::Vista_automapa		vista_automapa;
 	App_Juego_Sistemas::Contador_tiempo 		contador_tiempo;
 	App_Niveles::Sala * 				sala_actual;
 	

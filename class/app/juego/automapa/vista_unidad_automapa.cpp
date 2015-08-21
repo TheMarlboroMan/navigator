@@ -1,10 +1,10 @@
 #include "vista_unidad_automapa.h"
 
+using namespace App_Juego_Automapa;
+
 int Vista_unidad_automapa::pos_x_automapa=0;
 int Vista_unidad_automapa::pos_y_automapa=0;
 int Vista_unidad_automapa::dim_celda_automapa=0;
-
-using namespace App_Juego_Automapa;
 
 void Vista_unidad_automapa::transformar_bloque(App_Graficos::Bloque_transformacion_representable &b) const
 {

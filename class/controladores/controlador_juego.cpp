@@ -16,20 +16,20 @@
 using namespace App_Niveles;
 using namespace App_Juego;
 
-Controlador_juego::Controlador_juego(Director_estados &DI, App_Niveles::Mapa& p_mapa)
+Controlador_juego::Controlador_juego(Director_estados &DI, App_Niveles::Mapa& mapa, App_Juego_Automapa::Automapa& am)
 	:Controlador_base(DI),
 	camara(0, 0, App_Definiciones::definiciones::w_vista, App_Definiciones::definiciones::h_vista),
-	mapa(p_mapa),
+	mapa(mapa),
 	jugador(32.0, 32.0),
-	automapa(5, 5),
+	automapa(am),
 	contador_tiempo(),
 	sala_actual(nullptr),
 	cambiar_modo_pantalla(false)
 {
 	sala_actual=&(mapa.obtener_sala_inicio());
 	ajustar_camara_a_sala(*sala_actual);
-	iniciar_automapa();
 	
+	refrescar_automapa();
 
 	const auto& pi=sala_actual->obtener_posicion_inicial_jugador();
 	if(!pi)
@@ -346,42 +346,8 @@ void Controlador_juego::refrescar_automapa()
 {
 	int x=sala_actual->acc_x(), y=sala_actual->acc_y();
 	automapa.descubrir(x, y);
-	automapa.establecer_posicion_actual(x, y);
+	automapa.establecer_posicion_jugador(x, y);
 	automapa.refrescar_vista(x, y);
-}
-
-void Controlador_juego::iniciar_automapa()
-{
-	//TODO: Código repetido con el controller de pausa... Quizás podamos llevarlo a otro sitio...
-
-	//Llegados a este punto podríamos usar de nuevo la información que
-	//sacó el generador, mucho más legible, pero nos vamos a quedar con
-	//esto, rápidamente...
-
-	struct llamable_salas
-	{
-		struct info
-		{
-			int x, y;
-			App_Definiciones::direcciones dir;
-			info(int px, int py, App_Definiciones::direcciones pd)
-				:x(px), y(py), dir(pd)
-			{} 
-		};
-
-		std::vector<info> v;
-
-		void operator()(const Sala& s)
-		{
-			v.push_back(info(s.acc_x(), s.acc_y(), s.acc_direcciones_entradas()) );
-		}
-	}ls;
-
-	automapa.inicializar(mapa.acc_w(), mapa.acc_h());
-	mapa.para_cada_sala(ls);
-	for(const auto& i : ls.v) automapa.configurar(i.x, i.y, i.dir);
-
-	refrescar_automapa();
 }
 
 void Controlador_juego::logica_proyectiles(float delta)
@@ -509,4 +475,15 @@ void Controlador_juego::ajustar_camara_a_sala(const Sala& s)
 	camara.mut_pos_y(y_pos);
 
 	camara.restaurar_enfoque();
+}
+
+/**
+* Esto asume que el controlador de juego es quien tiene el control sobre la
+* posición actual del jugador, que más o menos es cierto.
+*/
+
+std::tuple<int, int> Controlador_juego::obtener_coordenadas_sala_actual()
+{
+	int x=sala_actual->acc_x(), y=sala_actual->acc_y();
+	return std::tuple<int, int>(x, y);
 }

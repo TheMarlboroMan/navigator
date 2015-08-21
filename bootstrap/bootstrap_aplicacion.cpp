@@ -21,8 +21,8 @@ void App::loop_aplicacion(Kernel_app& kernel)
 		MS.generar_mapa(30, 40);
 
 		//Controladores.
-		Controlador_juego C_J(DI, MS.acc_mapa());
-		Controlador_pausa C_P(DI, MS.acc_mapa());
+		Controlador_juego C_J(DI, MS.acc_mapa(), MS.acc_automapa());
+		Controlador_pausa C_P(DI, MS.acc_automapa());
 
 		//Interface común...
 		Interface_controlador * IC=&C_J;
@@ -41,7 +41,10 @@ void App::loop_aplicacion(Kernel_app& kernel)
 				switch(DI.acc_estado_deseado())
 				{
 					case Director_estados::t_estados::juego: IC=&C_J; break;
-					case Director_estados::t_estados::pausa: IC=&C_P; break;
+					case Director_estados::t_estados::pausa: 
+						C_P.centrar_mapa(C_J.obtener_coordenadas_sala_actual());
+						IC=&C_P; 
+					break;
 
 				}
 

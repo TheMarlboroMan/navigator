@@ -1,34 +1,10 @@
 #include "controlador_pausa.h"
 
-Controlador_pausa::Controlador_pausa(Director_estados &DI, App_Niveles::Mapa& m)
+Controlador_pausa::Controlador_pausa(Director_estados &DI, App_Juego_Automapa::Automapa& am)
 	:Controlador_base(DI), 
-	mapa(m), 
-	automapa(21, 21),
-	x_mapa(0), y_mapa(0)
+	automapa(am),
+	x_mapa(0), y_mapa(0) //Esta no será la posición final, por supuesto...
 {
-	struct llamable_salas
-	{
-		struct info
-		{
-			int x, y;
-			App_Definiciones::direcciones dir;
-			info(int px, int py, App_Definiciones::direcciones pd)
-				:x(px), y(py), dir(pd)
-			{} 
-		};
-
-		std::vector<info> v;
-
-		void operator()(const App_Niveles::Sala& s)
-		{
-			v.push_back(info(s.acc_x(), s.acc_y(), s.acc_direcciones_entradas()) );
-		}
-	}ls;
-
-	automapa.inicializar(mapa.acc_w(), mapa.acc_h());
-	mapa.para_cada_sala(ls);
-	for(const auto& i : ls.v) automapa.configurar(i.x, i.y, i.dir);
-
 	automapa.refrescar_vista(x_mapa, y_mapa);
 }
 
@@ -56,6 +32,8 @@ void Controlador_pausa::loop(Input_base& input, float delta)
 			return;
 		}
 
+		//TODO: Mejorar: controlar que cuando salimos del mapa no se vuelva y explote!!!!.
+
 		if(input.es_input_down(Input::I_IZQUIERDA)) 
 		{
 			--x_mapa;
@@ -82,6 +60,13 @@ void Controlador_pausa::loop(Input_base& input, float delta)
 void Controlador_pausa::dibujar(DLibV::Pantalla& pantalla)
 {
 	pantalla.limpiar(0, 0, 0, 255);
-
 	representador.generar_vista(pantalla, automapa.obtener_vista(200, 200, 7));
+}
+
+void Controlador_pausa::centrar_mapa(const std::tuple<int, int>& t)
+{
+	x_mapa=std::get<0>(t);
+	y_mapa=std::get<1>(t);
+	automapa.establecer_posicion_jugador(x_mapa, y_mapa);
+	automapa.refrescar_vista(x_mapa, y_mapa);
 }

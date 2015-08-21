@@ -2,6 +2,7 @@
 #define CONTROLADOR_JUEGO
 
 #include <memory>
+#include <tuple>
 
 #include "controlador_base.h"
 #include "../app/juego/jugador.h"
@@ -21,13 +22,15 @@ class Controlador_juego:public Controlador_base
 	//Interface pública.
 	public:
 	
-						Controlador_juego(Director_estados &DI, App_Niveles::Mapa&);
+						Controlador_juego(Director_estados &DI, App_Niveles::Mapa&, App_Juego_Automapa::Automapa&);
 						~Controlador_juego();
 
 	virtual void 				preloop(Input_base& input, float delta);
 	virtual void 				postloop(Input_base& input, float delta);
 	virtual void 				loop(Input_base& input, float delta);
 	virtual void 				dibujar(DLibV::Pantalla& pantalla);
+
+	std::tuple<int, int>			obtener_coordenadas_sala_actual();
 
 	//////////////
 	//Definiciones.
@@ -45,7 +48,7 @@ class Controlador_juego:public Controlador_base
 	App_Niveles::Mapa& 				mapa;
 	App_Juego::Jugador 				jugador;
 
-	App_Juego_Automapa::Automapa 			automapa;
+	App_Juego_Automapa::Automapa& 			automapa;
 	App_Juego_Sistemas::Contador_tiempo 		contador_tiempo;
 	App_Niveles::Sala * 				sala_actual;
 	
@@ -61,7 +64,6 @@ class Controlador_juego:public Controlador_base
 	void					evaluar_enfoque_camara();
 	void 					procesar_jugador(App_Juego::Jugador& j, float delta, App_Input::Input_usuario iu);
 	bool 					controlar_y_efectuar_salida_sala(App_Juego::Jugador& j);
-	void 					iniciar_automapa();
 	void 					refrescar_automapa();
 	void 					logica_mundo(float delta);
 	void 					logica_proyectiles(float delta);

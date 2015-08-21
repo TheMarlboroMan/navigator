@@ -198,7 +198,28 @@ $(DIR_JUEGO_SISTEMAS)contador_tiempo.cpp
 ################################################################################
 #Juego automapa
 
+$(DIR_O)unidad_automapa.o:\
+$(DIR_JUEGO_AUTOMAPA)unidad_automapa.h \
+$(DIR_JUEGO_AUTOMAPA)unidad_automapa.cpp
+	$(CC) $(CFLAGS) $(INCLUDES) $(DIR_JUEGO_AUTOMAPA)unidad_automapa.cpp -o $(DIR_O)unidad_automapa.o
+
+$(DIR_O)vista_unidad_automapa.o:\
+$(DIR_O)automapa.o\
+$(DIR_O)vista_unidad_automapa.o\
+$(DIR_JUEGO_AUTOMAPA)vista_unidad_automapa.h \
+$(DIR_JUEGO_AUTOMAPA)vista_unidad_automapa.cpp
+	$(CC) $(CFLAGS) $(INCLUDES) $(DIR_JUEGO_AUTOMAPA)vista_unidad_automapa.cpp -o $(DIR_O)vista_unidad_automapa.o
+
+$(DIR_O)vista_automapa.o:\
+$(DIR_O)automapa.o\
+$(DIR_O)vista_unidad_automapa.o\
+$(DIR_JUEGO_AUTOMAPA)vista_automapa.h \
+$(DIR_JUEGO_AUTOMAPA)vista_automapa.cpp
+	$(CC) $(CFLAGS) $(INCLUDES) $(DIR_JUEGO_AUTOMAPA)vista_automapa.cpp -o $(DIR_O)vista_automapa.o
+
 $(DIR_O)automapa.o:\
+$(DIR_O)unidad_automapa.o\
+$(DIR_O)vista_unidad_automapa.o\
 $(DIR_JUEGO_AUTOMAPA)automapa.h \
 $(DIR_JUEGO_AUTOMAPA)automapa.cpp
 	$(CC) $(CFLAGS) $(INCLUDES) $(DIR_JUEGO_AUTOMAPA)automapa.cpp -o $(DIR_O)automapa.o
@@ -325,6 +346,7 @@ $(DIR_GENERADOR)proto_sala.cpp
 
 $(DIR_O)motor_mapas.o:\
 $(DIR_O)traductor_mapas.o\
+$(DIR_O)automapa.o\
 $(DIR_O)generador_estructura_niveles.o\
 $(DIR_O)repositorio_salas.o
 	$(CC) $(CFLAGS) $(INCLUDES) $(DIR_GENERADOR)motor_mapas.cpp -o $(DIR_O)motor_mapas.o

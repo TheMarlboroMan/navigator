@@ -3,6 +3,7 @@
 
 #include <vector>
 #include <memory>
+#include <functional>
 #include "../../interfaces/objeto_juego_i.h"
 #include "../../interfaces/bonus_i.h"
 #include "../../interfaces/con_turno_i.h"
@@ -10,6 +11,7 @@
 #include "../../interfaces/disparador_i.h"
 #include "../../interfaces/representable_i.h"
 #include "../../interfaces/colisionable_i.h"
+#include "../../interfaces/sonoro_i.h"
 #include "entrada.h"
 #include "salida.h"
 #include "posicion_inicial.h"
@@ -38,6 +40,7 @@ namespace App_Juego_ObjetoJuego
 		std::vector<std::shared_ptr<App_Interfaces::Disparador_I>>		disparadores;
 		std::vector<std::shared_ptr<App_Interfaces::Representable_I>>		representables;
 		std::vector<std::shared_ptr<App_Interfaces::Colisionable_I>>		colisionables;
+		std::vector<std::shared_ptr<App_Interfaces::Sonoro_I>>			sonoros;
 
 		/**
 		* Además, las entradas del nivel y posiciones iniciales y finales.

@@ -5,6 +5,7 @@
 #include <tuple>
 
 #include "controlador_base.h"
+#include "../app/audio/gestor_audio.h"
 #include "../app/juego/jugador.h"
 #include "../app/juego/automapa/automapa.h"
 #include "../app/juego/automapa/vista_automapa.h"
@@ -30,8 +31,7 @@ class Controlador_juego:public Controlador_base
 	virtual void 				postloop(Input_base& input, float delta);
 	virtual void 				loop(Input_base& input, float delta);
 	virtual void 				dibujar(DLibV::Pantalla& pantalla);
-
-	std::tuple<int, int>			obtener_coordenadas_sala_actual();
+	virtual void				sonar(float);
 
 	//////////////
 	//Definiciones.
@@ -45,6 +45,7 @@ class Controlador_juego:public Controlador_base
 
 	DLibV::Camara camara;
 
+	App_Audio::Gestor_audio				gestor_audio;
 	App_Graficos::Representador 			representador;
 	App_Niveles::Mapa& 				mapa;
 	App_Juego::Jugador 				jugador;
@@ -58,6 +59,8 @@ class Controlador_juego:public Controlador_base
 	Vsptr_Proyectil_base		 		proyectiles_enemigos;
 
 	bool						cambiar_modo_pantalla;
+	int						cosa_audio;
+	
 
 	///////////////
 	//Métodos internos.

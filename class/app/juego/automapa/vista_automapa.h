@@ -21,7 +21,6 @@ class Vista_automapa
 						Vista_automapa(int, int);
 
 	void 					refrescar_vista(const Automapa& a,int px, int py);
-	void					establecer_posicion_jugador(int px, int py);
 	std::vector<const App_Interfaces::Representable_I *>	obtener_vista(int px, int py, int pdim) const;
 
 	/////////////////////////
@@ -31,7 +30,6 @@ class Vista_automapa
 	std::vector<Vista_unidad_automapa> 	vista;
 	
 	int					w_vista, h_vista;
-	int					x_jugador, y_jugador;
 	int					margen_w, margen_h;
 };
 }

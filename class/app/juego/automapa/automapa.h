@@ -24,17 +24,21 @@ class Automapa
 	//Interface pública
 	public:
 
+						Automapa();
 	void 					inicializar(int pw, int ph);
 	void 					descubrir(int px, int py);
 	void					configurar(int px, int py, App_Definiciones::direcciones pt);
 	Unidad_automapa 			copia_unidad(int x, int y)const;
+	void					establecer_posicion_jugador(int px, int py);
+	int					acc_x_jugador() const {return x_jugador;}
+	int					acc_y_jugador() const {return y_jugador;}
 
 	/////////////
 	//Privados...
 
 	private:
 	std::vector<Unidad_automapa> 		unidades;
-	
+	int					x_jugador, y_jugador;
 	Unidad_automapa& 			localizar(int x, int y);
 
 };

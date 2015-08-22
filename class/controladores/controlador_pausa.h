@@ -21,7 +21,7 @@ class Controlador_pausa:
 	virtual void 				loop(Input_base& input, float delta);
 	virtual void 				dibujar(DLibV::Pantalla& pantalla);
 
-	void					centrar_mapa(const std::tuple<int, int>&);
+	void					refrescar();
 
 	//////////////////////
 	//Internas

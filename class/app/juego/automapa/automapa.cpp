@@ -7,6 +7,12 @@ using namespace App_Juego_Automapa;
 #include <herramientas/log_base/log_base.h>
 extern DLibH::Log_base LOG;
 
+Automapa::Automapa()
+	:x_jugador(0), y_jugador(0)
+{
+
+}
+
 /**
 * @param int pw : ancho del mapa con índice 0.
 * @param int ph : alto del mapa con índice 0.
@@ -74,4 +80,10 @@ Unidad_automapa Automapa::copia_unidad(int x, int y) const
 void Automapa::configurar(int px, int py, App_Definiciones::direcciones pt)
 {
 	localizar(px, py).tipo=pt;
+}
+
+void Automapa::establecer_posicion_jugador(int px, int py)
+{
+	x_jugador=px;
+	y_jugador=py;
 }

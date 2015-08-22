@@ -4,11 +4,15 @@
 #include "../class/controladores/controlador_juego.h"
 #include "../class/controladores/controlador_pausa.h"
 #include "../class/app/generador/motor_mapas.h"
+#include "../class/app/recursos.h"
 
 using namespace App;
 
 void App::loop_aplicacion(Kernel_app& kernel)
 {
+	Audio::reproducir_musica(
+		DLibA::Gestor_recursos_audio::obtener_musica(App::Recursos_audio::RM_BLIND_SHIFT));
+
 	//Declaraciones de herramientas externas.
 	Director_estados DI;
 
@@ -40,9 +44,11 @@ void App::loop_aplicacion(Kernel_app& kernel)
 
 				switch(DI.acc_estado_deseado())
 				{
-					case Director_estados::t_estados::juego: IC=&C_J; break;
+					case Director_estados::t_estados::juego: 
+						IC=&C_J; 
+					break;
 					case Director_estados::t_estados::pausa: 
-						C_P.centrar_mapa(C_J.obtener_coordenadas_sala_actual());
+						C_P.refrescar();
 						IC=&C_P; 
 					break;
 

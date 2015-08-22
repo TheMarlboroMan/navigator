@@ -41,6 +41,7 @@ void Contenedor_objetos::sumar_variante(const Contenedor_objetos& o)
 	for(auto& ob : o.disparadores) disparadores.push_back(ob);
 	for(auto& ob : o.representables) representables.push_back(ob);
 	for(auto& ob : o.colisionables) colisionables.push_back(ob);
+	for(auto& ob : o.sonoros) sonoros.push_back(ob);
 }
 
 
@@ -65,28 +66,33 @@ size_t Contenedor_objetos::limpiar_para_borrar()
 
 	if(res)
 	{
+		//TODO: Buen sitio para aprender a usar std::function y quitar las especializaciones...
 		ayudante_borrar(bonus);
 		ayudante_borrar(con_turno);
 		ayudante_borrar(disparables);
 		ayudante_borrar(disparadores);
 		ayudante_borrar(colisionables);
 
-		//Y la especialización malvada.
-		auto 	ini=std::begin(representables),
-			fin=std::end(representables);
-	
-		while(ini < fin)
+		//Y las especializaciones malvadas.
 		{
-			if(ini->get()->es_representable_borrar())
-			{
-				ini=representables.erase(ini);
-				fin=std::end(representables);
-			}
-			else
-			{
-				++ini;
-			}
+		auto 	ini=std::begin(representables);
+		while(ini < std::end(representables))
+		{
+			if(ini->get()->es_representable_borrar()) ini=representables.erase(ini);
+			else ++ini;
 		}
+		}
+
+		{
+		auto 	ini=std::begin(sonoros);
+		while(ini < std::end(sonoros))
+		{
+			if(ini->get()->es_sonoro_borrar()) ini=sonoros.erase(ini);
+			else ++ini;
+		}
+		}
+
+
 	}
 
 	return res;

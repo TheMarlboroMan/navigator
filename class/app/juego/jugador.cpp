@@ -93,6 +93,10 @@ void Jugador::recibir_impacto(float val)
 
 	if(escudo < 0.0) escudo=0.0;
 	if(salud < 0.0) salud=0.0;
+
+	insertar_reproducir(App_Audio::Audio_reproducir(
+		App_Audio::Audio_reproducir::tipos_reproduccion::simple, 
+		App::Recursos_audio::rs_explosion, 127, 127));
 }
 
 void Jugador::transformar_bloque(Bloque_transformacion_representable &b) const
@@ -212,6 +216,11 @@ bool Jugador::disparar()
 	{
 		consumir_energia(10.0f);
 		sumar_vector(direccion==App_Definiciones::direcciones::izquierda ? 30.0 : -30.0, Movil::t_vector::V_X);		
+		
+		insertar_reproducir(App_Audio::Audio_reproducir(
+					App_Audio::Audio_reproducir::tipos_reproduccion::simple, 
+					App::Recursos_audio::rs_disparo, 127, 127));
+
 		return true;
 	}
 

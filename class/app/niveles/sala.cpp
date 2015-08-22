@@ -63,6 +63,13 @@ std::vector<const App_Interfaces::Representable_I *> Sala::obtener_vector_repres
 	return resultado;
 }
 
+std::vector<App_Interfaces::Sonoro_I *> Sala::obtener_vector_sonoros() const
+{
+	std::vector<App_Interfaces::Sonoro_I *> resultado;
+	for(auto& o : objetos.sonoros) resultado.push_back(o.get());
+	return resultado;
+}
+
 /**
 * @return Entrada
 * @throw std::logic_error cuando no hay entrada en esa posición.

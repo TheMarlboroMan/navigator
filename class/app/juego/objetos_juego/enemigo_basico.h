@@ -6,6 +6,7 @@
 #include "../../recursos.h"
 #include "../../interfaces/objeto_juego_i.h"
 #include "../../interfaces/representable_i.h"
+#include "../../interfaces/sonoro_i.h"
 #include "../../interfaces/disparable_i.h"
 #include "../../interfaces/con_turno_i.h"
 #include "../../interfaces/disparador_i.h"
@@ -18,6 +19,7 @@ namespace App_Juego_ObjetoJuego
 class Enemigo_basico:
 		public App_Juego::Actor_movil, 
 		public App_Interfaces::Representable_I,
+		public App_Interfaces::Sonoro_I,
 		public App_Interfaces::Con_turno_I,
 		public App_Interfaces::Disparable_I,
 		public App_Interfaces::Disparador_I,
@@ -51,6 +53,12 @@ class Enemigo_basico:
 	virtual unsigned short int 			obtener_profundidad_ordenacion()const;
 	virtual void 					transformar_bloque(App_Graficos::Bloque_transformacion_representable &b)const;
 	virtual bool					es_representable_borrar() const {return es_borrar();}
+
+	///////////////
+	// Implementación de Sonoro_I.
+	public:
+
+	virtual bool					es_sonoro_borrar() const {return es_borrar();}
 
 	///////////////
 	//Implementación de Con_turno_I

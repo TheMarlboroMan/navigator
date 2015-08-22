@@ -32,11 +32,13 @@ class Recursos_audio
 	public:
 
 	enum musicas{
-		RM_DEFECTO=1
+		RM_BLIND_SHIFT=1
 	};
 
 	enum sonidos{
-		RS_DEFECTO=1
+		RS_DEFECTO=1,
+		rs_disparo=10,
+		rs_explosion=11
 	};
 };
 

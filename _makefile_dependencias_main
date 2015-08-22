@@ -37,6 +37,7 @@ $(DIR_O)colisionable_i.o\
 $(DIR_O)con_turno_i.o\
 $(DIR_O)disparador_i.o\
 $(DIR_O)representable_i.o\
+$(DIR_O)sonoro_i.o\
 $(DIR_O)bonus_tiempo.o\
 $(DIR_O)bonus_salud.o\
 $(DIR_O)logica_con_turno.o\
@@ -50,6 +51,9 @@ $(DIR_O)proyectil_base.o\
 $(DIR_O)proyectil_normal.o\
 $(DIR_O)item_repositorio.o\
 $(DIR_O)repositorio_salas.o\
+$(DIR_O)audio_reproducir.o\
+$(DIR_O)audio_detener.o\
+$(DIR_O)gestor_audio.o\
 
 DEP_CONTROLADORES=$(DIR_O)controlador_base.o \
 $(DIR_O)controlador_juego.o \

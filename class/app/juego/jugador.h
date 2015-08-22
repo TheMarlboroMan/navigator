@@ -4,6 +4,7 @@
 #include <memory>
 #include "actor_movil.h"
 #include "../interfaces/representable_i.h"
+#include "../interfaces/sonoro_i.h"
 #include "../graficos/bloque_transformacion_representable.h"
 #include "../recursos.h"
 #include "../input/input_usuario.h"
@@ -16,7 +17,8 @@ namespace App_Juego
 
 class Jugador:
 	public Actor_movil, 
-	public App_Interfaces::Representable_I
+	public App_Interfaces::Representable_I,	
+	public App_Interfaces::Sonoro_I
 {
 	////////////////////////
 	// Definiciones...
@@ -64,6 +66,12 @@ class Jugador:
 	virtual unsigned short int 		obtener_profundidad_ordenacion() const {return 20;}
 	virtual void 				transformar_bloque(App_Graficos::Bloque_transformacion_representable &b) const;
 	virtual bool				es_representable_borrar() const {return false;}
+
+	///////////////////////
+	// Implementación de Sonoro_I.
+	public:
+
+	virtual bool				es_sonoro_borrar() const {return false;}
 
 	/////////////////////////
 	// Métodos internos.

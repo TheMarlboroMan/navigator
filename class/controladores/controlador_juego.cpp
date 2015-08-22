@@ -73,7 +73,6 @@ void Controlador_juego::loop(Input_base& input, float delta)
 			solicitar_cambio_estado(Director_estados::t_estados::pausa);
 			return;
 		}
-		
 
 		/**
 		* Almacenamos la orden para poder enviarla allá donde haya 
@@ -186,8 +185,6 @@ void Controlador_juego::cargar_sala(int ax, int ay, App_Definiciones::direccione
 			
 		refrescar_automapa();
 		ajustar_camara_a_sala(*sala_actual);
-		
-
 	}
 	catch(std::logic_error& e)
 	{
@@ -348,7 +345,7 @@ void Controlador_juego::refrescar_automapa()
 {
 	int x=sala_actual->acc_x(), y=sala_actual->acc_y();
 	automapa.descubrir(x, y);
-	vista_automapa.establecer_posicion_jugador(x, y);
+	automapa.establecer_posicion_jugador(x, y);
 	vista_automapa.refrescar_vista(automapa, x, y);
 }
 
@@ -424,6 +421,10 @@ void Controlador_juego::logica_mundo(float delta)
 	for(auto &p : proyectiles_enemigos) vpr.push_back(p);
 	lct.procesar(vpr);
 
+	//TODO TODO TODO: Sacar la limpieza final de este punto y que
+	//vuelva al loop.
+
+	sonar(delta);
 
 	/**
 	* Limpiar cualquier cosa que pueda haber desaparecido...
@@ -479,13 +480,46 @@ void Controlador_juego::ajustar_camara_a_sala(const Sala& s)
 	camara.restaurar_enfoque();
 }
 
-/**
-* Esto asume que el controlador de juego es quien tiene el control sobre la
-* posición actual del jugador, que más o menos es cierto.
+void Controlador_juego::sonar(float delta)
+{
+	//TODO: Esto no va a funcionar en la vida porque el vector de 
+	//sonoros ya ha desaparecido en este punto.
+
+	auto vs=(*sala_actual).obtener_vector_sonoros();
+	vs.push_back(&jugador);
+
+	for(auto& s : vs)
+	{
+		if(s->hay_reproducir())
+		{
+			auto &v=s->acc_reproducir();
+			for(auto& r : v) gestor_audio.insertar(r);
+			s->reset_reproducir();
+		}
+
+		if(s->hay_detener())
+		{
+			auto &v=s->acc_detener();
+			for(auto& r : v) gestor_audio.insertar(r);
+			s->reset_detener();
+		}
+	}	
+/*
+		else if(input.es_input_down(Input::I_RECARGA_ESCUDO))
+		{
+			auto a=App_Audio::Audio_reproducir(
+					App_Audio::Audio_reproducir::tipos_reproduccion::repetido, 
+					1, 127, 127);
+			cosa_audio=a.acc_id();
+			gestor_audio.insertar(a);
+
+		}
+		else if(input.es_input_down(Input::I_USAR_SELECCION))
+		{
+			auto a=App_Audio::Audio_detener(cosa_audio);
+			gestor_audio.insertar(a);
+		}
 */
 
-std::tuple<int, int> Controlador_juego::obtener_coordenadas_sala_actual()
-{
-	int x=sala_actual->acc_x(), y=sala_actual->acc_y();
-	return std::tuple<int, int>(x, y);
+	gestor_audio.turno(delta);
 }

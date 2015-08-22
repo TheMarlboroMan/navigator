@@ -15,6 +15,7 @@ DIR_COLISIONES=$(DIR_CLASES_APP)colisiones/
 DIR_DEFINICIONES=$(DIR_CLASES_APP)definiciones/
 DIR_GENERADOR=$(DIR_CLASES_APP)generador/
 DIR_REPOSITORIO_SALAS=$(DIR_CLASES_APP)repositorio_salas/
+DIR_AUDIO=$(DIR_CLASES_APP)audio/
 
 ################################################################################
 #Juego
@@ -22,6 +23,7 @@ DIR_REPOSITORIO_SALAS=$(DIR_CLASES_APP)repositorio_salas/
 $(DIR_O)jugador.o:\
 $(DIR_O)actor_movil.o \
 $(DIR_O)representable_i.o \
+$(DIR_O)sonoro_i.o \
 $(DIR_GRAFICOS)bloque_transformacion_representable.h\
 $(DIR_INPUT)input_usuario.h \
 $(DIR_JUEGO)jugador.h \
@@ -186,6 +188,25 @@ $(DIR_JUEGO_OBJETOS)posicion_inicial.h \
 $(DIR_JUEGO_OBJETOS)posicion_inicial.cpp
 	$(CC) $(CFLAGS) $(INCLUDES) $(DIR_JUEGO_OBJETOS)posicion_inicial.cpp -o $(DIR_O)posicion_inicial.o
 
+################################################################################
+#Audio
+
+$(DIR_O)audio_reproducir.o:\
+$(DIR_AUDIO)audio_reproducir.h\
+$(DIR_AUDIO)audio_reproducir.cpp
+	$(CC) $(CFLAGS) $(INCLUDES) $(DIR_AUDIO)audio_reproducir.cpp -o $(DIR_O)audio_reproducir.o
+
+$(DIR_O)audio_detener.o:\
+$(DIR_AUDIO)audio_detener.h\
+$(DIR_AUDIO)audio_detener.cpp
+	$(CC) $(CFLAGS) $(INCLUDES) $(DIR_AUDIO)audio_detener.cpp -o $(DIR_O)audio_detener.o
+
+$(DIR_O)gestor_audio.o:\
+$(DIR_O)audio_reproducir.o\
+$(DIR_O)audio_detener.o\
+$(DIR_AUDIO)gestor_audio.h\
+$(DIR_AUDIO)gestor_audio.cpp
+	$(CC) $(CFLAGS) $(INCLUDES) $(DIR_AUDIO)gestor_audio.cpp -o $(DIR_O)gestor_audio.o
 
 ################################################################################
 #Juego sistemas
@@ -405,6 +426,11 @@ $(DIR_VISITANTES)visitante_disparador.h \
 $(DIR_INTERFACES)disparador_i.h \
 $(DIR_INTERFACES)disparador_i.cpp
 	$(CC) $(CFLAGS) $(INCLUDES) $(DIR_INTERFACES)disparador_i.cpp -o $(DIR_O)disparador_i.o
+
+$(DIR_O)sonoro_i.o:\
+$(DIR_INTERFACES)sonoro_i.h \
+$(DIR_INTERFACES)sonoro_i.cpp
+	$(CC) $(CFLAGS) $(INCLUDES) $(DIR_INTERFACES)sonoro_i.cpp -o $(DIR_O)sonoro_i.o
 
 $(DIR_O)representable_i.o:\
 $(DIR_INTERFACES)representable_i.h \

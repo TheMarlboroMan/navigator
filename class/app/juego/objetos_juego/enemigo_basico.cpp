@@ -54,5 +54,12 @@ void Enemigo_basico::turno(float delta)
 void Enemigo_basico::recibir_disparo(float potencia)
 {
 	salud-=potencia;
-	if(salud <= 0.0) mut_borrar(true);
+	if(salud <= 0.0) 
+	{
+		insertar_reproducir(App_Audio::Audio_reproducir(
+			App_Audio::Audio_reproducir::tipos_reproduccion::simple, 
+			App::Recursos_audio::rs_explosion, 127, 127));
+
+		mut_borrar(true);
+	}
 }

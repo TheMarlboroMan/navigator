@@ -36,6 +36,7 @@ class Sala
 	void 							modificar_posicion(App_Definiciones::t_dim px, App_Definiciones::t_dim py);
 	void 							modificar_dimensiones(App_Definiciones::t_dim px, App_Definiciones::t_dim py);
 	std::vector<const App_Interfaces::Representable_I *> 	obtener_vector_representables() const;
+	std::vector<App_Interfaces::Sonoro_I *> 		obtener_vector_sonoros() const;
 	void							implantar_objetos_juego(App_Juego_ObjetoJuego::Contenedor_objetos&&);
 	//TODO: Elimianr...
 	const HerramientasProyecto::Matriz_2d<Celda>& 		acc_matriz() const {return celdas;}
@@ -51,6 +52,7 @@ class Sala
 	template<typename T> void 				procesar_disparadores(T& p) {p.procesar(objetos.disparadores);}
 	template<typename T> void				procesar_representables(T& p) {p.procesar(objetos.representables);}
 	template<typename T> void				procesar_colisionables(T& p) {p.procesar(objetos.colisionables);}
+	template<typename T> void				procesar_sonoros(T& p) {p.procesar(objetos.sonoros);}
 
 	///////////
 	// Propiedades

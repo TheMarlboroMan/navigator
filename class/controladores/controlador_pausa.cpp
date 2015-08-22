@@ -64,10 +64,7 @@ void Controlador_pausa::dibujar(DLibV::Pantalla& pantalla)
 	representador.generar_vista(pantalla, vista_automapa.obtener_vista(50, 50, 14));
 }
 
-void Controlador_pausa::centrar_mapa(const std::tuple<int, int>& t)
+void Controlador_pausa::refrescar()
 {
-	x_mapa=std::get<0>(t);
-	y_mapa=std::get<1>(t);
-	vista_automapa.establecer_posicion_jugador(x_mapa, y_mapa);
 	vista_automapa.refrescar_vista(automapa, x_mapa, y_mapa);
 }

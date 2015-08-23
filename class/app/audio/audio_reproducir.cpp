@@ -3,72 +3,68 @@
 using namespace App_Audio;
 using namespace DLibA;
 
-int Audio_reproducir::id_siguiente=1;
+int Info_audio_reproducir::id_siguiente=1;
 
-Audio_reproducir::Audio_reproducir(tipos_reproduccion tr, int id_snd, int vol, int ppan)
-	:id(id_siguiente), tipo_reproduccion(tr),
-	id_sonido(id_snd),
-	volumen(vol),
+Info_audio_reproducir::Info_audio_reproducir(tipos_reproduccion tr, int id_snd, int vol, int ppan)
+	:id(id_siguiente++), 
+	tipo_reproduccion(tr), 
+	id_sonido(id_snd), 
+	volumen(vol), 
 	pan(ppan)
 {
-	++id_siguiente;
+
 }
+
+/***********/
+
+Audio_reproducir::Audio_reproducir(const Info_audio_reproducir& i)
+	:info(i),
+	estado(estados::sin_iniciar)
+{
+
+}
+
+/**
+* Atención, cuando metamos esto dentro de un vector se va a copiar y a destruir.
+* El canal lo vamos a duplicar pero nos interesará NO detener el sonido porque
+* aún puede tener que estar sonando en la nueva copia.
+*/
 
 Audio_reproducir::~Audio_reproducir()
 {
-	liberar_canal();
+	if(canal.es_vinculado())
+	{
+		canal.desactivar_monitoreado();
+//		canal.forzar_parada();
+		canal.desvincular();
+		estado=estados::desvinculado;
+	}
 }
 
 void Audio_reproducir::detener_sonido()
 {
 	canal.forzar_parada();
-}
-
-bool Audio_reproducir::es_finalizado() const
-{
-	return canal.es_vinculado() && !canal.es_reproduciendo();
-}
-
-/**
-* Técnicamente lo que hace es darnos el estado que se queda tras liberar eñ
-* el canal, que es el mismo que tendría al iniciarse.
-*/
-
-bool Audio_reproducir::es_expirado() const
-{
-	return !canal.es_vinculado() && !iniciada_reproduccion;
+	estado=estados::finalizado;
 }
 
 void Audio_reproducir::turno(float p_delta)
 {
 	//TODO TODO TODO: Subclasear.
 
-	switch(tipo_reproduccion)
+	switch(info.tipo_reproduccion)
 	{
-		case tipos_reproduccion::simple:
-		case tipos_reproduccion::repetido:
-			if(!iniciada_reproduccion)
+		case Info_audio_reproducir::tipos_reproduccion::simple:
+		case Info_audio_reproducir::tipos_reproduccion::repetido:
+			if(estado==estados::sin_iniciar)
 			{
 				iniciar_reproduccion();
 			}
-			else if(es_finalizado())
+			else if(!canal.es_reproduciendo())
 			{
-				liberar_canal();
+				estado=estados::finalizado;
 			}
 		break;
 	}
-}
-
-void Audio_reproducir::liberar_canal()
-{
-	if(canal.es_vinculado())
-	{
-		canal.desactivar_monitoreado();
-		canal.forzar_parada();
-		canal.desvincular();
-	}
-
-	iniciada_reproduccion=false;
 }
 
 void Audio_reproducir::iniciar_reproduccion()
@@ -95,19 +91,19 @@ void Audio_reproducir::iniciar_reproduccion()
 	int repeticiones=0;
 
 	//TODO: Subclass this bitch.
-	switch(tipo_reproduccion)
+	switch(info.tipo_reproduccion)
 	{
-		case tipos_reproduccion::simple:	repeticiones=0; break;
-		case tipos_reproduccion::repetido: 	repeticiones=-1; break;
+		case Info_audio_reproducir::tipos_reproduccion::simple:	repeticiones=0; break;
+		case Info_audio_reproducir::tipos_reproduccion::repetido: 	repeticiones=-1; break;
 	}
 	
-	int pan_d=(pan / 2);		
+	int pan_d=(info.pan / 2);		
 	int pan_i=255-pan_d;
 
 	canal.iniciar_reproduccion(
 		DLibA::Estructura_sonido(
-				DLibA::Gestor_recursos_audio::obtener_sonido(id_sonido), 
-			volumen, repeticiones, pan_i, pan_d));
+				DLibA::Gestor_recursos_audio::obtener_sonido(info.id_sonido), 
+			info.volumen, repeticiones, pan_i, pan_d));
 
-	iniciada_reproduccion=true;
+	estado=estados::reproduciendo;
 }

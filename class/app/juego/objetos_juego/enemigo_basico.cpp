@@ -48,18 +48,28 @@ void Enemigo_basico::turno(float delta)
 	{
 		Disparador_I::mut_disparar(true);
 		tiempo_proximo_disparo=TIEMPO_PROXIMO_DISPARO_DEFECTO;
+
+		insertar_reproducir(App_Audio::Info_audio_reproducir(
+			App_Audio::Info_audio_reproducir::tipos_reproduccion::simple, 
+			App::Recursos_audio::rs_disparo, 127, 127));
 	}
 }
 
 void Enemigo_basico::recibir_disparo(float potencia)
 {
+	int id_sonido=App::Recursos_audio::rs_explosion;
+
 	salud-=potencia;
 	if(salud <= 0.0) 
 	{
-		insertar_reproducir(App_Audio::Audio_reproducir(
-			App_Audio::Audio_reproducir::tipos_reproduccion::simple, 
-			App::Recursos_audio::rs_explosion, 127, 127));
-
 		mut_borrar(true);
 	}
+	else
+	{
+		id_sonido=App::Recursos_audio::rs_golpe;
+	}
+
+	insertar_reproducir(App_Audio::Info_audio_reproducir(
+		App_Audio::Info_audio_reproducir::tipos_reproduccion::simple, 
+		id_sonido, 127, 127));
 }

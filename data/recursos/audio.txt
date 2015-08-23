@@ -3,7 +3,8 @@
 #Sonidos motor... estos no debemos cambiarlos porque se usan en código!
 1	data/sonidos/defecto.ogg
 
-10	data/sonidos/disparo.wav
-11	data/sonidos/explosion.wav
+10	data/sonidos/disparo.ogg
+11	data/sonidos/explosion.ogg
+12	data/sonidos/golpe.ogg
 
 #Sonidos de aplicacion...

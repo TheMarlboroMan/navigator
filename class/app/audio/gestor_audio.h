@@ -14,7 +14,7 @@ class Gestor_audio
 	// Interface pública.
 	public:
 
-	void					insertar(const Audio_reproducir&);
+	void					insertar(const Info_audio_reproducir&);
 	void					insertar(const Audio_detener&);
 	void					turno(float delta);
 

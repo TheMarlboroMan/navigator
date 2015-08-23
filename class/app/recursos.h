@@ -38,7 +38,8 @@ class Recursos_audio
 	enum sonidos{
 		RS_DEFECTO=1,
 		rs_disparo=10,
-		rs_explosion=11
+		rs_explosion=11,
+		rs_golpe=12
 	};
 };
 

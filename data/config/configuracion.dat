@@ -3,8 +3,8 @@ pantalla_completa:0
 modo_hardware:1
 doble_buffer:1
 pantalla_anyformat:1
-volumen_audio:64
-volumen_musica:64
+volumen_audio:128
+volumen_musica:128
 audio_ratio:44100
 audio_salidas:0
 audio_buffers:1024

@@ -482,9 +482,6 @@ void Controlador_juego::ajustar_camara_a_sala(const Sala& s)
 
 void Controlador_juego::sonar(float delta)
 {
-	//TODO: Esto no va a funcionar en la vida porque el vector de 
-	//sonoros ya ha desaparecido en este punto.
-
 	auto vs=(*sala_actual).obtener_vector_sonoros();
 	vs.push_back(&jugador);
 
@@ -504,22 +501,6 @@ void Controlador_juego::sonar(float delta)
 			s->reset_detener();
 		}
 	}	
-/*
-		else if(input.es_input_down(Input::I_RECARGA_ESCUDO))
-		{
-			auto a=App_Audio::Audio_reproducir(
-					App_Audio::Audio_reproducir::tipos_reproduccion::repetido, 
-					1, 127, 127);
-			cosa_audio=a.acc_id();
-			gestor_audio.insertar(a);
-
-		}
-		else if(input.es_input_down(Input::I_USAR_SELECCION))
-		{
-			auto a=App_Audio::Audio_detener(cosa_audio);
-			gestor_audio.insertar(a);
-		}
-*/
 
 	gestor_audio.turno(delta);
 }

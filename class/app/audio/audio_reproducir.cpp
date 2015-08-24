@@ -5,9 +5,10 @@ using namespace DLibA;
 
 int Info_audio_reproducir::id_siguiente=1;
 
-Info_audio_reproducir::Info_audio_reproducir(tipos_reproduccion tr, int id_snd, int vol, int ppan)
+Info_audio_reproducir::Info_audio_reproducir(t_reproduccion tr, t_sonido ts, int id_snd, int vol, int ppan)
 	:id(id_siguiente++), 
 	tipo_reproduccion(tr), 
+	tipo_sonido(ts),
 	id_sonido(id_snd), 
 	volumen(vol), 
 	pan(ppan)
@@ -53,8 +54,8 @@ void Audio_reproducir::turno(float p_delta)
 
 	switch(info.tipo_reproduccion)
 	{
-		case Info_audio_reproducir::tipos_reproduccion::simple:
-		case Info_audio_reproducir::tipos_reproduccion::repetido:
+		case Info_audio_reproducir::t_reproduccion::simple:
+		case Info_audio_reproducir::t_reproduccion::repetido:
 			if(estado==estados::sin_iniciar)
 			{
 				iniciar_reproduccion();
@@ -93,8 +94,8 @@ void Audio_reproducir::iniciar_reproduccion()
 	//TODO: Subclass this bitch.
 	switch(info.tipo_reproduccion)
 	{
-		case Info_audio_reproducir::tipos_reproduccion::simple:	repeticiones=0; break;
-		case Info_audio_reproducir::tipos_reproduccion::repetido: 	repeticiones=-1; break;
+		case Info_audio_reproducir::t_reproduccion::simple:	repeticiones=0; break;
+		case Info_audio_reproducir::t_reproduccion::repetido: 	repeticiones=-1; break;
 	}
 	
 	int pan_d=(info.pan / 2);		

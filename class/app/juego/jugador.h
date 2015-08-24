@@ -2,6 +2,7 @@
 #define JUGADOR_H
 
 #include <memory>
+#include <map>
 #include "actor_movil.h"
 #include "../interfaces/representable_i.h"
 #include "../interfaces/sonoro_i.h"
@@ -104,10 +105,13 @@ class Jugador:
 	static const float FACTOR_DETENCION_ESTASIS;
 	static const float VALOR_GRAVEDAD;
 	static const float TIEMPO_COMPLETAR_ATERRIZAJE;
+	static const float VELOCIDAD_MOD_COLOR;
 
 	/////////////////////////
 	// Propiedades...
 	private:
+
+	struct {float r, g, b;}			mod_color;
 
 	App_Input::Input_usuario 		input;
 	App_Interfaces::Espaciable::t_caja			posicion_anterior;

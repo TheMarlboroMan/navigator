@@ -12,6 +12,8 @@
 namespace App_Audio
 {
 
+class Gestor_audio;
+
 struct Info_audio_reproducir
 {
 	private:
@@ -19,13 +21,21 @@ struct Info_audio_reproducir
 
 	public:
 
-	enum class tipos_reproduccion {simple, repetido};
+	enum class t_reproduccion {
+		simple, 	//Se repite una vez.
+		repetido	//Se repite en loop.
+	};
+	enum class t_sonido {
+		unico,		//No se permite que suene otro si ya hay uno en un canal.
+		repetible	//Se permite la repetición entre canales.
+	};
 
-						Info_audio_reproducir(tipos_reproduccion, int id_snd, int vol, int ppan);
+						Info_audio_reproducir(t_reproduccion, t_sonido, int id_snd, int vol, int ppan);
 
 
 	int 					id;
-	tipos_reproduccion 			tipo_reproduccion;
+	t_reproduccion 				tipo_reproduccion;
+	t_sonido 				tipo_sonido;
 	int	 				id_sonido;
 	int 					volumen;
 	int 					pan;
@@ -40,8 +50,6 @@ class Audio_reproducir
 	enum class estados {sin_iniciar, reproduciendo, finalizado, desvinculado};
 
 						Audio_reproducir(const Info_audio_reproducir&);
-//TODO: Debe ser copiable, simplemente. Si no, es mierda.
-//						Audio_reproducir(const Audio_reproducir& a);
 						~Audio_reproducir();
 
 	void 					turno(float p_delta);
@@ -58,6 +66,8 @@ class Audio_reproducir
 	DLibA::Canal_audio 			canal;
 	Info_audio_reproducir			info;
 	estados 				estado;
+
+	friend class Gestor_audio;
 
 };
 

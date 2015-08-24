@@ -19,9 +19,11 @@ const float Jugador::UMBRAL_DETENCION_ESTASIS=1.0f;
 const float Jugador::FACTOR_DETENCION_ESTASIS=1.2f;
 const float Jugador::VALOR_GRAVEDAD=1.0f;
 const float Jugador::TIEMPO_COMPLETAR_ATERRIZAJE=1.2f;
+const float Jugador::VELOCIDAD_MOD_COLOR=500.0f;
 
 Jugador::Jugador(float x, float y)
 	:Actor_movil(x, y, W, H),
+	mod_color{255.0, 255.0, 255.0},
 	posicion_anterior(copia_caja()),
 	salud(MAX_SALUD), energia(MAX_ENERGIA), 
 	escudo(MAX_ESCUDO), cooloff_energia(0.0f),
@@ -94,9 +96,20 @@ void Jugador::recibir_impacto(float val)
 	if(escudo < 0.0) escudo=0.0;
 	if(salud < 0.0) salud=0.0;
 
+	mod_color.r=escudo ? 0.0 : 255.0;
+	mod_color.g=escudo ? 0.0 : 0.0;
+	mod_color.b=escudo ? 255.0 : 0.0;
+
+	/*
+	* Un pequeño hack: el sonido golpe_jugador apunta al mismo wav pero
+	* si sólo lo usa el jugador será único (para modos de single player)
+	* y no volverá a sonar mientras esté activo.
+	*/
+
 	insertar_reproducir(App_Audio::Info_audio_reproducir(
-		App_Audio::Info_audio_reproducir::tipos_reproduccion::simple, 
-		App::Recursos_audio::rs_golpe, 127, 127));
+		App_Audio::Info_audio_reproducir::t_reproduccion::simple,
+		App_Audio::Info_audio_reproducir::t_sonido::unico,  
+		App::Recursos_audio::rs_golpe_jugador, 127, 127));
 }
 
 void Jugador::transformar_bloque(Bloque_transformacion_representable &b) const
@@ -108,11 +121,28 @@ void Jugador::transformar_bloque(Bloque_transformacion_representable &b) const
 	b.establecer_recorte(32, 0, 27, 16);
 	b.establecer_posicion(acc_espaciable_x()-1, acc_espaciable_y()-1, 27, 16);
 	b.invertir_horizontal(direccion==App_Definiciones::direcciones::izquierda);
+	b.establecer_mod_color(mod_color.r, mod_color.g, mod_color.b);
 }
 
 void Jugador::turno(float delta)
 {
+	using namespace App_Input;
+
 	posicion_anterior=copia_caja();
+
+	//TODO: Meter el tema de mod color como otro objeto de forma que podamos 
+	//reutilizarlo en otros objetos del juego. Podríamos poner la velocidad
+	//en el constructor, por ejemplo.
+
+	auto proc_color=[delta](float& c)
+	{
+		c+=delta * VELOCIDAD_MOD_COLOR;
+		if(c > 255.0) c=255.0;
+	};
+
+	proc_color(mod_color.r);
+	proc_color(mod_color.g);
+	proc_color(mod_color.b);
 
 	//Recuperación de la energía.
 	if(cooloff_energia)
@@ -130,24 +160,45 @@ void Jugador::turno(float delta)
 	//Recuperación de escudo.
 	float consumo_escudo=ENERGIA_ESTASIS_POR_SEGUNDO * delta;
 
-	if(input.recargar_escudo && energia >= consumo_escudo && escudo < MAX_ESCUDO)
+	//TODO: No me gusta el planteamiento que va mezclando las consideraciones
+	//de sonido con la lógica interna.
+
+	if(input.recargar_escudo != Input_usuario::t_estados::nada)
 	{
-		escudo+=(delta * ESCUDO_RECUPERADO_POR_SEGUNDO);
-		if(escudo > MAX_ESCUDO) escudo=MAX_ESCUDO;
-		
-		consumir_energia(consumo_escudo);
+		if(energia >= consumo_escudo && escudo < MAX_ESCUDO)
+		{
+			escudo+=(delta * ESCUDO_RECUPERADO_POR_SEGUNDO);
+			if(escudo > MAX_ESCUDO) escudo=MAX_ESCUDO;
+			consumir_energia(consumo_escudo);
+
+			if(input.recargar_escudo==Input_usuario::t_estados::down)
+			{
+				insertar_reproducir(App_Audio::Info_audio_reproducir(
+						App_Audio::Info_audio_reproducir::t_reproduccion::simple,
+						App_Audio::Info_audio_reproducir::t_sonido::unico,
+						App::Recursos_audio::rs_recargar_escudo, 127, 127));
+			}
+		}
 	}
 
 	//Movimiento y estasis.
 	float consumo_estasis=ENERGIA_ESTASIS_POR_SEGUNDO * delta;
 
-	if(input.estasis && energia >= consumo_estasis)
+	if(input.estasis!=Input_usuario::t_estados::nada && energia >= consumo_estasis)
 	{
 		auto v=acc_vector();
 		float fx=fabs(v.x) <= UMBRAL_DETENCION_ESTASIS ? 0.0f : (v.x / FACTOR_DETENCION_ESTASIS);
 		float fy=fabs(v.y) <= UMBRAL_DETENCION_ESTASIS ? 0.0f : (v.y / FACTOR_DETENCION_ESTASIS);
 		establecer_vector(DLibH::Vector_2d(fx, fy));
 		consumir_energia(consumo_estasis);
+
+		if(input.estasis==Input_usuario::t_estados::down)
+		{
+			insertar_reproducir(App_Audio::Info_audio_reproducir(
+					App_Audio::Info_audio_reproducir::t_reproduccion::simple,
+					App_Audio::Info_audio_reproducir::t_sonido::unico,
+					App::Recursos_audio::rs_estasis, 127, 127));
+		}
 	}
 	else
 	{
@@ -218,7 +269,8 @@ bool Jugador::disparar()
 		sumar_vector(direccion==App_Definiciones::direcciones::izquierda ? 30.0 : -30.0, Movil::t_vector::V_X);		
 		
 		insertar_reproducir(App_Audio::Info_audio_reproducir(
-					App_Audio::Info_audio_reproducir::tipos_reproduccion::simple, 
+					App_Audio::Info_audio_reproducir::t_reproduccion::simple, 
+					App_Audio::Info_audio_reproducir::t_sonido::repetible, 
 					App::Recursos_audio::rs_disparo, 127, 127));
 
 		return true;

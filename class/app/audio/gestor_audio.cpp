@@ -5,7 +5,26 @@ using namespace App_Audio;
 
 void Gestor_audio::insertar(const Info_audio_reproducir& a)
 {
-	reproducir.push_back(Audio_reproducir(a));
+	switch(a.tipo_sonido)
+	{
+		case Info_audio_reproducir::t_sonido::unico:
+		{
+			auto id_sonido=a.id_sonido;
+			auto it=std::find_if(std::begin(reproducir), std::end(reproducir), [id_sonido](const Audio_reproducir& a)
+			{
+				return a.info.id_sonido==id_sonido;
+			});
+			if(it==std::end(reproducir))
+			{
+				reproducir.push_back(Audio_reproducir(a));
+			}
+		}
+		break;
+		
+		case Info_audio_reproducir::t_sonido::repetible:
+			reproducir.push_back(Audio_reproducir(a));
+		break;
+	}
 }
 
 void Gestor_audio::insertar(const Audio_detener& a)

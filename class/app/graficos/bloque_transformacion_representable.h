@@ -75,6 +75,7 @@ struct Bloque_transformacion_representable
 			case tipos::TR_BITMAP: 
 				tipo_actual=tipos::TR_BITMAP;
 				rep_bmp.reiniciar_transformacion();
+//				rep_bmp.establecer_mod_color(255,255,255);
 				rep=&rep_bmp;
 			break;
 
@@ -93,7 +94,7 @@ struct Bloque_transformacion_representable
 
 		establecer_alpha(255);
 		establecer_blend(DLibV::Representacion::BLEND_ALPHA);
-//		establecer_mod_color(255, 255, 255);
+		establecer_mod_color(255, 255, 255);
 	}
 
 	void establecer_alpha(unsigned int v) 

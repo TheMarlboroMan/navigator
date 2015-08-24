@@ -213,7 +213,8 @@ void Controlador_juego::procesar_jugador(Jugador& j, float delta, App_Input::Inp
 {
 	using namespace App_Colisiones;
 
-	if(iu.usar)
+	//TODO... No me gusta nada de nada. Deberíamos meterlo en el turno, quizás...
+	if(iu.usar == App_Input::Input_usuario::t_estados::down)
 	{
 		if(jugador.disparar())
 		{

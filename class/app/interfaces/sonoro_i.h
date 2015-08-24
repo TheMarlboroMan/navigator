@@ -17,7 +17,7 @@ class Sonoro_I
 
 	bool						hay_reproducir() const {return reproducir.size();}
 	bool						hay_detener() const {return detener.size();}
-	void						insertar_reproducir(const App_Audio::Info_audio_reproducir& a) {reproducir.push_back(a);}
+	int						insertar_reproducir(const App_Audio::Info_audio_reproducir& a);
 	void						insertar_detener(const App_Audio::Audio_detener& a) {detener.push_back(a);}
 	void						reset_reproducir() {reproducir.clear();}
 	void						reset_detener() {detener.clear();}

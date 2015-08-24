@@ -50,7 +50,8 @@ void Enemigo_basico::turno(float delta)
 		tiempo_proximo_disparo=TIEMPO_PROXIMO_DISPARO_DEFECTO;
 
 		insertar_reproducir(App_Audio::Info_audio_reproducir(
-			App_Audio::Info_audio_reproducir::tipos_reproduccion::simple, 
+			App_Audio::Info_audio_reproducir::t_reproduccion::simple,
+			App_Audio::Info_audio_reproducir::t_sonido::repetible,  
 			App::Recursos_audio::rs_disparo, 127, 127));
 	}
 }
@@ -70,6 +71,7 @@ void Enemigo_basico::recibir_disparo(float potencia)
 	}
 
 	insertar_reproducir(App_Audio::Info_audio_reproducir(
-		App_Audio::Info_audio_reproducir::tipos_reproduccion::simple, 
+		App_Audio::Info_audio_reproducir::t_reproduccion::simple,
+		App_Audio::Info_audio_reproducir::t_sonido::repetible,  
 		id_sonido, 127, 127));
 }

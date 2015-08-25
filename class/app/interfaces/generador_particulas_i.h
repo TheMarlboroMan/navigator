@@ -4,6 +4,7 @@
 #include <memory>
 #include <vector>
 #include "../juego/particulas/definicion_particula.h"
+#include "objeto_juego_i.h"
 
 namespace App_Interfaces
 {
@@ -13,22 +14,22 @@ namespace App_Interfaces
 * podamos cogerlos por el mismo asa.
 */
 
-class Generador_particulas_I
+class Generador_particulas_I:
+	public virtual Objeto_juego_I
 {
 	public:
 
 	typedef std::vector<std::shared_ptr<App_Juego_Particulas::Definicion_particula>> vDefinicionParticula;
 	typedef std::shared_ptr<App_Juego_Particulas::Definicion_particula> sptrDefinicionParticula;
 
-	static bool							hay_prototipos();
-	static void							reset_prototipos();
-	static vDefinicionParticula&					acc_prototipos();
-
-	void								insertar_prototipo(sptrDefinicionParticula);
+	bool							hay_prototipos();
+	void							reset_prototipos();
+	vDefinicionParticula&					acc_prototipos();
+	void							insertar_prototipo(sptrDefinicionParticula);
 
 	private:
 
-	static vDefinicionParticula					prototipos;
+	vDefinicionParticula					prototipos;
 	
 };
 }

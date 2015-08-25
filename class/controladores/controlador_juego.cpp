@@ -11,6 +11,7 @@
 #include "../app/juego/logica_con_turno.h"
 #include "../app/juego/logica_disparable.h"
 #include "../app/juego/logica_colisionable.h"
+#include "../app/juego/logica_generador_particulas.h"
 
 using namespace App_Niveles;
 using namespace App_Juego;
@@ -106,7 +107,10 @@ void Controlador_juego::loop(Input_base& input, float delta)
 		controlar_y_efectuar_salida_sala(jugador);
 
 		logica_proyectiles(delta);
+		logica_particulas(delta);
 		logica_mundo(delta);
+		sonar(delta);
+		sala_actual->limpiar_objetos_juego_para_borrar();
 	}
 }
 
@@ -201,6 +205,7 @@ void Controlador_juego::limpiar_pre_cambio_sala()
 {
 	proyectiles_jugador.clear();
 	proyectiles_enemigos.clear();
+	particulas.clear();
 }
 
 /**
@@ -327,6 +332,7 @@ void Controlador_juego::dibujar(DLibV::Pantalla& pantalla)
 
 	for(const auto& p : proyectiles_jugador) vr.push_back(p.get());
 	for(const auto& p : proyectiles_enemigos) vr.push_back(p.get());
+	for(const auto& p : particulas) vr.push_back(p.get());
 
 	App_Interfaces::Ordenador_representables ord;
 	std::sort(std::begin(vr), std::end(vr), ord);
@@ -382,6 +388,12 @@ void Controlador_juego::logica_proyectiles(float delta)
 	if(proyectiles_enemigos.size()) procesar(proyectiles_enemigos, delta, *sala_actual);
 }
 
+void Controlador_juego::logica_particulas(float delta)
+{
+	auto it=std::remove_if(std::begin(particulas), std::end(particulas), [](sptr_Particula_base p) {return p->es_borrar();});
+	if(it!=std::end(particulas)) particulas.erase(it, std::end(particulas));
+}
+
 void Controlador_juego::logica_mundo(float delta)
 {
 	/**
@@ -411,9 +423,13 @@ void Controlador_juego::logica_mundo(float delta)
 	* Objeto para procesar la lógica de los turnos... Bien podría ser
 	* una clase aparte si es necesario. Por un lado se procesan los objetos
 	* de la sala y por otro los que quedan fuera.
+	* TODO: Terrible lo de las particulas, terrible... Esto hay que 
+	* plantearlo de otro modo.
 	*/
 
-	Logica_con_turno lct(jugador, *sala_actual, delta);
+	std::vector<std::shared_ptr<App_Interfaces::Con_turno_I>> pt;
+	for(auto& p : particulas) pt.push_back(p);
+	Logica_con_turno lct(jugador, *sala_actual, delta, pt);
 	sala_actual->procesar_con_turno(lct);
 
 	std::vector<std::shared_ptr<App_Interfaces::Con_turno_I>> vpr;
@@ -421,16 +437,17 @@ void Controlador_juego::logica_mundo(float delta)
 	for(auto &p : proyectiles_enemigos) vpr.push_back(p);
 	lct.procesar(vpr);
 
-	//TODO TODO TODO: Sacar la limpieza final de este punto y que
-	//vuelva al loop.
-
-	sonar(delta);
-
 	/**
-	* Limpiar cualquier cosa que pueda haber desaparecido...
+	* Lógica para los objetos que pueden generar particulas.
+	* Esta es un poco diferente del resto: no es necesario pasarla al mapa
+	* porque la interface define un punto único de inserción para las 
+	* partículas.
+	* Podríamos haber usado este mismo sistema para el resto, pero esto es
+	* aún más vago :D.
 	*/
 
-	sala_actual->limpiar_objetos_juego_para_borrar();
+	Logica_generador_particulas lgp(particulas, jugador);
+	sala_actual->procesar_generadores_particulas(lgp);
 }
 
 

@@ -6,10 +6,12 @@
 #include "actor_movil.h"
 #include "../interfaces/representable_i.h"
 #include "../interfaces/sonoro_i.h"
+#include "../interfaces/generador_particulas_i.h"
 #include "../graficos/bloque_transformacion_representable.h"
 #include "../recursos.h"
 #include "../input/input_usuario.h"
 #include "../definiciones/definiciones.h"
+#include "particulas/definicion_particula_fantasma.h"
 //#include "../../herramientas_proyecto/tabla_sprites.h"
 //#include "jugador_estados.h"
 
@@ -19,7 +21,8 @@ namespace App_Juego
 class Jugador:
 	public Actor_movil, 
 	public App_Interfaces::Representable_I,	
-	public App_Interfaces::Sonoro_I
+	public App_Interfaces::Sonoro_I,
+	public App_Interfaces::Generador_particulas_I
 {
 	////////////////////////
 	// Definiciones...

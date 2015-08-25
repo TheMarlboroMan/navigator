@@ -42,6 +42,7 @@ void Contenedor_objetos::sumar_variante(const Contenedor_objetos& o)
 	for(auto& ob : o.representables) representables.push_back(ob);
 	for(auto& ob : o.colisionables) colisionables.push_back(ob);
 	for(auto& ob : o.sonoros) sonoros.push_back(ob);
+	for(auto& ob : o.generadores_particulas) generadores_particulas.push_back(ob);
 }
 
 
@@ -72,6 +73,7 @@ size_t Contenedor_objetos::limpiar_para_borrar()
 		ayudante_borrar(disparables);
 		ayudante_borrar(disparadores);
 		ayudante_borrar(colisionables);
+		ayudante_borrar(generadores_particulas);
 
 		//Y las especializaciones malvadas.
 		{

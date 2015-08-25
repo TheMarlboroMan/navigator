@@ -198,6 +198,11 @@ void Jugador::turno(float delta)
 					App_Audio::Info_audio_reproducir::t_reproduccion::simple,
 					App_Audio::Info_audio_reproducir::t_sonido::unico,
 					App::Recursos_audio::rs_estasis, 127, 127));
+
+			auto ptr=std::shared_ptr<App_Juego_Particulas::Definicion_particula>(
+				new App_Juego_Particulas::Definicion_particula_fantasma(
+					acc_espaciable_x(), acc_espaciable_y(), 1.0f, 20.0f, direccion));
+			insertar_prototipo(ptr);
 		}
 	}
 	else

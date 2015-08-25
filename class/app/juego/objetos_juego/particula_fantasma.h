@@ -2,13 +2,19 @@
 #define PARTICULA_FANTASMA_H
 
 #include "particula_base.h"
+#include "../../graficos/bloque_transformacion_representable.h"
+#include "../../recursos.h"
+#include "../../definiciones/definiciones.h"
 
 namespace App_Juego_ObjetoJuego
 {
 class Particula_fantasma:
 	public Particula_base
 {
-						Particula_fantasma(float x, float y, float tv, float ve);
+	//////////////////////
+	//Interface pública.
+	public:
+						Particula_fantasma(float x, float y, float tv, float ve, App_Definiciones::direcciones direccion);
 
 	//////////////
 	// Implementación de Representable_I
@@ -29,7 +35,10 @@ class Particula_fantasma:
 	//Internas.
 	private:
 
+	float					x, y, w, h;
 	float 					velocidad_expansion;
+	float					tiempo_vida_total;
+	App_Definiciones::direcciones 		direccion;
 };
 
 }

@@ -27,6 +27,7 @@ struct Bloque_transformacion_representable
 	DLibV::Representacion_agrupada_estatica rep_agr_est;
 	DLibV::Representacion * rep;
 	tipos tipo_actual;
+	bool visible;
 	
 	///////////////////////////////////
 	// Interfaz pública
@@ -38,7 +39,8 @@ struct Bloque_transformacion_representable
 		rep_agr_din(true),
 		rep_agr_est(true),
 		rep(&rep_bmp),
-		tipo_actual(tipos::TR_BITMAP)
+		tipo_actual(tipos::TR_BITMAP),
+		visible(true)
 	{
 		rep_agr_din.imponer_alpha();
 		rep_agr_din.imponer_modo_blend();
@@ -52,6 +54,8 @@ struct Bloque_transformacion_representable
 		rep_agr_din.vaciar_grupo();
 		rep_agr_est.vaciar_grupo();
 	}
+
+	bool es_visible() const {return visible;}
 
 	void establecer_recorte(unsigned int x, unsigned int y, unsigned int w, unsigned int h) 
 	{
@@ -95,6 +99,12 @@ struct Bloque_transformacion_representable
 		establecer_alpha(255);
 		establecer_blend(DLibV::Representacion::BLEND_ALPHA);
 		establecer_mod_color(255, 255, 255);
+		visible=true;
+	}
+
+	void ocultar()
+	{
+		visible=false;
 	}
 
 	void establecer_alpha(unsigned int v) 

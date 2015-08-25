@@ -12,6 +12,7 @@
 #include "../../interfaces/representable_i.h"
 #include "../../interfaces/colisionable_i.h"
 #include "../../interfaces/sonoro_i.h"
+#include "../../interfaces/generador_particulas_i.h"
 #include "entrada.h"
 #include "salida.h"
 #include "posicion_inicial.h"
@@ -41,6 +42,7 @@ namespace App_Juego_ObjetoJuego
 		std::vector<std::shared_ptr<App_Interfaces::Representable_I>>		representables;
 		std::vector<std::shared_ptr<App_Interfaces::Colisionable_I>>		colisionables;
 		std::vector<std::shared_ptr<App_Interfaces::Sonoro_I>>			sonoros;
+		std::vector<std::shared_ptr<App_Interfaces::Generador_particulas_I>>	generadores_particulas;
 
 		/**
 		* Además, las entradas del nivel y posiciones iniciales y finales.

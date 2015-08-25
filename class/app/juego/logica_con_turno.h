@@ -17,7 +17,7 @@ class Logica_con_turno:
 	//Interface pública.
 	public:
 
-					Logica_con_turno(const Jugador& j, const App_Niveles::Sala& s, float d);
+					Logica_con_turno(const Jugador& j, const App_Niveles::Sala& s, float d, std::vector<std::shared_ptr<App_Interfaces::Con_turno_I>>& p);
 	virtual void 			procesar(std::vector<std::shared_ptr<App_Interfaces::Con_turno_I>>&);
 
 	///////////////////////
@@ -34,9 +34,10 @@ class Logica_con_turno:
 	//Propiedades privadas
 	private:
 
-	const Jugador&			jugador;
-	const App_Niveles::Sala&	sala;
-	float				delta;
+	const Jugador&							jugador;
+	const App_Niveles::Sala&					sala;
+	float								delta;
+	std::vector<std::shared_ptr<App_Interfaces::Con_turno_I>>&	particulas;
 };
 }
 

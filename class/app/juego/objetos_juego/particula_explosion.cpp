@@ -2,6 +2,7 @@
 
 using namespace App_Juego_ObjetoJuego;
 
+HerramientasProyecto::Tabla_sprites Particula_explosion::tabla_sprites("data/recursos/particulas.dat");
 
 Particula_explosion::Particula_explosion(float x, float y, float tv, const DLibH::Vector_2d& v):
 	App_Interfaces::Objeto_juego_I(),
@@ -19,6 +20,12 @@ unsigned short int Particula_explosion::obtener_profundidad_ordenacion()const
 void Particula_explosion::transformar_bloque(App_Graficos::Bloque_transformacion_representable &b)const
 {
 	//TODO TODO TODO...
+
+	//TODO: Crear propiedad "frame actual".
+
+	//TODO: Crear una clase de definiciones para spritesheet "particulas"
+
+	//TODO: Ya hablaremos de cómo hacer el humo...
 }
 
 void Particula_explosion::turno(float delta)

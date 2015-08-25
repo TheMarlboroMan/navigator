@@ -80,6 +80,14 @@ $(DIR_JUEGO)logica_disparable.h\
 $(DIR_JUEGO)logica_disparable.cpp
 	$(CC) $(CFLAGS) $(INCLUDES) $(DIR_JUEGO)logica_disparable.cpp -o $(DIR_O)logica_disparable.o
 
+$(DIR_O)logica_generador_particulas.o:\
+$(DIR_O)particula_base.o\
+$(DIR_O)generador_particulas_i.o\
+$(DIR_O)definicion_particula.o\
+$(DIR_JUEGO)logica_generador_particulas.h\
+$(DIR_JUEGO)logica_generador_particulas.cpp
+	$(CC) $(CFLAGS) $(INCLUDES) $(DIR_JUEGO)logica_generador_particulas.cpp -o $(DIR_O)logica_generador_particulas.o
+
 $(DIR_O)logica_colisionable.o:\
 $(DIR_O)enemigo_basico.o\
 $(DIR_O)enemigo_rebote.o\
@@ -205,6 +213,7 @@ $(DIR_JUEGO_OBJETOS)particula_explosion.cpp
 
 $(DIR_O)particula_fantasma.o:\
 $(DIR_O)particula_base.o\
+$(DIR_GRAFICOS)bloque_transformacion_representable.h\
 $(DIR_JUEGO_OBJETOS)particula_fantasma.h \
 $(DIR_JUEGO_OBJETOS)particula_fantasma.cpp
 	$(CC) $(CFLAGS) $(INCLUDES) $(DIR_JUEGO_OBJETOS)particula_fantasma.cpp -o $(DIR_O)particula_fantasma.o
@@ -490,6 +499,7 @@ $(DIR_INTERFACES)movil.cpp
 	$(CC) $(CFLAGS) $(INCLUDES) $(DIR_INTERFACES)movil.cpp -o $(DIR_O)movil.o
 
 $(DIR_O)generador_particulas_i.o:\
+$(DIR_O)objeto_juego_i.o\
 $(DIR_O)definicion_particula.o\
 $(DIR_INTERFACES)generador_particulas_i.h \
 $(DIR_INTERFACES)generador_particulas_i.cpp

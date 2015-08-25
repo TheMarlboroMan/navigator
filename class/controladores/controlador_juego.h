@@ -37,7 +37,10 @@ class Controlador_juego:public Controlador_base
 	//Definiciones.
 	public:
 	typedef std::shared_ptr<App_Juego_ObjetoJuego::Proyectil_base> sptr_Proyectil_base;
+	typedef std::shared_ptr<App_Juego_ObjetoJuego::Particula_base> sptr_Particula_base;
+
 	typedef std::vector<std::shared_ptr<App_Juego_ObjetoJuego::Proyectil_base> > Vsptr_Proyectil_base;
+	typedef std::vector<std::shared_ptr<App_Juego_ObjetoJuego::Particula_base> > Vsptr_Particula_base;
 
 	//////////////
 	//Propiedades
@@ -57,6 +60,7 @@ class Controlador_juego:public Controlador_base
 	
 	Vsptr_Proyectil_base		 		proyectiles_jugador;
 	Vsptr_Proyectil_base		 		proyectiles_enemigos;
+	Vsptr_Particula_base				particulas;
 
 	bool						cambiar_modo_pantalla;
 	int						cosa_audio;
@@ -72,6 +76,7 @@ class Controlador_juego:public Controlador_base
 	void 					refrescar_automapa();
 	void 					logica_mundo(float delta);
 	void 					logica_proyectiles(float delta);
+	void 					logica_particulas(float delta);
 	void 					limpiar_pre_cambio_sala();
 	void					cargar_sala(int ax, int ay, App_Definiciones::direcciones salida, App_Juego::Jugador& j, DLibH::Punto_2d<int> offset);
 };

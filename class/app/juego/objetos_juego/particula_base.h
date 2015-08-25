@@ -24,6 +24,9 @@ class Particula_base:
 	public:
 						Particula_base(float tv);
 	virtual					~Particula_base();
+	float					acc_tiempo_vida() const {return tiempo_vida;}
+	void					restar_tiempo_vida(float v) {tiempo_vida-=v;}
+	bool					es_expirada() const {return tiempo_vida <= 0.0f;}
 
 	//////////////
 	// Implementación de Representable_I

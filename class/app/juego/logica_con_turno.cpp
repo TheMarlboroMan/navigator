@@ -2,22 +2,28 @@
 
 using namespace App_Juego;
 
-Logica_con_turno::Logica_con_turno(const Jugador& j, const App_Niveles::Sala& s, float d)
-	:jugador(j), sala(s), delta(d)
+Logica_con_turno::Logica_con_turno(const Jugador& j, const App_Niveles::Sala& s, float d, std::vector<std::shared_ptr<App_Interfaces::Con_turno_I>>& p)
+	:jugador(j), sala(s), delta(d), particulas(p)
 {
 
 }
 
 void Logica_con_turno::procesar(std::vector<std::shared_ptr<App_Interfaces::Con_turno_I>>& v)
 {
-	for(auto& o : v)
+	auto f=[this](std::vector<std::shared_ptr<App_Interfaces::Con_turno_I>>& v)
 	{
-		if(!o->es_borrar()) 
+		for(auto& o : v)
 		{
-			o->turno(delta);
-			o->recibir_visitante(*this);
+			if(!o->es_borrar()) 
+			{
+				o->turno(delta);
+				o->recibir_visitante(*this);
+			}
 		}
-	}
+	};
+	f(v);
+	f(particulas);
+
 }
 
 void Logica_con_turno::visitar(App_Juego_ObjetoJuego::Enemigo_basico& o)

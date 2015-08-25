@@ -79,3 +79,13 @@ void Logica_con_turno::visitar(App_Juego_ObjetoJuego::Proyectil_normal& o)
 	auto v=o.acc_vector();
 	o.desplazar_caja(v.x * delta, v.y * delta); 
 }
+
+void Logica_con_turno::visitar(App_Juego_ObjetoJuego::Particula_fantasma& o)
+{
+	//TODO...
+}
+
+void Logica_con_turno::visitar(App_Juego_ObjetoJuego::Particula_explosion& o)
+{
+	//TODO...
+}

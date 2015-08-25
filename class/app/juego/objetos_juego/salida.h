@@ -40,13 +40,6 @@ class Salida:
 	virtual void 				mut_w_caja(unsigned int) {}
 	virtual void 				mut_h_caja(unsigned int) {}	
 
-	////////////////////////////
-	//Implementación de Objeto_juego_I
-	public:
-
-	virtual void 				recibir_visitante(App_Visitantes::Visitante_objeto_juego& v) {v.visitar(*this);}
-	virtual void 				recibir_visitante(App_Visitantes::Visitante_objeto_juego_const& v)const {v.visitar(*this);}
-
 	///////////////
 	// Implementación de Representable_i.
 	public:

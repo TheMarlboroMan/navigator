@@ -27,6 +27,8 @@ class Logica_con_turno:
 	virtual void 			visitar(App_Juego_ObjetoJuego::Enemigo_basico&);
 	virtual void 			visitar(App_Juego_ObjetoJuego::Enemigo_rebote&);
 	virtual void 			visitar(App_Juego_ObjetoJuego::Proyectil_normal&);
+	virtual void 			visitar(App_Juego_ObjetoJuego::Particula_fantasma&);
+	virtual void 			visitar(App_Juego_ObjetoJuego::Particula_explosion&);
 
 	///////////////////////
 	//Propiedades privadas

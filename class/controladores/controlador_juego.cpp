@@ -4,7 +4,6 @@
 #include "../app/recursos.h"
 #include "../app/definiciones/definiciones.h"
 
-#include "../app/visitantes/visitante_objeto_juego.h"
 #include "../app/juego/objetos_juego/bonus_tiempo.h"
 #include "../app/juego/objetos_juego/bonus_salud.h"
 #include "../app/juego/logica_bonus.h"

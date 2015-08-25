@@ -39,13 +39,6 @@ class Enemigo_basico:
 	virtual float 					obtener_max_velocidad_caida() const {return 0.0;}
 	virtual void 					callback_ajuste(float pos, posiciones_ajuste tipo) {};
 
-	////////////////////////////
-	//Implementación de Objeto_juego_I
-	public:
-
-	virtual void 					recibir_visitante(App_Visitantes::Visitante_objeto_juego& v) {v.visitar(*this);}
-	virtual void 					recibir_visitante(App_Visitantes::Visitante_objeto_juego_const& v)const {v.visitar(*this);}
-
 	///////////////
 	// Implementación de Representable_i.
 	public:

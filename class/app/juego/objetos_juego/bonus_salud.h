@@ -25,13 +25,6 @@ class Bonus_salud:
 	void						mut_salud(float v) {salud=v;}
 
 	///////////////
-	// Implementación de Objeto_juego_i.
-	public:
-
-	virtual void 					recibir_visitante(App_Visitantes::Visitante_objeto_juego& v) {v.visitar(*this);}
-	virtual void 					recibir_visitante(App_Visitantes::Visitante_objeto_juego_const& v)const {v.visitar(*this);}
-
-	///////////////
 	// Implementación de Bonus_i.
 	public:
 

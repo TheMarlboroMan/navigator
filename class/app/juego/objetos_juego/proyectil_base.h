@@ -30,13 +30,6 @@ class Proyectil_base:
 	void 						mut_potencia(float v);
 	void						establecer_vector(const DLibH::Vector_2d& v);
 
-	////////////////////////////
-	//Implementación de Objeto_juego_I
-	public:
-
-	virtual void 					recibir_visitante(App_Visitantes::Visitante_objeto_juego& v)=0;
-	virtual void 					recibir_visitante(App_Visitantes::Visitante_objeto_juego_const& v)const=0;
-
 	///////////////
 	// Implementación de Con_turno_I
 	virtual void 					turno(float)=0;

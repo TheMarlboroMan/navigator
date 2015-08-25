@@ -50,13 +50,6 @@ class Proyectil_normal:
 	virtual void 					turno(float);
 	virtual void 					recibir_visitante(App_Visitantes::Visitante_con_turno& v) {v.visitar(*this);}
 
-	///////////////////////////////////
-	//Implementación de Objeto_juego_I
-	public:
-
-	virtual void 					recibir_visitante(App_Visitantes::Visitante_objeto_juego& v) {v.visitar(*this);}
-	virtual void 					recibir_visitante(App_Visitantes::Visitante_objeto_juego_const& v)const {v.visitar(*this);}
-
 	///////////////
 	// Implementación de Representable_i.
 	public:

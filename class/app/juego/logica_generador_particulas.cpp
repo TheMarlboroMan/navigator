@@ -15,11 +15,16 @@ void Logica_generador_particulas::procesar(Vsptr_Generador_particulas_I& v)
 		if(gp.hay_prototipos())
 		{
 			auto vp=gp.acc_prototipos();
-			for(auto& p : vp) particulas_controlador.push_back(p->crear_particula());
+			for(auto& p : vp) 
+			{
+				auto part=p->crear_particula();
+				if(part.get()) particulas_controlador.push_back(part);
+//TODO: Probar esto, a ver si funciona.
+				else LOG<<"WARNING: Logica_generador_particulas detecta crear particula con resultado nullptr"<<std::endl;
+			}
 			gp.reset_prototipos();
 		}
 	};
-
 	f(jugador);
 	for(auto& gp : v) f(*gp);
 }

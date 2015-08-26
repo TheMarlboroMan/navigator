@@ -31,7 +31,7 @@ void Enemigo_basico::transformar_bloque(App_Graficos::Bloque_transformacion_repr
 	//Se asume que todos los frames van mirando a la derecha.
 	b.establecer_tipo(Bloque_transformacion_representable::tipos::TR_BITMAP);
 	b.establecer_alpha(255);
-	b.establecer_recurso(App::Recursos_graficos::RT_DEFECTO);
+	b.establecer_recurso(App::Recursos_graficos::rt_defecto);
 	b.establecer_recorte(32, 0, 27, 16);
 	b.establecer_posicion(acc_espaciable_x()-1, acc_espaciable_y()-1, W, H);
 	b.invertir_horizontal(direccion==App_Definiciones::direcciones::izquierda);
@@ -64,6 +64,12 @@ void Enemigo_basico::recibir_disparo(float potencia)
 	if(salud <= 0.0) 
 	{
 		mut_borrar(true);
+
+		const auto& v=acc_vector();
+		auto ptr=std::shared_ptr<App_Juego_Particulas::Definicion_particula>(
+				new App_Juego_Particulas::Definicion_particula_explosion(
+					acc_espaciable_x(), acc_espaciable_y(), 1.0f, v.x, v.y));
+		insertar_prototipo(ptr);
 	}
 	else
 	{

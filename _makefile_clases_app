@@ -121,6 +121,8 @@ $(DIR_O)representable_i.o\
 $(DIR_O)disparador_i.o\
 $(DIR_O)con_turno_i.o\
 $(DIR_O)disparable_i.o\
+$(DIR_O)generador_particulas_i.o\
+$(DIR_O)definicion_particula_explosion.o\
 $(DIR_JUEGO_OBJETOS)enemigo_basico.h\
 $(DIR_JUEGO_OBJETOS)enemigo_basico.cpp
 	$(CC) $(CFLAGS) $(INCLUDES) $(DIR_JUEGO_OBJETOS)enemigo_basico.cpp -o $(DIR_O)enemigo_basico.o

@@ -11,7 +11,7 @@ using namespace App;
 void App::loop_aplicacion(Kernel_app& kernel)
 {
 	Audio::reproducir_musica(
-		DLibA::Gestor_recursos_audio::obtener_musica(App::Recursos_audio::RM_BLIND_SHIFT));
+		DLibA::Gestor_recursos_audio::obtener_musica(App::Recursos_audio::rm_blind_shift));
 
 	//Declaraciones de herramientas externas.
 	Director_estados DI;

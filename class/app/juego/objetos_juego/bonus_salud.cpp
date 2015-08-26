@@ -26,7 +26,7 @@ void Bonus_salud::transformar_bloque(App_Graficos::Bloque_transformacion_represe
 	//Se asume que todos los frames van mirando a la derecha.
 	b.establecer_tipo(Bloque_transformacion_representable::tipos::TR_BITMAP);
 	b.establecer_alpha(255);
-	b.establecer_recurso(Recursos_graficos::RT_DEFECTO);
+	b.establecer_recurso(Recursos_graficos::rt_defecto);
 	b.establecer_recorte(16, 32, W, H);
 	b.establecer_posicion(acc_espaciable_x(), acc_espaciable_y(), W, H);
 }

@@ -93,6 +93,7 @@ void Factoria_objetos_juego::interpretar_como_enemigo_basico(const std::vector<s
 		contenedor.con_turno.push_back(std::shared_ptr<Con_turno_I>(ob, static_cast<Con_turno_I*>(ob.get())));
 		contenedor.disparables.push_back(std::shared_ptr<Disparable_I>(ob, static_cast<Disparable_I*>(ob.get())));
 		contenedor.disparadores.push_back(std::shared_ptr<Disparador_I>(ob, static_cast<Disparador_I*>(ob.get())));
+		contenedor.generadores_particulas.push_back(std::shared_ptr<Generador_particulas_I>(ob, static_cast<Generador_particulas_I*>(ob.get())));
 	}
 }
 

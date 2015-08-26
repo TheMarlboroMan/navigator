@@ -6,5 +6,9 @@
 10	data/sonidos/disparo.ogg
 11	data/sonidos/explosion.ogg
 12	data/sonidos/golpe.ogg
+#Hack... El golpe está dos veces para permitir insertarlo de forma única para el jugador.
+13	data/sonidos/golpe.ogg
+14	data/sonidos/recargar_escudo.ogg
+15	data/sonidos/estasis.ogg
 
 #Sonidos de aplicacion...

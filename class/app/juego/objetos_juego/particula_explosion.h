@@ -6,6 +6,8 @@
 #include "particula_base.h"
 #include "../actor_movil.h"
 #include "../../../herramientas_proyecto/tabla_sprites.h"
+#include "../../definiciones/sprites_particulas.h"
+#include "../../recursos.h"
 
 namespace App_Juego_ObjetoJuego
 {
@@ -45,7 +47,8 @@ class Particula_explosion:
 	//Internas.
 	private:
 
-	static HerramientasProyecto::Tabla_sprites tabla_sprites;
+	static HerramientasProyecto::Tabla_sprites 	tabla_sprites;
+	int						frame_actual;
 
 };
 }

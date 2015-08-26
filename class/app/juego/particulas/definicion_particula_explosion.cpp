@@ -11,7 +11,7 @@ Definicion_particula_explosion::Definicion_particula_explosion(float x, float y,
 
 Definicion_particula::sptrParticula Definicion_particula_explosion::crear_particula()
 {
-	//TODO TODO TODO
-	sptrParticula resultado=sptrParticula(nullptr);
+	using namespace App_Juego_ObjetoJuego;
+	sptrParticula resultado=sptrParticula(new Particula_explosion(x, y, tiempo_vida, DLibH::Vector_2d(vx, vy)));
 	return resultado;
 }

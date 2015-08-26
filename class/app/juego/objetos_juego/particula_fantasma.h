@@ -37,7 +37,6 @@ class Particula_fantasma:
 
 	float					x, y, w, h;
 	float 					velocidad_expansion;
-	float					tiempo_vida_total;
 	App_Definiciones::direcciones 		direccion;
 };
 

@@ -13,13 +13,14 @@ class Recursos_graficos
 	public:
 
 	enum superficies{
-		RS_FUENTE_BASE=1
+		rs_fuente_base=1
 	};
 
 	enum texturas{
-		RT_DEFECTO=1,
-		RT_AUTOMAPA=2,
-		RT_TEMPLATE_TILES=3
+		rt_defecto=1,
+		rt_automapa=2,
+		rt_template_tiles=3,
+		rt_particulas=4
 	};
 };
 
@@ -32,7 +33,7 @@ class Recursos_audio
 	public:
 
 	enum musicas{
-		RM_BLIND_SHIFT=1
+		rm_blind_shift=1
 	};
 
 	enum sonidos{

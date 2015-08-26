@@ -25,7 +25,9 @@ class Particula_base:
 						Particula_base(float tv);
 	virtual					~Particula_base();
 	float					acc_tiempo_vida() const {return tiempo_vida;}
-	void					restar_tiempo_vida(float v) {tiempo_vida-=v;}
+	float					acc_tiempo_vida_inicial() const {return tiempo_vida_inicial;}
+	int					calcular_parcial_tiempo_vida(int t) const;
+	void					restar_tiempo_vida(float v);
 	bool					es_expirada() const {return tiempo_vida <= 0.0f;}
 
 	//////////////
@@ -48,6 +50,7 @@ class Particula_base:
 	private:
 
 	float					tiempo_vida;
+	float					tiempo_vida_inicial;
 };
 }
 

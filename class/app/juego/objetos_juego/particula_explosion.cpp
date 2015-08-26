@@ -7,7 +7,8 @@ HerramientasProyecto::Tabla_sprites Particula_explosion::tabla_sprites("data/rec
 Particula_explosion::Particula_explosion(float x, float y, float tv, const DLibH::Vector_2d& v):
 	App_Interfaces::Objeto_juego_I(),
 	Particula_base(tv),
-	App_Juego::Actor_movil(x, y, 1.0, 1.0)
+	App_Juego::Actor_movil(x, y, 1.0, 1.0),
+	frame_actual(App_Definiciones::Sprites_particulas::explosion_01)
 {
 	establecer_vector(v);
 }
@@ -19,18 +20,27 @@ unsigned short int Particula_explosion::obtener_profundidad_ordenacion()const
 
 void Particula_explosion::transformar_bloque(App_Graficos::Bloque_transformacion_representable &b)const
 {
-	//TODO TODO TODO...
+	b.establecer_tipo(App_Graficos::Bloque_transformacion_representable::tipos::TR_BITMAP);
+	b.establecer_alpha(192);
+	b.establecer_recurso(App::Recursos_graficos::rt_particulas);
 
-	//TODO: Crear propiedad "frame actual".
+	const auto& f=tabla_sprites.obtener(frame_actual);
+	b.establecer_recorte(f.x, f.y, f.w, f.h);
 
-	//TODO: Crear una clase de definiciones para spritesheet "particulas"
+	//TODO: Esto está mal seguro: el frame va cambiando de tamaño y hay que centrarlo en la posición
+	//de turno.
+	float pos_x=acc_espaciable_x();
+	float pos_y=acc_espaciable_y();
+
+	b.establecer_posicion(pos_x, pos_y, f.w, f.w);
 
 	//TODO: Ya hablaremos de cómo hacer el humo...
 }
 
 void Particula_explosion::turno(float delta)
 {
-	//TODO TODO TODO
+	restar_tiempo_vida(delta);
+	//TODO: Calcular el frame actual en base a Particula_base::calcular_parcial_tiempo_vida();
 }
 
 float Particula_explosion::obtener_peso() const

@@ -2,3 +2,4 @@
 1	data/graficos/defecto.png	1	0	255	255
 2	data/graficos/automapa.png	1	0	255	255
 3	data/graficos/template_tiles.png	0	0	0	0
+4	data/graficos/particulas.png	1	0	255	255

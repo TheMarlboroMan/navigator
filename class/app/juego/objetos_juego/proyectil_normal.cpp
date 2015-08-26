@@ -40,7 +40,7 @@ void Proyectil_normal::transformar_bloque(App_Graficos::Bloque_transformacion_re
 
 	b.establecer_tipo(Bloque_transformacion_representable::tipos::TR_BITMAP);
 //	b.establecer_alpha(alpha);
-	b.establecer_recurso(Recursos_graficos::RT_DEFECTO);
+	b.establecer_recurso(Recursos_graficos::rt_defecto);
 	
 	switch(color)
 	{

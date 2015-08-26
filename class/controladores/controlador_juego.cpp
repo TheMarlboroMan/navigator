@@ -334,9 +334,14 @@ void Controlador_juego::dibujar(DLibV::Pantalla& pantalla)
 	for(const auto& p : proyectiles_enemigos) vr.push_back(p.get());
 	for(const auto& p : particulas) vr.push_back(p.get());
 
+	//Eliminar los que se vayan a borrar...
+	auto it=std::remove_if(std::begin(vr), std::end(vr), [](const Representable_I * r) {return r->es_representable_borrar();});
+	vr.erase(it, std::end(vr));
+	
+	//Ordenarlos...
 	App_Interfaces::Ordenador_representables ord;
 	std::sort(std::begin(vr), std::end(vr), ord);
-	
+
 	//Generar vista.
 	representador.generar_vista(pantalla, camara, vr);
 

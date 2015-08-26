@@ -19,7 +19,7 @@ void Vista_unidad_automapa::transformar_bloque(App_Graficos::Bloque_transformaci
 		DLibV::Representacion_bitmap_estatica * rep=new DLibV::Representacion_bitmap_estatica;
 		rep->establecer_alpha(255);
 		rep->establecer_modo_blend(DLibV::Representacion::BLEND_ALPHA);
-		rep->establecer_textura(DLibV::Gestor_texturas::obtener(Recursos_graficos::RT_AUTOMAPA));
+		rep->establecer_textura(DLibV::Gestor_texturas::obtener(Recursos_graficos::rt_automapa));
 		rep->establecer_posicion(pos_x_automapa + (vista_x * dim_celda_automapa), 
 			pos_y_automapa + (vista_y * dim_celda_automapa), 
 			dim_celda_automapa, dim_celda_automapa);

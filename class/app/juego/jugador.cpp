@@ -117,7 +117,7 @@ void Jugador::transformar_bloque(Bloque_transformacion_representable &b) const
 	//Se asume que todos los frames van mirando a la derecha.
 	b.establecer_tipo(Bloque_transformacion_representable::tipos::TR_BITMAP);
 	b.establecer_alpha(255);
-	b.establecer_recurso(Recursos_graficos::RT_DEFECTO);
+	b.establecer_recurso(Recursos_graficos::rt_defecto);
 	b.establecer_recorte(32, 0, 27, 16);
 	b.establecer_posicion(acc_espaciable_x()-1, acc_espaciable_y()-1, 27, 16);
 	b.invertir_horizontal(direccion==App_Definiciones::direcciones::izquierda);
@@ -271,7 +271,7 @@ bool Jugador::disparar()
 	if(energia >= 10.0f)
 	{
 		consumir_energia(10.0f);
-		sumar_vector(direccion==App_Definiciones::direcciones::izquierda ? 30.0 : -30.0, Movil::t_vector::V_X);		
+		sumar_vector(direccion==App_Definiciones::direcciones::izquierda ? 30.0 : -30.0, Movil::t_vector::V_X);
 		
 		insertar_reproducir(App_Audio::Info_audio_reproducir(
 					App_Audio::Info_audio_reproducir::t_reproduccion::simple, 

@@ -63,7 +63,7 @@ void Representador::generar_hud(DLibV::Pantalla& pantalla, int salud, int energi
 /*	ss<<jugador.acc_espaciable_x()<<","<<jugador.acc_espaciable_y()<<std::endl<<*/
 	ss<<"HULL:   "<<salud<<"\nENERGY: "<<energia<<"\nSHIELD: "<<escudo;
 
-	DLibV::Representacion_texto_auto_estatica rep_hud(pantalla.acc_renderer(), DLibV::Gestor_superficies::obtener(App::Recursos_graficos::RS_FUENTE_BASE), ss.str());
+	DLibV::Representacion_texto_auto_estatica rep_hud(pantalla.acc_renderer(), DLibV::Gestor_superficies::obtener(App::Recursos_graficos::rs_fuente_base), ss.str());
 	rep_hud.mut_interlineado(2);
 	rep_hud.establecer_posicion(16, 416);
 	rep_hud.volcar(pantalla);

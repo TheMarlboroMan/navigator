@@ -26,7 +26,7 @@ void Salida::transformar_bloque(App_Graficos::Bloque_transformacion_representabl
 
 	b.establecer_tipo(Bloque_transformacion_representable::tipos::TR_BITMAP);
 	b.establecer_alpha(255);
-	b.establecer_recurso(App::Recursos_graficos::RT_DEFECTO);
+	b.establecer_recurso(App::Recursos_graficos::rt_defecto);
 	b.establecer_recorte(32, 32, W, H);
 	b.establecer_posicion(acc_espaciable_x(), acc_espaciable_y(), W, H);
 }

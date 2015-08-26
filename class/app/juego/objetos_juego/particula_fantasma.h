@@ -3,8 +3,8 @@
 
 #include "particula_base.h"
 #include "../../graficos/bloque_transformacion_representable.h"
-#include "../../recursos.h"
 #include "../../definiciones/definiciones.h"
+#include <herramientas/caja/caja.h>
 
 namespace App_Juego_ObjetoJuego
 {
@@ -14,7 +14,7 @@ class Particula_fantasma:
 	//////////////////////
 	//Interface pública.
 	public:
-						Particula_fantasma(float x, float y, float tv, float ve, App_Definiciones::direcciones direccion);
+						Particula_fantasma(float x, float y, float tv, float ve, App_Definiciones::direcciones direccion, int recurso, const DLibH::Caja<int, int>& recorte);
 
 	//////////////
 	// Implementación de Representable_I
@@ -38,6 +38,8 @@ class Particula_fantasma:
 	float					x, y, w, h;
 	float 					velocidad_expansion;
 	App_Definiciones::direcciones 		direccion;
+	int recurso;
+	DLibH::Caja<int, int>			recorte;
 };
 
 }

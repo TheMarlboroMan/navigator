@@ -19,7 +19,7 @@ unsigned short int Particula_chatarra::obtener_profundidad_ordenacion()const
 
 void Particula_chatarra::transformar_bloque(App_Graficos::Bloque_transformacion_representable &b)const
 {
-	b.establecer_tipo(App_Graficos::Bloque_transformacion_representable::tipos::TR_BITMAP);
+	b.establecer_tipo(App_Graficos::Bloque_transformacion_representable::tipos::tr_bitmap);
 	b.establecer_alpha(255);
 	b.establecer_recurso(App::Recursos_graficos::rt_particulas);
 

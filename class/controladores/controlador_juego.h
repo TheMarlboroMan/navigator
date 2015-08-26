@@ -79,6 +79,7 @@ class Controlador_juego:public Controlador_base
 	void 					logica_particulas(float delta);
 	void 					limpiar_pre_cambio_sala();
 	void					cargar_sala(int ax, int ay, App_Definiciones::direcciones salida, App_Juego::Jugador& j, DLibH::Punto_2d<int> offset);
+	void					limpiar_eliminados();
 };
 
 #endif

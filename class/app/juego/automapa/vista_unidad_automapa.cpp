@@ -12,7 +12,7 @@ void Vista_unidad_automapa::transformar_bloque(App_Graficos::Bloque_transformaci
 	using namespace App_Definiciones;
 	using namespace App_Graficos;
 
-	b.establecer_tipo(Bloque_transformacion_representable::tipos::TR_GRUPO_ESTATICO);
+	b.establecer_tipo(Bloque_transformacion_representable::tipos::tr_grupo_estatico);
 
 	auto preparar=[this](int x, int y)
 	{

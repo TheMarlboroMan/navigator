@@ -38,12 +38,14 @@ class Recursos_audio
 
 	enum sonidos{
 		RS_DEFECTO=1,
-		rs_disparo=10,
 		rs_explosion=11,
+		rs_disparo=10,
 		rs_golpe=12,
 		rs_golpe_jugador=13,
 		rs_recargar_escudo=14,
-		rs_estasis=15
+		rs_estasis=15,
+		rs_recoger_bonus=16,
+		rs_disparo_pared=17
 	};
 };
 

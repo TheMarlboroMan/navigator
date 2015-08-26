@@ -46,7 +46,7 @@ void Enemigo_rebote::transformar_bloque(App_Graficos::Bloque_transformacion_repr
 	using namespace App_Graficos;
 
 	//Se asume que todos los frames van mirando a la derecha.
-	b.establecer_tipo(Bloque_transformacion_representable::tipos::TR_BITMAP);
+	b.establecer_tipo(Bloque_transformacion_representable::tipos::tr_bitmap);
 	b.establecer_alpha(255);
 	b.establecer_recurso(App::Recursos_graficos::rt_defecto);
 	b.establecer_recorte(32, 0, 27, 16);

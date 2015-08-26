@@ -41,7 +41,7 @@ void Proyectil_normal::transformar_bloque(App_Graficos::Bloque_transformacion_re
 
 //	unsigned int alpha=(acc_potencia() * 255.0f) / acc_potencia_original();
 
-	b.establecer_tipo(Bloque_transformacion_representable::tipos::TR_BITMAP);
+	b.establecer_tipo(Bloque_transformacion_representable::tipos::tr_bitmap);
 //	b.establecer_alpha(alpha);
 	b.establecer_recurso(Recursos_graficos::rt_defecto);
 	
@@ -52,4 +52,49 @@ void Proyectil_normal::transformar_bloque(App_Graficos::Bloque_transformacion_re
 	}
 
 	b.establecer_posicion(acc_espaciable_x(), acc_espaciable_y(), acc_espaciable_w(), acc_espaciable_h());
+}
+
+void Proyectil_normal::colisionar_con_nivel()
+{
+	mut_borrar(true);
+	generar_chispas(0.3f, 5);
+
+	insertar_reproducir(App_Audio::Info_audio_reproducir(
+		App_Audio::Info_audio_reproducir::t_reproduccion::simple,
+		App_Audio::Info_audio_reproducir::t_sonido::repetible,  
+		App::Recursos_audio::rs_disparo_pared, 64, 127));
+}
+
+void Proyectil_normal::colisionar_con_enemigo()
+{
+	mut_borrar(true);
+	generar_chispas(0.3f, 15);
+}
+
+void Proyectil_normal::colisionar_con_jugador()
+{
+	mut_borrar(true);
+	generar_chispas(0.6f, 25);
+}
+
+/**
+* @param float tv : Tiempo de vida de la chispa.
+*/
+
+void Proyectil_normal::generar_chispas(float tv, int c)
+{
+	auto ggrad=HerramientasProyecto::Generador_int(-30, 30);
+	auto gvel=HerramientasProyecto::Generador_int(150, 300);
+	int i=0;
+	while(i < c)
+	{
+		auto v=DLibH::Vector_2d::vector_unidad_para_angulo(acc_vector().angulo_grados()+ggrad()-90.0f)*gvel();
+		v.x=v.x-1;
+		v.y=v.y-1;
+		auto ptr=std::shared_ptr<App_Juego_Particulas::Definicion_particula>(
+			new App_Juego_Particulas::Definicion_particula_chispa(
+					acc_espaciable_x()+(acc_espaciable_w()/2), acc_espaciable_y()+(acc_espaciable_w()/2), tv, v));
+		insertar_prototipo(ptr);
+		++i;
+	}
 }

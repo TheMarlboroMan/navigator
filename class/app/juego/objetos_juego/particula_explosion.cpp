@@ -17,7 +17,7 @@ unsigned short int Particula_explosion::obtener_profundidad_ordenacion()const
 
 void Particula_explosion::transformar_bloque(App_Graficos::Bloque_transformacion_representable &b)const
 {
-	b.establecer_tipo(App_Graficos::Bloque_transformacion_representable::tipos::TR_BITMAP);
+	b.establecer_tipo(App_Graficos::Bloque_transformacion_representable::tipos::tr_bitmap);
 	
 	float alpha=calcular_parcial_tiempo_vida(255);
 	if(alpha < 0.0f) alpha=0.0f;

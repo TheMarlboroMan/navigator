@@ -7,14 +7,21 @@
 #include "../../interfaces/objeto_juego_i.h"
 #include "../../interfaces/representable_i.h"
 #include "../../interfaces/bonus_i.h"
+#include "../../interfaces/sonoro_i.h"
+#include "../../interfaces/generador_particulas_i.h"
+#include "../../interfaces/recoge_bonus_i.h"
+#include "../particulas/definicion_particula_fantasma.h"
+#include "../../audio/audio_reproducir.h"
+
 
 namespace App_Juego_ObjetoJuego
 {
-
 class Bonus_salud:
 		public App_Juego::Actor, 
 		public App_Interfaces::Representable_I,
-		public App_Interfaces::Bonus_I
+		public App_Interfaces::Bonus_I,
+		public App_Interfaces::Sonoro_I,
+		public App_Interfaces::Generador_particulas_I
 {
 	////////////////
 	// Interface pública:
@@ -28,8 +35,12 @@ class Bonus_salud:
 	// Implementación de Bonus_i.
 	public:
 
-	virtual void 					recibir_visitante(App_Visitantes::Visitante_bonus& v) {v.visitar(*this);}
+	virtual void					recoger(App_Interfaces::Recoge_bonus_I&);
 	bool						es_bonus_para(const Espaciable& e)const {return en_colision_con(e);}
+
+	////////////////
+	// Implementación de Sonoro_i
+	virtual bool					es_sonoro_borrar() const {return es_borrar();}
 
 	///////////////
 	// Implementación de Representable_i.

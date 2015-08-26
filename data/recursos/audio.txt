@@ -10,5 +10,7 @@
 13	data/sonidos/golpe.ogg
 14	data/sonidos/recargar_escudo.ogg
 15	data/sonidos/estasis.ogg
+16	data/sonidos/recoger_bonus.ogg
+17	data/sonidos/disparo_pared.ogg
 
 #Sonidos de aplicacion...

@@ -1,8 +1,8 @@
 #ifndef BONUS_I_H
 #define BONUS_I_H
 
-#include "../visitantes/visitante_bonus.h"
 #include "objeto_juego_i.h"
+#include "recoge_bonus_i.h"
 
 /**
 * Interface para objetos susceptibles de recibir un visitante de bonus.
@@ -24,7 +24,7 @@ class Bonus_I:
 	public:
 
 				~Bonus_I() {}
-	virtual void 		recibir_visitante(App_Visitantes::Visitante_bonus& v)=0;
+	virtual void		recoger(Recoge_bonus_I&);
 	virtual bool		es_bonus_para(const Espaciable&)const=0;
 };
 }

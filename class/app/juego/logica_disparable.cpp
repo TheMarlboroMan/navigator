@@ -17,7 +17,7 @@ void Logica_disparable::procesar(std::vector<std::shared_ptr<App_Interfaces::Dis
 			if(!(p->es_borrar()) && o->es_colision_proyectil(*p))
 			{
 				o->recibir_disparo(p->acc_potencia());
-				p->mut_borrar(true);
+				p->colisionar_con_enemigo(); //Implica borrar...
 			}
 		}
 	}

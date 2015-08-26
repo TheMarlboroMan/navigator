@@ -1,45 +1,21 @@
 #include "logica_bonus.h"
 
-#include "objetos_juego/bonus_tiempo.h"
-#include "objetos_juego/bonus_salud.h"
-
 using namespace App_Juego;
-using namespace App_Juego_Sistemas;
 
-Logica_bonus::Logica_bonus(Contador_tiempo& ct, Jugador& j)
-	:contador_tiempo(ct), jugador(j)
+Logica_bonus::Logica_bonus(App_Interfaces::Recoge_bonus_I& rb)
+	:recoge_bonus(rb)
 {
-
-}
-
-/**
-* Cuando estamos llamando a cualquiera de estas fases hemos llegado al punto
-* en que la colisión con el bonus está verificada y sólo tenemos que correr
-* la lógica de turno.
-*/
-
-void Logica_bonus::visitar(App_Juego_ObjetoJuego::Bonus_tiempo& b)
-{
-	contador_tiempo.sumar_tiempo(b.acc_tiempo());
-	b.mut_borrar(true);
-}
-
-void Logica_bonus::visitar(App_Juego_ObjetoJuego::Bonus_salud& b)
-{
-	if(jugador.puede_recoger_salud())
-	{
-		jugador.sumar_salud(b.acc_salud());
-		b.mut_borrar(true);
-	}
+	
 }
 
 void Logica_bonus::procesar(std::vector<std::shared_ptr<App_Interfaces::Bonus_I>>& v)
 {
+	const auto& e=recoge_bonus.obtener_espaciable_recogedor_bonus();
+
 	for(auto& o : v)
 	{		
-		if(o->es_bonus_para(jugador))
-		{
-			o->recibir_visitante(*this);
-		}
+		//Se comprueba la colisión antes de nada.
+		if(o->es_bonus_para(e))
+			o->recoger(recoge_bonus);
 	}
 }

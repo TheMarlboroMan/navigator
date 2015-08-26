@@ -53,11 +53,8 @@ $(DIR_JUEGO)logica_disparador.cpp
 	$(CC) $(CFLAGS) $(INCLUDES) $(DIR_JUEGO)logica_disparador.cpp -o $(DIR_O)logica_disparador.o
 
 $(DIR_O)logica_bonus.o:\
-$(DIR_O)bonus_tiempo.o\
-$(DIR_O)bonus_salud.o\
-$(DIR_O)jugador.o\
-$(DIR_O)contador_tiempo.o\
-$(DIR_VISITANTES)visitante_bonus.h\
+$(DIR_O)bonus_i.o\
+$(DIR_O)recoge_bonus_i.o\
 $(DIR_JUEGO)logica_bonus.h\
 $(DIR_JUEGO)logica_bonus.cpp
 	$(CC) $(CFLAGS) $(INCLUDES) $(DIR_JUEGO)logica_bonus.cpp -o $(DIR_O)logica_bonus.o
@@ -97,6 +94,14 @@ $(DIR_O)colisionable_i.o\
 $(DIR_JUEGO)logica_colisionable.h\
 $(DIR_JUEGO)logica_colisionable.cpp
 	$(CC) $(CFLAGS) $(INCLUDES) $(DIR_JUEGO)logica_colisionable.cpp -o $(DIR_O)logica_colisionable.o
+
+$(DIR_O)recogedor_bonus.o:\
+$(DIR_O)jugador.o\
+$(DIR_O)contador_tiempo.o\
+$(DIR_O)recoge_bonus_i.o\
+$(DIR_JUEGO)recogedor_bonus.h\
+$(DIR_JUEGO)recogedor_bonus.cpp
+	$(CC) $(CFLAGS) $(INCLUDES) $(DIR_JUEGO)recogedor_bonus.cpp -o $(DIR_O)recogedor_bonus.o
 
 ################################################################################
 #Objetos juego
@@ -146,6 +151,8 @@ $(DIR_O)actor.o\
 $(DIR_O)objeto_juego_i.o\
 $(DIR_O)representable_i.o\
 $(DIR_O)bonus_i.o\
+$(DIR_O)generador_particulas_i.o\
+$(DIR_O)definicion_particula_fantasma.o\
 $(DIR_GRAFICOS)bloque_transformacion_representable.h\
 $(DIR_JUEGO_OBJETOS)bonus_salud.h\
 $(DIR_JUEGO_OBJETOS)bonus_salud.cpp
@@ -156,6 +163,8 @@ $(DIR_O)actor.o\
 $(DIR_O)objeto_juego_i.o\
 $(DIR_O)representable_i.o\
 $(DIR_O)bonus_i.o\
+$(DIR_O)generador_particulas_i.o\
+$(DIR_O)definicion_particula_fantasma.o\
 $(DIR_GRAFICOS)bloque_transformacion_representable.h\
 $(DIR_JUEGO_OBJETOS)bonus_tiempo.h\
 $(DIR_JUEGO_OBJETOS)bonus_tiempo.cpp
@@ -163,15 +172,19 @@ $(DIR_JUEGO_OBJETOS)bonus_tiempo.cpp
 
 $(DIR_O)proyectil_normal.o:\
 $(DIR_O)proyectil_base.o\
-$(DIR_O)proyectil_base.o\
+$(DIR_O)generador_numeros.o\
+$(DIR_O)definicion_particula_chispa.o\
+$(DIR_GRAFICOS)bloque_transformacion_representable.h\
 $(DIR_JUEGO_OBJETOS)proyectil_normal.h\
 $(DIR_JUEGO_OBJETOS)proyectil_normal.cpp
 	$(CC) $(CFLAGS) $(INCLUDES) $(DIR_JUEGO_OBJETOS)proyectil_normal.cpp -o $(DIR_O)proyectil_normal.o
 
 $(DIR_O)proyectil_base.o:\
+$(DIR_O)generador_particulas_i.o\
 $(DIR_O)actor.o\
 $(DIR_O)actor_movil.o\
 $(DIR_O)representable_i.o\
+$(DIR_O)sonoro_i.o\
 $(DIR_O)objeto_juego_i.o\
 $(DIR_O)con_turno_i.o\
 $(DIR_JUEGO_OBJETOS)proyectil_base.h\
@@ -227,6 +240,12 @@ $(DIR_O)particula_movil_base.o\
 $(DIR_JUEGO_OBJETOS)particula_chatarra.h \
 $(DIR_JUEGO_OBJETOS)particula_chatarra.cpp
 	$(CC) $(CFLAGS) $(INCLUDES) $(DIR_JUEGO_OBJETOS)particula_chatarra.cpp -o $(DIR_O)particula_chatarra.o
+
+$(DIR_O)particula_chispa.o:\
+$(DIR_O)particula_movil_base.o\
+$(DIR_JUEGO_OBJETOS)particula_chispa.h \
+$(DIR_JUEGO_OBJETOS)particula_chispa.cpp
+	$(CC) $(CFLAGS) $(INCLUDES) $(DIR_JUEGO_OBJETOS)particula_chispa.cpp -o $(DIR_O)particula_chispa.o
 
 $(DIR_O)particula_fantasma.o:\
 $(DIR_O)particula_base.o\
@@ -382,6 +401,13 @@ $(DIR_JUEGO_PARTICULAS)definicion_particula_chatarra.h \
 $(DIR_JUEGO_PARTICULAS)definicion_particula_chatarra.cpp
 	$(CC) $(CFLAGS) $(INCLUDES) $(DIR_JUEGO_PARTICULAS)definicion_particula_chatarra.cpp -o $(DIR_O)definicion_particula_chatarra.o
 
+$(DIR_O)definicion_particula_chispa.o :\
+$(DIR_O)definicion_particula_movil_base.o\
+$(DIR_O)particula_chatarra.o\
+$(DIR_JUEGO_PARTICULAS)definicion_particula_chispa.h \
+$(DIR_JUEGO_PARTICULAS)definicion_particula_chispa.cpp
+	$(CC) $(CFLAGS) $(INCLUDES) $(DIR_JUEGO_PARTICULAS)definicion_particula_chispa.cpp -o $(DIR_O)definicion_particula_chispa.o
+
 ################################################################################
 #Graficos
 
@@ -473,6 +499,12 @@ $(DIR_INTERFACES)objeto_juego_i.h \
 $(DIR_INTERFACES)objeto_juego_i.cpp
 	$(CC) $(CFLAGS) $(INCLUDES) $(DIR_INTERFACES)objeto_juego_i.cpp -o $(DIR_O)objeto_juego_i.o
 
+$(DIR_O)recoge_bonus_i.o:\
+$(DIR_O)espaciable.o\
+$(DIR_INTERFACES)recoge_bonus_i.h\
+$(DIR_INTERFACES)recoge_bonus_i.cpp
+	$(CC) $(CFLAGS) $(INCLUDES) $(DIR_INTERFACES)recoge_bonus_i.cpp -o $(DIR_O)recoge_bonus_i.o
+
 $(DIR_O)colisionable_i.o:\
 $(DIR_O)objeto_juego_i.o\
 $(DIR_VISITANTES)visitante_colisionable.h \
@@ -481,8 +513,8 @@ $(DIR_INTERFACES)colisionable_i.cpp
 	$(CC) $(CFLAGS) $(INCLUDES) $(DIR_INTERFACES)colisionable_i.cpp -o $(DIR_O)colisionable_i.o
 
 $(DIR_O)bonus_i.o:\
+$(DIR_O)recoge_bonus_i.o\
 $(DIR_O)objeto_juego_i.o\
-$(DIR_VISITANTES)visitante_bonus.h \
 $(DIR_INTERFACES)bonus_i.h \
 $(DIR_INTERFACES)bonus_i.cpp
 	$(CC) $(CFLAGS) $(INCLUDES) $(DIR_INTERFACES)bonus_i.cpp -o $(DIR_O)bonus_i.o

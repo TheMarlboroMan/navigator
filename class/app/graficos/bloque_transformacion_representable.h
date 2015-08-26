@@ -12,9 +12,10 @@ struct Bloque_transformacion_representable
 	// Definiciones...
 
 	enum class tipos{
-		TR_BITMAP=1,
-		TR_GRUPO_DINAMICO=2,
-		TR_GRUPO_ESTATICO=3
+		tr_bitmap=1,
+		tr_grupo_dinamico=2,
+		tr_grupo_estatico=3,
+		tr_primitiva_puntos=4
 	};
 
 	///////////////////////////////////
@@ -25,6 +26,7 @@ struct Bloque_transformacion_representable
 	DLibV::Representacion_bitmap_dinamica rep_bmp;
 	DLibV::Representacion_agrupada_dinamica rep_agr_din;
 	DLibV::Representacion_agrupada_estatica rep_agr_est;
+	DLibV::Representacion_primitiva_puntos_dinamica rep_prim_punt;
 	DLibV::Representacion * rep;
 	tipos tipo_actual;
 	bool visible;
@@ -38,8 +40,9 @@ struct Bloque_transformacion_representable
 		:rep_bmp(), 
 		rep_agr_din(true),
 		rep_agr_est(true),
+		rep_prim_punt(0, 0, 0),
 		rep(&rep_bmp),
-		tipo_actual(tipos::TR_BITMAP),
+		tipo_actual(tipos::tr_bitmap),
 		visible(true)
 	{
 		rep_agr_din.imponer_alpha();
@@ -74,25 +77,29 @@ struct Bloque_transformacion_representable
 
 	void establecer_tipo(tipos t)
 	{
+		tipo_actual=t;
+
 		switch(t)
 		{
-			case tipos::TR_BITMAP: 
-				tipo_actual=tipos::TR_BITMAP;
+			case tipos::tr_bitmap: 
 				rep_bmp.reiniciar_transformacion();
 //				rep_bmp.establecer_mod_color(255,255,255);
 				rep=&rep_bmp;
 			break;
 
-			case tipos::TR_GRUPO_DINAMICO:
+			case tipos::tr_grupo_dinamico:
 				rep_agr_din.vaciar_grupo();
-				tipo_actual=tipos::TR_GRUPO_DINAMICO;
 				rep=&rep_agr_din;
 			break;
 
-			case tipos::TR_GRUPO_ESTATICO:
+			case tipos::tr_grupo_estatico:
 				rep_agr_est.vaciar_grupo();
-				tipo_actual=tipos::TR_GRUPO_ESTATICO;
 				rep=&rep_agr_est;
+			break;
+
+			case tipos::tr_primitiva_puntos:
+				rep_prim_punt.limpiar_puntos();
+				rep=&rep_prim_punt;
 			break;
 		}
 
@@ -123,10 +130,24 @@ struct Bloque_transformacion_representable
 	{
 		switch(tipo_actual)
 		{
-			case tipos::TR_BITMAP: 	break;
-			case tipos::TR_GRUPO_DINAMICO:	rep_agr_din.insertar_representacion(r);	break;
-			case tipos::TR_GRUPO_ESTATICO:	rep_agr_est.insertar_representacion(r);	break;
+			case tipos::tr_bitmap: 	break;
+			case tipos::tr_primitiva_puntos: break;
+			case tipos::tr_grupo_dinamico:	rep_agr_din.insertar_representacion(r);	break;
+			case tipos::tr_grupo_estatico:	rep_agr_est.insertar_representacion(r);	break;
 		}
+	}
+
+	////////////////////
+	//Métodos para manipular la representación de puntos.
+
+	void establecer_color_puntos(int r, int g, int b)
+	{
+		rep_prim_punt.mut_rgb(r, g, b);
+	}
+
+	void insertar_punto(int x, int y)
+	{
+		rep_prim_punt.insertar(x, y);
 	}
 
 	///////////////////

@@ -51,6 +51,8 @@ void Factoria_objetos_juego::interpretar_como_bonus_tiempo(const std::vector<std
 		contenedor.objetos_juego.push_back(ob);
 		contenedor.representables.push_back( std::shared_ptr<Representable_I>(ob, static_cast<Representable_I*>(ob.get())));
 		contenedor.bonus.push_back(std::shared_ptr<Bonus_I>(ob, static_cast<Bonus_I*>(ob.get())));
+		contenedor.sonoros.push_back(std::shared_ptr<Sonoro_I>(ob, static_cast<Sonoro_I*>(ob.get())));
+		contenedor.generadores_particulas.push_back(std::shared_ptr<Generador_particulas_I>(ob, static_cast<Generador_particulas_I*>(ob.get())));
 	}
 }
 
@@ -70,6 +72,8 @@ void Factoria_objetos_juego::interpretar_como_bonus_salud(const std::vector<std:
 		contenedor.objetos_juego.push_back(ob);
 		contenedor.representables.push_back(std::shared_ptr<Representable_I>(ob, static_cast<Representable_I*>(ob.get())));
 		contenedor.bonus.push_back(std::shared_ptr<Bonus_I>(ob, static_cast<Bonus_I*>(ob.get())));
+		contenedor.sonoros.push_back(std::shared_ptr<Sonoro_I>(ob, static_cast<Sonoro_I*>(ob.get())));
+		contenedor.generadores_particulas.push_back(std::shared_ptr<Generador_particulas_I>(ob, static_cast<Generador_particulas_I*>(ob.get())));
 	}
 }
 

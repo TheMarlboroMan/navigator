@@ -20,7 +20,7 @@ void Celda_decorativa::transformar_bloque(App_Graficos::Bloque_transformacion_re
 	const auto& t=tabla_sprites.obtener(indice);
 
 	using namespace App_Definiciones;
-	b.establecer_tipo(App_Graficos::Bloque_transformacion_representable::tipos::TR_BITMAP);
+	b.establecer_tipo(App_Graficos::Bloque_transformacion_representable::tipos::tr_bitmap);
 	b.establecer_recurso(App::Recursos_graficos::rt_template_tiles);
 	b.establecer_posicion(x*definiciones::dim_celda, y*definiciones::dim_celda, definiciones::dim_celda, definiciones::dim_celda);
 	b.establecer_recorte(t.x, t.y, t.w, t.h);

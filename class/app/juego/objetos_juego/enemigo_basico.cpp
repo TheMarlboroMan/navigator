@@ -29,7 +29,7 @@ void Enemigo_basico::transformar_bloque(App_Graficos::Bloque_transformacion_repr
 	using namespace App_Graficos;
 
 	//Se asume que todos los frames van mirando a la derecha.
-	b.establecer_tipo(Bloque_transformacion_representable::tipos::TR_BITMAP);
+	b.establecer_tipo(Bloque_transformacion_representable::tipos::tr_bitmap);
 	b.establecer_alpha(255);
 	b.establecer_recurso(App::Recursos_graficos::rt_defecto);
 	b.establecer_recorte(32, 0, 27, 16);
@@ -86,7 +86,7 @@ void Enemigo_basico::recibir_disparo(float potencia)
 			auto v=Vector_2d::vector_unidad_para_angulo(g())*gvel();
 			auto ptr=std::shared_ptr<App_Juego_Particulas::Definicion_particula>(
 				new App_Juego_Particulas::Definicion_particula_chatarra(
-					acc_espaciable_x()+(acc_espaciable_w()/2), acc_espaciable_y()+(acc_espaciable_w()/2), 2.0f, v));
+					acc_espaciable_x()+(acc_espaciable_w()/2), acc_espaciable_y()+(acc_espaciable_w()/2), 3.0f, v));
 			insertar_prototipo(ptr);
 			++i;
 		}

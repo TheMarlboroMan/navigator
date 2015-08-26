@@ -1,43 +1,32 @@
 #ifndef LOGICA_BONUS_H
 #define LOGICA_BONUS_H
 
-#include "sistemas/contador_tiempo.h"
-#include "../visitantes/visitante_bonus.h"
-#include "objetos_juego/bonus_salud.h"
-#include "objetos_juego/bonus_tiempo.h"
-#include "jugador.h"
+#include <vector>
+#include <memory>
+#include "../interfaces/bonus_i.h"
+#include "../interfaces/recoge_bonus_i.h"
 
 /**
-* Clase que controla la lógica de recoger los objetos del juego. Es una 
-* extensión del visitante de bonus y combina tanto el double dispatcher como
-* la lógica en si.
+* Clase que controla la lógica de recoger los objetos del juego. Implementa el
+* método "procesar", requerido por las salas para usar sus "bonus_i".
 */
 
 namespace App_Juego
 {
-class Logica_bonus:
-	public App_Visitantes::Visitante_bonus
+class Logica_bonus
 {
 	/////////////////
 	//Interface pública.
 	public:
 
-	Logica_bonus(App_Juego_Sistemas::Contador_tiempo& ct, Jugador& j);
-	virtual void 		procesar(std::vector<std::shared_ptr<App_Interfaces::Bonus_I>>&);
-
-	/////////////////
-	//Implementación de Visitante_bonus.
-	public:
-
-	virtual void 		visitar(App_Juego_ObjetoJuego::Bonus_tiempo& b);
-	virtual void 		visitar(App_Juego_ObjetoJuego::Bonus_salud& b);
+						Logica_bonus(App_Interfaces::Recoge_bonus_I&);
+	virtual void 				procesar(std::vector<std::shared_ptr<App_Interfaces::Bonus_I>>&);
 
 	/////////////////
 	//Propiedades.
 	private:
 
-	App_Juego_Sistemas::Contador_tiempo&	contador_tiempo;
-	Jugador& jugador;
+	App_Interfaces::Recoge_bonus_I&		recoge_bonus;
 };
 
 }

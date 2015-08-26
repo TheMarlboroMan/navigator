@@ -31,6 +31,8 @@ $(DIR_O)vista_automapa.o\
 $(DIR_O)contador_tiempo.o\
 $(DIR_O)factoria_objetos_juego.o\
 $(DIR_O)contenedor_objetos_juego.o\
+$(DIR_O)recogedor_bonus.o\
+$(DIR_O)recoge_bonus_i.o\
 $(DIR_O)objeto_juego_i.o\
 $(DIR_O)bonus_i.o\
 $(DIR_O)colisionable_i.o\
@@ -44,6 +46,7 @@ $(DIR_O)particula_movil_base.o\
 $(DIR_O)particula_fantasma.o\
 $(DIR_O)particula_explosion.o\
 $(DIR_O)particula_chatarra.o\
+$(DIR_O)particula_chispa.o\
 $(DIR_O)bonus_tiempo.o\
 $(DIR_O)bonus_salud.o\
 $(DIR_O)logica_con_turno.o\
@@ -66,6 +69,7 @@ $(DIR_O)definicion_particula_movil_base.o\
 $(DIR_O)definicion_particula_fantasma.o\
 $(DIR_O)definicion_particula_explosion.o\
 $(DIR_O)definicion_particula_chatarra.o\
+$(DIR_O)definicion_particula_chispa.o\
 
 DEP_CONTROLADORES=$(DIR_O)controlador_base.o \
 $(DIR_O)controlador_juego.o \

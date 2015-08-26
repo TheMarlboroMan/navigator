@@ -4,8 +4,7 @@
 #include "../app/recursos.h"
 #include "../app/definiciones/definiciones.h"
 
-#include "../app/juego/objetos_juego/bonus_tiempo.h"
-#include "../app/juego/objetos_juego/bonus_salud.h"
+#include "../app/juego/recogedor_bonus.h"
 #include "../app/juego/logica_bonus.h"
 #include "../app/juego/logica_disparador.h"
 #include "../app/juego/logica_con_turno.h"
@@ -110,7 +109,7 @@ void Controlador_juego::loop(Input_base& input, float delta)
 		logica_particulas(delta);
 		logica_mundo(delta);
 		sonar(delta);
-		sala_actual->limpiar_objetos_juego_para_borrar();
+		limpiar_eliminados();
 	}
 }
 
@@ -250,8 +249,8 @@ void Controlador_juego::procesar_jugador(Jugador& j, float delta, App_Input::Inp
 	//Las colisiones con objetos de juego se evaluan en la posición final.
 
 	//En primer lugar evaluamos los bonus que se pueden recoger.
-
-	Logica_bonus lb(contador_tiempo, jugador);
+	Recogedor_bonus rb(contador_tiempo, jugador);
+	Logica_bonus lb(rb);
 	sala_actual->procesar_bonus(lb);
 
 	//Ahora evaluamos el choque con los proyectiles enemigos...
@@ -259,10 +258,10 @@ void Controlador_juego::procesar_jugador(Jugador& j, float delta, App_Input::Inp
 	{
 		for(auto& p : proyectiles_enemigos)
 		{
-			if(p->en_colision_con(jugador))
+			if(!p->es_borrar() && p->en_colision_con(jugador))
 			{
 				jugador.recibir_impacto(p->acc_potencia());
-				p->mut_borrar(true);
+				p->colisionar_con_jugador();
 			}
 		}
 	}
@@ -372,21 +371,20 @@ void Controlador_juego::logica_proyectiles(float delta)
 			Calculador_colisiones CC;
 			auto cc=p->copia_caja();
 
-			if(CC.es_fuera_de_sala(cc, sala)) p->mut_borrar(true);
+			if(CC.es_fuera_de_sala(cc, sala)) 
+			{
+				p->mut_borrar(true);
+			}
 			else
 			{
 				std::vector<const Celda *> celdas=CC.celdas_en_caja(cc, sala);
-				if(celdas.size()) p->mut_borrar(true);
+				if(celdas.size()) p->colisionar_con_nivel(); //Implica borrar...
 			}
 		}
-
-		auto it=std::remove_if(std::begin(proy), std::end(proy), [](sptr_Proyectil_base p) {return p->es_borrar();});
-		if(it!=std::end(proy)) proy.erase(it, std::end(proy));
-
 	};
 
 	/**
-	* Proyectiles del jugador y enemigos, proceso normal con borrado si procede.
+	* Proyectiles del jugador y enemigos...
 	*/
 	
 	if(proyectiles_jugador.size()) procesar(proyectiles_jugador, delta, *sala_actual);
@@ -432,12 +430,14 @@ void Controlador_juego::logica_mundo(float delta)
 	* plantearlo de otro modo.
 	*/
 
-	std::vector<std::shared_ptr<App_Interfaces::Con_turno_I>> pt;
+	using namespace App_Interfaces;
+
+	std::vector<std::shared_ptr<Con_turno_I>> pt;
 	for(auto& p : particulas) pt.push_back(p);
 	Logica_con_turno lct(jugador, *sala_actual, delta, pt);
 	sala_actual->procesar_con_turno(lct);
 
-	std::vector<std::shared_ptr<App_Interfaces::Con_turno_I>> vpr;
+	std::vector<std::shared_ptr<Con_turno_I>> vpr;
 	for(auto &p : proyectiles_jugador) vpr.push_back(p);
 	for(auto &p : proyectiles_enemigos) vpr.push_back(p);
 	lct.procesar(vpr);
@@ -451,7 +451,10 @@ void Controlador_juego::logica_mundo(float delta)
 	* aún más vago :D.
 	*/
 
-	Logica_generador_particulas lgp(particulas, jugador);
+	std::vector<std::shared_ptr<Generador_particulas_I>> vgp;
+	for(auto &p : proyectiles_jugador) vgp.push_back(p);
+	for(auto &p : proyectiles_enemigos) vgp.push_back(p);
+	Logica_generador_particulas lgp(particulas, vgp, jugador);
 	sala_actual->procesar_generadores_particulas(lgp);
 }
 
@@ -505,6 +508,8 @@ void Controlador_juego::ajustar_camara_a_sala(const Sala& s)
 void Controlador_juego::sonar(float delta)
 {
 	auto vs=(*sala_actual).obtener_vector_sonoros();
+	for(auto& p : proyectiles_jugador) vs.push_back(p.get());
+	for(auto& p : proyectiles_enemigos) vs.push_back(p.get());
 	vs.push_back(&jugador);
 
 	for(auto& s : vs)
@@ -525,4 +530,17 @@ void Controlador_juego::sonar(float delta)
 	}	
 
 	gestor_audio.turno(delta);
+}
+
+void Controlador_juego::limpiar_eliminados()
+{
+	auto f=[](Vsptr_Proyectil_base& proy)
+	{
+		auto it=std::remove_if(std::begin(proy), std::end(proy), [](sptr_Proyectil_base p) {return p->es_borrar();});
+		if(it!=std::end(proy)) proy.erase(it, std::end(proy));
+	};
+
+	f(proyectiles_jugador);	
+	f(proyectiles_enemigos);
+	sala_actual->limpiar_objetos_juego_para_borrar();
 }

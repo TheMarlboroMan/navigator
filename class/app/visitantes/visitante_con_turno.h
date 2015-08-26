@@ -9,6 +9,7 @@ class Proyectil_normal;
 class Particula_fantasma;
 class Particula_explosion;
 class Particula_chatarra;
+class Particula_chispa;
 }
 
 namespace App_Visitantes
@@ -25,6 +26,7 @@ class Visitante_con_turno
 	virtual void visitar(App_Juego_ObjetoJuego::Particula_fantasma&)=0;
 	virtual void visitar(App_Juego_ObjetoJuego::Particula_explosion&)=0;
 	virtual void visitar(App_Juego_ObjetoJuego::Particula_chatarra&)=0;
+	virtual void visitar(App_Juego_ObjetoJuego::Particula_chispa&)=0;
 };
 }
 

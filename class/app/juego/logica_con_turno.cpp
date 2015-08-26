@@ -99,3 +99,8 @@ void Logica_con_turno::visitar(App_Juego_ObjetoJuego::Particula_chatarra& o)
 {
 	//Nada...
 }
+
+void Logica_con_turno::visitar(App_Juego_ObjetoJuego::Particula_chispa& o)
+{
+	//Nada...
+}

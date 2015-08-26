@@ -5,6 +5,8 @@
 #include "../../interfaces/objeto_juego_i.h"
 #include "../../interfaces/representable_i.h"
 #include "../../interfaces/con_turno_i.h"
+#include "../../interfaces/sonoro_i.h"
+#include "../../interfaces/generador_particulas_i.h"
 
 /**
 * La base para todos los proyectiles del juego.
@@ -18,7 +20,9 @@ namespace App_Juego_ObjetoJuego
 class Proyectil_base:
 	public App_Juego::Actor_movil, 
 	public App_Interfaces::Representable_I,
-	public App_Interfaces::Con_turno_I
+	public App_Interfaces::Con_turno_I,
+	public App_Interfaces::Generador_particulas_I,
+	public App_Interfaces::Sonoro_I
 {
 	/////////////////////
 	//Interface pública.
@@ -30,10 +34,22 @@ class Proyectil_base:
 	void 						mut_potencia(float v);
 	void						establecer_vector(const DLibH::Vector_2d& v);
 
+	virtual void					colisionar_con_nivel()=0;
+	virtual void					colisionar_con_enemigo()=0;
+	virtual void					colisionar_con_jugador()=0;
+
 	///////////////
 	// Implementación de Con_turno_I
+	public:
+
 	virtual void 					turno(float)=0;
 	virtual void 					recibir_visitante(App_Visitantes::Visitante_con_turno& v)=0;
+
+	///////////////
+	// Implementación de Sonoro_I
+	public:
+
+	virtual bool 					es_sonoro_borrar() const {return es_borrar();}
 
 	///////////////
 	// Implementación de Representable_i.

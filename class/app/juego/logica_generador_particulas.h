@@ -19,7 +19,7 @@ class Logica_generador_particulas
 	typedef std::vector<std::shared_ptr<App_Juego_ObjetoJuego::Particula_base> > Vsptr_Particula_base;
 	typedef std::vector<std::shared_ptr<App_Interfaces::Generador_particulas_I>> Vsptr_Generador_particulas_I;
 
-							Logica_generador_particulas(Vsptr_Particula_base&, App_Interfaces::Generador_particulas_I& j);
+							Logica_generador_particulas(Vsptr_Particula_base&, Vsptr_Generador_particulas_I&, App_Interfaces::Generador_particulas_I&);
 	virtual void 					procesar(Vsptr_Generador_particulas_I&);
 
 	/////////////////////////
@@ -27,7 +27,8 @@ class Logica_generador_particulas
 	private:
 
 	Vsptr_Particula_base& 				particulas_controlador;
-	App_Interfaces::Generador_particulas_I& 	jugador;
+	Vsptr_Generador_particulas_I& 			generadores;
+	App_Interfaces::Generador_particulas_I&		jugador;
 };
 }
 

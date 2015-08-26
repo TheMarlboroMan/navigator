@@ -2,8 +2,8 @@
 
 using namespace App_Juego;
 
-Logica_generador_particulas::Logica_generador_particulas(Vsptr_Particula_base& v, App_Interfaces::Generador_particulas_I& j)
-	:particulas_controlador(v), jugador(j)
+Logica_generador_particulas::Logica_generador_particulas(Vsptr_Particula_base& v, Vsptr_Generador_particulas_I& g, App_Interfaces::Generador_particulas_I& j)
+	:particulas_controlador(v), generadores(g), jugador(j)
 {
 
 }
@@ -24,6 +24,7 @@ void Logica_generador_particulas::procesar(Vsptr_Generador_particulas_I& v)
 			gp.reset_prototipos();
 		}
 	};
-	f(jugador);
+	for(auto& gp : generadores) f(*gp);
 	for(auto& gp : v) f(*gp);
+	f(jugador);
 }

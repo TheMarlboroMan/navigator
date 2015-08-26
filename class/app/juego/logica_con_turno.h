@@ -30,6 +30,7 @@ class Logica_con_turno:
 	virtual void 			visitar(App_Juego_ObjetoJuego::Particula_fantasma&);
 	virtual void 			visitar(App_Juego_ObjetoJuego::Particula_explosion&);
 	virtual void 			visitar(App_Juego_ObjetoJuego::Particula_chatarra&);
+	virtual void 			visitar(App_Juego_ObjetoJuego::Particula_chispa&);
 
 	///////////////////////
 	//Propiedades privadas

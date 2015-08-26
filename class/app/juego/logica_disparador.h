@@ -27,7 +27,7 @@ class Logica_disparador:
 	public:
 
 				Logica_disparador(std::vector<std::shared_ptr<App_Juego_ObjetoJuego::Proyectil_base> >&v, const Jugador& j);
-	bool 			insertar_disparo_jugador(std::vector<std::shared_ptr<App_Juego_ObjetoJuego::Proyectil_base> >&v);
+	void 			insertar_disparo_jugador(std::vector<std::shared_ptr<App_Juego_ObjetoJuego::Proyectil_base> >&v);
 	virtual void 		procesar(std::vector<std::shared_ptr<App_Interfaces::Disparador_I>>&);
 
 	/////////////////////

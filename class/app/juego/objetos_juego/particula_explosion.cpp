@@ -3,13 +3,11 @@
 using namespace App_Juego_ObjetoJuego;
 
 Particula_explosion::Particula_explosion(float x, float y, float tv, const DLibH::Vector_2d& v):
-	App_Interfaces::Objeto_juego_I(),
-	Particula_base(tv),
-	App_Juego::Actor_movil(x, y, 1.0, 1.0),
+	Particula_movil_base(x, y, tv, v),
 	frame_actual(App_Definiciones::Sprites_particulas::explosion_01),
 	w(0.0f), h(0.0f)
 {
-	establecer_vector(v);
+	mut_fuerza_frenado(25.0f);
 }
 
 unsigned short int Particula_explosion::obtener_profundidad_ordenacion()const
@@ -44,27 +42,9 @@ void Particula_explosion::transformar_bloque(App_Graficos::Bloque_transformacion
 
 void Particula_explosion::turno(float delta)
 {
-	restar_tiempo_vida(delta);
-
-	//El movimiento...
-	desplazar(delta);
-	frenar(delta, 25.0f);
+	Particula_movil_base::turno(delta);
 
 	//La selección del frame.
 	int lon=App_Definiciones::Sprites_particulas::lon_explosion;
 	frame_actual=App_Definiciones::Sprites_particulas::explosion_01+(lon - calcular_parcial_tiempo_vida(lon));
-}
-
-float Particula_explosion::obtener_peso() const
-{
-	return 0.0;
-}
-float Particula_explosion::obtener_max_velocidad_caida() const
-{
-	return 0.0;
-}
-
-void Particula_explosion::callback_ajuste(float pos, posiciones_ajuste tipo)
-{
-	//Nada de nada...
 }

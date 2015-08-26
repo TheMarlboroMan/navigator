@@ -209,16 +209,21 @@ $(DIR_JUEGO_OBJETOS)particula_base.h \
 $(DIR_JUEGO_OBJETOS)particula_base.cpp
 	$(CC) $(CFLAGS) $(INCLUDES) $(DIR_JUEGO_OBJETOS)particula_base.cpp -o $(DIR_O)particula_base.o
 
+$(DIR_O)particula_movil_base.o:\
+$(DIR_O)actor_movil.o\
+$(DIR_JUEGO_OBJETOS)particula_movil_base.h \
+$(DIR_JUEGO_OBJETOS)particula_movil_base.cpp
+	$(CC) $(CFLAGS) $(INCLUDES) $(DIR_JUEGO_OBJETOS)particula_movil_base.cpp -o $(DIR_O)particula_movil_base.o
+
 $(DIR_O)particula_explosion.o:\
 $(DIR_O)particula_base.o\
-$(DIR_O)actor_movil.o\
+$(DIR_O)particula_movil_base.o\
 $(DIR_JUEGO_OBJETOS)particula_explosion.h \
 $(DIR_JUEGO_OBJETOS)particula_explosion.cpp
 	$(CC) $(CFLAGS) $(INCLUDES) $(DIR_JUEGO_OBJETOS)particula_explosion.cpp -o $(DIR_O)particula_explosion.o
 
 $(DIR_O)particula_chatarra.o:\
-$(DIR_O)particula_base.o\
-$(DIR_O)actor_movil.o\
+$(DIR_O)particula_movil_base.o\
 $(DIR_JUEGO_OBJETOS)particula_chatarra.h \
 $(DIR_JUEGO_OBJETOS)particula_chatarra.cpp
 	$(CC) $(CFLAGS) $(INCLUDES) $(DIR_JUEGO_OBJETOS)particula_chatarra.cpp -o $(DIR_O)particula_chatarra.o
@@ -357,15 +362,21 @@ $(DIR_JUEGO_PARTICULAS)definicion_particula_fantasma.h \
 $(DIR_JUEGO_PARTICULAS)definicion_particula_fantasma.cpp
 	$(CC) $(CFLAGS) $(INCLUDES) $(DIR_JUEGO_PARTICULAS)definicion_particula_fantasma.cpp -o $(DIR_O)definicion_particula_fantasma.o
 
-$(DIR_O)definicion_particula_explosion.o :\
+$(DIR_O)definicion_particula_movil_base.o :\
 $(DIR_O)definicion_particula.o\
+$(DIR_JUEGO_PARTICULAS)definicion_particula_movil_base.h \
+$(DIR_JUEGO_PARTICULAS)definicion_particula_movil_base.cpp
+	$(CC) $(CFLAGS) $(INCLUDES) $(DIR_JUEGO_PARTICULAS)definicion_particula_movil_base.cpp -o $(DIR_O)definicion_particula_movil_base.o
+
+$(DIR_O)definicion_particula_explosion.o :\
+$(DIR_O)definicion_particula_movil_base.o\
 $(DIR_O)particula_explosion.o\
 $(DIR_JUEGO_PARTICULAS)definicion_particula_explosion.h \
 $(DIR_JUEGO_PARTICULAS)definicion_particula_explosion.cpp
 	$(CC) $(CFLAGS) $(INCLUDES) $(DIR_JUEGO_PARTICULAS)definicion_particula_explosion.cpp -o $(DIR_O)definicion_particula_explosion.o
 
 $(DIR_O)definicion_particula_chatarra.o :\
-$(DIR_O)definicion_particula.o\
+$(DIR_O)definicion_particula_movil_base.o\
 $(DIR_O)particula_chatarra.o\
 $(DIR_JUEGO_PARTICULAS)definicion_particula_chatarra.h \
 $(DIR_JUEGO_PARTICULAS)definicion_particula_chatarra.cpp

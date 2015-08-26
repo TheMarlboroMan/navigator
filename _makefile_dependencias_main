@@ -40,6 +40,7 @@ $(DIR_O)representable_i.o\
 $(DIR_O)generador_particulas_i.o\
 $(DIR_O)sonoro_i.o\
 $(DIR_O)particula_base.o\
+$(DIR_O)particula_movil_base.o\
 $(DIR_O)particula_fantasma.o\
 $(DIR_O)particula_explosion.o\
 $(DIR_O)particula_chatarra.o\
@@ -61,6 +62,7 @@ $(DIR_O)audio_reproducir.o\
 $(DIR_O)audio_detener.o\
 $(DIR_O)gestor_audio.o\
 $(DIR_O)definicion_particula.o\
+$(DIR_O)definicion_particula_movil_base.o\
 $(DIR_O)definicion_particula_fantasma.o\
 $(DIR_O)definicion_particula_explosion.o\
 $(DIR_O)definicion_particula_chatarra.o\

@@ -2,9 +2,9 @@
 
 using namespace App_Juego_Particulas;
 
-Definicion_particula_explosion::Definicion_particula_explosion(float x, float y, float tv, float vx, float vy)
+Definicion_particula_explosion::Definicion_particula_explosion(float x, float y, float tv, const DLibH::Vector_2d v)
 	:Definicion_particula(x, y, tv), 
-	vx(vx), vy(vy)
+	v(v)
 {
 
 } 
@@ -12,6 +12,6 @@ Definicion_particula_explosion::Definicion_particula_explosion(float x, float y,
 Definicion_particula::sptrParticula Definicion_particula_explosion::crear_particula()
 {
 	using namespace App_Juego_ObjetoJuego;
-	sptrParticula resultado=sptrParticula(new Particula_explosion(x, y, tiempo_vida, DLibH::Vector_2d(vx, vy)));
+	sptrParticula resultado=sptrParticula(new Particula_explosion(x, y, tiempo_vida, v));
 	return resultado;
 }

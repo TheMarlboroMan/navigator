@@ -82,16 +82,20 @@ void Logica_con_turno::visitar(App_Juego_ObjetoJuego::Enemigo_rebote& o)
 
 void Logica_con_turno::visitar(App_Juego_ObjetoJuego::Proyectil_normal& o)
 {
-	auto v=o.acc_vector();
-	o.desplazar_caja(v.x * delta, v.y * delta); 
+	//Nada...
 }
 
 void Logica_con_turno::visitar(App_Juego_ObjetoJuego::Particula_fantasma& o)
 {
-	//TODO...
+	//Nada...
 }
 
 void Logica_con_turno::visitar(App_Juego_ObjetoJuego::Particula_explosion& o)
 {
-	//TODO...
+	//Nada...
+}
+
+void Logica_con_turno::visitar(App_Juego_ObjetoJuego::Particula_chatarra& o)
+{
+	//Nada...
 }

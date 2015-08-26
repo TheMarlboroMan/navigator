@@ -122,7 +122,9 @@ $(DIR_O)disparador_i.o\
 $(DIR_O)con_turno_i.o\
 $(DIR_O)disparable_i.o\
 $(DIR_O)generador_particulas_i.o\
+$(DIR_O)generador_numeros.o\
 $(DIR_O)definicion_particula_explosion.o\
+$(DIR_O)definicion_particula_chatarra.o\
 $(DIR_JUEGO_OBJETOS)enemigo_basico.h\
 $(DIR_JUEGO_OBJETOS)enemigo_basico.cpp
 	$(CC) $(CFLAGS) $(INCLUDES) $(DIR_JUEGO_OBJETOS)enemigo_basico.cpp -o $(DIR_O)enemigo_basico.o
@@ -200,6 +202,7 @@ $(DIR_JUEGO_OBJETOS)posicion_inicial.cpp
 	$(CC) $(CFLAGS) $(INCLUDES) $(DIR_JUEGO_OBJETOS)posicion_inicial.cpp -o $(DIR_O)posicion_inicial.o
 
 $(DIR_O)particula_base.o:\
+$(DIR_O)tabla_sprites.o\
 $(DIR_O)representable_i.o\
 $(DIR_O)con_turno_i.o \
 $(DIR_JUEGO_OBJETOS)particula_base.h \
@@ -212,6 +215,13 @@ $(DIR_O)actor_movil.o\
 $(DIR_JUEGO_OBJETOS)particula_explosion.h \
 $(DIR_JUEGO_OBJETOS)particula_explosion.cpp
 	$(CC) $(CFLAGS) $(INCLUDES) $(DIR_JUEGO_OBJETOS)particula_explosion.cpp -o $(DIR_O)particula_explosion.o
+
+$(DIR_O)particula_chatarra.o:\
+$(DIR_O)particula_base.o\
+$(DIR_O)actor_movil.o\
+$(DIR_JUEGO_OBJETOS)particula_chatarra.h \
+$(DIR_JUEGO_OBJETOS)particula_chatarra.cpp
+	$(CC) $(CFLAGS) $(INCLUDES) $(DIR_JUEGO_OBJETOS)particula_chatarra.cpp -o $(DIR_O)particula_chatarra.o
 
 $(DIR_O)particula_fantasma.o:\
 $(DIR_O)particula_base.o\
@@ -353,6 +363,13 @@ $(DIR_O)particula_explosion.o\
 $(DIR_JUEGO_PARTICULAS)definicion_particula_explosion.h \
 $(DIR_JUEGO_PARTICULAS)definicion_particula_explosion.cpp
 	$(CC) $(CFLAGS) $(INCLUDES) $(DIR_JUEGO_PARTICULAS)definicion_particula_explosion.cpp -o $(DIR_O)definicion_particula_explosion.o
+
+$(DIR_O)definicion_particula_chatarra.o :\
+$(DIR_O)definicion_particula.o\
+$(DIR_O)particula_chatarra.o\
+$(DIR_JUEGO_PARTICULAS)definicion_particula_chatarra.h \
+$(DIR_JUEGO_PARTICULAS)definicion_particula_chatarra.cpp
+	$(CC) $(CFLAGS) $(INCLUDES) $(DIR_JUEGO_PARTICULAS)definicion_particula_chatarra.cpp -o $(DIR_O)definicion_particula_chatarra.o
 
 ################################################################################
 #Graficos

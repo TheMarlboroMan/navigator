@@ -42,3 +42,29 @@ void Actor_movil::ajustar(const Espaciable& e, posiciones_ajuste tipo)
 
 	ajustar(pos, tipo);
 }
+
+void Actor_movil::desplazar(float delta)
+{
+	const auto& v=acc_vector();
+	desplazar_caja(v.x * delta, v.y * delta);
+}
+
+/**
+* @param float delta
+* @param float factor
+* Enlentece el movimiento en los vectores hasta que llegan a cero.
+*/
+
+void Actor_movil::frenar(float delta, float factor)
+{
+	auto v=acc_vector();	//Copia de vector.
+	auto val=factor * delta;
+	v.x=fabs(v.x);
+	v.y=fabs(v.y);
+	v.x-=val;
+	v.y-=val;
+
+	if(acc_vector_x() < 0.0) v.x=-v.x;
+	if(acc_vector_y() < 0.0) v.y=-v.y;
+	establecer_vector(v);
+}

@@ -66,10 +66,30 @@ void Enemigo_basico::recibir_disparo(float potencia)
 		mut_borrar(true);
 
 		const auto& v=acc_vector();
+
+		//La explosión...
 		auto ptr=std::shared_ptr<App_Juego_Particulas::Definicion_particula>(
 				new App_Juego_Particulas::Definicion_particula_explosion(
-					acc_espaciable_x(), acc_espaciable_y(), 1.0f, v.x, v.y));
+					acc_espaciable_x()+(acc_espaciable_w()/2), acc_espaciable_y()+(acc_espaciable_w()/2), 1.0f, v));
 		insertar_prototipo(ptr);
+
+		//Y la chatarra...
+		//TODO: Esto se va a repetir en muchos sitios. Cuando llegue
+		//el momento podemos ponerlo en una sóla función.
+		auto g=HerramientasProyecto::Generador_int(10, 30);
+		auto gvel=HerramientasProyecto::Generador_int(150, 300);
+		int i=0, mp=g();
+		while(i < mp)
+		{
+
+			auto g=HerramientasProyecto::Generador_int(0, 359);
+			auto v=Vector_2d::vector_unidad_para_angulo(g())*gvel();
+			auto ptr=std::shared_ptr<App_Juego_Particulas::Definicion_particula>(
+				new App_Juego_Particulas::Definicion_particula_chatarra(
+					acc_espaciable_x()+(acc_espaciable_w()/2), acc_espaciable_y()+(acc_espaciable_w()/2), 2.0f, v));
+			insertar_prototipo(ptr);
+			++i;
+		}
 	}
 	else
 	{

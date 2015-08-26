@@ -14,6 +14,8 @@
 #include "../../interfaces/generador_particulas_i.h"
 #include "../../graficos/bloque_transformacion_representable.h"
 #include "../particulas/definicion_particula_explosion.h"
+#include "../particulas/definicion_particula_chatarra.h"
+#include "../../../herramientas_proyecto/generador_numeros.h"
 
 namespace App_Juego_ObjetoJuego
 {

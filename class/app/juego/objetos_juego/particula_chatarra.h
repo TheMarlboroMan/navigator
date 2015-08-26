@@ -1,23 +1,28 @@
-#ifndef PARTICULA_EXPLOSION_H
-#define PARTICULA_EXPLOSION_H
+#ifndef PARTICULA_CHATARRA_H
+#define PARTICULA_CHATARRA_H
 
 #include <herramientas/vector_2d/vector_2d.h>
 
 #include "particula_base.h"
 #include "../actor_movil.h"
+#include "../../../herramientas_proyecto/tabla_sprites.h"
 #include "../../definiciones/sprites_particulas.h"
 #include "../../recursos.h"
+#include "../../../herramientas_proyecto/generador_numeros.h"
+
+//TODO: Comparte casi todo con la partícula de explosión, de modo que las podemos
+//unir en una "particula_movil" base.
 
 namespace App_Juego_ObjetoJuego
 {
-class Particula_explosion:
+class Particula_chatarra:
 	public Particula_base,
 	public App_Juego::Actor_movil
 {
 	//////////////////
 	//Interface pública...
 	public:
-						Particula_explosion(float x, float y, float tv, const DLibH::Vector_2d& v);
+						Particula_chatarra(float x, float y, float tv, const DLibH::Vector_2d& v);
 
 	//////////////
 	// Implementación de Representable_I
@@ -46,9 +51,9 @@ class Particula_explosion:
 	//Internas.
 	private:
 
-	int						frame_actual;
-	mutable float						w, h;
-
+	static const int 				W=8;
+	static const int				H=8;
+	int						frame;
 };
 }
 

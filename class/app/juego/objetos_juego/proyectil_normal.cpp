@@ -22,8 +22,11 @@ void Proyectil_normal::turno(float delta)
 		mut_potencia(0.0f);
 		mut_borrar(true);
 	}
-
-	//El movimiento está en el visitante de turno.
+	else
+	{
+		const auto& v=acc_vector();
+		desplazar_caja(v.x * delta, v.y * delta); 
+	}
 }
 
 unsigned short int Proyectil_normal::obtener_profundidad_ordenacion()const

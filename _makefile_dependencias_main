@@ -42,6 +42,7 @@ $(DIR_O)sonoro_i.o\
 $(DIR_O)particula_base.o\
 $(DIR_O)particula_fantasma.o\
 $(DIR_O)particula_explosion.o\
+$(DIR_O)particula_chatarra.o\
 $(DIR_O)bonus_tiempo.o\
 $(DIR_O)bonus_salud.o\
 $(DIR_O)logica_con_turno.o\
@@ -62,6 +63,7 @@ $(DIR_O)gestor_audio.o\
 $(DIR_O)definicion_particula.o\
 $(DIR_O)definicion_particula_fantasma.o\
 $(DIR_O)definicion_particula_explosion.o\
+$(DIR_O)definicion_particula_chatarra.o\
 
 DEP_CONTROLADORES=$(DIR_O)controlador_base.o \
 $(DIR_O)controlador_juego.o \

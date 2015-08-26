@@ -19,8 +19,7 @@ void Logica_generador_particulas::procesar(Vsptr_Generador_particulas_I& v)
 			{
 				auto part=p->crear_particula();
 				if(part.get()) particulas_controlador.push_back(part);
-//TODO: Probar esto, a ver si funciona.
-				else LOG<<"WARNING: Logica_generador_particulas detecta crear particula con resultado nullptr"<<std::endl;
+				else LOG<<"WARNING: Logica_generador_particulas detecta 'crear_particula' con resultado nullptr"<<std::endl;
 			}
 			gp.reset_prototipos();
 		}

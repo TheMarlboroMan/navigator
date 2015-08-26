@@ -27,6 +27,8 @@ class Actor_movil:public Actor, public App_Interfaces::Movil
 
 	void ajustar(float pos, posiciones_ajuste tipo);
 	void ajustar(const Espaciable& e, posiciones_ajuste tipo);
+	void desplazar(float delta);
+	void frenar(float delta, float factor);
 
 	/////////////////
 	//Implementación de Movil

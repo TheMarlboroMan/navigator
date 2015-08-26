@@ -8,6 +8,7 @@ class Enemigo_rebote;
 class Proyectil_normal;
 class Particula_fantasma;
 class Particula_explosion;
+class Particula_chatarra;
 }
 
 namespace App_Visitantes
@@ -23,6 +24,7 @@ class Visitante_con_turno
 	virtual void visitar(App_Juego_ObjetoJuego::Proyectil_normal&)=0;
 	virtual void visitar(App_Juego_ObjetoJuego::Particula_fantasma&)=0;
 	virtual void visitar(App_Juego_ObjetoJuego::Particula_explosion&)=0;
+	virtual void visitar(App_Juego_ObjetoJuego::Particula_chatarra&)=0;
 };
 }
 

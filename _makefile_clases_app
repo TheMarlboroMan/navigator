@@ -11,7 +11,7 @@ DIR_VISITANTES=$(DIR_CLASES_APP)visitantes/
 DIR_JUEGO_AUTOMAPA=$(DIR_JUEGO)automapa/
 DIR_JUEGO_SISTEMAS=$(DIR_JUEGO)sistemas/
 DIR_JUEGO_OBJETOS=$(DIR_JUEGO)objetos_juego/
-DIR_JUEGO_PARTICULAS=$(DIR_JUEGO)particulas/
+DIR_JUEGO_PARTICULAS=$(DIR_JUEGO)prototipos/
 DIR_COLISIONES=$(DIR_CLASES_APP)colisiones/
 DIR_DEFINICIONES=$(DIR_CLASES_APP)definiciones/
 DIR_GENERADOR=$(DIR_CLASES_APP)generador/
@@ -367,7 +367,20 @@ $(DIR_NIVELES)celda_decorativa.cpp
 	$(CC) $(CFLAGS) $(INCLUDES) $(DIR_NIVELES)celda_decorativa.cpp -o $(DIR_O)celda_decorativa.o
 
 ################################################################################
-#Particulas
+#Prototipos
+
+$(DIR_O)alpha_prototipo.o :\
+$(DIR_O)factoria_objetos_juego_i.o\
+$(DIR_JUEGO_PARTICULAS)alpha_prototipo.h \
+$(DIR_JUEGO_PARTICULAS)alpha_prototipo.cpp
+	$(CC) $(CFLAGS) $(INCLUDES) $(DIR_JUEGO_PARTICULAS)alpha_prototipo.cpp -o $(DIR_O)alpha_prototipo.o
+
+$(DIR_O)prototipo_proyectil_normal.o :\
+$(DIR_O)alpha_prototipo.o\
+$(DIR_O)proyectil_normal.o\
+$(DIR_JUEGO_PARTICULAS)prototipo_proyectil_normal.h \
+$(DIR_JUEGO_PARTICULAS)prototipo_proyectil_normal.cpp
+	$(CC) $(CFLAGS) $(INCLUDES) $(DIR_JUEGO_PARTICULAS)prototipo_proyectil_normal.cpp -o $(DIR_O)prototipo_proyectil_normal.o
 
 $(DIR_O)definicion_particula.o :\
 $(DIR_JUEGO_PARTICULAS)definicion_particula.h \
@@ -430,6 +443,7 @@ $(DIR_COLISIONES)calculador_colisiones.cpp
 #Generador
 
 $(DIR_O)factoria_objetos_juego.o:\
+$(DIR_O)factoria_objetos_juego_i.o\
 $(DIR_O)contenedor_objetos_juego.o\
 $(DIR_O)bonus_salud.o\
 $(DIR_O)bonus_tiempo.o\
@@ -498,6 +512,11 @@ $(DIR_O)objeto_juego_i.o:\
 $(DIR_INTERFACES)objeto_juego_i.h \
 $(DIR_INTERFACES)objeto_juego_i.cpp
 	$(CC) $(CFLAGS) $(INCLUDES) $(DIR_INTERFACES)objeto_juego_i.cpp -o $(DIR_O)objeto_juego_i.o
+
+$(DIR_O)factoria_objetos_juego_i.o:\
+$(DIR_INTERFACES)factoria_objetos_juego_i.h \
+$(DIR_INTERFACES)factoria_objetos_juego_i.cpp
+	$(CC) $(CFLAGS) $(INCLUDES) $(DIR_INTERFACES)factoria_objetos_juego_i.cpp -o $(DIR_O)factoria_objetos_juego_i.o
 
 $(DIR_O)recoge_bonus_i.o:\
 $(DIR_O)espaciable.o\

@@ -10,6 +10,7 @@
 #include "../app/juego/automapa/automapa.h"
 #include "../app/juego/automapa/vista_automapa.h"
 #include "../app/juego/sistemas/contador_tiempo.h"
+//TODO: Quitar...
 #include "../app/juego/objetos_juego/proyectil_base.h"
 #include "../app/juego/objetos_juego/proyectil_normal.h"
 #include "../app/juego/objetos_juego/enemigo_basico.h"

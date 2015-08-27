@@ -4,7 +4,7 @@
 #include "proyectil_base.h"
 #include "../../graficos/bloque_transformacion_representable.h"
 #include "../../../herramientas_proyecto/generador_numeros.h"
-#include "../particulas/definicion_particula_chispa.h"
+#include "../prototipos/definicion_particula_chispa.h"
 
 /**
 * Un proyectil corriente y moliente.
@@ -43,6 +43,7 @@ class Proyectil_normal:
 	/////////////////////
 	//Interface pública.
 	public:
+							Proyectil_normal(float x, float y, int w, int h, const DLibH::Vector_2d& v, float potencia, App_Juego_ObjetoJuego::Proyectil_normal::colores color);
 							Proyectil_normal(const Propiedades_proyectil& pp);
 	virtual						~Proyectil_normal() {}
 	void						mut_color(colores c) {color=c;}

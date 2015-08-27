@@ -40,7 +40,7 @@ void Parser_salas::parsear_fichero(const std::string& ruta)
 			linea=L.leer_linea();
 			if(!L) break;
 
-			if(interpretar_estado(linea))
+			if(interpretar_estado(linea, factoria))
 			{
 				switch(estado)
 				{
@@ -59,7 +59,7 @@ void Parser_salas::parsear_fichero(const std::string& ruta)
 	}
 }
 
-bool Parser_salas::interpretar_estado(const std::string& linea)
+bool Parser_salas::interpretar_estado(const std::string& linea, Factoria_objetos_juego& factoria)
 {
 	if(linea==TIPO_ESTRUCTURA) estado=t_estados::estructura;
 	else if(linea==TIPO_INFO) estado=t_estados::info;
@@ -81,7 +81,10 @@ bool Parser_salas::interpretar_estado(const std::string& linea)
 	{
 		//Por cada vez que se encuentre esta tag, añadimos un contenedor al final.
 		contenedores.push_back(App_Juego_ObjetoJuego::Contenedor_objetos());
+		auto& c=contenedores.back();
+		factoria.establecer_contenedor(c);
 		estado=t_estados::objetos;
+		
 	}
 	else if(linea==TIPO_FIN_ESTRUCTURA) 
 	{
@@ -135,7 +138,7 @@ void Parser_salas::interpretar_linea_como_celdas(const std::string& linea)
 
 void Parser_salas::interpretar_linea_como_objeto(const std::string& linea, Factoria_objetos_juego& factoria)
 {
-	factoria.interpretar_linea(linea, contenedores.back());
+	factoria.interpretar_linea(linea);
 }
 
 /**

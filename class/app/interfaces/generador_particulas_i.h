@@ -3,7 +3,7 @@
 
 #include <memory>
 #include <vector>
-#include "../juego/particulas/definicion_particula.h"
+#include "../juego/prototipos/definicion_particula.h"
 #include "objeto_juego_i.h"
 
 namespace App_Interfaces
@@ -19,13 +19,13 @@ class Generador_particulas_I:
 {
 	public:
 
-	typedef std::vector<std::shared_ptr<App_Juego_Particulas::Definicion_particula>> vDefinicionParticula;
-	typedef std::shared_ptr<App_Juego_Particulas::Definicion_particula> sptrDefinicionParticula;
+	typedef std::vector<std::shared_ptr<App_Juego_Prototipos::Definicion_particula>> vDefinicionParticula;
+	typedef std::shared_ptr<App_Juego_Prototipos::Definicion_particula> sptrDefinicionParticula;
 
-	bool							hay_prototipos();
-	void							reset_prototipos();
-	vDefinicionParticula&					acc_prototipos();
-	void							insertar_prototipo(sptrDefinicionParticula);
+	bool							hay_particulas();
+	void							reset_particulas();
+	vDefinicionParticula&					acc_particulas();
+	void							insertar_particula(sptrDefinicionParticula);
 
 	private:
 

@@ -12,6 +12,14 @@ Proyectil_normal::Proyectil_normal(const Propiedades_proyectil& pp)
 
 }
 
+Proyectil_normal::Proyectil_normal(float x, float y, int w, int h, const DLibH::Vector_2d& v, float potencia, App_Juego_ObjetoJuego::Proyectil_normal::colores color)
+	:Proyectil_base(x, y, w, h),
+	color(color)
+{
+	mut_potencia(potencia);
+	establecer_vector(v);
+}
+
 void Proyectil_normal::turno(float delta)
 {
 	float p=acc_potencia();
@@ -91,10 +99,7 @@ void Proyectil_normal::generar_chispas(float tv, int c)
 		auto v=DLibH::Vector_2d::vector_unidad_para_angulo(acc_vector().angulo_grados()+ggrad()-90.0f)*gvel();
 		v.x=v.x-1;
 		v.y=v.y-1;
-		auto ptr=std::shared_ptr<App_Juego_Particulas::Definicion_particula>(
-			new App_Juego_Particulas::Definicion_particula_chispa(
-					acc_espaciable_x()+(acc_espaciable_w()/2), acc_espaciable_y()+(acc_espaciable_w()/2), tv, v));
-		insertar_prototipo(ptr);
+		insertar_particula(App_Juego_Prototipos::crear_particula_chispa(acc_espaciable_x()+(acc_espaciable_w()/2), acc_espaciable_y()+(acc_espaciable_w()/2), tv, v));
 		++i;
 	}
 }

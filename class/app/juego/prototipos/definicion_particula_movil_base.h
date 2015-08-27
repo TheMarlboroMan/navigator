@@ -8,7 +8,7 @@
 * Base para todas las definiciones de partículas que indican algo que se mueve.
 */
 
-namespace App_Juego_Particulas
+namespace App_Juego_Prototipos
 {
 
 struct Definicion_particula_movil_base:

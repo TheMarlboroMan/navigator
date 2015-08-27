@@ -41,7 +41,7 @@ class Parser_salas
 
 	private:
 
-	bool							interpretar_estado(const std::string& linea);
+	bool							interpretar_estado(const std::string& linea, Factoria_objetos_juego& factoria);
 	void 							interpretar_linea_como_rejilla(const std::string& linea);
 	void							interpretar_linea_como_celdas(const std::string& linea);
 	void							interpretar_linea_como_objeto(const std::string& linea, Factoria_objetos_juego&);

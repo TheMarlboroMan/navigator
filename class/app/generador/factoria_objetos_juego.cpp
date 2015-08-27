@@ -5,8 +5,18 @@ using namespace App_Juego_ObjetoJuego;
 using namespace App_Interfaces;
 using namespace DLibH;
 
+Factoria_objetos_juego::Factoria_objetos_juego()
+	:contenedor_ptr(nullptr)
+{
 
-void Factoria_objetos_juego::interpretar_linea(const std::string& linea, App_Juego_ObjetoJuego::Contenedor_objetos& contenedor)
+}
+
+void Factoria_objetos_juego::establecer_contenedor(App_Juego_ObjetoJuego::Contenedor_objetos& c)
+{
+	contenedor_ptr=&c;
+}
+
+void Factoria_objetos_juego::interpretar_linea(const std::string& linea)
 {
 	const auto params=Herramientas::explotar(linea, ',');
 	const int tipo=toi(params[0]);
@@ -15,13 +25,13 @@ void Factoria_objetos_juego::interpretar_linea(const std::string& linea, App_Jue
 	{
 		switch(tipo)
 		{
-			case bonus_tiempo: 	interpretar_como_bonus_tiempo(params, contenedor); break;
-			case bonus_salud:	interpretar_como_bonus_salud(params, contenedor); break;
-			case enemigo_basico:	interpretar_como_enemigo_basico(params, contenedor); break;
-			case enemigo_rebote:	interpretar_como_enemigo_rebote(params, contenedor); break;
-			case entrada:		interpretar_como_entrada(params, contenedor); break;
-			case salida:		interpretar_como_salida(params, contenedor); break;
-			case posicion_inicial:	interpretar_como_posicion_inicial(params, contenedor); break;
+			case bonus_tiempo: 	interpretar_como_bonus_tiempo(params); break;
+			case bonus_salud:	interpretar_como_bonus_salud(params); break;
+			case enemigo_basico:	interpretar_como_enemigo_basico(params); break;
+			case enemigo_rebote:	interpretar_como_enemigo_rebote(params); break;
+			case entrada:		interpretar_como_entrada(params); break;
+			case salida:		interpretar_como_salida(params); break;
+			case posicion_inicial:	interpretar_como_posicion_inicial(params); break;
 			default:
 				LOG<<"No se ha interpretado la línea "<<linea<<" por ser de tipo ["<<tipo<<"] desconocido."<<std::endl;
 			break;
@@ -33,8 +43,60 @@ void Factoria_objetos_juego::interpretar_linea(const std::string& linea, App_Jue
 	}
 }
 
+void Factoria_objetos_juego::insertar(std::shared_ptr<App_Juego_ObjetoJuego::Bonus_tiempo>& ob)
+{
+	auto& contenedor=*contenedor_ptr;
+	contenedor.objetos_juego.push_back(ob);
+	contenedor.representables.push_back( std::shared_ptr<Representable_I>(ob, static_cast<Representable_I*>(ob.get())));
+	contenedor.bonus.push_back(std::shared_ptr<Bonus_I>(ob, static_cast<Bonus_I*>(ob.get())));
+	contenedor.sonoros.push_back(std::shared_ptr<Sonoro_I>(ob, static_cast<Sonoro_I*>(ob.get())));
+	contenedor.generadores_particulas.push_back(std::shared_ptr<Generador_particulas_I>(ob, static_cast<Generador_particulas_I*>(ob.get())));
+}
 
-void Factoria_objetos_juego::interpretar_como_bonus_tiempo(const std::vector<std::string>& params, App_Juego_ObjetoJuego::Contenedor_objetos& contenedor)
+void Factoria_objetos_juego::insertar(std::shared_ptr<App_Juego_ObjetoJuego::Bonus_salud>& ob)
+{
+	auto& contenedor=*contenedor_ptr;
+	contenedor.objetos_juego.push_back(ob);
+	contenedor.representables.push_back(std::shared_ptr<Representable_I>(ob, static_cast<Representable_I*>(ob.get())));
+	contenedor.bonus.push_back(std::shared_ptr<Bonus_I>(ob, static_cast<Bonus_I*>(ob.get())));
+	contenedor.sonoros.push_back(std::shared_ptr<Sonoro_I>(ob, static_cast<Sonoro_I*>(ob.get())));
+	contenedor.generadores_particulas.push_back(std::shared_ptr<Generador_particulas_I>(ob, static_cast<Generador_particulas_I*>(ob.get())));
+}
+
+void Factoria_objetos_juego::insertar(std::shared_ptr<App_Juego_ObjetoJuego::Enemigo_basico>& ob)
+{
+	auto& contenedor=*contenedor_ptr;
+	contenedor.objetos_juego.push_back(ob);
+	contenedor.colisionables.push_back(std::shared_ptr<Colisionable_I>(ob, static_cast<Colisionable_I*>(ob.get())));
+	contenedor.representables.push_back(std::shared_ptr<Representable_I>(ob, static_cast<Representable_I*>(ob.get())));
+	contenedor.sonoros.push_back(std::shared_ptr<Sonoro_I>(ob, static_cast<Sonoro_I*>(ob.get())));
+	contenedor.con_turno.push_back(std::shared_ptr<Con_turno_I>(ob, static_cast<Con_turno_I*>(ob.get())));
+	contenedor.disparables.push_back(std::shared_ptr<Disparable_I>(ob, static_cast<Disparable_I*>(ob.get())));
+	contenedor.disparadores.push_back(std::shared_ptr<Disparador_I>(ob, static_cast<Disparador_I*>(ob.get())));
+	contenedor.generadores_particulas.push_back(std::shared_ptr<Generador_particulas_I>(ob, static_cast<Generador_particulas_I*>(ob.get())));
+}
+
+void Factoria_objetos_juego::insertar(std::shared_ptr<App_Juego_ObjetoJuego::Enemigo_rebote>& ob)
+{
+	auto& contenedor=*contenedor_ptr;
+	contenedor.objetos_juego.push_back(ob);
+	contenedor.colisionables.push_back(std::shared_ptr<Colisionable_I>(ob, static_cast<Colisionable_I*>(ob.get())));
+	contenedor.representables.push_back(std::shared_ptr<Representable_I>(ob, static_cast<Representable_I*>(ob.get())));
+	contenedor.con_turno.push_back(std::shared_ptr<Con_turno_I>(ob, static_cast<Con_turno_I*>(ob.get())));
+	contenedor.disparables.push_back(std::shared_ptr<Disparable_I>(ob, static_cast<Disparable_I*>(ob.get())));
+}
+
+void Factoria_objetos_juego::insertar(std::shared_ptr<App_Juego_ObjetoJuego::Salida>& ob)
+{
+	auto& contenedor=*contenedor_ptr;
+	contenedor.objetos_juego.push_back(ob);
+	contenedor.colisionables.push_back(std::shared_ptr<Colisionable_I>(ob, static_cast<Colisionable_I*>(ob.get())));
+	contenedor.representables.push_back(std::shared_ptr<Representable_I>(ob, static_cast<Representable_I*>(ob.get())));
+}
+
+//////////////////////
+
+void Factoria_objetos_juego::interpretar_como_bonus_tiempo(const std::vector<std::string>& params)
 {
 	if(params.size() != lp_bonus_tiempo)
 	{
@@ -45,18 +107,12 @@ void Factoria_objetos_juego::interpretar_como_bonus_tiempo(const std::vector<std
 		const int x=toi(params[1]);
 		const int y=toi(params[2]);
 		const int cantidad=toi(params[3]);
-	
 		std::shared_ptr<Bonus_tiempo> ob(new Bonus_tiempo(x, y, cantidad));
-
-		contenedor.objetos_juego.push_back(ob);
-		contenedor.representables.push_back( std::shared_ptr<Representable_I>(ob, static_cast<Representable_I*>(ob.get())));
-		contenedor.bonus.push_back(std::shared_ptr<Bonus_I>(ob, static_cast<Bonus_I*>(ob.get())));
-		contenedor.sonoros.push_back(std::shared_ptr<Sonoro_I>(ob, static_cast<Sonoro_I*>(ob.get())));
-		contenedor.generadores_particulas.push_back(std::shared_ptr<Generador_particulas_I>(ob, static_cast<Generador_particulas_I*>(ob.get())));
+		insertar(ob);
 	}
 }
 
-void Factoria_objetos_juego::interpretar_como_bonus_salud(const std::vector<std::string>& params, App_Juego_ObjetoJuego::Contenedor_objetos& contenedor)
+void Factoria_objetos_juego::interpretar_como_bonus_salud(const std::vector<std::string>& params)
 {
 	if(params.size() != lp_bonus_tiempo)
 	{
@@ -68,16 +124,11 @@ void Factoria_objetos_juego::interpretar_como_bonus_salud(const std::vector<std:
 		const int y=toi(params[2]);
 		const int cantidad=toi(params[3]);
 		std::shared_ptr<Bonus_salud> ob(new Bonus_salud(x, y, cantidad));
-
-		contenedor.objetos_juego.push_back(ob);
-		contenedor.representables.push_back(std::shared_ptr<Representable_I>(ob, static_cast<Representable_I*>(ob.get())));
-		contenedor.bonus.push_back(std::shared_ptr<Bonus_I>(ob, static_cast<Bonus_I*>(ob.get())));
-		contenedor.sonoros.push_back(std::shared_ptr<Sonoro_I>(ob, static_cast<Sonoro_I*>(ob.get())));
-		contenedor.generadores_particulas.push_back(std::shared_ptr<Generador_particulas_I>(ob, static_cast<Generador_particulas_I*>(ob.get())));
+		insertar(ob);
 	}
 }
 
-void Factoria_objetos_juego::interpretar_como_enemigo_basico(const std::vector<std::string>& params, App_Juego_ObjetoJuego::Contenedor_objetos& contenedor)
+void Factoria_objetos_juego::interpretar_como_enemigo_basico(const std::vector<std::string>& params)
 {
 	if(params.size() != lp_enemigo_basico)
 	{
@@ -89,19 +140,11 @@ void Factoria_objetos_juego::interpretar_como_enemigo_basico(const std::vector<s
 		const int y=toi(params[2]);
 		const int salud=toi(params[3]);
 		std::shared_ptr<Enemigo_basico> ob(new Enemigo_basico(x, y, salud));
-
-		contenedor.objetos_juego.push_back(ob);
-		contenedor.colisionables.push_back(std::shared_ptr<Colisionable_I>(ob, static_cast<Colisionable_I*>(ob.get())));
-		contenedor.representables.push_back(std::shared_ptr<Representable_I>(ob, static_cast<Representable_I*>(ob.get())));
-		contenedor.sonoros.push_back(std::shared_ptr<Sonoro_I>(ob, static_cast<Sonoro_I*>(ob.get())));
-		contenedor.con_turno.push_back(std::shared_ptr<Con_turno_I>(ob, static_cast<Con_turno_I*>(ob.get())));
-		contenedor.disparables.push_back(std::shared_ptr<Disparable_I>(ob, static_cast<Disparable_I*>(ob.get())));
-		contenedor.disparadores.push_back(std::shared_ptr<Disparador_I>(ob, static_cast<Disparador_I*>(ob.get())));
-		contenedor.generadores_particulas.push_back(std::shared_ptr<Generador_particulas_I>(ob, static_cast<Generador_particulas_I*>(ob.get())));
+		insertar(ob);
 	}
 }
 
-void Factoria_objetos_juego::interpretar_como_enemigo_rebote(const std::vector<std::string>& params, App_Juego_ObjetoJuego::Contenedor_objetos& contenedor)
+void Factoria_objetos_juego::interpretar_como_enemigo_rebote(const std::vector<std::string>& params)
 {
 	if(params.size() != lp_enemigo_rebote)
 	{
@@ -122,16 +165,11 @@ void Factoria_objetos_juego::interpretar_como_enemigo_rebote(const std::vector<s
 		else if(tr==2) tipo_rebote=Enemigo_rebote::tipos_rebote::izquierda;
 
 		std::shared_ptr<Enemigo_rebote> ob(new Enemigo_rebote(x, y, velocidad, tipo_rebote, dir));
-
-		contenedor.objetos_juego.push_back(ob);
-		contenedor.colisionables.push_back(std::shared_ptr<Colisionable_I>(ob, static_cast<Colisionable_I*>(ob.get())));
-		contenedor.representables.push_back(std::shared_ptr<Representable_I>(ob, static_cast<Representable_I*>(ob.get())));
-		contenedor.con_turno.push_back(std::shared_ptr<Con_turno_I>(ob, static_cast<Con_turno_I*>(ob.get())));
-		contenedor.disparables.push_back(std::shared_ptr<Disparable_I>(ob, static_cast<Disparable_I*>(ob.get())));
+		insertar(ob);
 	}
 }
 
-void Factoria_objetos_juego::interpretar_como_entrada(const std::vector<std::string>& params, App_Juego_ObjetoJuego::Contenedor_objetos& contenedor)
+void Factoria_objetos_juego::interpretar_como_entrada(const std::vector<std::string>& params)
 {
 	if(params.size() != lp_entrada)
 	{
@@ -143,11 +181,11 @@ void Factoria_objetos_juego::interpretar_como_entrada(const std::vector<std::str
 		const int y=toi(params[2]);
 		const App_Definiciones::direcciones pos=App_Definiciones::convertir_en_direccion(toi(params[3]));
 		Entrada e(pos, x, y);
-		contenedor.insertar_entrada(e);
+		contenedor_ptr->insertar_entrada(e);
 	}
 }
 
-void Factoria_objetos_juego::interpretar_como_salida(const std::vector<std::string>& params, App_Juego_ObjetoJuego::Contenedor_objetos& contenedor)
+void Factoria_objetos_juego::interpretar_como_salida(const std::vector<std::string>& params)
 {
 	if(params.size() != lp_salida)
 	{
@@ -157,16 +195,12 @@ void Factoria_objetos_juego::interpretar_como_salida(const std::vector<std::stri
 	{
 		const int x=toi(params[1]);
 		const int y=toi(params[2]);
-		contenedor.salida.reset( new Salida(x, y));
-
-		auto ob=contenedor.salida.get();
-		contenedor.objetos_juego.push_back(contenedor.salida);
-		contenedor.colisionables.push_back(std::shared_ptr<Colisionable_I>(contenedor.salida, static_cast<Colisionable_I*>(ob)));
-		contenedor.representables.push_back(std::shared_ptr<Representable_I>(contenedor.salida, static_cast<Representable_I*>(ob)));
+		contenedor_ptr->salida.reset( new Salida(x, y));		
+		insertar(contenedor_ptr->salida);
 	}
 }
 
-void Factoria_objetos_juego::interpretar_como_posicion_inicial(const std::vector<std::string>& params, App_Juego_ObjetoJuego::Contenedor_objetos& contenedor)
+void Factoria_objetos_juego::interpretar_como_posicion_inicial(const std::vector<std::string>& params)
 {
 	if(params.size() != lp_posicion_inicial)
 	{
@@ -176,6 +210,6 @@ void Factoria_objetos_juego::interpretar_como_posicion_inicial(const std::vector
 	{
 		const int x=toi(params[1]);
 		const int y=toi(params[2]);
-		contenedor.posicion_inicial.reset( new Posicion_inicial(x, y));
+		contenedor_ptr->posicion_inicial.reset( new Posicion_inicial(x, y));
 	}
 }

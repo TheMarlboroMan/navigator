@@ -11,7 +11,7 @@
 #include "../recursos.h"
 #include "../input/input_usuario.h"
 #include "../definiciones/definiciones.h"
-#include "particulas/definicion_particula_fantasma.h"
+#include "prototipos/definicion_particula_fantasma.h"
 //#include "../../herramientas_proyecto/tabla_sprites.h"
 //#include "jugador_estados.h"
 

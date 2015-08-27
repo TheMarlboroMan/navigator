@@ -10,7 +10,7 @@
 #include "../../interfaces/sonoro_i.h"
 #include "../../interfaces/generador_particulas_i.h"
 #include "../../interfaces/recoge_bonus_i.h"
-#include "../particulas/definicion_particula_fantasma.h"
+#include "../prototipos/definicion_particula_fantasma.h"
 #include "../../audio/audio_reproducir.h"
 
 

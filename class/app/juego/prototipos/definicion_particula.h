@@ -8,7 +8,7 @@ namespace App_Juego_ObjetoJuego
 class Particula_base;
 }
 
-namespace App_Juego_Particulas
+namespace App_Juego_Prototipos
 {
 struct Definicion_particula
 {

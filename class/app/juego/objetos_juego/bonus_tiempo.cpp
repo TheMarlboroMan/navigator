@@ -37,11 +37,10 @@ void Bonus_tiempo::recoger(App_Interfaces::Recoge_bonus_I& rb)
 	
 	
 
-	auto ptr=std::shared_ptr<App_Juego_Particulas::Definicion_particula>(new App_Juego_Particulas::Definicion_particula_fantasma(
+	insertar_particula(App_Juego_Prototipos::crear_particula_fantasma(
 		acc_espaciable_x(), acc_espaciable_y(), 0.8f, 10.0f, App_Definiciones::direcciones::derecha,
 		App::Recursos_graficos::rt_defecto, 
-		DLibH::Caja<int, int>(0, 32, W, H)));
-	insertar_prototipo(ptr);
+		DLibH::Caja<int, int>(16, 32, W, H)));
 
 	using namespace App_Audio;
 	insertar_reproducir(Info_audio_reproducir(

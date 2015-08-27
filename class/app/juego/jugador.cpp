@@ -199,10 +199,9 @@ void Jugador::turno(float delta)
 					App_Audio::Info_audio_reproducir::t_sonido::unico,
 					App::Recursos_audio::rs_estasis, 127, 127));
 
-			auto ptr=std::shared_ptr<App_Juego_Particulas::Definicion_particula>(new App_Juego_Particulas::Definicion_particula_fantasma(
+			insertar_particula(App_Juego_Prototipos::crear_particula_fantasma(
 					acc_espaciable_x(), acc_espaciable_y(), 1.0f, 20.0f, direccion,
 					App::Recursos_graficos::rt_defecto, DLibH::Caja<int, int>(32, 0, 27, 16)));
-			insertar_prototipo(ptr);
 		}
 	}
 	else

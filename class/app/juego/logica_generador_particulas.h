@@ -4,7 +4,7 @@
 #include <vector>
 #include <memory>
 
-#include "particulas/definicion_particula.h"
+#include "prototipos/definicion_particula.h"
 #include "objetos_juego/particula_base.h"
 #include "../interfaces/generador_particulas_i.h"
 

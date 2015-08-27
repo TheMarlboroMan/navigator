@@ -13,6 +13,7 @@
 #include "../juego/objetos_juego/entrada.h"
 #include "../juego/objetos_juego/salida.h"
 #include "../juego/objetos_juego/posicion_inicial.h"
+#include "../interfaces/factoria_objetos_juego_i.h"
 
 namespace App_Generador
 {
@@ -36,31 +37,43 @@ class Factoria_objetos_juego_excepcion:
 	}
 };
 
-class Factoria_objetos_juego
+class Factoria_objetos_juego:
+	public App_Interfaces::Factoria_objetos_juego_I
 {	
 	////////////////////
 	//Interface pública.
 	public:
 
-	void 						interpretar_linea(const std::string&, App_Juego_ObjetoJuego::Contenedor_objetos&);
+							Factoria_objetos_juego();
+	void						establecer_contenedor(App_Juego_ObjetoJuego::Contenedor_objetos&);
+
+	void 						interpretar_linea(const std::string&);
+
+	void						insertar(std::shared_ptr<App_Juego_ObjetoJuego::Bonus_tiempo>&);
+	void						insertar(std::shared_ptr<App_Juego_ObjetoJuego::Bonus_salud>&);
+	void						insertar(std::shared_ptr<App_Juego_ObjetoJuego::Enemigo_basico>&);
+	void						insertar(std::shared_ptr<App_Juego_ObjetoJuego::Enemigo_rebote>&);
+	void						insertar(std::shared_ptr<App_Juego_ObjetoJuego::Salida>&);
 
 	////////////////////
 	//Métodos privados.
 	private:
 
 	int						toi(const std::string& c) {return std::atoi(c.c_str());}
-	void						interpretar_como_bonus_tiempo(const std::vector<std::string>&, App_Juego_ObjetoJuego::Contenedor_objetos&);
-	void						interpretar_como_bonus_salud(const std::vector<std::string>&, App_Juego_ObjetoJuego::Contenedor_objetos&);
-	void						interpretar_como_enemigo_basico(const std::vector<std::string>&, App_Juego_ObjetoJuego::Contenedor_objetos&);
-	void						interpretar_como_enemigo_rebote(const std::vector<std::string>&, App_Juego_ObjetoJuego::Contenedor_objetos&);
-	void						interpretar_como_entrada(const std::vector<std::string>&, App_Juego_ObjetoJuego::Contenedor_objetos&);
-	void						interpretar_como_salida(const std::vector<std::string>&, App_Juego_ObjetoJuego::Contenedor_objetos&);
-	void						interpretar_como_posicion_inicial(const std::vector<std::string>&, App_Juego_ObjetoJuego::Contenedor_objetos&);
+	void						interpretar_como_bonus_tiempo(const std::vector<std::string>&);
+	void						interpretar_como_bonus_salud(const std::vector<std::string>&);
+	void						interpretar_como_enemigo_basico(const std::vector<std::string>&);
+	void						interpretar_como_enemigo_rebote(const std::vector<std::string>&);
+	void						interpretar_como_entrada(const std::vector<std::string>&);
+	void						interpretar_como_salida(const std::vector<std::string>&);
+	void						interpretar_como_posicion_inicial(const std::vector<std::string>&);
 
 	///////////////////
 	// Propiedades.
 
 	private:
+
+	App_Juego_ObjetoJuego::Contenedor_objetos *	contenedor_ptr;
 
 	/**
 	* longitudes de parámetros.

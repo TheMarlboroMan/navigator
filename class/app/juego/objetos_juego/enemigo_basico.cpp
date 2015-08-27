@@ -68,10 +68,7 @@ void Enemigo_basico::recibir_disparo(float potencia)
 		const auto& v=acc_vector();
 
 		//La explosión...
-		auto ptr=std::shared_ptr<App_Juego_Particulas::Definicion_particula>(
-				new App_Juego_Particulas::Definicion_particula_explosion(
-					acc_espaciable_x()+(acc_espaciable_w()/2), acc_espaciable_y()+(acc_espaciable_w()/2), 1.0f, v));
-		insertar_prototipo(ptr);
+		insertar_particula(App_Juego_Prototipos::crear_particula_explosion(acc_espaciable_x()+(acc_espaciable_w()/2), acc_espaciable_y()+(acc_espaciable_w()/2), 1.0f, v));
 
 		//Y la chatarra...
 		//TODO: Esto se va a repetir en muchos sitios. Cuando llegue
@@ -81,13 +78,9 @@ void Enemigo_basico::recibir_disparo(float potencia)
 		int i=0, mp=g();
 		while(i < mp)
 		{
-
 			auto g=HerramientasProyecto::Generador_int(0, 359);
 			auto v=Vector_2d::vector_unidad_para_angulo(g())*gvel();
-			auto ptr=std::shared_ptr<App_Juego_Particulas::Definicion_particula>(
-				new App_Juego_Particulas::Definicion_particula_chatarra(
-					acc_espaciable_x()+(acc_espaciable_w()/2), acc_espaciable_y()+(acc_espaciable_w()/2), 3.0f, v));
-			insertar_prototipo(ptr);
+			insertar_particula(App_Juego_Prototipos::crea_particula_chatarra(acc_espaciable_x()+(acc_espaciable_w()/2), acc_espaciable_y()+(acc_espaciable_w()/2), 3.0f, v));
 			++i;
 		}
 	}

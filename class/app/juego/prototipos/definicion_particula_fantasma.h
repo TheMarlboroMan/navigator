@@ -6,7 +6,7 @@
 #include "definicion_particula.h"
 #include "../objetos_juego/particula_fantasma.h"
 
-namespace App_Juego_Particulas
+namespace App_Juego_Prototipos
 {
 struct Definicion_particula_fantasma:
 	public Definicion_particula
@@ -18,6 +18,8 @@ struct Definicion_particula_fantasma:
 	int				recurso;
 	DLibH::Caja<int, int>		recorte;
 };
+
+std::shared_ptr<App_Juego_Prototipos::Definicion_particula> crear_particula_fantasma(float x, float y, float tv, float ve, App_Definiciones::direcciones d, int recurso, const DLibH::Caja<int, int>& recorte);
 }
 
 #endif

@@ -108,7 +108,12 @@ void Sala::modificar_dimensiones(App_Definiciones::t_dim pw, App_Definiciones::t
 	celdas_decorativas=celdas_decorativas.copiar_con_dimensiones(w, h);
 }
 
-void Sala::implantar_objetos_juego(App_Juego_ObjetoJuego::Contenedor_objetos&& co)
+void Sala::implantar_objetos_juego(App_Juego_Contenedores::Contenedor_objetos&& co)
 {
 	objetos=co;
+}
+
+void Sala::fusionar_objetos_juego(App_Juego_Contenedores::Contenedor_objetos& co)
+{
+	objetos.fusionar_con(co);
 }

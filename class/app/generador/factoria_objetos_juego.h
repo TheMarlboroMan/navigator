@@ -5,7 +5,7 @@
 #include <vector>
 #include <string>
 #include <herramientas/herramientas/herramientas.h>
-#include "../juego/objetos_juego/contenedor_objetos_juego.h"
+#include "../juego/contenedores/contenedor_objetos.h"
 #include "../juego/objetos_juego/bonus_salud.h"
 #include "../juego/objetos_juego/bonus_tiempo.h"
 #include "../juego/objetos_juego/enemigo_basico.h"
@@ -45,7 +45,7 @@ class Factoria_objetos_juego:
 	public:
 
 							Factoria_objetos_juego();
-	void						establecer_contenedor(App_Juego_ObjetoJuego::Contenedor_objetos&);
+	void						establecer_contenedor(App_Juego_Contenedores::Contenedor_objetos&);
 
 	void 						interpretar_linea(const std::string&);
 
@@ -54,6 +54,12 @@ class Factoria_objetos_juego:
 	void						insertar(std::shared_ptr<App_Juego_ObjetoJuego::Enemigo_basico>&);
 	void						insertar(std::shared_ptr<App_Juego_ObjetoJuego::Enemigo_rebote>&);
 	void						insertar(std::shared_ptr<App_Juego_ObjetoJuego::Salida>&);
+
+	std::shared_ptr<App_Juego_ObjetoJuego::Bonus_tiempo>	crear_bonus_tiempo(float x, float y, float t);
+
+	////////////////
+	//Implementación de la interface...
+	void						fabricar_e_insertar_bonus_tiempo(float x, float y, float t);
 
 	////////////////////
 	//Métodos privados.
@@ -73,7 +79,7 @@ class Factoria_objetos_juego:
 
 	private:
 
-	App_Juego_ObjetoJuego::Contenedor_objetos *	contenedor_ptr;
+	App_Juego_Contenedores::Contenedor_objetos *	contenedor_ptr;
 
 	/**
 	* longitudes de parámetros.

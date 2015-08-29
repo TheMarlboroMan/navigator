@@ -11,6 +11,7 @@
 #include "../app/juego/logica_disparable.h"
 #include "../app/juego/logica_colisionable.h"
 #include "../app/juego/logica_generador_particulas.h"
+#include "../app/juego/logica_generador_objetos_juego.h"
 
 using namespace App_Niveles;
 using namespace App_Juego;
@@ -106,7 +107,6 @@ void Controlador_juego::loop(Input_base& input, float delta)
 		controlar_y_efectuar_salida_sala(jugador);
 
 		logica_proyectiles(delta);
-		logica_particulas(delta);
 		logica_mundo(delta);
 		sonar(delta);
 		limpiar_eliminados();
@@ -202,9 +202,7 @@ void Controlador_juego::cargar_sala(int ax, int ay, App_Definiciones::direccione
 
 void Controlador_juego::limpiar_pre_cambio_sala()
 {
-	proyectiles_jugador.clear();
-	proyectiles_enemigos.clear();
-	particulas.clear();
+	contenedor_volatiles.vaciar();
 }
 
 /**
@@ -221,8 +219,8 @@ void Controlador_juego::procesar_jugador(Jugador& j, float delta, App_Input::Inp
 	{
 		if(jugador.disparar())
 		{
-			Logica_disparador lp(proyectiles_enemigos, jugador);
-			lp.insertar_disparo_jugador(proyectiles_jugador);
+			Logica_disparador lp(contenedor_volatiles.proyectiles_enemigos, jugador);
+			lp.insertar_disparo_jugador(contenedor_volatiles.proyectiles_jugador);
 		}
 	}
 
@@ -254,9 +252,9 @@ void Controlador_juego::procesar_jugador(Jugador& j, float delta, App_Input::Inp
 	sala_actual->procesar_bonus(lb);
 
 	//Ahora evaluamos el choque con los proyectiles enemigos...
-	if(proyectiles_enemigos.size())
+	if(contenedor_volatiles.proyectiles_enemigos.size())
 	{
-		for(auto& p : proyectiles_enemigos)
+		for(auto& p : contenedor_volatiles.proyectiles_enemigos)
 		{
 			if(!p->es_borrar() && p->en_colision_con(jugador))
 			{
@@ -329,9 +327,9 @@ void Controlador_juego::dibujar(DLibV::Pantalla& pantalla)
 	std::vector<const Representable_I *> vr=(*sala_actual).obtener_vector_representables();
 	vr.push_back(&jugador);
 
-	for(const auto& p : proyectiles_jugador) vr.push_back(p.get());
-	for(const auto& p : proyectiles_enemigos) vr.push_back(p.get());
-	for(const auto& p : particulas) vr.push_back(p.get());
+	for(const auto& p : contenedor_volatiles.proyectiles_jugador) vr.push_back(p.get());
+	for(const auto& p : contenedor_volatiles.proyectiles_enemigos) vr.push_back(p.get());
+	for(const auto& p : contenedor_volatiles.particulas) vr.push_back(p.get());
 
 	//Eliminar los que se vayan a borrar...
 	auto it=std::remove_if(std::begin(vr), std::end(vr), [](const Representable_I * r) {return r->es_representable_borrar();});
@@ -363,7 +361,7 @@ void Controlador_juego::logica_proyectiles(float delta)
 {
 	using namespace App_Colisiones;
 
-	auto procesar=[](Vsptr_Proyectil_base& proy, float delta, const Sala& sala)
+	auto procesar=[](App_Juego_Contenedores::Contenedor_volatiles::Vsptr_Proyectil_base& proy, float delta, const Sala& sala)
 	{
 		for(auto& p : proy) 
 		{
@@ -387,14 +385,8 @@ void Controlador_juego::logica_proyectiles(float delta)
 	* Proyectiles del jugador y enemigos...
 	*/
 	
-	if(proyectiles_jugador.size()) procesar(proyectiles_jugador, delta, *sala_actual);
-	if(proyectiles_enemigos.size()) procesar(proyectiles_enemigos, delta, *sala_actual);
-}
-
-void Controlador_juego::logica_particulas(float delta)
-{
-	auto it=std::remove_if(std::begin(particulas), std::end(particulas), [](sptr_Particula_base p) {return p->es_borrar();});
-	if(it!=std::end(particulas)) particulas.erase(it, std::end(particulas));
+	if(contenedor_volatiles.proyectiles_jugador.size()) procesar(contenedor_volatiles.proyectiles_jugador, delta, *sala_actual);
+	if(contenedor_volatiles.proyectiles_enemigos.size()) procesar(contenedor_volatiles.proyectiles_enemigos, delta, *sala_actual);
 }
 
 void Controlador_juego::logica_mundo(float delta)
@@ -403,9 +395,9 @@ void Controlador_juego::logica_mundo(float delta)
 	* Cosas a las que les podemos disparar: controlar si cualquier proyectil
 	* del jugador ha hecho impacto con ellas.
 	*/
-	if(proyectiles_jugador.size()) 
+	if(contenedor_volatiles.proyectiles_jugador.size()) 
 	{
-		Logica_disparable ld(proyectiles_jugador);
+		Logica_disparable ld(contenedor_volatiles.proyectiles_jugador);
 		sala_actual->procesar_disparables(ld);
 	}
 
@@ -419,7 +411,7 @@ void Controlador_juego::logica_mundo(float delta)
 	* "disparadores" y llamar a los visitantes propios.
 	*/
 
-	Logica_disparador lp(proyectiles_enemigos, jugador);
+	Logica_disparador lp(contenedor_volatiles.proyectiles_enemigos, jugador);
 	sala_actual->procesar_disparadores(lp);
 
 	/** 
@@ -433,13 +425,13 @@ void Controlador_juego::logica_mundo(float delta)
 	using namespace App_Interfaces;
 
 	std::vector<std::shared_ptr<Con_turno_I>> pt;
-	for(auto& p : particulas) pt.push_back(p);
+	for(auto& p : contenedor_volatiles.particulas) pt.push_back(p);
 	Logica_con_turno lct(jugador, *sala_actual, delta, pt);
 	sala_actual->procesar_con_turno(lct);
 
 	std::vector<std::shared_ptr<Con_turno_I>> vpr;
-	for(auto &p : proyectiles_jugador) vpr.push_back(p);
-	for(auto &p : proyectiles_enemigos) vpr.push_back(p);
+	for(auto &p : contenedor_volatiles.proyectiles_jugador) vpr.push_back(p);
+	for(auto &p : contenedor_volatiles.proyectiles_enemigos) vpr.push_back(p);
 	lct.procesar(vpr);
 
 	/**
@@ -452,10 +444,20 @@ void Controlador_juego::logica_mundo(float delta)
 	*/
 
 	std::vector<std::shared_ptr<Generador_particulas_I>> vgp;
-	for(auto &p : proyectiles_jugador) vgp.push_back(p);
-	for(auto &p : proyectiles_enemigos) vgp.push_back(p);
-	Logica_generador_particulas lgp(particulas, vgp, jugador);
+	for(auto &p : contenedor_volatiles.proyectiles_jugador) vgp.push_back(p);
+	for(auto &p : contenedor_volatiles.proyectiles_enemigos) vgp.push_back(p);
+	//TODO... Hmmm... No me gusta, mejor con fusión, como se ve más abajo.
+	//TODO: De hecho todo esto se irá al carajer.
+	Logica_generador_particulas lgp(contenedor_volatiles.particulas, vgp, jugador);
 	sala_actual->procesar_generadores_particulas(lgp);
+
+	/*****
+	* Los que pueden crear nuevos objetos...
+	*/
+
+	Logica_generador_objetos_juego lgoj;
+	sala_actual->procesar_generadores_objetos_juego(lgoj);
+	if(lgoj.hay_nuevos()) sala_actual->fusionar_objetos_juego(lgoj.acc_contenedor());
 }
 
 
@@ -508,8 +510,8 @@ void Controlador_juego::ajustar_camara_a_sala(const Sala& s)
 void Controlador_juego::sonar(float delta)
 {
 	auto vs=(*sala_actual).obtener_vector_sonoros();
-	for(auto& p : proyectiles_jugador) vs.push_back(p.get());
-	for(auto& p : proyectiles_enemigos) vs.push_back(p.get());
+	for(auto& p : contenedor_volatiles.proyectiles_jugador) vs.push_back(p.get());
+	for(auto& p : contenedor_volatiles.proyectiles_enemigos) vs.push_back(p.get());
 	vs.push_back(&jugador);
 
 	for(auto& s : vs)
@@ -534,13 +536,6 @@ void Controlador_juego::sonar(float delta)
 
 void Controlador_juego::limpiar_eliminados()
 {
-	auto f=[](Vsptr_Proyectil_base& proy)
-	{
-		auto it=std::remove_if(std::begin(proy), std::end(proy), [](sptr_Proyectil_base p) {return p->es_borrar();});
-		if(it!=std::end(proy)) proy.erase(it, std::end(proy));
-	};
-
-	f(proyectiles_jugador);	
-	f(proyectiles_enemigos);
 	sala_actual->limpiar_objetos_juego_para_borrar();
+	contenedor_volatiles.limpiar_para_borrar();
 }

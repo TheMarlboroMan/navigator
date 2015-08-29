@@ -12,6 +12,7 @@
 #include "../../interfaces/disparador_i.h"
 #include "../../interfaces/colisionable_i.h"
 #include "../../interfaces/generador_particulas_i.h"
+#include "../../interfaces/generador_objetos_juego_i.h"
 #include "../../graficos/bloque_transformacion_representable.h"
 #include "../prototipos/definicion_particula_explosion.h"
 #include "../prototipos/definicion_particula_chatarra.h"
@@ -28,7 +29,8 @@ class Enemigo_basico:
 		public App_Interfaces::Disparable_I,
 		public App_Interfaces::Disparador_I,
 		public App_Interfaces::Colisionable_I,
-		public App_Interfaces::Generador_particulas_I
+		public App_Interfaces::Generador_particulas_I,
+		public App_Interfaces::Generador_objetos_juego_I
 {
 	////////////////////////////
 	// Interface pública.
@@ -72,6 +74,10 @@ class Enemigo_basico:
 	virtual void 		recibir_disparo(float potencia);
 	virtual void 		recibir_visitante(App_Visitantes::Visitante_disparable& v) {v.visitar(*this);}
 	virtual bool		es_colision_proyectil(const Espaciable& e)const {return en_colision_con(e);}
+
+	///////////////
+	//Implementación de Generador_objetos_juego_I
+	virtual	void		generar_objetos(App_Interfaces::Factoria_objetos_juego_I&);
 
 	///////////////
 	//Implementación de Colisionable_I

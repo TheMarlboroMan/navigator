@@ -80,7 +80,7 @@ bool Parser_salas::interpretar_estado(const std::string& linea, Factoria_objetos
 	else if(linea==TIPO_OBJETOS) 
 	{
 		//Por cada vez que se encuentre esta tag, añadimos un contenedor al final.
-		contenedores.push_back(App_Juego_ObjetoJuego::Contenedor_objetos());
+		contenedores.push_back(App_Juego_Contenedores::Contenedor_objetos());
 		auto& c=contenedores.back();
 		factoria.establecer_contenedor(c);
 		estado=t_estados::objetos;

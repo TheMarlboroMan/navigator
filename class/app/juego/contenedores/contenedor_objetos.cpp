@@ -1,6 +1,6 @@
-#include "contenedor_objetos_juego.h"
+#include "contenedor_objetos.h"
 
-using namespace App_Juego_ObjetoJuego;
+using namespace App_Juego_Contenedores;
 
 Contenedor_objetos::Contenedor_objetos()
 	:
@@ -19,7 +19,7 @@ Contenedor_objetos::Contenedor_objetos()
 * lanzaría la excepción.
 */
 
-void Contenedor_objetos::insertar_entrada(const Entrada& e)
+void Contenedor_objetos::insertar_entrada(const App_Juego_ObjetoJuego::Entrada& e)
 {
 	using namespace App_Definiciones;
 
@@ -43,6 +43,7 @@ void Contenedor_objetos::sumar_variante(const Contenedor_objetos& o)
 	for(auto& ob : o.colisionables) colisionables.push_back(ob);
 	for(auto& ob : o.sonoros) sonoros.push_back(ob);
 	for(auto& ob : o.generadores_particulas) generadores_particulas.push_back(ob);
+	for(auto& ob : o.generadores_objetos_juego) generadores_objetos_juego.push_back(ob);
 }
 
 
@@ -74,6 +75,7 @@ size_t Contenedor_objetos::limpiar_para_borrar()
 		ayudante_borrar(disparadores);
 		ayudante_borrar(colisionables);
 		ayudante_borrar(generadores_particulas);
+		ayudante_borrar(generadores_objetos_juego);
 
 		//Y las especializaciones malvadas.
 		{
@@ -93,9 +95,21 @@ size_t Contenedor_objetos::limpiar_para_borrar()
 			else ++ini;
 		}
 		}
-
-
 	}
 
 	return res;
+}
+
+void Contenedor_objetos::fusionar_con(Contenedor_objetos& c)
+{
+	std::move(std::begin(c.objetos_juego), std::end(c.objetos_juego), std::back_inserter(objetos_juego));
+	std::move(std::begin(c.bonus), std::end(c.bonus), std::back_inserter(bonus));
+	std::move(std::begin(c.con_turno), std::end(c.con_turno), std::back_inserter(con_turno));
+	std::move(std::begin(c.disparables), std::end(c.disparables), std::back_inserter(disparables));
+	std::move(std::begin(c.disparadores), std::end(c.disparadores), std::back_inserter(disparadores));
+	std::move(std::begin(c.colisionables), std::end(c.colisionables), std::back_inserter(colisionables));
+	std::move(std::begin(c.generadores_particulas), std::end(c.generadores_particulas), std::back_inserter(generadores_particulas));
+	std::move(std::begin(c.generadores_objetos_juego), std::end(c.generadores_objetos_juego), std::back_inserter(generadores_objetos_juego));
+	std::move(std::begin(c.representables), std::end(c.representables), std::back_inserter(representables));
+	std::move(std::begin(c.sonoros), std::end(c.sonoros), std::back_inserter(sonoros));
 }

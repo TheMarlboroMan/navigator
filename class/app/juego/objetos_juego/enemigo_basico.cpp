@@ -94,3 +94,14 @@ void Enemigo_basico::recibir_disparo(float potencia)
 		App_Audio::Info_audio_reproducir::t_sonido::repetible,  
 		id_sonido, 127, 127));
 }
+
+void Enemigo_basico::generar_objetos(App_Interfaces::Factoria_objetos_juego_I& f)
+{
+	if(es_borrar())
+	{
+		f.fabricar_e_insertar_bonus_tiempo(acc_espaciable_x(), acc_espaciable_y(), 5.0f);
+	}
+
+	//TODO: En el futuro también podemos poner las partículas y disparos aquí.
+
+}

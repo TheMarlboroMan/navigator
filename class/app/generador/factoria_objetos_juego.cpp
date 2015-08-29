@@ -11,7 +11,7 @@ Factoria_objetos_juego::Factoria_objetos_juego()
 
 }
 
-void Factoria_objetos_juego::establecer_contenedor(App_Juego_ObjetoJuego::Contenedor_objetos& c)
+void Factoria_objetos_juego::establecer_contenedor(App_Juego_Contenedores::Contenedor_objetos& c)
 {
 	contenedor_ptr=&c;
 }
@@ -74,6 +74,7 @@ void Factoria_objetos_juego::insertar(std::shared_ptr<App_Juego_ObjetoJuego::Ene
 	contenedor.disparables.push_back(std::shared_ptr<Disparable_I>(ob, static_cast<Disparable_I*>(ob.get())));
 	contenedor.disparadores.push_back(std::shared_ptr<Disparador_I>(ob, static_cast<Disparador_I*>(ob.get())));
 	contenedor.generadores_particulas.push_back(std::shared_ptr<Generador_particulas_I>(ob, static_cast<Generador_particulas_I*>(ob.get())));
+	contenedor.generadores_objetos_juego.push_back(std::shared_ptr<Generador_objetos_juego_I>(ob, static_cast<Generador_objetos_juego_I*>(ob.get())));
 }
 
 void Factoria_objetos_juego::insertar(std::shared_ptr<App_Juego_ObjetoJuego::Enemigo_rebote>& ob)
@@ -107,7 +108,8 @@ void Factoria_objetos_juego::interpretar_como_bonus_tiempo(const std::vector<std
 		const int x=toi(params[1]);
 		const int y=toi(params[2]);
 		const int cantidad=toi(params[3]);
-		std::shared_ptr<Bonus_tiempo> ob(new Bonus_tiempo(x, y, cantidad));
+
+		auto ob=crear_bonus_tiempo(x, y, cantidad);
 		insertar(ob);
 	}
 }
@@ -212,4 +214,16 @@ void Factoria_objetos_juego::interpretar_como_posicion_inicial(const std::vector
 		const int y=toi(params[2]);
 		contenedor_ptr->posicion_inicial.reset( new Posicion_inicial(x, y));
 	}
+}
+
+std::shared_ptr<App_Juego_ObjetoJuego::Bonus_tiempo> Factoria_objetos_juego::crear_bonus_tiempo(float x, float y, float t)
+{
+	auto res=std::shared_ptr<Bonus_tiempo>(new Bonus_tiempo(x, y, t));
+	return res;
+}
+
+void Factoria_objetos_juego::fabricar_e_insertar_bonus_tiempo(float x, float y, float t)
+{
+	auto ob=crear_bonus_tiempo(x, y, t);
+	insertar(ob);
 }

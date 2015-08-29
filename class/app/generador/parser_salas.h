@@ -63,7 +63,7 @@ class Parser_salas
 	static const std::string 				TIPO_OBJETOS;
 
 	App_Niveles::Sala 					sala;
-	std::vector<App_Juego_ObjetoJuego::Contenedor_objetos>	contenedores;
+	std::vector<App_Juego_Contenedores::Contenedor_objetos>	contenedores;
 
 
 };

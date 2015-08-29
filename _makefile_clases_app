@@ -12,6 +12,7 @@ DIR_JUEGO_AUTOMAPA=$(DIR_JUEGO)automapa/
 DIR_JUEGO_SISTEMAS=$(DIR_JUEGO)sistemas/
 DIR_JUEGO_OBJETOS=$(DIR_JUEGO)objetos_juego/
 DIR_JUEGO_PARTICULAS=$(DIR_JUEGO)prototipos/
+DIR_JUEGO_CONTENEDORES=$(DIR_JUEGO)contenedores/
 DIR_COLISIONES=$(DIR_CLASES_APP)colisiones/
 DIR_DEFINICIONES=$(DIR_CLASES_APP)definiciones/
 DIR_GENERADOR=$(DIR_CLASES_APP)generador/
@@ -85,6 +86,14 @@ $(DIR_JUEGO)logica_generador_particulas.h\
 $(DIR_JUEGO)logica_generador_particulas.cpp
 	$(CC) $(CFLAGS) $(INCLUDES) $(DIR_JUEGO)logica_generador_particulas.cpp -o $(DIR_O)logica_generador_particulas.o
 
+$(DIR_O)logica_generador_objetos_juego.o:\
+$(DIR_O)generador_objetos_juego_i.o\
+$(DIR_O)factoria_objetos_juego_i.o\
+$(DIR_O)contenedor_objetos.o\
+$(DIR_JUEGO)logica_generador_objetos_juego.h\
+$(DIR_JUEGO)logica_generador_objetos_juego.cpp
+	$(CC) $(CFLAGS) $(INCLUDES) $(DIR_JUEGO)logica_generador_objetos_juego.cpp -o $(DIR_O)logica_generador_objetos_juego.o
+
 $(DIR_O)logica_colisionable.o:\
 $(DIR_O)enemigo_basico.o\
 $(DIR_O)enemigo_rebote.o\
@@ -106,7 +115,7 @@ $(DIR_JUEGO)recogedor_bonus.cpp
 ################################################################################
 #Objetos juego
 
-$(DIR_O)contenedor_objetos_juego.o:\
+$(DIR_O)contenedor_objetos.o:\
 $(DIR_O)objeto_juego_i.o\
 $(DIR_O)bonus_i.o\
 $(DIR_O)con_turno_i.o\
@@ -114,9 +123,21 @@ $(DIR_O)disparable_i.o\
 $(DIR_O)disparador_i.o\
 $(DIR_O)representable_i.o\
 $(DIR_O)colisionable_i.o\
-$(DIR_JUEGO_OBJETOS)contenedor_objetos_juego.h\
-$(DIR_JUEGO_OBJETOS)contenedor_objetos_juego.cpp
-	$(CC) $(CFLAGS) $(INCLUDES) $(DIR_JUEGO_OBJETOS)contenedor_objetos_juego.cpp -o $(DIR_O)contenedor_objetos_juego.o
+$(DIR_O)sonoro_i.o\
+$(DIR_O)generador_particulas_i.o\
+$(DIR_O)generador_objetos_juego_i.o\
+$(DIR_JUEGO_CONTENEDORES)contenedor_herramientas.h\
+$(DIR_JUEGO_CONTENEDORES)contenedor_objetos.h\
+$(DIR_JUEGO_CONTENEDORES)contenedor_objetos.cpp
+	$(CC) $(CFLAGS) $(INCLUDES) $(DIR_JUEGO_CONTENEDORES)contenedor_objetos.cpp -o $(DIR_O)contenedor_objetos.o
+
+$(DIR_O)contenedor_volatiles.o:\
+$(DIR_O)proyectil_base.o\
+$(DIR_O)particula_base.o\
+$(DIR_JUEGO_CONTENEDORES)contenedor_herramientas.h\
+$(DIR_JUEGO_CONTENEDORES)contenedor_volatiles.h\
+$(DIR_JUEGO_CONTENEDORES)contenedor_volatiles.cpp
+	$(CC) $(CFLAGS) $(INCLUDES) $(DIR_JUEGO_CONTENEDORES)contenedor_volatiles.cpp -o $(DIR_O)contenedor_volatiles.o
 
 $(DIR_O)enemigo_basico.o:\
 $(DIR_O)actor_movil.o\
@@ -127,6 +148,7 @@ $(DIR_O)disparador_i.o\
 $(DIR_O)con_turno_i.o\
 $(DIR_O)disparable_i.o\
 $(DIR_O)generador_particulas_i.o\
+$(DIR_O)generador_objetos_juego_i.o\
 $(DIR_O)generador_numeros.o\
 $(DIR_O)definicion_particula_explosion.o\
 $(DIR_O)definicion_particula_chatarra.o\
@@ -339,7 +361,7 @@ $(DIR_O)celda.o \
 $(DIR_O)celda_decorativa.o \
 $(DIR_O)entrada.o \
 $(DIR_O)definiciones.o \
-$(DIR_O)contenedor_objetos_juego.o \
+$(DIR_O)contenedor_objetos.o \
 $(DIR_NIVELES)sala.h \
 $(DIR_NIVELES)sala.cpp
 	$(CC) $(CFLAGS) $(INCLUDES) $(DIR_NIVELES)sala.cpp -o $(DIR_O)sala.o
@@ -444,7 +466,7 @@ $(DIR_COLISIONES)calculador_colisiones.cpp
 
 $(DIR_O)factoria_objetos_juego.o:\
 $(DIR_O)factoria_objetos_juego_i.o\
-$(DIR_O)contenedor_objetos_juego.o\
+$(DIR_O)contenedor_objetos.o\
 $(DIR_O)bonus_salud.o\
 $(DIR_O)bonus_tiempo.o\
 $(DIR_O)enemigo_basico.o\
@@ -514,9 +536,15 @@ $(DIR_INTERFACES)objeto_juego_i.cpp
 	$(CC) $(CFLAGS) $(INCLUDES) $(DIR_INTERFACES)objeto_juego_i.cpp -o $(DIR_O)objeto_juego_i.o
 
 $(DIR_O)factoria_objetos_juego_i.o:\
+$(DIR_O)objeto_juego_i.o\
 $(DIR_INTERFACES)factoria_objetos_juego_i.h \
 $(DIR_INTERFACES)factoria_objetos_juego_i.cpp
 	$(CC) $(CFLAGS) $(INCLUDES) $(DIR_INTERFACES)factoria_objetos_juego_i.cpp -o $(DIR_O)factoria_objetos_juego_i.o
+
+$(DIR_O)generador_objetos_juego_i.o:\
+$(DIR_INTERFACES)generador_objetos_juego_i.h \
+$(DIR_INTERFACES)generador_objetos_juego_i.cpp
+	$(CC) $(CFLAGS) $(INCLUDES) $(DIR_INTERFACES)generador_objetos_juego_i.cpp -o $(DIR_O)generador_objetos_juego_i.o
 
 $(DIR_O)recoge_bonus_i.o:\
 $(DIR_O)espaciable.o\

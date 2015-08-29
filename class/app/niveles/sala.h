@@ -7,7 +7,7 @@
 #include "../definiciones/definiciones.h"
 #include <memory>
 
-#include "../juego/objetos_juego/contenedor_objetos_juego.h"
+#include "../juego/contenedores/contenedor_objetos.h"
 
 namespace App_Niveles
 {
@@ -37,7 +37,8 @@ class Sala
 	void 							modificar_dimensiones(App_Definiciones::t_dim px, App_Definiciones::t_dim py);
 	std::vector<const App_Interfaces::Representable_I *> 	obtener_vector_representables() const;
 	std::vector<App_Interfaces::Sonoro_I *> 		obtener_vector_sonoros() const;
-	void							implantar_objetos_juego(App_Juego_ObjetoJuego::Contenedor_objetos&&);
+	void							implantar_objetos_juego(App_Juego_Contenedores::Contenedor_objetos&&);
+	void							fusionar_objetos_juego(App_Juego_Contenedores::Contenedor_objetos&);
 	//TODO: Elimianr...
 	const HerramientasProyecto::Matriz_2d<Celda>& 		acc_matriz() const {return celdas;}
 	const App_Juego_ObjetoJuego::Entrada& 			obtener_entrada_posicion(App_Definiciones::direcciones p); /** @throw std::logic_error cuando no hay entrada en esa posición. */
@@ -54,6 +55,7 @@ class Sala
 	template<typename T> void				procesar_colisionables(T& p) {p.procesar(objetos.colisionables);}
 	template<typename T> void				procesar_sonoros(T& p) {p.procesar(objetos.sonoros);}
 	template<typename T> void				procesar_generadores_particulas(T& p) {p.procesar(objetos.generadores_particulas);}
+	template<typename T> void				procesar_generadores_objetos_juego(T& p) {p.procesar(objetos.generadores_objetos_juego);}
 
 	///////////
 	// Propiedades
@@ -64,7 +66,7 @@ class Sala
 	App_Definiciones::t_dim 				w, h;		//Ancho y alto.
 	HerramientasProyecto::Matriz_2d<Celda> 			celdas;
 	HerramientasProyecto::Matriz_2d<Celda_decorativa> 	celdas_decorativas;
-	App_Juego_ObjetoJuego::Contenedor_objetos	 	objetos;
+	App_Juego_Contenedores::Contenedor_objetos	 	objetos;
 
 	///////////
 	// Métodos privados.

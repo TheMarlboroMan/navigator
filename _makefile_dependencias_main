@@ -41,7 +41,6 @@ $(DIR_O)con_turno_i.o\
 $(DIR_O)disparador_i.o\
 $(DIR_O)representable_i.o\
 $(DIR_O)generador_objetos_juego_i.o\
-$(DIR_O)generador_particulas_i.o\
 $(DIR_O)factoria_objetos_juego_i.o\
 $(DIR_O)sonoro_i.o\
 $(DIR_O)particula_base.o\
@@ -57,7 +56,6 @@ $(DIR_O)logica_disparable.o\
 $(DIR_O)logica_bonus.o\
 $(DIR_O)logica_disparador.o\
 $(DIR_O)logica_colisionable.o\
-$(DIR_O)logica_generador_particulas.o\
 $(DIR_O)logica_generador_objetos_juego.o\
 $(DIR_O)enemigo_basico.o\
 $(DIR_O)enemigo_rebote.o\
@@ -68,14 +66,6 @@ $(DIR_O)repositorio_salas.o\
 $(DIR_O)audio_reproducir.o\
 $(DIR_O)audio_detener.o\
 $(DIR_O)gestor_audio.o\
-$(DIR_O)alpha_prototipo.o\
-$(DIR_O)prototipo_proyectil_normal.o\
-$(DIR_O)definicion_particula.o\
-$(DIR_O)definicion_particula_movil_base.o\
-$(DIR_O)definicion_particula_fantasma.o\
-$(DIR_O)definicion_particula_explosion.o\
-$(DIR_O)definicion_particula_chatarra.o\
-$(DIR_O)definicion_particula_chispa.o\
 
 DEP_CONTROLADORES=$(DIR_O)controlador_base.o \
 $(DIR_O)controlador_juego.o \

@@ -10,7 +10,6 @@
 #include "../app/juego/logica_con_turno.h"
 #include "../app/juego/logica_disparable.h"
 #include "../app/juego/logica_colisionable.h"
-#include "../app/juego/logica_generador_particulas.h"
 #include "../app/juego/logica_generador_objetos_juego.h"
 
 using namespace App_Niveles;
@@ -411,6 +410,8 @@ void Controlador_juego::logica_mundo(float delta)
 	* "disparadores" y llamar a los visitantes propios.
 	*/
 
+	//TODO: Esto va a desaparecer y a integrarse con "creador de objetos juego".
+
 	Logica_disparador lp(contenedor_volatiles.proyectiles_enemigos, jugador);
 	sala_actual->procesar_disparadores(lp);
 
@@ -434,30 +435,18 @@ void Controlador_juego::logica_mundo(float delta)
 	for(auto &p : contenedor_volatiles.proyectiles_enemigos) vpr.push_back(p);
 	lct.procesar(vpr);
 
-	/**
-	* Lógica para los objetos que pueden generar particulas.
-	* Esta es un poco diferente del resto: no es necesario pasarla al mapa
-	* porque la interface define un punto único de inserción para las 
-	* partículas.
-	* Podríamos haber usado este mismo sistema para el resto, pero esto es
-	* aún más vago :D.
-	*/
-
-	std::vector<std::shared_ptr<Generador_particulas_I>> vgp;
-	for(auto &p : contenedor_volatiles.proyectiles_jugador) vgp.push_back(p);
-	for(auto &p : contenedor_volatiles.proyectiles_enemigos) vgp.push_back(p);
-	//TODO... Hmmm... No me gusta, mejor con fusión, como se ve más abajo.
-	//TODO: De hecho todo esto se irá al carajer.
-	Logica_generador_particulas lgp(contenedor_volatiles.particulas, vgp, jugador);
-	sala_actual->procesar_generadores_particulas(lgp);
-
 	/*****
 	* Los que pueden crear nuevos objetos...
 	*/
 
-	Logica_generador_objetos_juego lgoj;
+	std::vector<std::shared_ptr<Generador_objetos_juego_I>> vgoj;
+	for(auto &p : contenedor_volatiles.proyectiles_jugador) vgoj.push_back(p);
+	for(auto &p : contenedor_volatiles.proyectiles_enemigos) vgoj.push_back(p);
+
+	Logica_generador_objetos_juego lgoj(vgoj, jugador);
 	sala_actual->procesar_generadores_objetos_juego(lgoj);
 	if(lgoj.hay_nuevos()) sala_actual->fusionar_objetos_juego(lgoj.acc_contenedor());
+	if(lgoj.hay_volatiles()) contenedor_volatiles.fusionar_con(lgoj.acc_contenedor_volatiles());
 }
 
 

@@ -54,7 +54,6 @@ class Sala
 	template<typename T> void				procesar_representables(T& p) {p.procesar(objetos.representables);}
 	template<typename T> void				procesar_colisionables(T& p) {p.procesar(objetos.colisionables);}
 	template<typename T> void				procesar_sonoros(T& p) {p.procesar(objetos.sonoros);}
-	template<typename T> void				procesar_generadores_particulas(T& p) {p.procesar(objetos.generadores_particulas);}
 	template<typename T> void				procesar_generadores_objetos_juego(T& p) {p.procesar(objetos.generadores_objetos_juego);}
 
 	///////////

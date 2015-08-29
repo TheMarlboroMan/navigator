@@ -11,7 +11,6 @@ DIR_VISITANTES=$(DIR_CLASES_APP)visitantes/
 DIR_JUEGO_AUTOMAPA=$(DIR_JUEGO)automapa/
 DIR_JUEGO_SISTEMAS=$(DIR_JUEGO)sistemas/
 DIR_JUEGO_OBJETOS=$(DIR_JUEGO)objetos_juego/
-DIR_JUEGO_PARTICULAS=$(DIR_JUEGO)prototipos/
 DIR_JUEGO_CONTENEDORES=$(DIR_JUEGO)contenedores/
 DIR_COLISIONES=$(DIR_CLASES_APP)colisiones/
 DIR_DEFINICIONES=$(DIR_CLASES_APP)definiciones/
@@ -26,6 +25,7 @@ $(DIR_O)jugador.o:\
 $(DIR_O)actor_movil.o \
 $(DIR_O)representable_i.o \
 $(DIR_O)sonoro_i.o \
+$(DIR_O)generador_objetos_juego_i.o \
 $(DIR_GRAFICOS)bloque_transformacion_representable.h\
 $(DIR_INPUT)input_usuario.h \
 $(DIR_JUEGO)jugador.h \
@@ -78,14 +78,6 @@ $(DIR_JUEGO)logica_disparable.h\
 $(DIR_JUEGO)logica_disparable.cpp
 	$(CC) $(CFLAGS) $(INCLUDES) $(DIR_JUEGO)logica_disparable.cpp -o $(DIR_O)logica_disparable.o
 
-$(DIR_O)logica_generador_particulas.o:\
-$(DIR_O)particula_base.o\
-$(DIR_O)generador_particulas_i.o\
-$(DIR_O)definicion_particula.o\
-$(DIR_JUEGO)logica_generador_particulas.h\
-$(DIR_JUEGO)logica_generador_particulas.cpp
-	$(CC) $(CFLAGS) $(INCLUDES) $(DIR_JUEGO)logica_generador_particulas.cpp -o $(DIR_O)logica_generador_particulas.o
-
 $(DIR_O)logica_generador_objetos_juego.o:\
 $(DIR_O)generador_objetos_juego_i.o\
 $(DIR_O)factoria_objetos_juego_i.o\
@@ -124,7 +116,6 @@ $(DIR_O)disparador_i.o\
 $(DIR_O)representable_i.o\
 $(DIR_O)colisionable_i.o\
 $(DIR_O)sonoro_i.o\
-$(DIR_O)generador_particulas_i.o\
 $(DIR_O)generador_objetos_juego_i.o\
 $(DIR_JUEGO_CONTENEDORES)contenedor_herramientas.h\
 $(DIR_JUEGO_CONTENEDORES)contenedor_objetos.h\
@@ -147,11 +138,8 @@ $(DIR_O)representable_i.o\
 $(DIR_O)disparador_i.o\
 $(DIR_O)con_turno_i.o\
 $(DIR_O)disparable_i.o\
-$(DIR_O)generador_particulas_i.o\
 $(DIR_O)generador_objetos_juego_i.o\
 $(DIR_O)generador_numeros.o\
-$(DIR_O)definicion_particula_explosion.o\
-$(DIR_O)definicion_particula_chatarra.o\
 $(DIR_JUEGO_OBJETOS)enemigo_basico.h\
 $(DIR_JUEGO_OBJETOS)enemigo_basico.cpp
 	$(CC) $(CFLAGS) $(INCLUDES) $(DIR_JUEGO_OBJETOS)enemigo_basico.cpp -o $(DIR_O)enemigo_basico.o
@@ -173,8 +161,7 @@ $(DIR_O)actor.o\
 $(DIR_O)objeto_juego_i.o\
 $(DIR_O)representable_i.o\
 $(DIR_O)bonus_i.o\
-$(DIR_O)generador_particulas_i.o\
-$(DIR_O)definicion_particula_fantasma.o\
+$(DIR_O)generador_objetos_juego_i.o\
 $(DIR_GRAFICOS)bloque_transformacion_representable.h\
 $(DIR_JUEGO_OBJETOS)bonus_salud.h\
 $(DIR_JUEGO_OBJETOS)bonus_salud.cpp
@@ -185,8 +172,7 @@ $(DIR_O)actor.o\
 $(DIR_O)objeto_juego_i.o\
 $(DIR_O)representable_i.o\
 $(DIR_O)bonus_i.o\
-$(DIR_O)generador_particulas_i.o\
-$(DIR_O)definicion_particula_fantasma.o\
+$(DIR_O)generador_objetos_juego_i.o\
 $(DIR_GRAFICOS)bloque_transformacion_representable.h\
 $(DIR_JUEGO_OBJETOS)bonus_tiempo.h\
 $(DIR_JUEGO_OBJETOS)bonus_tiempo.cpp
@@ -195,14 +181,12 @@ $(DIR_JUEGO_OBJETOS)bonus_tiempo.cpp
 $(DIR_O)proyectil_normal.o:\
 $(DIR_O)proyectil_base.o\
 $(DIR_O)generador_numeros.o\
-$(DIR_O)definicion_particula_chispa.o\
 $(DIR_GRAFICOS)bloque_transformacion_representable.h\
 $(DIR_JUEGO_OBJETOS)proyectil_normal.h\
 $(DIR_JUEGO_OBJETOS)proyectil_normal.cpp
 	$(CC) $(CFLAGS) $(INCLUDES) $(DIR_JUEGO_OBJETOS)proyectil_normal.cpp -o $(DIR_O)proyectil_normal.o
 
 $(DIR_O)proyectil_base.o:\
-$(DIR_O)generador_particulas_i.o\
 $(DIR_O)actor.o\
 $(DIR_O)actor_movil.o\
 $(DIR_O)representable_i.o\
@@ -389,61 +373,6 @@ $(DIR_NIVELES)celda_decorativa.cpp
 	$(CC) $(CFLAGS) $(INCLUDES) $(DIR_NIVELES)celda_decorativa.cpp -o $(DIR_O)celda_decorativa.o
 
 ################################################################################
-#Prototipos
-
-$(DIR_O)alpha_prototipo.o :\
-$(DIR_O)factoria_objetos_juego_i.o\
-$(DIR_JUEGO_PARTICULAS)alpha_prototipo.h \
-$(DIR_JUEGO_PARTICULAS)alpha_prototipo.cpp
-	$(CC) $(CFLAGS) $(INCLUDES) $(DIR_JUEGO_PARTICULAS)alpha_prototipo.cpp -o $(DIR_O)alpha_prototipo.o
-
-$(DIR_O)prototipo_proyectil_normal.o :\
-$(DIR_O)alpha_prototipo.o\
-$(DIR_O)proyectil_normal.o\
-$(DIR_JUEGO_PARTICULAS)prototipo_proyectil_normal.h \
-$(DIR_JUEGO_PARTICULAS)prototipo_proyectil_normal.cpp
-	$(CC) $(CFLAGS) $(INCLUDES) $(DIR_JUEGO_PARTICULAS)prototipo_proyectil_normal.cpp -o $(DIR_O)prototipo_proyectil_normal.o
-
-$(DIR_O)definicion_particula.o :\
-$(DIR_JUEGO_PARTICULAS)definicion_particula.h \
-$(DIR_JUEGO_PARTICULAS)definicion_particula.cpp
-	$(CC) $(CFLAGS) $(INCLUDES) $(DIR_JUEGO_PARTICULAS)definicion_particula.cpp -o $(DIR_O)definicion_particula.o
-
-$(DIR_O)definicion_particula_fantasma.o :\
-$(DIR_O)definicion_particula.o\
-$(DIR_O)particula_fantasma.o\
-$(DIR_JUEGO_PARTICULAS)definicion_particula_fantasma.h \
-$(DIR_JUEGO_PARTICULAS)definicion_particula_fantasma.cpp
-	$(CC) $(CFLAGS) $(INCLUDES) $(DIR_JUEGO_PARTICULAS)definicion_particula_fantasma.cpp -o $(DIR_O)definicion_particula_fantasma.o
-
-$(DIR_O)definicion_particula_movil_base.o :\
-$(DIR_O)definicion_particula.o\
-$(DIR_JUEGO_PARTICULAS)definicion_particula_movil_base.h \
-$(DIR_JUEGO_PARTICULAS)definicion_particula_movil_base.cpp
-	$(CC) $(CFLAGS) $(INCLUDES) $(DIR_JUEGO_PARTICULAS)definicion_particula_movil_base.cpp -o $(DIR_O)definicion_particula_movil_base.o
-
-$(DIR_O)definicion_particula_explosion.o :\
-$(DIR_O)definicion_particula_movil_base.o\
-$(DIR_O)particula_explosion.o\
-$(DIR_JUEGO_PARTICULAS)definicion_particula_explosion.h \
-$(DIR_JUEGO_PARTICULAS)definicion_particula_explosion.cpp
-	$(CC) $(CFLAGS) $(INCLUDES) $(DIR_JUEGO_PARTICULAS)definicion_particula_explosion.cpp -o $(DIR_O)definicion_particula_explosion.o
-
-$(DIR_O)definicion_particula_chatarra.o :\
-$(DIR_O)definicion_particula_movil_base.o\
-$(DIR_O)particula_chatarra.o\
-$(DIR_JUEGO_PARTICULAS)definicion_particula_chatarra.h \
-$(DIR_JUEGO_PARTICULAS)definicion_particula_chatarra.cpp
-	$(CC) $(CFLAGS) $(INCLUDES) $(DIR_JUEGO_PARTICULAS)definicion_particula_chatarra.cpp -o $(DIR_O)definicion_particula_chatarra.o
-
-$(DIR_O)definicion_particula_chispa.o :\
-$(DIR_O)definicion_particula_movil_base.o\
-$(DIR_O)particula_chatarra.o\
-$(DIR_JUEGO_PARTICULAS)definicion_particula_chispa.h \
-$(DIR_JUEGO_PARTICULAS)definicion_particula_chispa.cpp
-	$(CC) $(CFLAGS) $(INCLUDES) $(DIR_JUEGO_PARTICULAS)definicion_particula_chispa.cpp -o $(DIR_O)definicion_particula_chispa.o
-
-################################################################################
 #Graficos
 
 $(DIR_O)representador.o :\
@@ -465,14 +394,18 @@ $(DIR_COLISIONES)calculador_colisiones.cpp
 #Generador
 
 $(DIR_O)factoria_objetos_juego.o:\
-$(DIR_O)factoria_objetos_juego_i.o\
 $(DIR_O)contenedor_objetos.o\
+$(DIR_O)contenedor_volatiles.o\
 $(DIR_O)bonus_salud.o\
 $(DIR_O)bonus_tiempo.o\
 $(DIR_O)enemigo_basico.o\
 $(DIR_O)enemigo_rebote.o\
 $(DIR_O)entrada.o\
 $(DIR_O)salida.o\
+$(DIR_O)particula_chispa.o\
+$(DIR_O)particula_chatarra.o\
+$(DIR_O)particula_explosion.o\
+$(DIR_O)particula_fantasma.o\
 $(DIR_O)posicion_inicial.o\
 $(DIR_GENERADOR)factoria_objetos_juego.h \
 $(DIR_GENERADOR)factoria_objetos_juego.cpp
@@ -606,13 +539,6 @@ $(DIR_O)movil.o:\
 $(DIR_INTERFACES)movil.h \
 $(DIR_INTERFACES)movil.cpp
 	$(CC) $(CFLAGS) $(INCLUDES) $(DIR_INTERFACES)movil.cpp -o $(DIR_O)movil.o
-
-$(DIR_O)generador_particulas_i.o:\
-$(DIR_O)objeto_juego_i.o\
-$(DIR_O)definicion_particula.o\
-$(DIR_INTERFACES)generador_particulas_i.h \
-$(DIR_INTERFACES)generador_particulas_i.cpp
-	$(CC) $(CFLAGS) $(INCLUDES) $(DIR_INTERFACES)generador_particulas_i.cpp -o $(DIR_O)generador_particulas_i.o
 
 ################################################################################
 #Definiciones

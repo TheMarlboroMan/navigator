@@ -42,7 +42,6 @@ void Contenedor_objetos::sumar_variante(const Contenedor_objetos& o)
 	for(auto& ob : o.representables) representables.push_back(ob);
 	for(auto& ob : o.colisionables) colisionables.push_back(ob);
 	for(auto& ob : o.sonoros) sonoros.push_back(ob);
-	for(auto& ob : o.generadores_particulas) generadores_particulas.push_back(ob);
 	for(auto& ob : o.generadores_objetos_juego) generadores_objetos_juego.push_back(ob);
 }
 
@@ -74,7 +73,6 @@ size_t Contenedor_objetos::limpiar_para_borrar()
 		ayudante_borrar(disparables);
 		ayudante_borrar(disparadores);
 		ayudante_borrar(colisionables);
-		ayudante_borrar(generadores_particulas);
 		ayudante_borrar(generadores_objetos_juego);
 
 		//Y las especializaciones malvadas.
@@ -108,7 +106,6 @@ void Contenedor_objetos::fusionar_con(Contenedor_objetos& c)
 	std::move(std::begin(c.disparables), std::end(c.disparables), std::back_inserter(disparables));
 	std::move(std::begin(c.disparadores), std::end(c.disparadores), std::back_inserter(disparadores));
 	std::move(std::begin(c.colisionables), std::end(c.colisionables), std::back_inserter(colisionables));
-	std::move(std::begin(c.generadores_particulas), std::end(c.generadores_particulas), std::back_inserter(generadores_particulas));
 	std::move(std::begin(c.generadores_objetos_juego), std::end(c.generadores_objetos_juego), std::back_inserter(generadores_objetos_juego));
 	std::move(std::begin(c.representables), std::end(c.representables), std::back_inserter(representables));
 	std::move(std::begin(c.sonoros), std::end(c.sonoros), std::back_inserter(sonoros));

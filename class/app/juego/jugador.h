@@ -6,12 +6,11 @@
 #include "actor_movil.h"
 #include "../interfaces/representable_i.h"
 #include "../interfaces/sonoro_i.h"
-#include "../interfaces/generador_particulas_i.h"
+#include "../interfaces/generador_objetos_juego_i.h"
 #include "../graficos/bloque_transformacion_representable.h"
 #include "../recursos.h"
 #include "../input/input_usuario.h"
 #include "../definiciones/definiciones.h"
-#include "prototipos/definicion_particula_fantasma.h"
 //#include "../../herramientas_proyecto/tabla_sprites.h"
 //#include "jugador_estados.h"
 
@@ -22,7 +21,7 @@ class Jugador:
 	public Actor_movil, 
 	public App_Interfaces::Representable_I,	
 	public App_Interfaces::Sonoro_I,
-	public App_Interfaces::Generador_particulas_I
+	public App_Interfaces::Generador_objetos_juego_I
 {
 	////////////////////////
 	// Definiciones...
@@ -62,6 +61,11 @@ class Jugador:
 	virtual float 				obtener_peso() const {return 100.0;}
 	virtual float 				obtener_max_velocidad_caida() const {return MAXIMA_VELOCIDAD_CAIDA;}
 	virtual void 				callback_ajuste(float pos, Actor_movil::posiciones_ajuste tipo);
+
+	///////////////////////
+	// Implementación de Generador_objetos_juego_I
+
+	virtual	void				generar_objetos(App_Interfaces::Factoria_objetos_juego_I&);
 
 	///////////////////////
 	// Implementación de Representable_I.
@@ -125,6 +129,10 @@ class Jugador:
 	float					cooloff_energia;
 	float					tiempo_aterrizado;
 
+	struct
+	{ 
+		bool				crear_fantasma=false;
+	}senales;
 
 //	Tabla_sprites TREC;
 	App_Definiciones::direcciones 		direccion;

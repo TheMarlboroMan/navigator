@@ -8,10 +8,9 @@
 #include "../../interfaces/representable_i.h"
 #include "../../interfaces/bonus_i.h"
 #include "../../interfaces/sonoro_i.h"
-#include "../../interfaces/generador_particulas_i.h"
 #include "../../interfaces/recoge_bonus_i.h"
-#include "../prototipos/definicion_particula_fantasma.h"
 #include "../../audio/audio_reproducir.h"
+#include "../../interfaces/generador_objetos_juego_i.h"
 
 
 namespace App_Juego_ObjetoJuego
@@ -21,7 +20,7 @@ class Bonus_salud:
 		public App_Interfaces::Representable_I,
 		public App_Interfaces::Bonus_I,
 		public App_Interfaces::Sonoro_I,
-		public App_Interfaces::Generador_particulas_I
+		public App_Interfaces::Generador_objetos_juego_I
 {
 	////////////////
 	// Interface pública:
@@ -30,6 +29,10 @@ class Bonus_salud:
 
 	float						acc_salud() const {return salud;}
 	void						mut_salud(float v) {salud=v;}
+
+	///////////////
+	//Implementación de Generador_objetos_juego_I
+	virtual	void					generar_objetos(App_Interfaces::Factoria_objetos_juego_I&);
 
 	///////////////
 	// Implementación de Bonus_i.

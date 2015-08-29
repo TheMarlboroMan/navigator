@@ -64,25 +64,6 @@ void Enemigo_basico::recibir_disparo(float potencia)
 	if(salud <= 0.0) 
 	{
 		mut_borrar(true);
-
-		const auto& v=acc_vector();
-
-		//La explosión...
-		insertar_particula(App_Juego_Prototipos::crear_particula_explosion(acc_espaciable_x()+(acc_espaciable_w()/2), acc_espaciable_y()+(acc_espaciable_w()/2), 1.0f, v));
-
-		//Y la chatarra...
-		//TODO: Esto se va a repetir en muchos sitios. Cuando llegue
-		//el momento podemos ponerlo en una sóla función.
-		auto g=HerramientasProyecto::Generador_int(10, 30);
-		auto gvel=HerramientasProyecto::Generador_int(150, 300);
-		int i=0, mp=g();
-		while(i < mp)
-		{
-			auto g=HerramientasProyecto::Generador_int(0, 359);
-			auto v=Vector_2d::vector_unidad_para_angulo(g())*gvel();
-			insertar_particula(App_Juego_Prototipos::crea_particula_chatarra(acc_espaciable_x()+(acc_espaciable_w()/2), acc_espaciable_y()+(acc_espaciable_w()/2), 3.0f, v));
-			++i;
-		}
 	}
 	else
 	{
@@ -99,7 +80,23 @@ void Enemigo_basico::generar_objetos(App_Interfaces::Factoria_objetos_juego_I& f
 {
 	if(es_borrar())
 	{
-		f.fabricar_e_insertar_bonus_tiempo(acc_espaciable_x(), acc_espaciable_y(), 5.0f);
+		const auto& v=acc_vector();
+
+		float x=acc_espaciable_x()+(acc_espaciable_w()/2);
+		float y=acc_espaciable_y()+(acc_espaciable_w()/2);
+		auto g=HerramientasProyecto::Generador_int(10, 30);
+		auto gvel=HerramientasProyecto::Generador_int(150, 300);
+		int i=0, mp=g();
+		while(i < mp)
+		{
+			auto g=HerramientasProyecto::Generador_int(0, 359);
+			auto v=Vector_2d::vector_unidad_para_angulo(g())*gvel();
+			f.fabricar_chatarra(x, y, 3.0f, v);
+			++i;
+		}
+
+		f.fabricar_bonus_tiempo(acc_espaciable_x(), acc_espaciable_y(), 5.0f);
+		f.fabricar_explosion(x, y, 1.0f, v);
 	}
 
 	//TODO: En el futuro también podemos poner las partículas y disparos aquí.

@@ -184,6 +184,8 @@ void Jugador::turno(float delta)
 	//Movimiento y estasis.
 	float consumo_estasis=ENERGIA_ESTASIS_POR_SEGUNDO * delta;
 
+	senales.crear_fantasma=false;
+
 	if(input.estasis!=Input_usuario::t_estados::nada && energia >= consumo_estasis)
 	{
 		auto v=acc_vector();
@@ -199,9 +201,7 @@ void Jugador::turno(float delta)
 					App_Audio::Info_audio_reproducir::t_sonido::unico,
 					App::Recursos_audio::rs_estasis, 127, 127));
 
-			insertar_particula(App_Juego_Prototipos::crear_particula_fantasma(
-					acc_espaciable_x(), acc_espaciable_y(), 1.0f, 20.0f, direccion,
-					App::Recursos_graficos::rt_defecto, DLibH::Caja<int, int>(32, 0, 27, 16)));
+			senales.crear_fantasma=true;
 		}
 	}
 	else
@@ -300,4 +300,14 @@ bool Jugador::es_aterrizado() const
 {
 	const auto& v=acc_vector();
 	return tiempo_aterrizado >= TIEMPO_COMPLETAR_ATERRIZAJE && !v.x && !v.y;
+}
+
+void Jugador::generar_objetos(App_Interfaces::Factoria_objetos_juego_I& f)
+{
+	if(senales.crear_fantasma)
+	{
+		f.fabricar_fantasma(					
+			acc_espaciable_x(), acc_espaciable_y(), 1.0f, 20.0f, direccion,
+			App::Recursos_graficos::rt_defecto, DLibH::Caja<int, int>(32, 0, 27, 16));
+	}
 }

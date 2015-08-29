@@ -4,7 +4,6 @@
 #include "proyectil_base.h"
 #include "../../graficos/bloque_transformacion_representable.h"
 #include "../../../herramientas_proyecto/generador_numeros.h"
-#include "../prototipos/definicion_particula_chispa.h"
 
 /**
 * Un proyectil corriente y moliente.
@@ -52,6 +51,11 @@ class Proyectil_normal:
 	virtual void					colisionar_con_enemigo();
 	virtual void					colisionar_con_jugador();
 
+	////////////////
+	// Implementación de Generador_objetos_juego_I
+	virtual	void					generar_objetos(App_Interfaces::Factoria_objetos_juego_I&);
+
+
 	///////////////
 	// Implementación de Con_turno_I, por medio de Proyectil_base
 	virtual void 					turno(float);
@@ -75,11 +79,11 @@ class Proyectil_normal:
 	//Propiedades
 	private:
 
-	void						generar_chispas(float, int);
-
-	static const float FACTOR_DEBILITAR;
+	static const float 				FACTOR_DEBILITAR;
 	 
-	colores color;
+	colores 					color;
+	int						cantidad_chispas;
+	float						tv_chispas;
 };
 }
 

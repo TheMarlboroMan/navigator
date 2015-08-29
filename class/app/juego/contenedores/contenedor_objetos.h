@@ -17,7 +17,6 @@
 #include "../../interfaces/representable_i.h"
 #include "../../interfaces/colisionable_i.h"
 #include "../../interfaces/sonoro_i.h"
-#include "../../interfaces/generador_particulas_i.h"
 #include "../../interfaces/generador_objetos_juego_i.h"
 #include "../objetos_juego/entrada.h"
 #include "../objetos_juego/salida.h"
@@ -47,7 +46,6 @@ namespace App_Juego_Contenedores
 		std::vector<std::shared_ptr<App_Interfaces::Representable_I>>		representables;
 		std::vector<std::shared_ptr<App_Interfaces::Colisionable_I>>		colisionables;
 		std::vector<std::shared_ptr<App_Interfaces::Sonoro_I>>			sonoros;
-		std::vector<std::shared_ptr<App_Interfaces::Generador_particulas_I>>	generadores_particulas;
 		std::vector<std::shared_ptr<App_Interfaces::Generador_objetos_juego_I>>	generadores_objetos_juego;
 
 		/**

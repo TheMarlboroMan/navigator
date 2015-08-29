@@ -1,0 +1,5 @@
+- Unificar sistema de disparos de proyectiles en Generador_objetos_juego_I
+	- Ampliar factoría.
+	- Limpiar interface disparador y derivaciones.
+	- Ojo con el jugador, a ver cómo podemos hacerlo!!!.
+- Crear trazador de humo.

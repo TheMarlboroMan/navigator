@@ -37,15 +37,21 @@ void Bonus_salud::recoger(App_Interfaces::Recoge_bonus_I& rb)
 		rb.sumar_salud(salud);
 		Bonus_I::recoger(rb);
 
-		insertar_particula(App_Juego_Prototipos::crear_particula_fantasma(
-			acc_espaciable_x(), acc_espaciable_y(), 0.8f, 10.0f, App_Definiciones::direcciones::derecha,
-			App::Recursos_graficos::rt_defecto, 
-			DLibH::Caja<int, int>(16, 32, W, H)));
-
 		using namespace App_Audio;
 		insertar_reproducir(Info_audio_reproducir(
 			Info_audio_reproducir::t_reproduccion::simple, 
 			Info_audio_reproducir::t_sonido::repetible, 
 			App::Recursos_audio::rs_recoger_bonus, 127, 127));
+	}
+}
+
+void Bonus_salud::generar_objetos(App_Interfaces::Factoria_objetos_juego_I& f)
+{
+	if(es_borrar())
+	{
+		f.fabricar_fantasma(
+		acc_espaciable_x(), acc_espaciable_y(), 0.8f, 10.0f, App_Definiciones::direcciones::derecha,
+		App::Recursos_graficos::rt_defecto, 
+		DLibH::Caja<int, int>(16, 32, W, H));
 	}
 }

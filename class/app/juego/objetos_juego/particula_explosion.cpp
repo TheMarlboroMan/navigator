@@ -36,8 +36,6 @@ void Particula_explosion::transformar_bloque(App_Graficos::Bloque_transformacion
 	h=f.h;
 
 	b.establecer_posicion(pos_x, pos_y, w, h);
-
-	//TODO: Ya hablaremos de cómo hacer el humo...
 }
 
 void Particula_explosion::turno(float delta)

@@ -11,11 +11,8 @@
 #include "../../interfaces/con_turno_i.h"
 #include "../../interfaces/disparador_i.h"
 #include "../../interfaces/colisionable_i.h"
-#include "../../interfaces/generador_particulas_i.h"
 #include "../../interfaces/generador_objetos_juego_i.h"
 #include "../../graficos/bloque_transformacion_representable.h"
-#include "../prototipos/definicion_particula_explosion.h"
-#include "../prototipos/definicion_particula_chatarra.h"
 #include "../../../herramientas_proyecto/generador_numeros.h"
 
 namespace App_Juego_ObjetoJuego
@@ -29,7 +26,6 @@ class Enemigo_basico:
 		public App_Interfaces::Disparable_I,
 		public App_Interfaces::Disparador_I,
 		public App_Interfaces::Colisionable_I,
-		public App_Interfaces::Generador_particulas_I,
 		public App_Interfaces::Generador_objetos_juego_I
 {
 	////////////////////////////

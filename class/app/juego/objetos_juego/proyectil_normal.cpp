@@ -7,7 +7,7 @@ const float Proyectil_normal::FACTOR_DEBILITAR=9.0f;
 
 Proyectil_normal::Proyectil_normal(const Propiedades_proyectil& pp)
 	:Proyectil_base(pp.x, pp.y, pp.w, pp.h),
-	color(colores::rojo)
+	color(colores::rojo), cantidad_chispas(0), tv_chispas(0.0f)
 {
 
 }
@@ -65,7 +65,8 @@ void Proyectil_normal::transformar_bloque(App_Graficos::Bloque_transformacion_re
 void Proyectil_normal::colisionar_con_nivel()
 {
 	mut_borrar(true);
-	generar_chispas(0.3f, 5);
+	cantidad_chispas=5;
+	tv_chispas=0.3f;
 
 	insertar_reproducir(App_Audio::Info_audio_reproducir(
 		App_Audio::Info_audio_reproducir::t_reproduccion::simple,
@@ -76,30 +77,35 @@ void Proyectil_normal::colisionar_con_nivel()
 void Proyectil_normal::colisionar_con_enemigo()
 {
 	mut_borrar(true);
-	generar_chispas(0.3f, 15);
+	cantidad_chispas=15;
+	tv_chispas=0.3f;
 }
 
 void Proyectil_normal::colisionar_con_jugador()
 {
 	mut_borrar(true);
-	generar_chispas(0.6f, 25);
+	cantidad_chispas=25;
+	tv_chispas=0.6f;
 }
 
-/**
-* @param float tv : Tiempo de vida de la chispa.
-*/
-
-void Proyectil_normal::generar_chispas(float tv, int c)
+void Proyectil_normal::generar_objetos(App_Interfaces::Factoria_objetos_juego_I& f)
 {
-	auto ggrad=HerramientasProyecto::Generador_int(-30, 30);
-	auto gvel=HerramientasProyecto::Generador_int(150, 300);
-	int i=0;
-	while(i < c)
+	if(cantidad_chispas)
 	{
-		auto v=DLibH::Vector_2d::vector_unidad_para_angulo(acc_vector().angulo_grados()+ggrad()-90.0f)*gvel();
-		v.x=v.x-1;
-		v.y=v.y-1;
-		insertar_particula(App_Juego_Prototipos::crear_particula_chispa(acc_espaciable_x()+(acc_espaciable_w()/2), acc_espaciable_y()+(acc_espaciable_w()/2), tv, v));
-		++i;
+		auto ggrad=HerramientasProyecto::Generador_int(-30, 30);
+		auto gvel=HerramientasProyecto::Generador_int(150, 300);
+		int i=0;
+
+		float x=acc_espaciable_x()+(acc_espaciable_w()/2);
+		float y=acc_espaciable_y()+(acc_espaciable_w()/2);
+
+		while(i < cantidad_chispas)
+		{
+			auto v=DLibH::Vector_2d::vector_unidad_para_angulo(acc_vector().angulo_grados()+ggrad()-90.0f)*gvel();
+			v.x=v.x-1;
+			v.y=v.y-1;
+			f.fabricar_chispa(x, y, tv_chispas, v);
+			++i;
+		}
 	}
 }

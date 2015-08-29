@@ -18,6 +18,12 @@ size_t Contenedor_volatiles::limpiar_para_borrar()
 	return res;
 }
 
+size_t Contenedor_volatiles::size() const
+{
+	size_t	res=proyectiles_jugador.size()+proyectiles_enemigos.size()+particulas.size();
+	return res;
+}
+
 void Contenedor_volatiles::vaciar()
 {
 	proyectiles_jugador.clear();

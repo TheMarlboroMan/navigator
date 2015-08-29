@@ -23,6 +23,7 @@ struct Contenedor_volatiles
 	void						vaciar();
 	void						fusionar_con(Contenedor_volatiles&);
 	size_t						limpiar_para_borrar();
+	size_t						size() const;
 
 	Vsptr_Proyectil_base		 		proyectiles_jugador;
 	Vsptr_Proyectil_base		 		proyectiles_enemigos;

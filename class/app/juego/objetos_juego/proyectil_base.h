@@ -6,12 +6,10 @@
 #include "../../interfaces/representable_i.h"
 #include "../../interfaces/con_turno_i.h"
 #include "../../interfaces/sonoro_i.h"
-#include "../../interfaces/generador_particulas_i.h"
+#include "../../interfaces/generador_objetos_juego_i.h"
 
 /**
 * La base para todos los proyectiles del juego.
-* Implementa el método "turno", que probablemente vaya a ir en otra interface.
-* Además es "borrable".
 */ 
 
 namespace App_Juego_ObjetoJuego
@@ -21,8 +19,9 @@ class Proyectil_base:
 	public App_Juego::Actor_movil, 
 	public App_Interfaces::Representable_I,
 	public App_Interfaces::Con_turno_I,
-	public App_Interfaces::Generador_particulas_I,
-	public App_Interfaces::Sonoro_I
+	public App_Interfaces::Sonoro_I,
+		//La base extiende esto porque el vector de proyectiles es de tipo base.
+	public App_Interfaces::Generador_objetos_juego_I
 {
 	/////////////////////
 	//Interface pública.
@@ -44,6 +43,10 @@ class Proyectil_base:
 
 	virtual void 					turno(float)=0;
 	virtual void 					recibir_visitante(App_Visitantes::Visitante_con_turno& v)=0;
+
+	////////////////
+	// Implementación de Generador_objetos_juego_I
+	virtual	void					generar_objetos(App_Interfaces::Factoria_objetos_juego_I&)=0;
 
 	///////////////
 	// Implementación de Sonoro_I

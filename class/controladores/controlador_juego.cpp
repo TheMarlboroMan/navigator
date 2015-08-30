@@ -422,6 +422,36 @@ void Controlador_juego::logica_mundo(float delta)
 	for(auto &p : contenedor_volatiles.proyectiles_jugador) 	vct.push_back(p.get());
 	for(auto &p : contenedor_volatiles.proyectiles_enemigos) 	vct.push_back(p.get());
 
+	//TODO: Mover esto fuera...
+
+class Contexto_turno_juego:
+	public Contexto_turno_I
+{
+	public:
+						Contexto_turno_juego(float, const Sala& sala, Espaciable& jugador);
+
+	virtual float				acc_delta() const {return delta;}
+	virtual const Espaciable&		acc_blanco() const {return jugador;}
+	virtual bool				es_fuera_sala(const Espaciable& e)
+	{
+		App_Colisiones::Calculador_colisiones cc;
+		return cc.es_fuera_de_sala(e.copia_caja(), sala);
+	}
+
+	virtual std::vector<const Espaciable *>	celdas_en_caja(const Espaciable&e) const
+	{
+		App_Colisiones::Calculador_colisiones cc;
+		return cc.celdas_en_caja(e.copia_caja(), sala);
+	}
+
+	private:
+
+	float					delta;
+	const Sala&				sala;
+	const Espaciable&			jugador;
+};
+
+
 	Logica_con_turno lct(jugador, *sala_actual, delta);
 	lct.procesar(vct);
 

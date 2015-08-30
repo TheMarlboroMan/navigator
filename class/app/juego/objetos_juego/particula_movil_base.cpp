@@ -16,8 +16,9 @@ unsigned short int Particula_movil_base::obtener_profundidad_ordenacion()const
 	return 30;
 }
 
-void Particula_movil_base::turno(float delta)
+void Particula_movil_base::turno(App_Interfaces::Contexto_turno_I& ct)
 {
+	float delta=ct.acc_delta();
 	restar_tiempo_vida(delta);
 
 	//El movimiento...

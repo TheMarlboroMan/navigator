@@ -33,8 +33,9 @@ void Particula_fantasma::transformar_bloque(App_Graficos::Bloque_transformacion_
 	b.invertir_horizontal(direccion==App_Definiciones::direcciones::izquierda);
 }
 
-void Particula_fantasma::turno(float delta)
+void Particula_fantasma::turno(App_Interfaces::Contexto_turno_I& ct);
 {
+	auto delta=ct.acc_delta();
 	restar_tiempo_vida(delta);
 
 	float dist=delta * velocidad_expansion;

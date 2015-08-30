@@ -44,7 +44,7 @@ class Particula_base:
 	// Implementación de Con_turno_I
 	public:
 
-	virtual void 				turno(float)=0;
+	virtual void 				turno(App_Interfaces::Contexto_turno_I&)=0;
 	virtual void				recibir_visitante(App_Visitantes::Visitante_con_turno& v)=0;
 
 	/////////////

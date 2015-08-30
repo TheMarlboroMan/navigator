@@ -508,11 +508,17 @@ $(DIR_INTERFACES)bonus_i.cpp
 	$(CC) $(CFLAGS) $(INCLUDES) $(DIR_INTERFACES)bonus_i.cpp -o $(DIR_O)bonus_i.o
 
 $(DIR_O)con_turno_i.o:\
+$(DIR_O)contexto_turno_i.o\
 $(DIR_O)objeto_juego_i.o\
 $(DIR_VISITANTES)visitante_con_turno.h \
 $(DIR_INTERFACES)con_turno_i.h \
 $(DIR_INTERFACES)con_turno_i.cpp
 	$(CC) $(CFLAGS) $(INCLUDES) $(DIR_INTERFACES)con_turno_i.cpp -o $(DIR_O)con_turno_i.o
+
+$(DIR_O)contexto_turno_i.o:\
+$(DIR_INTERFACES)contexto_turno_i.h \
+$(DIR_INTERFACES)contexto_turno_i.cpp
+	$(CC) $(CFLAGS) $(INCLUDES) $(DIR_INTERFACES)contexto_turno_i.cpp -o $(DIR_O)contexto_turno_i.o
 
 $(DIR_O)disparable_i.o:\
 $(DIR_O)objeto_juego_i.o\

@@ -38,8 +38,9 @@ void Particula_explosion::transformar_bloque(App_Graficos::Bloque_transformacion
 	b.establecer_posicion(pos_x, pos_y, w, h);
 }
 
-void Particula_explosion::turno(float delta)
+void Particula_explosion::turno(App_Interfaces::Contexto_turno_I& ct)
 {
+	float delta=ct.acc_delta();
 	Particula_movil_base::turno(delta);
 
 	//La selección del frame.

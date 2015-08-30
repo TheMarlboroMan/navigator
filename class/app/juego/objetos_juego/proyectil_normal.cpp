@@ -20,8 +20,9 @@ Proyectil_normal::Proyectil_normal(float x, float y, int w, int h, const DLibH::
 	establecer_vector(v);
 }
 
-void Proyectil_normal::turno(float delta)
+void Proyectil_normal::turno(App_Interfaces::Contexto_turno_I& ct)
 {
+	float delta=ct.acc_delta();
 	float p=acc_potencia();
 	mut_potencia(p - (delta * FACTOR_DEBILITAR));
 

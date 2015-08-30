@@ -36,12 +36,9 @@ void Enemigo_basico::transformar_bloque(App_Graficos::Bloque_transformacion_repr
 	b.invertir_horizontal(direccion==App_Definiciones::direcciones::izquierda);
 }
 
-/**
-*@param float delta : cantidad de tiempo que ha pasado desde el último turno.
-*/ 
-
-void Enemigo_basico::turno(float delta)
+void Enemigo_basico::turno(App_Interfaces::Contexto_turno_I& ct)
 {
+	float delta=ct.acc_delta();
 	tiempo_proximo_disparo-=delta;
 }
 

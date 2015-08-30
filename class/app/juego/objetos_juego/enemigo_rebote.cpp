@@ -30,9 +30,9 @@ void Enemigo_rebote::recibir_disparo(float potencia)
 	//No hace nada.
 }
 	
-void Enemigo_rebote::turno(float d)
+void Enemigo_rebote::turno(App_Interfaces::Contexto_turno_I& ct)
 {
-	tiempo+=d;
+	tiempo+=ct.acc_delta();
 }
 
 

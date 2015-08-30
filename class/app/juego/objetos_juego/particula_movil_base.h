@@ -31,7 +31,7 @@ class Particula_movil_base:
 	// Implementación de Con_turno_I
 	public:
 
-	virtual void 				turno(float);
+	virtual void 				turno(App_Interfaces::Contexto_turno_I&);
 	virtual void				recibir_visitante(App_Visitantes::Visitante_con_turno& v)=0;
 
 	/////////////////

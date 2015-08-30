@@ -3,15 +3,15 @@
 
 #include <memory>
 #include <vector>
-#include "../interfaces/generador_objetos_juego_i.h"
-#include "factorias/factoria_objetos_juego.h"
-#include "factorias/factoria_objetos_volatiles.h"
-#include "contenedores/contenedor_objetos.h"
-#include "contenedores/contenedor_volatiles.h"
-#include "../interfaces/factoria_objetos_juego_i.h"
-#include "jugador.h"
+#include "../../interfaces/generador_objetos_juego_i.h"
+#include "../factorias/factoria_objetos_juego.h"
+#include "../factorias/factoria_objetos_volatiles.h"
+#include "../contenedores/contenedor_objetos.h"
+#include "../contenedores/contenedor_volatiles.h"
+#include "../../interfaces/factoria_objetos_juego_i.h"
+#include "../jugador.h"
 
-namespace App_Juego
+namespace App_Juego_Logica
 {
 
 class Interface_creador_objetos:
@@ -49,7 +49,7 @@ class Logica_generador_objetos_juego
 
 	public:
 
-							Logica_generador_objetos_juego(Jugador&);
+							Logica_generador_objetos_juego(App_Juego::Jugador&);
 	void 						procesar(std::vector<App_Interfaces::Generador_objetos_juego_I *> v);
 	bool						hay_nuevos() const {return contenedor.objetos_juego.size();}
 	bool						hay_volatiles() const {return contenedor_volatiles.size();}
@@ -61,7 +61,7 @@ class Logica_generador_objetos_juego
 
 	private:
 
-	Jugador&							jugador;
+	App_Juego::Jugador&						jugador;
 	App_Juego_Contenedores::Contenedor_objetos 			contenedor;
 	App_Juego_Contenedores::Contenedor_volatiles 			contenedor_volatiles;
 	Interface_creador_objetos					interface_crear;

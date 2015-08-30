@@ -1,7 +1,8 @@
 #include "recogedor_bonus.h"
 
-using namespace App_Juego;
-Recogedor_bonus::Recogedor_bonus(App_Juego_Sistemas::Contador_tiempo& t, Jugador& j)
+using namespace App_Juego_Logica;
+
+Recogedor_bonus::Recogedor_bonus(App_Juego_Sistemas::Contador_tiempo& t, App_Juego::Jugador& j)
 	:tiempo(t), jugador(j)
 {
 

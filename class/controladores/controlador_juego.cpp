@@ -5,16 +5,18 @@
 #include "../app/recursos.h"
 #include "../app/definiciones/definiciones.h"
 
-#include "../app/juego/recogedor_bonus.h"
-#include "../app/juego/logica_bonus.h"
-#include "../app/juego/logica_disparador.h"
-#include "../app/juego/logica_con_turno.h"
-#include "../app/juego/logica_disparable.h"
-#include "../app/juego/logica_colisionable.h"
-#include "../app/juego/logica_generador_objetos_juego.h"
+#include "../app/juego/logica/recogedor_bonus.h"
+#include "../app/juego/logica/logica_bonus.h"
+#include "../app/juego/logica/logica_disparador.h"
+#include "../app/juego/logica/logica_con_turno.h"
+#include "../app/juego/logica/logica_disparable.h"
+#include "../app/juego/logica/logica_colisionable.h"
+#include "../app/juego/logica/logica_generador_objetos_juego.h"
+#include "../app/juego/logica/contexto_turno_juego.h"
 
 using namespace App_Niveles;
 using namespace App_Juego;
+using namespace App_Juego_Logica;
 
 Controlador_juego::Controlador_juego(Director_estados &DI, App_Niveles::Mapa& mapa, App_Juego_Automapa::Automapa& am)
 	:Controlador_base(DI),
@@ -219,7 +221,7 @@ void Controlador_juego::procesar_jugador(Jugador& j, float delta, App_Input::Inp
 	{
 		if(jugador.disparar())
 		{
-			Logica_disparador lp(contenedor_volatiles.proyectiles_enemigos, jugador);
+			Logica_disparador lp(jugador);
 			lp.insertar_disparo_jugador(contenedor_volatiles.proyectiles_jugador);
 		}
 	}
@@ -248,6 +250,22 @@ void Controlador_juego::procesar_jugador(Jugador& j, float delta, App_Input::Inp
 	
 	//TODO: De alguna forma los bonus y choques con "enemigos" y otras cosas
 	//podrían pertenencer a la misma familia de "colisionables".
+	//Vamos a aplicarles el mismo tratamiento que al resto y disminuimos
+	//los archivos y las cosas que tenemos que hacer... Ya de paso eliminaremos
+	//el sistema de visitantes.
+
+	/**
+	auto vc=sala_actual->acc_objetos_juego().recolectar_colisionables();
+	Contexto_colisionable cc(contador_tiempo, jugador); //El objeto proxy que los colisionables comprenden.
+	Logica_colisionable lc(cc);
+	lc.procesar(vc);
+	if(lc.es_salida_nivel())
+	{
+		//Do something...
+	}
+	*/
+	
+
 	
 	//En primer lugar evaluamos los bonus que se pueden recoger.
 	auto vb=sala_actual->acc_objetos_juego().recolectar_bonus();
@@ -411,8 +429,6 @@ void Controlador_juego::logica_mundo(float delta)
 
 	/** 
 	* Objeto para procesar la lógica de los turnos...
-	* TODO: Aquí dentro hay un visitante y mierdas. A ver si lo podemos deshacer
-	* porque realmente no me gusta naaada.
 	*/
 
 	using namespace App_Interfaces;
@@ -422,37 +438,8 @@ void Controlador_juego::logica_mundo(float delta)
 	for(auto &p : contenedor_volatiles.proyectiles_jugador) 	vct.push_back(p.get());
 	for(auto &p : contenedor_volatiles.proyectiles_enemigos) 	vct.push_back(p.get());
 
-	//TODO: Mover esto fuera...
-
-class Contexto_turno_juego:
-	public Contexto_turno_I
-{
-	public:
-						Contexto_turno_juego(float, const Sala& sala, Espaciable& jugador);
-
-	virtual float				acc_delta() const {return delta;}
-	virtual const Espaciable&		acc_blanco() const {return jugador;}
-	virtual bool				es_fuera_sala(const Espaciable& e)
-	{
-		App_Colisiones::Calculador_colisiones cc;
-		return cc.es_fuera_de_sala(e.copia_caja(), sala);
-	}
-
-	virtual std::vector<const Espaciable *>	celdas_en_caja(const Espaciable&e) const
-	{
-		App_Colisiones::Calculador_colisiones cc;
-		return cc.celdas_en_caja(e.copia_caja(), sala);
-	}
-
-	private:
-
-	float					delta;
-	const Sala&				sala;
-	const Espaciable&			jugador;
-};
-
-
-	Logica_con_turno lct(jugador, *sala_actual, delta);
+	Contexto_turno_juego ctj(delta, *sala_actual, jugador);
+	Logica_con_turno lct(ctj);
 	lct.procesar(vct);
 
 	/*****

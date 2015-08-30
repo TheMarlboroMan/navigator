@@ -1,6 +1,6 @@
 #include "logica_disparable.h"
 
-using namespace App_Juego;
+using namespace App_Juego_Logica;
 
 Logica_disparable::Logica_disparable(std::vector<std::shared_ptr<App_Juego_ObjetoJuego::Proyectil_base >>& pj)
 	:proyectiles_jugador(pj)

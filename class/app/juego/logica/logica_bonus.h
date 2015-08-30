@@ -3,15 +3,16 @@
 
 #include <vector>
 #include <memory>
-#include "../interfaces/bonus_i.h"
-#include "../interfaces/recoge_bonus_i.h"
+
+#include "../../interfaces/bonus_i.h"
+#include "../../interfaces/recoge_bonus_i.h"
 
 /**
 * Clase que controla la lógica de recoger los objetos del juego. Implementa el
 * método "procesar", requerido por las salas para usar sus "bonus_i".
 */
 
-namespace App_Juego
+namespace App_Juego_Logica
 {
 class Logica_bonus
 {

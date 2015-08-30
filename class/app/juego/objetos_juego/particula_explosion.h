@@ -29,7 +29,6 @@ class Particula_explosion:
 	public:
 
 	virtual void 				turno(App_Interfaces::Contexto_turno_I&);
-	virtual void				recibir_visitante(App_Visitantes::Visitante_con_turno& v) {v.visitar(*this);}
 
 	/////////////////
 	//Internas.

@@ -23,12 +23,6 @@ class Particula_chispa:
 	virtual unsigned short int 		obtener_profundidad_ordenacion()const;
 	virtual void 				transformar_bloque(App_Graficos::Bloque_transformacion_representable &b)const;
 
-	//////////////
-	// Implementación de Con_turno_I
-	public:
-
-	virtual void				recibir_visitante(App_Visitantes::Visitante_con_turno& v) {v.visitar(*this);}
-
 	/////////////////
 	//Internas.
 	private:

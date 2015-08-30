@@ -1,7 +1,6 @@
 #ifndef CON_TURNO_I
 #define CON_TURNO_I
 
-#include "../visitantes/visitante_con_turno.h"
 #include "objeto_juego_i.h"
 #include "contexto_turno_i.h"
 
@@ -26,7 +25,6 @@ class Con_turno_I:
 	public:
 				~Con_turno_I() {}
 	virtual void 		turno(App_Interfaces::Contexto_turno_I&)=0;
-	virtual void		recibir_visitante(App_Visitantes::Visitante_con_turno& v)=0;
 };
 
 }

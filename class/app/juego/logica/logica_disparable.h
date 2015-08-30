@@ -1,17 +1,18 @@
 #ifndef LOGICA_DISPARABLE_H
 #define LOGICA_DISPARABLE_H
 
-#include "../interfaces/disparable_i.h"
-#include "objetos_juego/proyectil_base.h"
 #include <vector>
 #include <memory>
+
+#include "../../interfaces/disparable_i.h"
+#include "../objetos_juego/proyectil_base.h"
 
 /**
 * Lógica para los objetos que implementen la interface "Disparable_I".
 * Controla si han recibido impactos.
 */
 
-namespace App_Juego
+namespace App_Juego_Logica
 {
 
 class Logica_disparable

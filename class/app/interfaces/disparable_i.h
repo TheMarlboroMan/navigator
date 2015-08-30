@@ -8,7 +8,6 @@
 */
 
 #include "objeto_juego_i.h"
-#include "../visitantes/visitante_disparable.h"
 
 namespace App_Interfaces
 {
@@ -21,7 +20,6 @@ class Disparable_I:
 	public:
 
 				~Disparable_I() {}
-	virtual void 		recibir_visitante(App_Visitantes::Visitante_disparable& v)=0;
 	virtual void 		recibir_disparo(float potencia)=0;
 	virtual bool		es_colision_proyectil(const Espaciable&)const=0;
 };

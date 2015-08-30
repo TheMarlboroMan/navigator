@@ -38,7 +38,6 @@ class Enemigo_rebote:
 	//Implementación de Disparable_I
 	public:
 
-	virtual void 			recibir_visitante(App_Visitantes::Visitante_disparable& v) {v.visitar(*this);}
 	virtual void 			recibir_disparo(float potencia);
 	virtual bool			es_colision_proyectil(const Espaciable& e)const {return en_colision_con(e);}
 
@@ -48,7 +47,6 @@ class Enemigo_rebote:
 	
 					
 	virtual void 			turno(App_Interfaces::Contexto_turno_I&);
-	virtual void			recibir_visitante(App_Visitantes::Visitante_con_turno& v) {v.visitar(*this);}
 
 	/////////////////////////
 	//Implementación de Representable_I.

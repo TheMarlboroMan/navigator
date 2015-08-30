@@ -1,6 +1,6 @@
 #include "logica_generador_objetos_juego.h"
 
-using namespace App_Juego;
+using namespace App_Juego_Logica;
 
 Interface_creador_objetos::Interface_creador_objetos(App_Juego_Contenedores::Contenedor_objetos& co, App_Juego_Contenedores::Contenedor_volatiles& cv, App_Interfaces::Espaciable& es)
 	:contenedor_volatiles(cv), espaciable(es)
@@ -53,7 +53,7 @@ void Interface_creador_objetos::fabricar_proyectil_normal_enemigo(float x, float
 
 ///////////////////////////////////
 
-Logica_generador_objetos_juego::Logica_generador_objetos_juego(Jugador& j)
+Logica_generador_objetos_juego::Logica_generador_objetos_juego(App_Juego::Jugador& j)
 	:jugador(j), interface_crear(contenedor, contenedor_volatiles, j)
 {
 

@@ -32,7 +32,32 @@ void Enemigo_rebote::recibir_disparo(float potencia)
 	
 void Enemigo_rebote::turno(App_Interfaces::Contexto_turno_I& ct)
 {
-	tiempo+=ct.acc_delta();
+	float delta=ct.acc_delta();
+	tiempo+=delta;
+
+	//Moverse...
+	auto v=acc_vector();
+	desplazar_caja(v.x * delta, v.y * delta);
+
+	//En caso de colisión o salir fuera del mundo, revertir.
+	auto caja=copia_caja();
+	auto cel=ct.celdas_en_caja(caja);
+	if(ct.es_fuera_sala(caja) || cel.size())
+	{
+		if(cel.size())
+		{
+			if(v.x)
+			{
+				ajustar(*cel[0], v.x < 0 ? Actor_movil::posiciones_ajuste::izquierda : Actor_movil::posiciones_ajuste::derecha);
+			}
+			else if(v.y)
+			{
+				ajustar(*cel[0], v.y < 0 ? Actor_movil::posiciones_ajuste::arriba : Actor_movil::posiciones_ajuste::abajo);
+			}			
+		}
+
+		cambiar_direccion();
+	}
 }
 
 

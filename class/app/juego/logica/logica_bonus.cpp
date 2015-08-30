@@ -1,6 +1,6 @@
 #include "logica_bonus.h"
 
-using namespace App_Juego;
+using namespace App_Juego_Logica;
 
 Logica_bonus::Logica_bonus(App_Interfaces::Recoge_bonus_I& rb)
 	:recoge_bonus(rb)

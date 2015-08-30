@@ -11,6 +11,7 @@ DIR_VISITANTES=$(DIR_CLASES_APP)visitantes/
 DIR_JUEGO_AUTOMAPA=$(DIR_JUEGO)automapa/
 DIR_JUEGO_SISTEMAS=$(DIR_JUEGO)sistemas/
 DIR_JUEGO_OBJETOS=$(DIR_JUEGO)objetos_juego/
+DIR_JUEGO_LOGICA=$(DIR_JUEGO)logica/
 DIR_JUEGO_CONTENEDORES=$(DIR_JUEGO)contenedores/
 DIR_COLISIONES=$(DIR_CLASES_APP)colisiones/
 DIR_DEFINICIONES=$(DIR_CLASES_APP)definiciones/
@@ -46,19 +47,22 @@ $(DIR_JUEGO)actor_movil.h \
 $(DIR_JUEGO)actor_movil.cpp
 	$(CC) $(CFLAGS) $(INCLUDES) $(DIR_JUEGO)actor_movil.cpp -o $(DIR_O)actor_movil.o
 
+################################################################################
+#Lógica juego
+
 $(DIR_O)logica_disparador.o:\
 $(DIR_O)proyectil_normal.o\
 $(DIR_O)jugador.o\
-$(DIR_JUEGO)logica_disparador.h\
-$(DIR_JUEGO)logica_disparador.cpp
-	$(CC) $(CFLAGS) $(INCLUDES) $(DIR_JUEGO)logica_disparador.cpp -o $(DIR_O)logica_disparador.o
+$(DIR_JUEGO_LOGICA)logica_disparador.h\
+$(DIR_JUEGO_LOGICA)logica_disparador.cpp
+	$(CC) $(CFLAGS) $(INCLUDES) $(DIR_JUEGO_LOGICA)logica_disparador.cpp -o $(DIR_O)logica_disparador.o
 
 $(DIR_O)logica_bonus.o:\
 $(DIR_O)bonus_i.o\
 $(DIR_O)recoge_bonus_i.o\
-$(DIR_JUEGO)logica_bonus.h\
-$(DIR_JUEGO)logica_bonus.cpp
-	$(CC) $(CFLAGS) $(INCLUDES) $(DIR_JUEGO)logica_bonus.cpp -o $(DIR_O)logica_bonus.o
+$(DIR_JUEGO_LOGICA)logica_bonus.h\
+$(DIR_JUEGO_LOGICA)logica_bonus.cpp
+	$(CC) $(CFLAGS) $(INCLUDES) $(DIR_JUEGO_LOGICA)logica_bonus.cpp -o $(DIR_O)logica_bonus.o
 
 $(DIR_O)logica_con_turno.o:\
 $(DIR_O)calculador_colisiones.o\
@@ -66,17 +70,16 @@ $(DIR_O)jugador.o\
 $(DIR_O)enemigo_basico.o\
 $(DIR_O)enemigo_rebote.o\
 $(DIR_O)proyectil_normal.o\
-$(DIR_VISITANTES)visitante_con_turno.h\
-$(DIR_JUEGO)logica_con_turno.h\
-$(DIR_JUEGO)logica_con_turno.cpp
-	$(CC) $(CFLAGS) $(INCLUDES) $(DIR_JUEGO)logica_con_turno.cpp -o $(DIR_O)logica_con_turno.o
+$(DIR_JUEGO_LOGICA)logica_con_turno.h\
+$(DIR_JUEGO_LOGICA)logica_con_turno.cpp
+	$(CC) $(CFLAGS) $(INCLUDES) $(DIR_JUEGO_LOGICA)logica_con_turno.cpp -o $(DIR_O)logica_con_turno.o
 
 $(DIR_O)logica_disparable.o:\
 $(DIR_O)proyectil_base.o\
 $(DIR_O)disparable_i.o\
-$(DIR_JUEGO)logica_disparable.h\
-$(DIR_JUEGO)logica_disparable.cpp
-	$(CC) $(CFLAGS) $(INCLUDES) $(DIR_JUEGO)logica_disparable.cpp -o $(DIR_O)logica_disparable.o
+$(DIR_JUEGO_LOGICA)logica_disparable.h\
+$(DIR_JUEGO_LOGICA)logica_disparable.cpp
+	$(CC) $(CFLAGS) $(INCLUDES) $(DIR_JUEGO_LOGICA)logica_disparable.cpp -o $(DIR_O)logica_disparable.o
 
 $(DIR_O)logica_generador_objetos_juego.o:\
 $(DIR_O)generador_objetos_juego_i.o\
@@ -86,9 +89,9 @@ $(DIR_O)factoria_objetos_volatiles.o\
 $(DIR_O)contenedor_objetos.o\
 $(DIR_O)contenedor_volatiles.o\
 $(DIR_O)jugador.o\
-$(DIR_JUEGO)logica_generador_objetos_juego.h\
-$(DIR_JUEGO)logica_generador_objetos_juego.cpp
-	$(CC) $(CFLAGS) $(INCLUDES) $(DIR_JUEGO)logica_generador_objetos_juego.cpp -o $(DIR_O)logica_generador_objetos_juego.o
+$(DIR_JUEGO_LOGICA)logica_generador_objetos_juego.h\
+$(DIR_JUEGO_LOGICA)logica_generador_objetos_juego.cpp
+	$(CC) $(CFLAGS) $(INCLUDES) $(DIR_JUEGO_LOGICA)logica_generador_objetos_juego.cpp -o $(DIR_O)logica_generador_objetos_juego.o
 
 $(DIR_O)logica_colisionable.o:\
 $(DIR_O)enemigo_basico.o\
@@ -96,17 +99,27 @@ $(DIR_O)enemigo_rebote.o\
 $(DIR_O)salida.o\
 $(DIR_O)jugador.o\
 $(DIR_O)colisionable_i.o\
-$(DIR_JUEGO)logica_colisionable.h\
-$(DIR_JUEGO)logica_colisionable.cpp
-	$(CC) $(CFLAGS) $(INCLUDES) $(DIR_JUEGO)logica_colisionable.cpp -o $(DIR_O)logica_colisionable.o
+$(DIR_JUEGO_LOGICA)logica_colisionable.h\
+$(DIR_JUEGO_LOGICA)logica_colisionable.cpp
+	$(CC) $(CFLAGS) $(INCLUDES) $(DIR_JUEGO_LOGICA)logica_colisionable.cpp -o $(DIR_O)logica_colisionable.o
 
 $(DIR_O)recogedor_bonus.o:\
 $(DIR_O)jugador.o\
 $(DIR_O)contador_tiempo.o\
 $(DIR_O)recoge_bonus_i.o\
-$(DIR_JUEGO)recogedor_bonus.h\
-$(DIR_JUEGO)recogedor_bonus.cpp
-	$(CC) $(CFLAGS) $(INCLUDES) $(DIR_JUEGO)recogedor_bonus.cpp -o $(DIR_O)recogedor_bonus.o
+$(DIR_JUEGO_LOGICA)recogedor_bonus.h\
+$(DIR_JUEGO_LOGICA)recogedor_bonus.cpp
+	$(CC) $(CFLAGS) $(INCLUDES) $(DIR_JUEGO_LOGICA)recogedor_bonus.cpp -o $(DIR_O)recogedor_bonus.o
+
+
+$(DIR_O)contexto_turno_juego.o:\
+$(DIR_O)jugador.o\
+$(DIR_O)sala.o\
+$(DIR_O)calculador_colisiones.o\
+$(DIR_O)contexto_turno_i.o\
+$(DIR_JUEGO_LOGICA)contexto_turno_juego.h\
+$(DIR_JUEGO_LOGICA)contexto_turno_juego.cpp
+	$(CC) $(CFLAGS) $(INCLUDES) $(DIR_JUEGO_LOGICA)contexto_turno_juego.cpp -o $(DIR_O)contexto_turno_juego.o
 
 ################################################################################
 #Objetos juego
@@ -466,9 +479,6 @@ $(DIR_INPUT)recogedor_input.cpp
 	$(CC) $(CFLAGS) $(INCLUDES) $(DIR_INPUT)recogedor_input.cpp -o $(DIR_O)recogedor_input.o
 
 ################################################################################
-#Visitantes
-
-################################################################################
 #Interfaces
 
 $(DIR_O)objeto_juego_i.o:\
@@ -493,6 +503,19 @@ $(DIR_INTERFACES)recoge_bonus_i.h\
 $(DIR_INTERFACES)recoge_bonus_i.cpp
 	$(CC) $(CFLAGS) $(INCLUDES) $(DIR_INTERFACES)recoge_bonus_i.cpp -o $(DIR_O)recoge_bonus_i.o
 
+$(DIR_O)efecto_colision_recogedor_i.o:\
+$(DIR_INTERFACES)efecto_colision_recogedor_i.h\
+$(DIR_INTERFACES)efecto_colision_recogedor_i.cpp
+	$(CC) $(CFLAGS) $(INCLUDES) $(DIR_INTERFACES)efecto_colision_recogedor_i.cpp -o $(DIR_O)efecto_colision_recogedor_i.o
+
+$(DIR_O)efecto_colision_i.o:\
+$(DIR_O)objeto_juego_i.o\
+$(DIR_O)espaciable.o\
+$(DIR_O)efecto_colision_recogedor_i.o\
+$(DIR_INTERFACES)efecto_colision_i.h \
+$(DIR_INTERFACES)efecto_colision_i.cpp
+	$(CC) $(CFLAGS) $(INCLUDES) $(DIR_INTERFACES)efecto_colision_i.cpp -o $(DIR_O)efecto_colision_i.o
+
 $(DIR_O)colisionable_i.o:\
 $(DIR_O)objeto_juego_i.o\
 $(DIR_VISITANTES)visitante_colisionable.h \
@@ -510,7 +533,6 @@ $(DIR_INTERFACES)bonus_i.cpp
 $(DIR_O)con_turno_i.o:\
 $(DIR_O)contexto_turno_i.o\
 $(DIR_O)objeto_juego_i.o\
-$(DIR_VISITANTES)visitante_con_turno.h \
 $(DIR_INTERFACES)con_turno_i.h \
 $(DIR_INTERFACES)con_turno_i.cpp
 	$(CC) $(CFLAGS) $(INCLUDES) $(DIR_INTERFACES)con_turno_i.cpp -o $(DIR_O)con_turno_i.o
@@ -522,7 +544,6 @@ $(DIR_INTERFACES)contexto_turno_i.cpp
 
 $(DIR_O)disparable_i.o:\
 $(DIR_O)objeto_juego_i.o\
-$(DIR_VISITANTES)visitante_disparable.h \
 $(DIR_INTERFACES)disparable_i.h \
 $(DIR_INTERFACES)disparable_i.cpp
 	$(CC) $(CFLAGS) $(INCLUDES) $(DIR_INTERFACES)disparable_i.cpp -o $(DIR_O)disparable_i.o

@@ -40,6 +40,24 @@ void Enemigo_basico::turno(App_Interfaces::Contexto_turno_I& ct)
 {
 	float delta=ct.acc_delta();
 	tiempo_proximo_disparo-=delta;
+
+	//Encarar al jugador.
+	auto vd=obtener_vector_para(ct.acc_blanco());
+
+	mut_direccion(vd.x < 0.0 ? App_Definiciones::direcciones::izquierda : App_Definiciones::direcciones::derecha);
+
+	//Moverse...
+	auto v=acc_vector();
+	desplazar_caja(v.x * delta, v.y * delta);
+
+	//En caso de colisión o salir fuera del mundo, revertir.
+	auto caja=copia_caja();
+	if(ct.es_fuera_sala(caja) || ct.celdas_en_caja(caja).size())
+	{
+		v.x=-v.x;
+		v.y=-v.y;
+		establecer_vector(v);
+	}
 }
 
 void Enemigo_basico::recibir_disparo(float potencia)

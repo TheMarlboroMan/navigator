@@ -40,8 +40,7 @@ void Particula_explosion::transformar_bloque(App_Graficos::Bloque_transformacion
 
 void Particula_explosion::turno(App_Interfaces::Contexto_turno_I& ct)
 {
-	float delta=ct.acc_delta();
-	Particula_movil_base::turno(delta);
+	Particula_movil_base::turno(ct);
 
 	//La selección del frame.
 	int lon=App_Definiciones::Sprites_particulas::lon_explosion;

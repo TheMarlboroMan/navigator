@@ -32,7 +32,6 @@ class Particula_movil_base:
 	public:
 
 	virtual void 				turno(App_Interfaces::Contexto_turno_I&);
-	virtual void				recibir_visitante(App_Visitantes::Visitante_con_turno& v)=0;
 
 	/////////////////
 	//Implementación de Movil

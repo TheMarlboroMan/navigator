@@ -1,9 +1,9 @@
 #include "logica_colisionable.h"
-#include "objetos_juego/enemigo_basico.h"
+#include "../objetos_juego/enemigo_basico.h"
 
-using namespace App_Juego;
+using namespace App_Juego_Logica;
 
-Logica_colisionable::Logica_colisionable(Jugador& j)
+Logica_colisionable::Logica_colisionable(App_Juego::Jugador& j)
 	:jugador(j), salida_nivel(false)
 {
 

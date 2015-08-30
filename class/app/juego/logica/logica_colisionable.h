@@ -1,11 +1,11 @@
 #ifndef LOGICA_COLISIONABLE_H
 #define LOGICA_COLISIONABLE_H
 
-#include "../visitantes/visitante_colisionable.h"
-#include "objetos_juego/enemigo_basico.h"
-#include "objetos_juego/enemigo_rebote.h"
-#include "objetos_juego/salida.h"
-#include "jugador.h"
+#include "../../visitantes/visitante_colisionable.h"
+#include "../objetos_juego/enemigo_basico.h"
+#include "../objetos_juego/enemigo_rebote.h"
+#include "../objetos_juego/salida.h"
+#include "../jugador.h"
 
 /**
 * Clase que controla la lógica de recoger colisión con objetos de juego. Se
@@ -13,7 +13,7 @@
 * controlada en la "colisión con celdas".
 */
 
-namespace App_Juego
+namespace App_Juego_Logica
 {
 class Logica_colisionable:
 	public App_Visitantes::Visitante_colisionable
@@ -22,7 +22,7 @@ class Logica_colisionable:
 	//Interface pública.
 	public:
 
-	Logica_colisionable(Jugador& j);
+				Logica_colisionable(App_Juego::Jugador& j);
 	bool			es_salida_nivel() const {return salida_nivel;}
 	virtual void 		procesar(std::vector<App_Interfaces::Colisionable_I *>&);
 
@@ -38,7 +38,7 @@ class Logica_colisionable:
 	//Propiedades.
 	private:
 
-	Jugador& 		jugador;
+	App_Juego::Jugador& 	jugador;
 	bool			salida_nivel;
 };
 

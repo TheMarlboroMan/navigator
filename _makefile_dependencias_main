@@ -44,6 +44,8 @@ $(DIR_O)representable_i.o\
 $(DIR_O)generador_objetos_juego_i.o\
 $(DIR_O)factoria_objetos_juego_i.o\
 $(DIR_O)sonoro_i.o\
+$(DIR_O)efecto_colision_i.o\
+$(DIR_O)efecto_colision_recogedor_i.o\
 $(DIR_O)particula_base.o\
 $(DIR_O)particula_movil_base.o\
 $(DIR_O)particula_fantasma.o\
@@ -58,6 +60,7 @@ $(DIR_O)logica_bonus.o\
 $(DIR_O)logica_disparador.o\
 $(DIR_O)logica_colisionable.o\
 $(DIR_O)logica_generador_objetos_juego.o\
+$(DIR_O)contexto_turno_juego.o\
 $(DIR_O)enemigo_basico.o\
 $(DIR_O)enemigo_rebote.o\
 $(DIR_O)proyectil_base.o\

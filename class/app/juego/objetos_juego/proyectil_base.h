@@ -42,7 +42,6 @@ class Proyectil_base:
 	public:
 
 	virtual void 					turno(App_Interfaces::Contexto_turno_I&)=0;
-	virtual void 					recibir_visitante(App_Visitantes::Visitante_con_turno& v)=0;
 
 	////////////////
 	// Implementación de Generador_objetos_juego_I

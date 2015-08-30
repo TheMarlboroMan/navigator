@@ -8,7 +8,7 @@ Logica_bonus::Logica_bonus(App_Interfaces::Recoge_bonus_I& rb)
 	
 }
 
-void Logica_bonus::procesar(std::vector<std::shared_ptr<App_Interfaces::Bonus_I>>& v)
+void Logica_bonus::procesar(std::vector<App_Interfaces::Bonus_I *>& v)
 {
 	const auto& e=recoge_bonus.obtener_espaciable_recogedor_bonus();
 

@@ -13,7 +13,6 @@
 #include "../../interfaces/bonus_i.h"
 #include "../../interfaces/con_turno_i.h"
 #include "../../interfaces/disparable_i.h"
-#include "../../interfaces/disparador_i.h"
 #include "../../interfaces/representable_i.h"
 #include "../../interfaces/colisionable_i.h"
 #include "../../interfaces/sonoro_i.h"
@@ -42,7 +41,6 @@ namespace App_Juego_Contenedores
 		std::vector<std::shared_ptr<App_Interfaces::Bonus_I>>			bonus;
 		std::vector<std::shared_ptr<App_Interfaces::Con_turno_I>>		con_turno;
 		std::vector<std::shared_ptr<App_Interfaces::Disparable_I>>		disparables;
-		std::vector<std::shared_ptr<App_Interfaces::Disparador_I>>		disparadores;
 		std::vector<std::shared_ptr<App_Interfaces::Representable_I>>		representables;
 		std::vector<std::shared_ptr<App_Interfaces::Colisionable_I>>		colisionables;
 		std::vector<std::shared_ptr<App_Interfaces::Sonoro_I>>			sonoros;
@@ -67,6 +65,13 @@ namespace App_Juego_Contenedores
 		void									sumar_variante(const Contenedor_objetos&);
 		size_t									limpiar_para_borrar();
 		void									fusionar_con(Contenedor_objetos&);	
+
+		std::vector<App_Interfaces::Generador_objetos_juego_I *>		recolectar_generadores_objetos_juego();
+		std::vector<App_Interfaces::Con_turno_I *>				recolectar_con_turno();
+		std::vector<App_Interfaces::Disparable_I *>				recolectar_disparables();
+		std::vector<App_Interfaces::Bonus_I *>					recolectar_bonus();
+		std::vector<App_Interfaces::Colisionable_I *>				recolectar_colisionables();
+//		void									recolectar_generador_objetos_juego(std::vector<App_Interfaces::Generador_objetos_juego_I *>&);
 	};
 }
 

@@ -2,13 +2,13 @@
 
 using namespace App_Juego;
 
-Logica_disparable::Logica_disparable(std::vector<std::shared_ptr<App_Juego_ObjetoJuego::Proyectil_base> >& pj)
+Logica_disparable::Logica_disparable(std::vector<std::shared_ptr<App_Juego_ObjetoJuego::Proyectil_base >>& pj)
 	:proyectiles_jugador(pj)
 {
 
 }
 
-void Logica_disparable::procesar(std::vector<std::shared_ptr<App_Interfaces::Disparable_I>>& v)
+void Logica_disparable::procesar(std::vector<App_Interfaces::Disparable_I *>& v)
 {
 	for(auto& o : v)
 	{

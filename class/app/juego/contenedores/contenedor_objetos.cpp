@@ -38,7 +38,6 @@ void Contenedor_objetos::sumar_variante(const Contenedor_objetos& o)
 	for(auto& ob : o.bonus) bonus.push_back(ob);
 	for(auto& ob : o.con_turno) con_turno.push_back(ob);
 	for(auto& ob : o.disparables) disparables.push_back(ob);
-	for(auto& ob : o.disparadores) disparadores.push_back(ob);
 	for(auto& ob : o.representables) representables.push_back(ob);
 	for(auto& ob : o.colisionables) colisionables.push_back(ob);
 	for(auto& ob : o.sonoros) sonoros.push_back(ob);
@@ -71,7 +70,6 @@ size_t Contenedor_objetos::limpiar_para_borrar()
 		ayudante_borrar(bonus);
 		ayudante_borrar(con_turno);
 		ayudante_borrar(disparables);
-		ayudante_borrar(disparadores);
 		ayudante_borrar(colisionables);
 		ayudante_borrar(generadores_objetos_juego);
 
@@ -104,9 +102,51 @@ void Contenedor_objetos::fusionar_con(Contenedor_objetos& c)
 	std::move(std::begin(c.bonus), std::end(c.bonus), std::back_inserter(bonus));
 	std::move(std::begin(c.con_turno), std::end(c.con_turno), std::back_inserter(con_turno));
 	std::move(std::begin(c.disparables), std::end(c.disparables), std::back_inserter(disparables));
-	std::move(std::begin(c.disparadores), std::end(c.disparadores), std::back_inserter(disparadores));
 	std::move(std::begin(c.colisionables), std::end(c.colisionables), std::back_inserter(colisionables));
 	std::move(std::begin(c.generadores_objetos_juego), std::end(c.generadores_objetos_juego), std::back_inserter(generadores_objetos_juego));
 	std::move(std::begin(c.representables), std::end(c.representables), std::back_inserter(representables));
 	std::move(std::begin(c.sonoros), std::end(c.sonoros), std::back_inserter(sonoros));
 }
+
+
+std::vector<App_Interfaces::Generador_objetos_juego_I *> Contenedor_objetos::recolectar_generadores_objetos_juego()
+{
+	std::vector<App_Interfaces::Generador_objetos_juego_I *> v;
+	for(auto& o : generadores_objetos_juego) v.push_back(o.get());
+	return v;
+}
+
+std::vector<App_Interfaces::Con_turno_I *> Contenedor_objetos::recolectar_con_turno()
+{
+	std::vector<App_Interfaces::Con_turno_I *> v;
+	for(auto& o : con_turno) v.push_back(o.get());
+	return v;
+}
+
+std::vector<App_Interfaces::Disparable_I *> Contenedor_objetos::recolectar_disparables()
+{
+	std::vector<App_Interfaces::Disparable_I *> v;
+	for(auto& o : disparables) v.push_back(o.get());
+	return v;
+}
+
+std::vector<App_Interfaces::Bonus_I *> Contenedor_objetos::recolectar_bonus()
+{
+	std::vector<App_Interfaces::Bonus_I *> v;
+	for(auto& o : bonus) v.push_back(o.get());
+	return v;
+}
+
+std::vector<App_Interfaces::Colisionable_I *> Contenedor_objetos::recolectar_colisionables()
+{
+	std::vector<App_Interfaces::Colisionable_I *> v;
+	for(auto& o : colisionables) v.push_back(o.get());
+	return v;
+}
+
+/*
+void Contenedor_objetos::recolectar_generador_objetos_juego(std::vector<App_Interfaces::Generador_objetos_juego_I *>& v)
+{
+	for(auto& o : generadores_objetos_juego) v.push_back(o.get());
+}
+*/

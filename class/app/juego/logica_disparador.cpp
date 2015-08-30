@@ -31,8 +31,8 @@ void Logica_disparador::insertar_disparo_jugador(std::vector<std::shared_ptr<App
 	pr->mut_potencia(25.0f);
 	v.push_back(pr);
 }
-
-void Logica_disparador::procesar(std::vector<std::shared_ptr<App_Interfaces::Disparador_I>>& v)
+/*
+void Logica_disparador::procesar(std::vector<App_Interfaces::Disparador_I *>& v)
 {
 	for(auto& o : v)
 	{
@@ -61,3 +61,4 @@ void Logica_disparador::visitar(App_Juego_ObjetoJuego::Enemigo_basico& e)
 
 	e.mut_disparar(false);
 }
+*/

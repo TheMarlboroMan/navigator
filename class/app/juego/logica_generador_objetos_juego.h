@@ -4,9 +4,12 @@
 #include <memory>
 #include <vector>
 #include "../interfaces/generador_objetos_juego_i.h"
-#include "../generador/factoria_objetos_juego.h"
+#include "factorias/factoria_objetos_juego.h"
+#include "factorias/factoria_objetos_volatiles.h"
 #include "contenedores/contenedor_objetos.h"
+#include "contenedores/contenedor_volatiles.h"
 #include "../interfaces/factoria_objetos_juego_i.h"
+#include "jugador.h"
 
 namespace App_Juego
 {
@@ -16,8 +19,7 @@ class Interface_creador_objetos:
 {
 	public:
 
-	void						establecer_contenedor(App_Juego_Contenedores::Contenedor_objetos&);
-	void						establecer_contenedor_volatiles(App_Juego_Contenedores::Contenedor_volatiles&);
+							Interface_creador_objetos(App_Juego_Contenedores::Contenedor_objetos&, App_Juego_Contenedores::Contenedor_volatiles&, App_Interfaces::Espaciable&);
 	
 	virtual void					fabricar_bonus_tiempo(float x, float y, float t);
 	virtual void					fabricar_bonus_salud(float x, float y, float t);
@@ -25,14 +27,19 @@ class Interface_creador_objetos:
 	virtual void					fabricar_explosion(float x, float y, float tv, const DLibH::Vector_2d&);
 	virtual void					fabricar_chatarra(float x, float y, float tv, const DLibH::Vector_2d&);
 	virtual void					fabricar_fantasma(float x, float y, float tv, float ve, App_Definiciones::direcciones direccion, int recurso, const DLibH::Caja<int, int>& recorte);
+	virtual void					fabricar_proyectil_normal_enemigo(float x, float y, int w, int h, const DLibH::Vector_2d& v, float pot);
 
+	virtual const App_Interfaces::Espaciable& 	acc_blanco_disparo() const {return espaciable;}
 
 	//////////////
 	//Internas.
 
 	private:
 
-	App_Generador::Factoria_objetos_juego 		factoria;
+	App_Juego_Factorias::Factoria_objetos_juego 		factoria;
+	App_Juego_Factorias::Factoria_objetos_volatiles 	factoria_volatiles;
+	App_Juego_Contenedores::Contenedor_volatiles&		contenedor_volatiles;
+	const App_Interfaces::Espaciable&			espaciable;
 };
 
 class Logica_generador_objetos_juego
@@ -42,8 +49,8 @@ class Logica_generador_objetos_juego
 
 	public:
 
-							Logica_generador_objetos_juego(std::vector<std::shared_ptr<App_Interfaces::Generador_objetos_juego_I>>&, App_Interfaces::Generador_objetos_juego_I&);
-	void 						procesar(std::vector<std::shared_ptr<App_Interfaces::Generador_objetos_juego_I>> v);
+							Logica_generador_objetos_juego(Jugador&);
+	void 						procesar(std::vector<App_Interfaces::Generador_objetos_juego_I *> v);
 	bool						hay_nuevos() const {return contenedor.objetos_juego.size();}
 	bool						hay_volatiles() const {return contenedor_volatiles.size();}
 	App_Juego_Contenedores::Contenedor_objetos&	acc_contenedor() {return contenedor;}
@@ -54,12 +61,10 @@ class Logica_generador_objetos_juego
 
 	private:
 
-	std::vector<std::shared_ptr<App_Interfaces::Generador_objetos_juego_I>>&	generadores;
-	App_Interfaces::Generador_objetos_juego_I&			jugador;
-	Interface_creador_objetos					interface_crear;
+	Jugador&							jugador;
 	App_Juego_Contenedores::Contenedor_objetos 			contenedor;
-	App_Juego_Contenedores::Contenedor_volatiles 			contenedor_volatiles
-;
+	App_Juego_Contenedores::Contenedor_volatiles 			contenedor_volatiles;
+	Interface_creador_objetos					interface_crear;
 };
 
 }

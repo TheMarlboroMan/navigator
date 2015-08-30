@@ -9,7 +9,6 @@ Enemigo_basico::Enemigo_basico(float px, float py, float s)
 	:
 	Objeto_juego_I(),
 	Actor_movil(px, py, W, H),
-	Disparador_I(),
 	salud(s),
 	tiempo_proximo_disparo(TIEMPO_PROXIMO_DISPARO_DEFECTO),
 	direccion(App_Definiciones::direcciones::derecha)
@@ -44,16 +43,6 @@ void Enemigo_basico::transformar_bloque(App_Graficos::Bloque_transformacion_repr
 void Enemigo_basico::turno(float delta)
 {
 	tiempo_proximo_disparo-=delta;
-	if(tiempo_proximo_disparo < 0.0f) 
-	{
-		Disparador_I::mut_disparar(true);
-		tiempo_proximo_disparo=TIEMPO_PROXIMO_DISPARO_DEFECTO;
-
-		insertar_reproducir(App_Audio::Info_audio_reproducir(
-			App_Audio::Info_audio_reproducir::t_reproduccion::simple,
-			App_Audio::Info_audio_reproducir::t_sonido::repetible,  
-			App::Recursos_audio::rs_disparo, 127, 127));
-	}
 }
 
 void Enemigo_basico::recibir_disparo(float potencia)
@@ -98,7 +87,20 @@ void Enemigo_basico::generar_objetos(App_Interfaces::Factoria_objetos_juego_I& f
 		f.fabricar_bonus_tiempo(acc_espaciable_x(), acc_espaciable_y(), 5.0f);
 		f.fabricar_explosion(x, y, 1.0f, v);
 	}
+	else
+	{
+		if(tiempo_proximo_disparo < 0.0f) 
+		{
+			tiempo_proximo_disparo=TIEMPO_PROXIMO_DISPARO_DEFECTO;
 
-	//TODO: En el futuro también podemos poner las partículas y disparos aquí.
+			const auto v=obtener_vector_para(f.acc_blanco_disparo()) * 200.0f;
+			f.fabricar_proyectil_normal_enemigo(acc_espaciable_x(), acc_espaciable_y(), 8, 8, v, 25.0);
 
+			//TODO: Los concerns de audio están mezlados con el resto :(.
+			insertar_reproducir(App_Audio::Info_audio_reproducir(
+				App_Audio::Info_audio_reproducir::t_reproduccion::simple,
+				App_Audio::Info_audio_reproducir::t_sonido::repetible,  
+				App::Recursos_audio::rs_disparo, 127, 127));
+		}
+	}
 }

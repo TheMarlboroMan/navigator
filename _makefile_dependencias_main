@@ -30,6 +30,7 @@ $(DIR_O)vista_unidad_automapa.o\
 $(DIR_O)vista_automapa.o\
 $(DIR_O)contador_tiempo.o\
 $(DIR_O)factoria_objetos_juego.o\
+$(DIR_O)factoria_objetos_volatiles.o\
 $(DIR_O)contenedor_objetos.o\
 $(DIR_O)contenedor_volatiles.o\
 $(DIR_O)recogedor_bonus.o\
@@ -38,7 +39,6 @@ $(DIR_O)objeto_juego_i.o\
 $(DIR_O)bonus_i.o\
 $(DIR_O)colisionable_i.o\
 $(DIR_O)con_turno_i.o\
-$(DIR_O)disparador_i.o\
 $(DIR_O)representable_i.o\
 $(DIR_O)generador_objetos_juego_i.o\
 $(DIR_O)factoria_objetos_juego_i.o\

@@ -24,7 +24,7 @@ class Logica_colisionable:
 
 	Logica_colisionable(Jugador& j);
 	bool			es_salida_nivel() const {return salida_nivel;}
-	virtual void 		procesar(std::vector<std::shared_ptr<App_Interfaces::Colisionable_I>>&);
+	virtual void 		procesar(std::vector<App_Interfaces::Colisionable_I *>&);
 
 	/////////////////
 	//Implementación de Visitante_colisionable.

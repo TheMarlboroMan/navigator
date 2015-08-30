@@ -39,22 +39,15 @@ class Sala
 	std::vector<App_Interfaces::Sonoro_I *> 		obtener_vector_sonoros() const;
 	void							implantar_objetos_juego(App_Juego_Contenedores::Contenedor_objetos&&);
 	void							fusionar_objetos_juego(App_Juego_Contenedores::Contenedor_objetos&);
+	App_Juego_Contenedores::Contenedor_objetos&		acc_objetos_juego() {return objetos;}
+	
+
 	//TODO: Elimianr...
 	const HerramientasProyecto::Matriz_2d<Celda>& 		acc_matriz() const {return celdas;}
 	const App_Juego_ObjetoJuego::Entrada& 			obtener_entrada_posicion(App_Definiciones::direcciones p); /** @throw std::logic_error cuando no hay entrada en esa posición. */
 	const std::shared_ptr<App_Juego_ObjetoJuego::Posicion_inicial>	obtener_posicion_inicial_jugador() {return objetos.posicion_inicial;}
 	const std::shared_ptr<App_Juego_ObjetoJuego::Salida>	obtener_salida() {return objetos.salida;}
 	size_t 							limpiar_objetos_juego_para_borrar();
-
-	template<typename T> void				procesar_objetos_juego(T& p) {p.procesar(objetos.objetos_juego);}
-	template<typename T> void				procesar_bonus(T& p) {p.procesar(objetos.bonus);}
-	template<typename T> void				procesar_con_turno(T& p) {p.procesar(objetos.con_turno);}
-	template<typename T> void				procesar_disparables(T& p) {p.procesar(objetos.disparables);}
-	template<typename T> void 				procesar_disparadores(T& p) {p.procesar(objetos.disparadores);}
-	template<typename T> void				procesar_representables(T& p) {p.procesar(objetos.representables);}
-	template<typename T> void				procesar_colisionables(T& p) {p.procesar(objetos.colisionables);}
-	template<typename T> void				procesar_sonoros(T& p) {p.procesar(objetos.sonoros);}
-	template<typename T> void				procesar_generadores_objetos_juego(T& p) {p.procesar(objetos.generadores_objetos_juego);}
 
 	///////////
 	// Propiedades

@@ -20,7 +20,7 @@ class Logica_bonus
 	public:
 
 						Logica_bonus(App_Interfaces::Recoge_bonus_I&);
-	virtual void 				procesar(std::vector<std::shared_ptr<App_Interfaces::Bonus_I>>&);
+	virtual void 				procesar(std::vector<App_Interfaces::Bonus_I *>&);
 
 	/////////////////
 	//Propiedades.

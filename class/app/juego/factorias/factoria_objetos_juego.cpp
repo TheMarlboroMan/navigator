@@ -1,12 +1,12 @@
 #include "factoria_objetos_juego.h"
 
-using namespace App_Generador;
+using namespace App_Juego_Factorias;
 using namespace App_Juego_ObjetoJuego;
 using namespace App_Interfaces;
 using namespace DLibH;
 
 Factoria_objetos_juego::Factoria_objetos_juego()
-	:contenedor_ptr(nullptr), contenedor_volatiles_ptr(nullptr)
+	:contenedor_ptr(nullptr)
 {
 
 }
@@ -14,11 +14,6 @@ Factoria_objetos_juego::Factoria_objetos_juego()
 void Factoria_objetos_juego::establecer_contenedor(App_Juego_Contenedores::Contenedor_objetos& c)
 {
 	contenedor_ptr=&c;
-}
-
-void Factoria_objetos_juego::establecer_contenedor_volatiles(App_Juego_Contenedores::Contenedor_volatiles& c)
-{
-	contenedor_volatiles_ptr=&c;
 }
 
 void Factoria_objetos_juego::interpretar_linea(const std::string& linea)
@@ -77,7 +72,6 @@ void Factoria_objetos_juego::insertar(std::shared_ptr<App_Juego_ObjetoJuego::Ene
 	contenedor.sonoros.push_back(std::shared_ptr<Sonoro_I>(ob, static_cast<Sonoro_I*>(ob.get())));
 	contenedor.con_turno.push_back(std::shared_ptr<Con_turno_I>(ob, static_cast<Con_turno_I*>(ob.get())));
 	contenedor.disparables.push_back(std::shared_ptr<Disparable_I>(ob, static_cast<Disparable_I*>(ob.get())));
-	contenedor.disparadores.push_back(std::shared_ptr<Disparador_I>(ob, static_cast<Disparador_I*>(ob.get())));
 	contenedor.generadores_objetos_juego.push_back(std::shared_ptr<Generador_objetos_juego_I>(ob, static_cast<Generador_objetos_juego_I*>(ob.get())));
 }
 
@@ -99,26 +93,6 @@ void Factoria_objetos_juego::insertar(std::shared_ptr<App_Juego_ObjetoJuego::Sal
 	contenedor.representables.push_back(std::shared_ptr<Representable_I>(ob, static_cast<Representable_I*>(ob.get())));
 }
 
-
-void Factoria_objetos_juego::insertar(std::shared_ptr<App_Juego_ObjetoJuego::Particula_chispa>& ob)
-{
-	contenedor_volatiles_ptr->particulas.push_back(ob);
-}
-
-void Factoria_objetos_juego::insertar(std::shared_ptr<App_Juego_ObjetoJuego::Particula_explosion>& ob)
-{
-	contenedor_volatiles_ptr->particulas.push_back(ob);
-}
-
-void Factoria_objetos_juego::insertar(std::shared_ptr<App_Juego_ObjetoJuego::Particula_chatarra>& ob)
-{
-	contenedor_volatiles_ptr->particulas.push_back(ob);
-}
-
-void Factoria_objetos_juego::insertar(std::shared_ptr<App_Juego_ObjetoJuego::Particula_fantasma>& ob)
-{
-	contenedor_volatiles_ptr->particulas.push_back(ob);
-}
 
 //////////////////////
 
@@ -250,29 +224,5 @@ std::shared_ptr<App_Juego_ObjetoJuego::Bonus_tiempo> Factoria_objetos_juego::cre
 std::shared_ptr<App_Juego_ObjetoJuego::Bonus_salud> Factoria_objetos_juego::crear_bonus_salud(float x, float y, float t)
 {
 	auto res=std::shared_ptr<Bonus_salud>(new Bonus_salud(x, y, t));
-	return res;
-}
-
-std::shared_ptr<App_Juego_ObjetoJuego::Particula_chispa> Factoria_objetos_juego::crear_chispa(float x, float y, float tv, const DLibH::Vector_2d& v)
-{
-	auto res=std::shared_ptr<Particula_chispa>(new Particula_chispa(x, y, tv, v));
-	return res;
-}
-
-std::shared_ptr<App_Juego_ObjetoJuego::Particula_explosion> Factoria_objetos_juego::crear_explosion(float x, float y, float tv, const DLibH::Vector_2d& v)
-{
-	auto res=std::shared_ptr<Particula_explosion>(new Particula_explosion(x, y, tv, v));
-	return res;
-}
-
-std::shared_ptr<App_Juego_ObjetoJuego::Particula_chatarra> Factoria_objetos_juego::crear_chatarra(float x, float y, float tv, const DLibH::Vector_2d& v)
-{
-	auto res=std::shared_ptr<Particula_chatarra>(new Particula_chatarra(x, y, tv, v));
-	return res;
-}
-
-std::shared_ptr<App_Juego_ObjetoJuego::Particula_fantasma> Factoria_objetos_juego::crear_fantasma(float x, float y, float tv, float ve, App_Definiciones::direcciones direccion, int recurso, const DLibH::Caja<int, int>& recorte)
-{
-	auto res=std::shared_ptr<Particula_fantasma>(new Particula_fantasma(x, y, tv, ve, direccion, recurso, recorte));
 	return res;
 }

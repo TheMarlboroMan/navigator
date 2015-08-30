@@ -9,7 +9,6 @@
 #include "../../interfaces/sonoro_i.h"
 #include "../../interfaces/disparable_i.h"
 #include "../../interfaces/con_turno_i.h"
-#include "../../interfaces/disparador_i.h"
 #include "../../interfaces/colisionable_i.h"
 #include "../../interfaces/generador_objetos_juego_i.h"
 #include "../../graficos/bloque_transformacion_representable.h"
@@ -24,7 +23,6 @@ class Enemigo_basico:
 		public App_Interfaces::Sonoro_I,
 		public App_Interfaces::Con_turno_I,
 		public App_Interfaces::Disparable_I,
-		public App_Interfaces::Disparador_I,
 		public App_Interfaces::Colisionable_I,
 		public App_Interfaces::Generador_objetos_juego_I
 {
@@ -81,12 +79,6 @@ class Enemigo_basico:
 
 	virtual void 		recibir_visitante(App_Visitantes::Visitante_colisionable& v) {v.visitar(*this);}
 	virtual bool		es_colision_para(const Espaciable& e)const {return en_colision_con(e);}
-
-	///////////////
-	//Implementación de Disparador_I
-	public:
-
-	virtual void 		recibir_visitante(App_Visitantes::Visitante_disparador& v) {v.visitar(*this);}
 
 	////////////////////////////
 	// Definiciones privadas.

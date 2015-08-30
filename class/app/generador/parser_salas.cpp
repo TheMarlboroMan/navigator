@@ -33,7 +33,7 @@ void Parser_salas::parsear_fichero(const std::string& ruta)
 
 		//La factoría contendrá los objetos de juego hasta que finalmente
 		//se implanten en la sala.
-		Factoria_objetos_juego factoria;
+		App_Juego_Factorias::Factoria_objetos_juego factoria;
 
 		while(true)
 		{
@@ -59,7 +59,7 @@ void Parser_salas::parsear_fichero(const std::string& ruta)
 	}
 }
 
-bool Parser_salas::interpretar_estado(const std::string& linea, Factoria_objetos_juego& factoria)
+bool Parser_salas::interpretar_estado(const std::string& linea, App_Juego_Factorias::Factoria_objetos_juego& factoria)
 {
 	if(linea==TIPO_ESTRUCTURA) estado=t_estados::estructura;
 	else if(linea==TIPO_INFO) estado=t_estados::info;
@@ -136,7 +136,7 @@ void Parser_salas::interpretar_linea_como_celdas(const std::string& linea)
 	}
 }
 
-void Parser_salas::interpretar_linea_como_objeto(const std::string& linea, Factoria_objetos_juego& factoria)
+void Parser_salas::interpretar_linea_como_objeto(const std::string& linea, App_Juego_Factorias::Factoria_objetos_juego& factoria)
 {
 	factoria.interpretar_linea(linea);
 }

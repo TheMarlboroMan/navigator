@@ -5,7 +5,6 @@
 #include <vector>
 #include "objetos_juego/proyectil_normal.h"
 #include "jugador.h"
-#include "../visitantes/visitante_disparador.h"
 
 #include "objetos_juego/enemigo_basico.h"
 
@@ -19,8 +18,7 @@
 namespace App_Juego
 {
 
-class Logica_disparador:
-	public App_Visitantes::Visitante_disparador
+class Logica_disparador
 {
 	///////////////////////
 	//Interface pública:
@@ -28,12 +26,12 @@ class Logica_disparador:
 
 				Logica_disparador(std::vector<std::shared_ptr<App_Juego_ObjetoJuego::Proyectil_base> >&v, const Jugador& j);
 	void 			insertar_disparo_jugador(std::vector<std::shared_ptr<App_Juego_ObjetoJuego::Proyectil_base> >&v);
-	virtual void 		procesar(std::vector<std::shared_ptr<App_Interfaces::Disparador_I>>&);
+//	virtual void 		procesar(std::vector<App_Interfaces::Disparador_I *>&);
 
 	/////////////////////
 	//Implementación de Visitante_disparador.
 
-	virtual void 		visitar(App_Juego_ObjetoJuego::Enemigo_basico&);
+//	virtual void 		visitar(App_Juego_ObjetoJuego::Enemigo_basico&);
 
 	///////////////////////
 	//Propiedades:

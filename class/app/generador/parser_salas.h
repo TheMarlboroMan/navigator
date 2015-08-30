@@ -5,7 +5,7 @@
 #include <vector>
 #include "../definiciones/definiciones.h"
 #include "../niveles/sala.h"
-#include "factoria_objetos_juego.h"
+#include "../juego/factorias/factoria_objetos_juego.h"
 
 namespace App_Generador
 {
@@ -41,10 +41,10 @@ class Parser_salas
 
 	private:
 
-	bool							interpretar_estado(const std::string& linea, Factoria_objetos_juego& factoria);
+	bool							interpretar_estado(const std::string& linea, App_Juego_Factorias::Factoria_objetos_juego& factoria);
 	void 							interpretar_linea_como_rejilla(const std::string& linea);
 	void							interpretar_linea_como_celdas(const std::string& linea);
-	void							interpretar_linea_como_objeto(const std::string& linea, Factoria_objetos_juego&);
+	void							interpretar_linea_como_objeto(const std::string& linea, App_Juego_Factorias::Factoria_objetos_juego&);
 	int							toi(const std::string& s) {return std::atoi(s.c_str());};
 
 	enum class 						t_estados {nada, estructura, info, rejilla, celdas, logica, objetos, fin};

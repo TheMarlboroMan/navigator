@@ -94,7 +94,7 @@ std::cout<<"POR DER"<<std::endl;
 	//El jugador sufre un impacto.
 */
 
-void Logica_colisionable::procesar(std::vector<std::shared_ptr<App_Interfaces::Colisionable_I>>& v)
+void Logica_colisionable::procesar(std::vector<App_Interfaces::Colisionable_I *>& v)
 {
 	for(auto& o : v)
 	{		

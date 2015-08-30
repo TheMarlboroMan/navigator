@@ -4,24 +4,17 @@
 #include <stdexcept>
 #include <vector>
 #include <string>
-#include <herramientas/herramientas/herramientas.h>
-#include <herramientas/vector_2d/vector_2d.h>
 
-#include "../juego/contenedores/contenedor_objetos.h"
-#include "../juego/contenedores/contenedor_volatiles.h"
-#include "../juego/objetos_juego/bonus_salud.h"
-#include "../juego/objetos_juego/bonus_tiempo.h"
-#include "../juego/objetos_juego/enemigo_basico.h"
-#include "../juego/objetos_juego/enemigo_rebote.h"
-#include "../juego/objetos_juego/entrada.h"
-#include "../juego/objetos_juego/salida.h"
-#include "../juego/objetos_juego/posicion_inicial.h"
-#include "../juego/objetos_juego/particula_chispa.h"
-#include "../juego/objetos_juego/particula_explosion.h"
-#include "../juego/objetos_juego/particula_chatarra.h"
-#include "../juego/objetos_juego/particula_fantasma.h"
+#include "../contenedores/contenedor_objetos.h"
+#include "../objetos_juego/bonus_salud.h"
+#include "../objetos_juego/bonus_tiempo.h"
+#include "../objetos_juego/enemigo_basico.h"
+#include "../objetos_juego/enemigo_rebote.h"
+#include "../objetos_juego/entrada.h"
+#include "../objetos_juego/salida.h"
+#include "../objetos_juego/posicion_inicial.h"
 
-namespace App_Generador
+namespace App_Juego_Factorias
 {
 
 class Factoria_objetos_juego_excepcion:
@@ -43,6 +36,10 @@ class Factoria_objetos_juego_excepcion:
 	}
 };
 
+//TODO: A la factoría hay que darle un repensado... Sería una buena cosa que simplemente
+//fabricara los objetos y delegar a otra clase la interpretación de las líneas y el 
+//guardado en el contenedor de objetos de turno.
+
 class Factoria_objetos_juego
 {	
 	////////////////////
@@ -51,7 +48,6 @@ class Factoria_objetos_juego
 
 							Factoria_objetos_juego();
 	void						establecer_contenedor(App_Juego_Contenedores::Contenedor_objetos&);
-	void						establecer_contenedor_volatiles(App_Juego_Contenedores::Contenedor_volatiles&);
 
 	void 						interpretar_linea(const std::string&);
 
@@ -60,18 +56,9 @@ class Factoria_objetos_juego
 	void						insertar(std::shared_ptr<App_Juego_ObjetoJuego::Enemigo_basico>&);
 	void						insertar(std::shared_ptr<App_Juego_ObjetoJuego::Enemigo_rebote>&);
 	void						insertar(std::shared_ptr<App_Juego_ObjetoJuego::Salida>&);
-	void						insertar(std::shared_ptr<App_Juego_ObjetoJuego::Particula_chispa>&);
-	void						insertar(std::shared_ptr<App_Juego_ObjetoJuego::Particula_explosion>&);
-	void						insertar(std::shared_ptr<App_Juego_ObjetoJuego::Particula_chatarra>&);
-	void						insertar(std::shared_ptr<App_Juego_ObjetoJuego::Particula_fantasma>&);
 
 	std::shared_ptr<App_Juego_ObjetoJuego::Bonus_tiempo>		crear_bonus_tiempo(float x, float y, float t);
 	std::shared_ptr<App_Juego_ObjetoJuego::Bonus_salud>		crear_bonus_salud(float x, float y, float t);
-	std::shared_ptr<App_Juego_ObjetoJuego::Particula_chispa>	crear_chispa(float x, float y, float tv, const DLibH::Vector_2d& v);
-	std::shared_ptr<App_Juego_ObjetoJuego::Particula_explosion>	crear_explosion(float x, float y, float tv, const DLibH::Vector_2d& v);
-	std::shared_ptr<App_Juego_ObjetoJuego::Particula_chatarra>	crear_chatarra(float x, float y, float tv, const DLibH::Vector_2d& v);
-	std::shared_ptr<App_Juego_ObjetoJuego::Particula_fantasma>	crear_fantasma(float x, float y, float tv, float ve, App_Definiciones::direcciones direccion, int recurso, const DLibH::Caja<int, int>& recorte);
-
 
 	////////////////////
 	//Métodos privados.
@@ -92,7 +79,6 @@ class Factoria_objetos_juego
 	private:
 
 	App_Juego_Contenedores::Contenedor_objetos *	contenedor_ptr;
-	App_Juego_Contenedores::Contenedor_volatiles *	contenedor_volatiles_ptr;
 
 	/**
 	* longitudes de parámetros.

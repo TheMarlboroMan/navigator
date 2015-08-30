@@ -1,4 +1,5 @@
 #include <algorithm>
+#include <iterator>
 
 #include "controlador_juego.h"
 #include "../app/recursos.h"
@@ -244,11 +245,15 @@ void Controlador_juego::procesar_jugador(Jugador& j, float delta, App_Input::Inp
 	}
 
 	//Las colisiones con objetos de juego se evaluan en la posición final.
-
+	
+	//TODO: De alguna forma los bonus y choques con "enemigos" y otras cosas
+	//podrían pertenencer a la misma familia de "colisionables".
+	
 	//En primer lugar evaluamos los bonus que se pueden recoger.
-	Recogedor_bonus rb(contador_tiempo, jugador);
+	auto vb=sala_actual->acc_objetos_juego().recolectar_bonus();
+	Recogedor_bonus rb(contador_tiempo, jugador); //El objeto proxy que los bonus comprenden.
 	Logica_bonus lb(rb);
-	sala_actual->procesar_bonus(lb);
+	lb.procesar(vb);
 
 	//Ahora evaluamos el choque con los proyectiles enemigos...
 	if(contenedor_volatiles.proyectiles_enemigos.size())
@@ -276,8 +281,10 @@ void Controlador_juego::procesar_jugador(Jugador& j, float delta, App_Input::Inp
 	* salida puede provocar el fin del nivel si el jugador aterriza al lado.
 	*/
 
+	//TODO: Este otro tiene también pesky visitors.
 	Logica_colisionable lc(jugador);
-	sala_actual->procesar_colisionables(lc);
+	auto vc=sala_actual->acc_objetos_juego().recolectar_colisionables();
+	lc.procesar(vc);
 	if(lc.es_salida_nivel())
 	{
 		//TODO...
@@ -394,57 +401,40 @@ void Controlador_juego::logica_mundo(float delta)
 	* Cosas a las que les podemos disparar: controlar si cualquier proyectil
 	* del jugador ha hecho impacto con ellas.
 	*/
+
 	if(contenedor_volatiles.proyectiles_jugador.size()) 
 	{
 		Logica_disparable ld(contenedor_volatiles.proyectiles_jugador);
-		sala_actual->procesar_disparables(ld);
+		auto vd=sala_actual->acc_objetos_juego().recolectar_disparables();
+		ld.procesar(vd);
 	}
 
-	/**
-	* Cosas que pueden añadir disparos al mundo... Básicamente controlar si
-	* ha llegado el momento de disparar y hacer lo que sea. 
-	* Aquí tenemos una mezcla interesante entre un visitante de Disparador y 
-	* la clase lógica proyectiles, que controla la inserción de los mismos. 
-	* Podemos convertir la lógica proyectiles en "procesador" para por hacer 
-	* "procesar" de todos los objetos juego y, posteriormente, separar los 
-	* "disparadores" y llamar a los visitantes propios.
-	*/
-
-	//TODO: Esto va a desaparecer y a integrarse con "creador de objetos juego".
-
-	Logica_disparador lp(contenedor_volatiles.proyectiles_enemigos, jugador);
-	sala_actual->procesar_disparadores(lp);
-
 	/** 
-	* Objeto para procesar la lógica de los turnos... Bien podría ser
-	* una clase aparte si es necesario. Por un lado se procesan los objetos
-	* de la sala y por otro los que quedan fuera.
-	* TODO: Terrible lo de las particulas, terrible... Esto hay que 
-	* plantearlo de otro modo.
+	* Objeto para procesar la lógica de los turnos...
+	* TODO: Aquí dentro hay un visitante y mierdas. A ver si lo podemos deshacer
+	* porque realmente no me gusta naaada.
 	*/
 
 	using namespace App_Interfaces;
+	std::vector<Con_turno_I *> vct=sala_actual->acc_objetos_juego().recolectar_con_turno();
 
-	std::vector<std::shared_ptr<Con_turno_I>> pt;
-	for(auto& p : contenedor_volatiles.particulas) pt.push_back(p);
-	Logica_con_turno lct(jugador, *sala_actual, delta, pt);
-	sala_actual->procesar_con_turno(lct);
+	for(auto& p : contenedor_volatiles.particulas) 			vct.push_back(p.get());
+	for(auto &p : contenedor_volatiles.proyectiles_jugador) 	vct.push_back(p.get());
+	for(auto &p : contenedor_volatiles.proyectiles_enemigos) 	vct.push_back(p.get());
 
-	std::vector<std::shared_ptr<Con_turno_I>> vpr;
-	for(auto &p : contenedor_volatiles.proyectiles_jugador) vpr.push_back(p);
-	for(auto &p : contenedor_volatiles.proyectiles_enemigos) vpr.push_back(p);
-	lct.procesar(vpr);
+	Logica_con_turno lct(jugador, *sala_actual, delta);
+	lct.procesar(vct);
 
 	/*****
 	* Los que pueden crear nuevos objetos...
 	*/
 
-	std::vector<std::shared_ptr<Generador_objetos_juego_I>> vgoj;
-	for(auto &p : contenedor_volatiles.proyectiles_jugador) vgoj.push_back(p);
-	for(auto &p : contenedor_volatiles.proyectiles_enemigos) vgoj.push_back(p);
+	auto vgoj=sala_actual->acc_objetos_juego().recolectar_generadores_objetos_juego();
+	for(auto &p : contenedor_volatiles.proyectiles_jugador) vgoj.push_back(p.get());
+	for(auto &p : contenedor_volatiles.proyectiles_enemigos) vgoj.push_back(p.get());
 
-	Logica_generador_objetos_juego lgoj(vgoj, jugador);
-	sala_actual->procesar_generadores_objetos_juego(lgoj);
+	Logica_generador_objetos_juego lgoj(jugador);
+	lgoj.procesar(vgoj);
 	if(lgoj.hay_nuevos()) sala_actual->fusionar_objetos_juego(lgoj.acc_contenedor());
 	if(lgoj.hay_volatiles()) contenedor_volatiles.fusionar_con(lgoj.acc_contenedor_volatiles());
 }

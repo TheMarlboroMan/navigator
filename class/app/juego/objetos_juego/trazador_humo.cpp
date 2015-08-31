@@ -15,7 +15,7 @@ Trazador_humo::Trazador_humo(float x, float y, float tv, const DLibH::Vector_2d&
 	
 float Trazador_humo::obtener_peso() const
 {
-	return 20.0f;
+	return 200.0f;
 }
 
 float Trazador_humo::obtener_max_velocidad_caida() const
@@ -34,6 +34,7 @@ void Trazador_humo::turno(App_Interfaces::Contexto_turno_I& ct)
 	tiempo_vida-=delta;
 	tiempo_humo-=delta;
 	desplazar(delta);
+	accion_gravedad(delta);
 
 	if(tiempo_vida <= 0.0f)
 	{

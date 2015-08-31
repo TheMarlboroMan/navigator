@@ -5,14 +5,12 @@
 #include "../app/recursos.h"
 #include "../app/definiciones/definiciones.h"
 
-#include "../app/juego/logica/recogedor_bonus.h"
-#include "../app/juego/logica/logica_bonus.h"
 #include "../app/juego/logica/logica_disparador.h"
 #include "../app/juego/logica/logica_con_turno.h"
 #include "../app/juego/logica/logica_disparable.h"
-#include "../app/juego/logica/logica_colisionable.h"
 #include "../app/juego/logica/logica_generador_objetos_juego.h"
 #include "../app/juego/logica/contexto_turno_juego.h"
+#include "../app/juego/logica/logica_efectos_colision.h"
 
 using namespace App_Niveles;
 using namespace App_Juego;
@@ -248,30 +246,13 @@ void Controlador_juego::procesar_jugador(Jugador& j, float delta, App_Input::Inp
 
 	//Las colisiones con objetos de juego se evaluan en la posición final.
 	
-	//TODO: De alguna forma los bonus y choques con "enemigos" y otras cosas
-	//podrían pertenencer a la misma familia de "colisionables".
-	//Vamos a aplicarles el mismo tratamiento que al resto y disminuimos
-	//los archivos y las cosas que tenemos que hacer... Ya de paso eliminaremos
-	//el sistema de visitantes.
-
-	/**
-	auto vc=sala_actual->acc_objetos_juego().recolectar_colisionables();
-	Contexto_colisionable cc(contador_tiempo, jugador); //El objeto proxy que los colisionables comprenden.
-	Logica_colisionable lc(cc);
-	lc.procesar(vc);
-	if(lc.es_salida_nivel())
+	auto vec=sala_actual->acc_objetos_juego().recolectar_efectos_colision();
+	Logica_efectos_colision lec(contador_tiempo, jugador);
+	lec.procesar(vec);
+	if(lec.es_salida_nivel())
 	{
-		//Do something...
+		abandonar_aplicacion();
 	}
-	*/
-	
-
-	
-	//En primer lugar evaluamos los bonus que se pueden recoger.
-	auto vb=sala_actual->acc_objetos_juego().recolectar_bonus();
-	Recogedor_bonus rb(contador_tiempo, jugador); //El objeto proxy que los bonus comprenden.
-	Logica_bonus lb(rb);
-	lb.procesar(vb);
 
 	//Ahora evaluamos el choque con los proyectiles enemigos...
 	if(contenedor_volatiles.proyectiles_enemigos.size())
@@ -293,21 +274,6 @@ void Controlador_juego::procesar_jugador(Jugador& j, float delta, App_Input::Inp
 	auto c=jugador.copia_caja_desplazada(0.0, 1.0);
 	Calculador_colisiones CC;
 	jugador.contabilizar_tiempo_aterrizado(CC.celdas_en_caja(c, *sala_actual).size() ? delta : 0.0);
-
-	/*
-	* Cosas con las que se pueden chocar que no son bonus. El objeto de 
-	* salida puede provocar el fin del nivel si el jugador aterriza al lado.
-	*/
-
-	//TODO: Este otro tiene también pesky visitors.
-	Logica_colisionable lc(jugador);
-	auto vc=sala_actual->acc_objetos_juego().recolectar_colisionables();
-	lc.procesar(vc);
-	if(lc.es_salida_nivel())
-	{
-		//TODO...
-		abandonar_aplicacion();
-	}
 }
 
 /**

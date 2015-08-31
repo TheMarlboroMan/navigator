@@ -119,3 +119,8 @@ void Enemigo_basico::generar_objetos(App_Interfaces::Factoria_objetos_juego_I& f
 		}
 	}
 }
+
+void Enemigo_basico::efecto_colision(App_Interfaces::Efecto_colision_recogedor_I& er)
+{
+	er.recibir_impacto(2.5f);
+}

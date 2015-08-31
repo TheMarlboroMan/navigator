@@ -110,3 +110,8 @@ void Enemigo_rebote::cambiar_direccion()
 		break;
 	}
 }
+
+void Enemigo_rebote::efecto_colision(App_Interfaces::Efecto_colision_recogedor_I& er)
+{
+	er.recibir_impacto(2.5f);
+}

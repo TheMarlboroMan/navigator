@@ -9,7 +9,7 @@
 #include "../../interfaces/sonoro_i.h"
 #include "../../interfaces/disparable_i.h"
 #include "../../interfaces/con_turno_i.h"
-#include "../../interfaces/colisionable_i.h"
+#include "../../interfaces/efecto_colision_i.h"
 #include "../../interfaces/generador_objetos_juego_i.h"
 #include "../../graficos/bloque_transformacion_representable.h"
 #include "../../../herramientas_proyecto/generador_numeros.h"
@@ -23,7 +23,7 @@ class Enemigo_basico:
 		public App_Interfaces::Sonoro_I,
 		public App_Interfaces::Con_turno_I,
 		public App_Interfaces::Disparable_I,
-		public App_Interfaces::Colisionable_I,
+		public App_Interfaces::Efecto_colision_I,
 		public App_Interfaces::Generador_objetos_juego_I
 {
 	////////////////////////////
@@ -72,11 +72,11 @@ class Enemigo_basico:
 	virtual	void		generar_objetos(App_Interfaces::Factoria_objetos_juego_I&);
 
 	///////////////
-	//Implementación de Colisionable_I
+	//Implementación de Efecto_colision_I
 	public:
 
-	virtual void 		recibir_visitante(App_Visitantes::Visitante_colisionable& v) {v.visitar(*this);}
-	virtual bool		es_colision_para(const Espaciable& e)const {return en_colision_con(e);}
+	virtual void		efecto_colision(App_Interfaces::Efecto_colision_recogedor_I&);
+	virtual bool		es_colision_para(const App_Interfaces::Espaciable& e)const {return en_colision_con(e);}
 
 	////////////////////////////
 	// Definiciones privadas.

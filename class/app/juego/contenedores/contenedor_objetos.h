@@ -10,13 +10,12 @@
 #include "contenedor_herramientas.h"
 
 #include "../../interfaces/objeto_juego_i.h"
-#include "../../interfaces/bonus_i.h"
 #include "../../interfaces/con_turno_i.h"
 #include "../../interfaces/disparable_i.h"
 #include "../../interfaces/representable_i.h"
-#include "../../interfaces/colisionable_i.h"
 #include "../../interfaces/sonoro_i.h"
 #include "../../interfaces/generador_objetos_juego_i.h"
+#include "../../interfaces/efecto_colision_i.h"
 #include "../objetos_juego/entrada.h"
 #include "../objetos_juego/salida.h"
 #include "../objetos_juego/posicion_inicial.h"
@@ -38,13 +37,12 @@ namespace App_Juego_Contenedores
 		* El resto de vectores contendrían "copias" del original, por así decirlo.
 		*/
 
-		std::vector<std::shared_ptr<App_Interfaces::Bonus_I>>			bonus;
 		std::vector<std::shared_ptr<App_Interfaces::Con_turno_I>>		con_turno;
 		std::vector<std::shared_ptr<App_Interfaces::Disparable_I>>		disparables;
 		std::vector<std::shared_ptr<App_Interfaces::Representable_I>>		representables;
-		std::vector<std::shared_ptr<App_Interfaces::Colisionable_I>>		colisionables;
 		std::vector<std::shared_ptr<App_Interfaces::Sonoro_I>>			sonoros;
 		std::vector<std::shared_ptr<App_Interfaces::Generador_objetos_juego_I>>	generadores_objetos_juego;
+		std::vector<std::shared_ptr<App_Interfaces::Efecto_colision_I>>		efectos_colision;
 
 		/**
 		* Además, las entradas del nivel y posiciones iniciales y finales.
@@ -69,8 +67,7 @@ namespace App_Juego_Contenedores
 		std::vector<App_Interfaces::Generador_objetos_juego_I *>		recolectar_generadores_objetos_juego();
 		std::vector<App_Interfaces::Con_turno_I *>				recolectar_con_turno();
 		std::vector<App_Interfaces::Disparable_I *>				recolectar_disparables();
-		std::vector<App_Interfaces::Bonus_I *>					recolectar_bonus();
-		std::vector<App_Interfaces::Colisionable_I *>				recolectar_colisionables();
+		std::vector<App_Interfaces::Efecto_colision_I *>			recolectar_efectos_colision();
 //		void									recolectar_generador_objetos_juego(std::vector<App_Interfaces::Generador_objetos_juego_I *>&);
 	};
 }

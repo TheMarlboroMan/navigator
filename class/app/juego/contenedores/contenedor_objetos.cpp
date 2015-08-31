@@ -32,16 +32,17 @@ void Contenedor_objetos::insertar_entrada(const App_Juego_ObjetoJuego::Entrada& 
 	direcciones_entradas=direcciones_entradas | e.acc_posicion();
 }
 
+//TODO: Considerar si esto es lo mismo que "fusionar con".
+
 void Contenedor_objetos::sumar_variante(const Contenedor_objetos& o)
 {
-	for(auto& ob : o.objetos_juego) objetos_juego.push_back(ob);
-	for(auto& ob : o.bonus) bonus.push_back(ob);
-	for(auto& ob : o.con_turno) con_turno.push_back(ob);
-	for(auto& ob : o.disparables) disparables.push_back(ob);
-	for(auto& ob : o.representables) representables.push_back(ob);
-	for(auto& ob : o.colisionables) colisionables.push_back(ob);
-	for(auto& ob : o.sonoros) sonoros.push_back(ob);
-	for(auto& ob : o.generadores_objetos_juego) generadores_objetos_juego.push_back(ob);
+	std::move(std::begin(o.objetos_juego), std::end(o.objetos_juego), std::back_inserter(objetos_juego));
+	std::move(std::begin(o.con_turno), std::end(o.con_turno), std::back_inserter(con_turno));
+	std::move(std::begin(o.disparables), std::end(o.disparables), std::back_inserter(disparables));
+	std::move(std::begin(o.representables), std::end(o.representables), std::back_inserter(representables));
+	std::move(std::begin(o.sonoros), std::end(o.sonoros), std::back_inserter(sonoros));
+	std::move(std::begin(o.generadores_objetos_juego), std::end(o.generadores_objetos_juego), std::back_inserter(generadores_objetos_juego));
+	std::move(std::begin(o.efectos_colision), std::end(o.efectos_colision), std::back_inserter(efectos_colision));
 }
 
 
@@ -67,10 +68,9 @@ size_t Contenedor_objetos::limpiar_para_borrar()
 	if(res)
 	{
 		//TODO: Buen sitio para aprender a usar std::function y quitar las especializaciones...
-		ayudante_borrar(bonus);
 		ayudante_borrar(con_turno);
 		ayudante_borrar(disparables);
-		ayudante_borrar(colisionables);
+		ayudante_borrar(efectos_colision);
 		ayudante_borrar(generadores_objetos_juego);
 
 		//Y las especializaciones malvadas.
@@ -99,15 +99,15 @@ size_t Contenedor_objetos::limpiar_para_borrar()
 void Contenedor_objetos::fusionar_con(Contenedor_objetos& c)
 {
 	std::move(std::begin(c.objetos_juego), std::end(c.objetos_juego), std::back_inserter(objetos_juego));
-	std::move(std::begin(c.bonus), std::end(c.bonus), std::back_inserter(bonus));
 	std::move(std::begin(c.con_turno), std::end(c.con_turno), std::back_inserter(con_turno));
 	std::move(std::begin(c.disparables), std::end(c.disparables), std::back_inserter(disparables));
-	std::move(std::begin(c.colisionables), std::end(c.colisionables), std::back_inserter(colisionables));
 	std::move(std::begin(c.generadores_objetos_juego), std::end(c.generadores_objetos_juego), std::back_inserter(generadores_objetos_juego));
 	std::move(std::begin(c.representables), std::end(c.representables), std::back_inserter(representables));
 	std::move(std::begin(c.sonoros), std::end(c.sonoros), std::back_inserter(sonoros));
+	std::move(std::begin(c.efectos_colision), std::end(c.efectos_colision), std::back_inserter(efectos_colision));
 }
 
+//TODO: Quizás podamos especializar "back_inserter".
 
 std::vector<App_Interfaces::Generador_objetos_juego_I *> Contenedor_objetos::recolectar_generadores_objetos_juego()
 {
@@ -130,17 +130,10 @@ std::vector<App_Interfaces::Disparable_I *> Contenedor_objetos::recolectar_dispa
 	return v;
 }
 
-std::vector<App_Interfaces::Bonus_I *> Contenedor_objetos::recolectar_bonus()
+std::vector<App_Interfaces::Efecto_colision_I *> Contenedor_objetos::recolectar_efectos_colision()
 {
-	std::vector<App_Interfaces::Bonus_I *> v;
-	for(auto& o : bonus) v.push_back(o.get());
-	return v;
-}
-
-std::vector<App_Interfaces::Colisionable_I *> Contenedor_objetos::recolectar_colisionables()
-{
-	std::vector<App_Interfaces::Colisionable_I *> v;
-	for(auto& o : colisionables) v.push_back(o.get());
+	std::vector<App_Interfaces::Efecto_colision_I *> v;
+	for(auto& o : efectos_colision) v.push_back(o.get());
 	return v;
 }
 

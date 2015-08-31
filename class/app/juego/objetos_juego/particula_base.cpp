@@ -27,7 +27,9 @@ void Particula_base::restar_tiempo_vida(float v)
 * de la partícula.
 */
 
-int Particula_base::calcular_parcial_tiempo_vida(int t) const
+int Particula_base::calcular_parcial_tiempo_vida(float t) const
 {
-	return ceil(tiempo_vida * t) / tiempo_vida_inicial;
+	//TODO: Esta función no me gusta todo lo que debería... El primer paso es
+	//"t" pero luego ya no.
+	return ceil( (tiempo_vida * t) / tiempo_vida_inicial);
 }

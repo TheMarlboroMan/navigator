@@ -99,6 +99,19 @@ void Enemigo_basico::generar_objetos(App_Interfaces::Factoria_objetos_juego_I& f
 			++i;
 		}
 
+		auto gtraza=HerramientasProyecto::Generador_int(3, 5);
+		auto gveltraza=HerramientasProyecto::Generador_int(160, 200);
+		auto gduracion=HerramientasProyecto::Generador_int(40, 100);
+		i=0;
+		while(i < gtraza())
+		{
+			auto g=HerramientasProyecto::Generador_int(0, 359);
+			auto v=Vector_2d::vector_unidad_para_angulo(g())*gveltraza();
+			float dur=(float)gduracion() / 100.0;
+			f.fabricar_trazador_humo(x, y, dur, v);
+			++i;
+		}
+
 		f.fabricar_bonus_tiempo(acc_espaciable_x(), acc_espaciable_y(), 5.0f);
 		f.fabricar_explosion(x, y, 1.0f, v);
 	}

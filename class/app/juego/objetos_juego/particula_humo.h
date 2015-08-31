@@ -1,19 +1,21 @@
-#ifndef PARTICULA_EXPLOSION_H
-#define PARTICULA_EXPLOSION_H
+#ifndef PARTICULA_HUMO_H
+#define PARTICULA_HUMO_H
 
-#include "particula_movil_base.h"
+#include "particula_base.h"
 #include "../../definiciones/sprites_particulas.h"
 #include "../../recursos.h"
 
 namespace App_Juego_ObjetoJuego
 {
-class Particula_explosion:
-	public Particula_movil_base
+
+class Particula_humo:
+	public Particula_base
 {
+
 	//////////////////
 	//Interface pública...
 	public:
-						Particula_explosion(float x, float y, float tv, const DLibH::Vector_2d& v);
+						Particula_humo(float x, float y, float tv);
 
 	//////////////
 	// Implementación de Representable_I
@@ -33,8 +35,9 @@ class Particula_explosion:
 	private:
 
 	int						frame_actual;
+	//TODO: Porqué la partícula base no tiene ya una posición???. Si van a salir muchas más querremos revisar esto.
+	float							x, y;
 	mutable float						w, h;
-
 };
 }
 

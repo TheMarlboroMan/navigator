@@ -48,6 +48,7 @@ $(DIR_O)particula_fantasma.o\
 $(DIR_O)particula_explosion.o\
 $(DIR_O)particula_chatarra.o\
 $(DIR_O)particula_chispa.o\
+$(DIR_O)particula_humo.o\
 $(DIR_O)bonus_tiempo.o\
 $(DIR_O)bonus_salud.o\
 $(DIR_O)logica_con_turno.o\
@@ -59,6 +60,7 @@ $(DIR_O)contexto_turno_juego.o\
 $(DIR_O)efecto_colision_recogedor.o\
 $(DIR_O)enemigo_basico.o\
 $(DIR_O)enemigo_rebote.o\
+$(DIR_O)trazador_humo.o\
 $(DIR_O)proyectil_base.o\
 $(DIR_O)proyectil_normal.o\
 $(DIR_O)item_repositorio.o\

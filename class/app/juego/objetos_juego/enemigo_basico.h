@@ -69,6 +69,8 @@ class Enemigo_basico:
 
 	///////////////
 	//Implementación de Generador_objetos_juego_I
+	public:
+
 	virtual	void		generar_objetos(App_Interfaces::Factoria_objetos_juego_I&);
 
 	///////////////

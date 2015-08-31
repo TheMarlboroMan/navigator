@@ -20,6 +20,12 @@ void Interface_creador_objetos::fabricar_bonus_salud(float x, float y, float t)
 	factoria.insertar(ob);
 }
 
+void Interface_creador_objetos::fabricar_trazador_humo(float x, float y, float tv, const DLibH::Vector_2d& v)
+{
+	auto ob=factoria_volatiles.crear_trazador_humo(x, y, tv, v);
+	contenedor_volatiles.trazadores.push_back(ob);
+}
+
 void Interface_creador_objetos::fabricar_chispa(float x, float y, float tv, const DLibH::Vector_2d& v)
 {
 	auto ob=factoria_volatiles.crear_chispa(x, y, tv, v);
@@ -38,10 +44,15 @@ void Interface_creador_objetos::fabricar_chatarra(float x, float y, float tv, co
 	contenedor_volatiles.particulas.push_back(ob);
 }
 
-
 void Interface_creador_objetos::fabricar_fantasma(float x, float y, float tv, float ve, App_Definiciones::direcciones direccion, int recurso, const DLibH::Caja<int, int>& recorte)
 {
 	auto ob=factoria_volatiles.crear_fantasma(x, y, tv, ve, direccion, recurso, recorte);
+	contenedor_volatiles.particulas.push_back(ob);
+}
+
+void Interface_creador_objetos::fabricar_humo(float x, float y, float tv)
+{
+	auto ob=factoria_volatiles.crear_humo(x, y, tv);
 	contenedor_volatiles.particulas.push_back(ob);
 }
 

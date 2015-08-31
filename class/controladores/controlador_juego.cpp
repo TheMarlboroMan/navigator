@@ -403,6 +403,7 @@ void Controlador_juego::logica_mundo(float delta)
 	for(auto& p : contenedor_volatiles.particulas) 			vct.push_back(p.get());
 	for(auto &p : contenedor_volatiles.proyectiles_jugador) 	vct.push_back(p.get());
 	for(auto &p : contenedor_volatiles.proyectiles_enemigos) 	vct.push_back(p.get());
+	for(auto &p : contenedor_volatiles.trazadores) 			vct.push_back(p.get());
 
 	Contexto_turno_juego ctj(delta, *sala_actual, jugador);
 	Logica_con_turno lct(ctj);
@@ -415,6 +416,7 @@ void Controlador_juego::logica_mundo(float delta)
 	auto vgoj=sala_actual->acc_objetos_juego().recolectar_generadores_objetos_juego();
 	for(auto &p : contenedor_volatiles.proyectiles_jugador) vgoj.push_back(p.get());
 	for(auto &p : contenedor_volatiles.proyectiles_enemigos) vgoj.push_back(p.get());
+	for(auto &p : contenedor_volatiles.trazadores) vgoj.push_back(p.get());
 
 	Logica_generador_objetos_juego lgoj(jugador);
 	lgoj.procesar(vgoj);

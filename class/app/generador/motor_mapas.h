@@ -25,12 +25,15 @@ class Motor_mapas
 
 	void					iniciar_repo();
 	void					generar_mapa(int principales, int secundarias);
+	void					generar_mapa_test(int tipo, int nivel, int variante);
 	App_Niveles::Mapa&			acc_mapa() {return mapa;}
 	App_Juego_Automapa::Automapa&		acc_automapa() {return automapa;}
 
 	////////////////
 	//Internas
 	private:
+
+	void					generar_automapa(const App_Niveles::Mapa& mapa);
 
 	App_Niveles::Mapa			mapa;
 	App_Juego_Automapa::Automapa		automapa;

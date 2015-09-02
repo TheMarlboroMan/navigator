@@ -111,14 +111,10 @@ std::vector<const App_Interfaces::Espaciable *> Calculador_colisiones::solidos_e
 //TODO: Considerar move.
 	std::copy(std::begin(c), std::end(c), std::back_inserter(res));
 
-	//TODO: ATENCION ATENCION ANTENCION NO LO HACE BIEN!!!!. NO COMPRUEBA QUE COLISIONEN!!.
-
-std::cout<<res.size()<<std::endl;
 	auto sol=sala.acc_objetos_juego().recolectar_solidos();
-std::cout<<sol.size()<<std::endl;
+	auto it=std::remove_if(std::begin(sol), std::end(sol), [caja](const Espaciable * e) {return !e->copia_caja().es_en_colision_con(caja);});
+	sol.erase(it, std::end(sol));
 	std::copy(std::begin(sol), std::end(sol), std::back_inserter(res));
-
-std::cout<<res.size()<<"********"<<std::endl;
 
 	return res;
 }

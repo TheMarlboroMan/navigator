@@ -6,6 +6,9 @@
 /*El actor es algo que existe en el espacio de juego.
 Podemos encontrar con controladores que hacen cosas y que da igual su punto
 en el espacio, pero bueno, no es importante.
+
+Básicamente es el siguiente paso en el "espaciable", concretándulo en una
+caja real.
 */
 
 namespace App_Juego

@@ -232,16 +232,16 @@ void Controlador_juego::procesar_jugador(Jugador& j, float delta, App_Input::Inp
 	{
 		jugador.desplazar_caja(0.0, v.y * delta);
 		Calculador_colisiones CC;
-		std::vector<const Celda *> celdas=CC.celdas_en_caja(jugador.copia_caja(), *sala_actual);
-		if(celdas.size()) CC.ajustar_colisiones_actor_movil_y_con_celdas(jugador, celdas);
+		auto v=CC.solidos_en_caja_sala(jugador.copia_caja(), *sala_actual);
+		if(v.size()) CC.ajustar_colisiones_eje_y_actor_movil_con_espaciables(jugador, v);
 	}
 
 	if(v.x) 
 	{
 		jugador.desplazar_caja(v.x * delta, 0.0);
 		Calculador_colisiones CC;
-		std::vector<const Celda *> celdas=CC.celdas_en_caja(jugador.copia_caja(), *sala_actual);
-		if(celdas.size()) CC.ajustar_colisiones_actor_movil_x_con_celdas(jugador, celdas);
+		auto v=CC.solidos_en_caja_sala(jugador.copia_caja(), *sala_actual);
+		if(v.size()) CC.ajustar_colisiones_eje_x_actor_movil_con_espaciables(jugador, v);
 	}
 
 	//Las colisiones con objetos de juego se evaluan en la posición final.

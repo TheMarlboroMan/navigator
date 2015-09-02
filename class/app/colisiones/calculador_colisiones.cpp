@@ -103,76 +103,24 @@ std::vector<const Celda *> Calculador_colisiones::celdas_en_caja(const Espaciabl
 	return resultado;
 }
 
-void Calculador_colisiones::ajustar_colisiones_actor_movil_y_con_celdas(Actor_movil& actor, const std::vector<const Celda * >& celdas) const
+std::vector<const App_Interfaces::Espaciable *> Calculador_colisiones::solidos_en_caja_sala(const App_Interfaces::Espaciable::t_caja& caja, const App_Niveles::Sala& sala) const
 {
-	auto vy=actor.acc_vector_y();
+	std::vector<const App_Interfaces::Espaciable *> res;
 
-	if(vy < 0.0)
-	{
-		int fy=-1;
-		for(const Celda * e: celdas)
-		{
-			if(e->acc_espaciable_fy() >= fy)
-			{
-				fy=e->acc_espaciable_fy();
-			}
-		}
-		if(fy != -1)
-		{
-			actor.ajustar(fy, Actor_movil::posiciones_ajuste::arriba);
-		}
-	}
-	else if(vy > 0.0)
-	{
-		int fy=-1;
-		for(const Celda * e: celdas)
-		{
-			if(e->acc_espaciable_y() >= fy)
-			{
-				fy=e->acc_espaciable_y();
-			}
-		}
-		if(fy != -1)
-		{
-			actor.ajustar(fy, Actor_movil::posiciones_ajuste::abajo);
-		}
-	}
-}
+	auto c=celdas_en_caja(caja, sala);
+//TODO: Considerar move.
+	std::copy(std::begin(c), std::end(c), std::back_inserter(res));
 
-void Calculador_colisiones::ajustar_colisiones_actor_movil_x_con_celdas(Actor_movil& actor, const std::vector<const Celda * >& celdas) const
-{
-	auto vx=actor.acc_vector_x();
+	//TODO: ATENCION ATENCION ANTENCION NO LO HACE BIEN!!!!. NO COMPRUEBA QUE COLISIONEN!!.
 
-	if(vx < 0.0)
-	{
-		int fx=-1;
-		for(const Celda * e: celdas)
-		{
-			if(e->acc_espaciable_fx() >= fx)
-			{
-				fx=e->acc_espaciable_fx();
-			}
-		}
-		if(fx != -1)
-		{
-			actor.ajustar(fx, Actor_movil::posiciones_ajuste::izquierda);
-		}
-	}
-	else if(vx > 0.0)
-	{
-		int fx=-1;
-		for(const Celda * e: celdas)
-		{
-			if(e->acc_espaciable_x() >= fx)
-			{
-				fx=e->acc_espaciable_x();
-			}
-		}
-		if(fx != -1)
-		{
-			actor.ajustar(fx, Actor_movil::posiciones_ajuste::derecha);
-		}
-	}
+std::cout<<res.size()<<std::endl;
+	auto sol=sala.acc_objetos_juego().recolectar_solidos();
+std::cout<<sol.size()<<std::endl;
+	std::copy(std::begin(sol), std::end(sol), std::back_inserter(res));
+
+std::cout<<res.size()<<"********"<<std::endl;
+
+	return res;
 }
 
 /**
@@ -190,3 +138,78 @@ bool Calculador_colisiones::es_fuera_de_sala(const App_Interfaces::Espaciable::t
 
 	return !caja_sala.es_en_colision_con(caja);
 }
+
+void Calculador_colisiones::ajustar_colisiones_eje_y_actor_movil_con_espaciables(Actor_movil& actor, const std::vector<const App_Interfaces::Espaciable * >& espaciables) const
+{
+	//TODO: Seguramente podemos parametrizar estas dos funciones para que llamen a una sóla...
+
+	auto vy=actor.acc_vector_y();
+
+	if(vy < 0.0)
+	{
+		int fy=-1;
+		for(const App_Interfaces::Espaciable * e: espaciables)
+		{
+			if(e->acc_espaciable_fy() >= fy)
+			{
+				fy=e->acc_espaciable_fy();
+			}
+		}
+		if(fy != -1)
+		{
+			actor.ajustar(fy, Actor_movil::posiciones_ajuste::arriba);
+		}
+	}
+	else if(vy > 0.0)
+	{
+		int fy=-1;
+		for(const App_Interfaces::Espaciable * e: espaciables)
+		{
+			if(e->acc_espaciable_y() >= fy)
+			{
+				fy=e->acc_espaciable_y();
+			}
+		}
+		if(fy != -1)
+		{
+			actor.ajustar(fy, Actor_movil::posiciones_ajuste::abajo);
+		}
+	}
+}
+
+void Calculador_colisiones::ajustar_colisiones_eje_x_actor_movil_con_espaciables(Actor_movil& actor, const std::vector<const App_Interfaces::Espaciable * >& espaciables) const
+{
+	auto vx=actor.acc_vector_x();
+
+	if(vx < 0.0)
+	{
+		int fx=-1;
+		for(const App_Interfaces::Espaciable * e: espaciables)
+		{
+			if(e->acc_espaciable_fx() >= fx)
+			{
+				fx=e->acc_espaciable_fx();
+			}
+		}
+		if(fx != -1)
+		{
+			actor.ajustar(fx, Actor_movil::posiciones_ajuste::izquierda);
+		}
+	}
+	else if(vx > 0.0)
+	{
+		int fx=-1;
+		for(const App_Interfaces::Espaciable * e: espaciables)
+		{
+			if(e->acc_espaciable_x() >= fx)
+			{
+				fx=e->acc_espaciable_x();
+			}
+		}
+		if(fx != -1)
+		{
+			actor.ajustar(fx, Actor_movil::posiciones_ajuste::derecha);
+		}
+	}
+}
+

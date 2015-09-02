@@ -37,6 +37,7 @@ namespace App_Juego_Contenedores
 		* El resto de vectores contendrían "copias" del original, por así decirlo.
 		*/
 
+		std::vector<std::shared_ptr<App_Interfaces::Espaciable>>		solidos;
 		std::vector<std::shared_ptr<App_Interfaces::Con_turno_I>>		con_turno;
 		std::vector<std::shared_ptr<App_Interfaces::Disparable_I>>		disparables;
 		std::vector<std::shared_ptr<App_Interfaces::Representable_I>>		representables;
@@ -64,11 +65,25 @@ namespace App_Juego_Contenedores
 		size_t									limpiar_para_borrar();
 		void									fusionar_con(Contenedor_objetos&);	
 
+		std::vector<App_Interfaces::Espaciable *>				recolectar_solidos();
 		std::vector<App_Interfaces::Generador_objetos_juego_I *>		recolectar_generadores_objetos_juego();
 		std::vector<App_Interfaces::Con_turno_I *>				recolectar_con_turno();
 		std::vector<App_Interfaces::Disparable_I *>				recolectar_disparables();
 		std::vector<App_Interfaces::Efecto_colision_I *>			recolectar_efectos_colision();
+
+		std::vector<const App_Interfaces::Espaciable *>				recolectar_solidos() const;
+		std::vector<const App_Interfaces::Generador_objetos_juego_I *>		recolectar_generadores_objetos_juego() const;
+		std::vector<const App_Interfaces::Con_turno_I *>			recolectar_con_turno() const;
+		std::vector<const App_Interfaces::Disparable_I *>			recolectar_disparables() const;
+		std::vector<const App_Interfaces::Efecto_colision_I *>			recolectar_efectos_colision() const;
 //		void									recolectar_generador_objetos_juego(std::vector<App_Interfaces::Generador_objetos_juego_I *>&);
+/*
+		template <typename T, typename C> 
+		void recolectar(std::vector<T *>& res, C& c)
+		{
+			for(auto& o : c) res.push_back(o.get());
+		}
+*/
 	};
 }
 

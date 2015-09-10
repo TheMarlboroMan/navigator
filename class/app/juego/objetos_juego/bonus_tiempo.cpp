@@ -30,10 +30,10 @@ void Bonus_tiempo::transformar_bloque(App_Graficos::Bloque_transformacion_repres
 	b.establecer_posicion(acc_espaciable_x(), acc_espaciable_y(), W, H);
 }
 
-void Bonus_tiempo::recoger(App_Interfaces::Recoge_bonus_I& rb)
+void Bonus_tiempo::efecto_colision(App_Interfaces::Efecto_colision_recogedor_I& ec)
 {
-	rb.sumar_tiempo(tiempo);
-	Bonus_I::recoger(rb);
+	ec.sumar_tiempo(tiempo);
+	mut_borrar(true);
 	
 	using namespace App_Audio;
 	insertar_reproducir(Info_audio_reproducir(

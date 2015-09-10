@@ -27,6 +27,18 @@ void Motor_mapas::generar_mapa(int principales, int secundarias)
 	Traductor_mapas TM;
 	mapa=TM.traducir_mapa(GEN.acc_proto_salas(), repo);
 
+	generar_automapa(mapa);
+}
+
+void Motor_mapas::generar_mapa_test(int tipo, int nivel, int variante)
+{
+	Traductor_mapas TM;
+	mapa=TM.traducir_mapa_test(tipo, nivel, variante, repo);
+	generar_automapa(mapa);
+}
+
+void Motor_mapas::generar_automapa(const App_Niveles::Mapa& mapa)
+{
 	struct llamable_salas
 	{
 		struct info

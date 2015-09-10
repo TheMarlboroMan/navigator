@@ -57,13 +57,6 @@ $(DIR_JUEGO_LOGICA)logica_disparador.h\
 $(DIR_JUEGO_LOGICA)logica_disparador.cpp
 	$(CC) $(CFLAGS) $(INCLUDES) $(DIR_JUEGO_LOGICA)logica_disparador.cpp -o $(DIR_O)logica_disparador.o
 
-$(DIR_O)logica_bonus.o:\
-$(DIR_O)bonus_i.o\
-$(DIR_O)recoge_bonus_i.o\
-$(DIR_JUEGO_LOGICA)logica_bonus.h\
-$(DIR_JUEGO_LOGICA)logica_bonus.cpp
-	$(CC) $(CFLAGS) $(INCLUDES) $(DIR_JUEGO_LOGICA)logica_bonus.cpp -o $(DIR_O)logica_bonus.o
-
 $(DIR_O)logica_con_turno.o:\
 $(DIR_O)calculador_colisiones.o\
 $(DIR_O)jugador.o\
@@ -93,24 +86,23 @@ $(DIR_JUEGO_LOGICA)logica_generador_objetos_juego.h\
 $(DIR_JUEGO_LOGICA)logica_generador_objetos_juego.cpp
 	$(CC) $(CFLAGS) $(INCLUDES) $(DIR_JUEGO_LOGICA)logica_generador_objetos_juego.cpp -o $(DIR_O)logica_generador_objetos_juego.o
 
-$(DIR_O)logica_colisionable.o:\
-$(DIR_O)enemigo_basico.o\
-$(DIR_O)enemigo_rebote.o\
-$(DIR_O)salida.o\
-$(DIR_O)jugador.o\
-$(DIR_O)colisionable_i.o\
-$(DIR_JUEGO_LOGICA)logica_colisionable.h\
-$(DIR_JUEGO_LOGICA)logica_colisionable.cpp
-	$(CC) $(CFLAGS) $(INCLUDES) $(DIR_JUEGO_LOGICA)logica_colisionable.cpp -o $(DIR_O)logica_colisionable.o
-
-$(DIR_O)recogedor_bonus.o:\
+$(DIR_O)efecto_colision_recogedor.o:\
 $(DIR_O)jugador.o\
 $(DIR_O)contador_tiempo.o\
-$(DIR_O)recoge_bonus_i.o\
-$(DIR_JUEGO_LOGICA)recogedor_bonus.h\
-$(DIR_JUEGO_LOGICA)recogedor_bonus.cpp
-	$(CC) $(CFLAGS) $(INCLUDES) $(DIR_JUEGO_LOGICA)recogedor_bonus.cpp -o $(DIR_O)recogedor_bonus.o
+$(DIR_O)efecto_colision_recogedor_i.o\
+$(DIR_JUEGO_LOGICA)efecto_colision_recogedor.h\
+$(DIR_JUEGO_LOGICA)efecto_colision_recogedor.cpp
+	$(CC) $(CFLAGS) $(INCLUDES) $(DIR_JUEGO_LOGICA)efecto_colision_recogedor.cpp -o $(DIR_O)efecto_colision_recogedor.o
 
+$(DIR_O)logica_efectos_colision.o:\
+$(DIR_O)jugador.o\
+$(DIR_O)contador_tiempo.o\
+$(DIR_O)efecto_colision_recogedor.o\
+$(DIR_O)efecto_colision_i.o\
+$(DIR_O)espaciable.o\
+$(DIR_JUEGO_LOGICA)logica_efectos_colision.h\
+$(DIR_JUEGO_LOGICA)logica_efectos_colision.cpp
+	$(CC) $(CFLAGS) $(INCLUDES) $(DIR_JUEGO_LOGICA)logica_efectos_colision.cpp -o $(DIR_O)logica_efectos_colision.o
 
 $(DIR_O)contexto_turno_juego.o:\
 $(DIR_O)jugador.o\
@@ -126,12 +118,11 @@ $(DIR_JUEGO_LOGICA)contexto_turno_juego.cpp
 
 $(DIR_O)contenedor_objetos.o:\
 $(DIR_O)objeto_juego_i.o\
-$(DIR_O)bonus_i.o\
 $(DIR_O)con_turno_i.o\
 $(DIR_O)disparable_i.o\
 $(DIR_O)representable_i.o\
-$(DIR_O)colisionable_i.o\
 $(DIR_O)sonoro_i.o\
+$(DIR_O)efecto_colision_i.o\
 $(DIR_O)generador_objetos_juego_i.o\
 $(DIR_JUEGO_CONTENEDORES)contenedor_herramientas.h\
 $(DIR_JUEGO_CONTENEDORES)contenedor_objetos.h\
@@ -148,7 +139,7 @@ $(DIR_JUEGO_CONTENEDORES)contenedor_volatiles.cpp
 
 $(DIR_O)enemigo_basico.o:\
 $(DIR_O)actor_movil.o\
-$(DIR_O)colisionable_i.o\
+$(DIR_O)efecto_colision_i.o\
 $(DIR_O)objeto_juego_i.o\
 $(DIR_O)representable_i.o\
 $(DIR_O)con_turno_i.o\
@@ -162,7 +153,7 @@ $(DIR_JUEGO_OBJETOS)enemigo_basico.cpp
 $(DIR_O)enemigo_rebote.o:\
 $(DIR_O)definiciones.o \
 $(DIR_O)actor_movil.o\
-$(DIR_O)colisionable_i.o\
+$(DIR_O)efecto_colision_i.o\
 $(DIR_O)objeto_juego_i.o\
 $(DIR_O)representable_i.o\
 $(DIR_O)con_turno_i.o\
@@ -171,11 +162,20 @@ $(DIR_JUEGO_OBJETOS)enemigo_rebote.h\
 $(DIR_JUEGO_OBJETOS)enemigo_rebote.cpp
 	$(CC) $(CFLAGS) $(INCLUDES) $(DIR_JUEGO_OBJETOS)enemigo_rebote.cpp -o $(DIR_O)enemigo_rebote.o
 
+$(DIR_O)trazador_humo.o:\
+$(DIR_O)actor_movil.o\
+$(DIR_O)objeto_juego_i.o\
+$(DIR_O)con_turno_i.o\
+$(DIR_O)generador_objetos_juego_i.o\
+$(DIR_JUEGO_OBJETOS)trazador_humo.h\
+$(DIR_JUEGO_OBJETOS)trazador_humo.cpp
+	$(CC) $(CFLAGS) $(INCLUDES) $(DIR_JUEGO_OBJETOS)trazador_humo.cpp -o $(DIR_O)trazador_humo.o
+
 $(DIR_O)bonus_salud.o:\
 $(DIR_O)actor.o\
 $(DIR_O)objeto_juego_i.o\
 $(DIR_O)representable_i.o\
-$(DIR_O)bonus_i.o\
+$(DIR_O)efecto_colision_recogedor_i.o\
 $(DIR_O)generador_objetos_juego_i.o\
 $(DIR_O)bloque_transformacion_representable.o\
 $(DIR_JUEGO_OBJETOS)bonus_salud.h\
@@ -186,7 +186,6 @@ $(DIR_O)bonus_tiempo.o:\
 $(DIR_O)actor.o\
 $(DIR_O)objeto_juego_i.o\
 $(DIR_O)representable_i.o\
-$(DIR_O)bonus_i.o\
 $(DIR_O)generador_objetos_juego_i.o\
 $(DIR_O)bloque_transformacion_representable.o\
 $(DIR_JUEGO_OBJETOS)bonus_tiempo.h\
@@ -222,7 +221,7 @@ $(DIR_JUEGO_OBJETOS)entrada.cpp
 $(DIR_O)salida.o:\
 $(DIR_O)espaciable.o\
 $(DIR_O)representable_i.o\
-$(DIR_O)colisionable_i.o\
+$(DIR_O)efecto_colision_i.o\
 $(DIR_O)definiciones.o \
 $(DIR_JUEGO_OBJETOS)salida.h \
 $(DIR_JUEGO_OBJETOS)salida.cpp
@@ -255,6 +254,12 @@ $(DIR_O)particula_movil_base.o\
 $(DIR_JUEGO_OBJETOS)particula_explosion.h \
 $(DIR_JUEGO_OBJETOS)particula_explosion.cpp
 	$(CC) $(CFLAGS) $(INCLUDES) $(DIR_JUEGO_OBJETOS)particula_explosion.cpp -o $(DIR_O)particula_explosion.o
+
+$(DIR_O)particula_humo.o:\
+$(DIR_O)particula_base.o\
+$(DIR_JUEGO_OBJETOS)particula_humo.h \
+$(DIR_JUEGO_OBJETOS)particula_humo.cpp
+	$(CC) $(CFLAGS) $(INCLUDES) $(DIR_JUEGO_OBJETOS)particula_humo.cpp -o $(DIR_O)particula_humo.o
 
 $(DIR_O)particula_chatarra.o:\
 $(DIR_O)particula_movil_base.o\
@@ -437,9 +442,11 @@ $(DIR_O)factoria_objetos_volatiles.o:\
 $(DIR_O)particula_chispa.o\
 $(DIR_O)particula_chatarra.o\
 $(DIR_O)particula_explosion.o\
+$(DIR_O)particula_humo.o\
 $(DIR_O)particula_fantasma.o\
 $(DIR_O)posicion_inicial.o\
 $(DIR_O)proyectil_normal.o\
+$(DIR_O)trazador_humo.o\
 $(DIR_FACTORIAS)factoria_objetos_volatiles.h \
 $(DIR_FACTORIAS)factoria_objetos_volatiles.cpp
 	$(CC) $(CFLAGS) $(INCLUDES) $(DIR_FACTORIAS)factoria_objetos_volatiles.cpp -o $(DIR_O)factoria_objetos_volatiles.o
@@ -509,12 +516,6 @@ $(DIR_INTERFACES)generador_objetos_juego_i.h \
 $(DIR_INTERFACES)generador_objetos_juego_i.cpp
 	$(CC) $(CFLAGS) $(INCLUDES) $(DIR_INTERFACES)generador_objetos_juego_i.cpp -o $(DIR_O)generador_objetos_juego_i.o
 
-$(DIR_O)recoge_bonus_i.o:\
-$(DIR_O)espaciable.o\
-$(DIR_INTERFACES)recoge_bonus_i.h\
-$(DIR_INTERFACES)recoge_bonus_i.cpp
-	$(CC) $(CFLAGS) $(INCLUDES) $(DIR_INTERFACES)recoge_bonus_i.cpp -o $(DIR_O)recoge_bonus_i.o
-
 $(DIR_O)efecto_colision_recogedor_i.o:\
 $(DIR_INTERFACES)efecto_colision_recogedor_i.h\
 $(DIR_INTERFACES)efecto_colision_recogedor_i.cpp
@@ -527,20 +528,6 @@ $(DIR_O)efecto_colision_recogedor_i.o\
 $(DIR_INTERFACES)efecto_colision_i.h \
 $(DIR_INTERFACES)efecto_colision_i.cpp
 	$(CC) $(CFLAGS) $(INCLUDES) $(DIR_INTERFACES)efecto_colision_i.cpp -o $(DIR_O)efecto_colision_i.o
-
-$(DIR_O)colisionable_i.o:\
-$(DIR_O)objeto_juego_i.o\
-$(DIR_VISITANTES)visitante_colisionable.h \
-$(DIR_INTERFACES)colisionable_i.h \
-$(DIR_INTERFACES)colisionable_i.cpp
-	$(CC) $(CFLAGS) $(INCLUDES) $(DIR_INTERFACES)colisionable_i.cpp -o $(DIR_O)colisionable_i.o
-
-$(DIR_O)bonus_i.o:\
-$(DIR_O)recoge_bonus_i.o\
-$(DIR_O)objeto_juego_i.o\
-$(DIR_INTERFACES)bonus_i.h \
-$(DIR_INTERFACES)bonus_i.cpp
-	$(CC) $(CFLAGS) $(INCLUDES) $(DIR_INTERFACES)bonus_i.cpp -o $(DIR_O)bonus_i.o
 
 $(DIR_O)con_turno_i.o:\
 $(DIR_O)contexto_turno_i.o\

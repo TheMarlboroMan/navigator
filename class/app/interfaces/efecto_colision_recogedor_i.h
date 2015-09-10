@@ -25,6 +25,9 @@ class Efecto_colision_recogedor_I
 	virtual void					sumar_tiempo(float)=0;
 	virtual void					sumar_salud(float)=0;
 	virtual void					recibir_impacto(float)=0;
+	virtual bool					es_jugador_aterrizado() const=0;
+	virtual void					marcar_como_salida_nivel()=0;
+	virtual bool					es_salida_nivel() const=0;
 };
 }
 

@@ -3,7 +3,7 @@
 
 #include "../actor_movil.h"
 #include "../../definiciones/definiciones.h"
-#include "../../interfaces/colisionable_i.h"
+#include "../../interfaces/efecto_colision_i.h"
 #include "../../interfaces/disparable_i.h"
 #include "../../interfaces/con_turno_i.h"
 #include "../../interfaces/representable_i.h"
@@ -13,7 +13,7 @@ namespace App_Juego_ObjetoJuego
 
 class Enemigo_rebote:
 	public App_Juego::Actor_movil,
-	public App_Interfaces::Colisionable_I,
+	public App_Interfaces::Efecto_colision_I,
 	public App_Interfaces::Disparable_I,
 	public App_Interfaces::Con_turno_I,
 	public App_Interfaces::Representable_I
@@ -27,12 +27,12 @@ class Enemigo_rebote:
 					Enemigo_rebote(float px, float py, float vel, tipos_rebote treb, App_Definiciones::direcciones dir);
 	void				cambiar_direccion();
 
-	///////////////////////
-	//Implementación de Colisionable_I
+	///////////////
+	//Implementación de Efecto_colision_I
 	public:
 
-	virtual void 			recibir_visitante(App_Visitantes::Visitante_colisionable& v) {v.visitar(*this);}
-	virtual bool			es_colision_para(const Espaciable& e)const {return en_colision_con(e);}
+	virtual void		efecto_colision(App_Interfaces::Efecto_colision_recogedor_I&);
+	virtual bool		es_colision_para(const App_Interfaces::Espaciable& e)const {return en_colision_con(e);}
 
 	////////////////////////
 	//Implementación de Disparable_I

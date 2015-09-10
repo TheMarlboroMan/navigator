@@ -40,6 +40,7 @@ class Sala
 	void							implantar_objetos_juego(App_Juego_Contenedores::Contenedor_objetos&&);
 	void							fusionar_objetos_juego(App_Juego_Contenedores::Contenedor_objetos&);
 	App_Juego_Contenedores::Contenedor_objetos&		acc_objetos_juego() {return objetos;}
+	const App_Juego_Contenedores::Contenedor_objetos&	acc_objetos_juego() const {return objetos;}
 	
 
 	//TODO: Elimianr...

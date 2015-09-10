@@ -27,7 +27,7 @@ class Particula_base:
 	virtual					~Particula_base();
 	float					acc_tiempo_vida() const {return tiempo_vida;}
 	float					acc_tiempo_vida_inicial() const {return tiempo_vida_inicial;}
-	int					calcular_parcial_tiempo_vida(int t) const;
+	int					calcular_parcial_tiempo_vida(float t) const;
 	void					restar_tiempo_vida(float v);
 	bool					es_expirada() const {return tiempo_vida <= 0.0f;}
 	static HerramientasProyecto::Tabla_sprites&	acc_tabla_sprites() {return tabla_sprites;}
@@ -38,7 +38,7 @@ class Particula_base:
 
 	virtual unsigned short int 		obtener_profundidad_ordenacion()const=0;
 	virtual void 				transformar_bloque(App_Graficos::Bloque_transformacion_representable &b)const=0;
-	virtual bool				es_representable_borrar()const=0;
+	virtual bool				es_representable_borrar()const {return es_borrar();}
 
 	//////////////
 	// Implementación de Con_turno_I

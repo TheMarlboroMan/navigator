@@ -5,14 +5,12 @@
 #include "../app/recursos.h"
 #include "../app/definiciones/definiciones.h"
 
-#include "../app/juego/logica/recogedor_bonus.h"
-#include "../app/juego/logica/logica_bonus.h"
 #include "../app/juego/logica/logica_disparador.h"
 #include "../app/juego/logica/logica_con_turno.h"
 #include "../app/juego/logica/logica_disparable.h"
-#include "../app/juego/logica/logica_colisionable.h"
 #include "../app/juego/logica/logica_generador_objetos_juego.h"
 #include "../app/juego/logica/contexto_turno_juego.h"
+#include "../app/juego/logica/logica_efectos_colision.h"
 
 using namespace App_Niveles;
 using namespace App_Juego;
@@ -234,44 +232,27 @@ void Controlador_juego::procesar_jugador(Jugador& j, float delta, App_Input::Inp
 	{
 		jugador.desplazar_caja(0.0, v.y * delta);
 		Calculador_colisiones CC;
-		std::vector<const Celda *> celdas=CC.celdas_en_caja(jugador.copia_caja(), *sala_actual);
-		if(celdas.size()) CC.ajustar_colisiones_actor_movil_y_con_celdas(jugador, celdas);
+		auto v=CC.solidos_en_caja_sala(jugador.copia_caja(), *sala_actual);
+		if(v.size()) CC.ajustar_colisiones_eje_y_actor_movil_con_espaciables(jugador, v);
 	}
 
 	if(v.x) 
 	{
 		jugador.desplazar_caja(v.x * delta, 0.0);
 		Calculador_colisiones CC;
-		std::vector<const Celda *> celdas=CC.celdas_en_caja(jugador.copia_caja(), *sala_actual);
-		if(celdas.size()) CC.ajustar_colisiones_actor_movil_x_con_celdas(jugador, celdas);
+		auto v=CC.solidos_en_caja_sala(jugador.copia_caja(), *sala_actual);
+		if(v.size()) CC.ajustar_colisiones_eje_x_actor_movil_con_espaciables(jugador, v);
 	}
 
 	//Las colisiones con objetos de juego se evaluan en la posición final.
 	
-	//TODO: De alguna forma los bonus y choques con "enemigos" y otras cosas
-	//podrían pertenencer a la misma familia de "colisionables".
-	//Vamos a aplicarles el mismo tratamiento que al resto y disminuimos
-	//los archivos y las cosas que tenemos que hacer... Ya de paso eliminaremos
-	//el sistema de visitantes.
-
-	/**
-	auto vc=sala_actual->acc_objetos_juego().recolectar_colisionables();
-	Contexto_colisionable cc(contador_tiempo, jugador); //El objeto proxy que los colisionables comprenden.
-	Logica_colisionable lc(cc);
-	lc.procesar(vc);
-	if(lc.es_salida_nivel())
+	auto vec=sala_actual->acc_objetos_juego().recolectar_efectos_colision();
+	Logica_efectos_colision lec(contador_tiempo, jugador);
+	lec.procesar(vec);
+	if(lec.es_salida_nivel())
 	{
-		//Do something...
+		abandonar_aplicacion();
 	}
-	*/
-	
-
-	
-	//En primer lugar evaluamos los bonus que se pueden recoger.
-	auto vb=sala_actual->acc_objetos_juego().recolectar_bonus();
-	Recogedor_bonus rb(contador_tiempo, jugador); //El objeto proxy que los bonus comprenden.
-	Logica_bonus lb(rb);
-	lb.procesar(vb);
 
 	//Ahora evaluamos el choque con los proyectiles enemigos...
 	if(contenedor_volatiles.proyectiles_enemigos.size())
@@ -293,21 +274,6 @@ void Controlador_juego::procesar_jugador(Jugador& j, float delta, App_Input::Inp
 	auto c=jugador.copia_caja_desplazada(0.0, 1.0);
 	Calculador_colisiones CC;
 	jugador.contabilizar_tiempo_aterrizado(CC.celdas_en_caja(c, *sala_actual).size() ? delta : 0.0);
-
-	/*
-	* Cosas con las que se pueden chocar que no son bonus. El objeto de 
-	* salida puede provocar el fin del nivel si el jugador aterriza al lado.
-	*/
-
-	//TODO: Este otro tiene también pesky visitors.
-	Logica_colisionable lc(jugador);
-	auto vc=sala_actual->acc_objetos_juego().recolectar_colisionables();
-	lc.procesar(vc);
-	if(lc.es_salida_nivel())
-	{
-		//TODO...
-		abandonar_aplicacion();
-	}
 }
 
 /**
@@ -436,6 +402,7 @@ void Controlador_juego::logica_mundo(float delta)
 	for(auto& p : contenedor_volatiles.particulas) 			vct.push_back(p.get());
 	for(auto &p : contenedor_volatiles.proyectiles_jugador) 	vct.push_back(p.get());
 	for(auto &p : contenedor_volatiles.proyectiles_enemigos) 	vct.push_back(p.get());
+	for(auto &p : contenedor_volatiles.trazadores) 			vct.push_back(p.get());
 
 	Contexto_turno_juego ctj(delta, *sala_actual, jugador);
 	Logica_con_turno lct(ctj);
@@ -448,6 +415,7 @@ void Controlador_juego::logica_mundo(float delta)
 	auto vgoj=sala_actual->acc_objetos_juego().recolectar_generadores_objetos_juego();
 	for(auto &p : contenedor_volatiles.proyectiles_jugador) vgoj.push_back(p.get());
 	for(auto &p : contenedor_volatiles.proyectiles_enemigos) vgoj.push_back(p.get());
+	for(auto &p : contenedor_volatiles.trazadores) vgoj.push_back(p.get());
 
 	Logica_generador_objetos_juego lgoj(jugador);
 	lgoj.procesar(vgoj);

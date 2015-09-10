@@ -6,6 +6,8 @@
 *
 */
 
+#include <iomanip>
+
 #include "proto_sala.h"
 #include "../niveles/mapa.h"
 #include "../definiciones/definiciones.h"
@@ -29,6 +31,7 @@ class Traductor_mapas
 
 
 	App_Niveles::Mapa 		traducir_mapa(const std::vector<Proto_sala>& p, App_RepositorioSalas::Repositorio_salas&);
+	App_Niveles::Mapa 		traducir_mapa_test(int tipo, int nivel, int variante, App_RepositorioSalas::Repositorio_salas&);
 
 	//////////////////
 	//Métodos privados

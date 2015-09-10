@@ -30,3 +30,11 @@ void Salida::transformar_bloque(App_Graficos::Bloque_transformacion_representabl
 	b.establecer_recorte(32, 32, W, H);
 	b.establecer_posicion(acc_espaciable_x(), acc_espaciable_y(), W, H);
 }
+
+void Salida::efecto_colision(App_Interfaces::Efecto_colision_recogedor_I& ec)
+{
+	if(ec.es_jugador_aterrizado())
+	{
+		ec.marcar_como_salida_nivel();
+	}
+}

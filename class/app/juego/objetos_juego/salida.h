@@ -3,7 +3,7 @@
 
 #include "../../interfaces/espaciable.h"
 #include "../../interfaces/representable_i.h"
-#include "../../interfaces/colisionable_i.h"
+#include "../../interfaces/efecto_colision_i.h"
 #include "../../definiciones/definiciones.h"
 #include "../../graficos/bloque_transformacion_representable.h"
 #include "../../recursos.h"
@@ -17,7 +17,7 @@ namespace App_Juego_ObjetoJuego
 class Salida:
 	public App_Interfaces::Espaciable,
 	public App_Interfaces::Representable_I,
-	public App_Interfaces::Colisionable_I
+	public App_Interfaces::Efecto_colision_I
 {
 	///////////////////
 	//Interface pública
@@ -49,11 +49,11 @@ class Salida:
 	virtual bool				es_representable_borrar() const {return es_borrar();}
 
 	///////////////
-	//Implementación de Colisionable_I
+	//Implementación de Efecto_colision_I
 	public:
 
-	virtual void 				recibir_visitante(App_Visitantes::Visitante_colisionable& v) {v.visitar(*this);}
-	virtual bool				es_colision_para(const Espaciable& e)const {return en_colision_con(e);}
+	virtual void		efecto_colision(App_Interfaces::Efecto_colision_recogedor_I&);
+	virtual bool		es_colision_para(const App_Interfaces::Espaciable& e)const {return en_colision_con(e);}
 
 	///////////////////
 	//Propiedades

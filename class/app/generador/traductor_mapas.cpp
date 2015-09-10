@@ -44,6 +44,40 @@ App_Niveles::Mapa Traductor_mapas::traducir_mapa(const std::vector<Proto_sala>& 
 	return resultado;
 }
 
+App_Niveles::Mapa Traductor_mapas::traducir_mapa_test(int tipo, int nivel, int variante, App_RepositorioSalas::Repositorio_salas& repo)
+{
+	try
+	{		
+		LOG<<"Creando mapa test para tipo:"<<tipo<<" nivel:"<<nivel<<" variante:"<<variante<<std::endl;
+		Mapa resultado(1, 1);
+		resultado.establecer_coordenadas_sala_inicial(0, 0);
+
+		//Componer nombre de sala a probar...
+		std::stringstream ss;
+		ss<<"data/salas/"<<tipo<<"/"<<tipo<<"_"<<std::setw(3)<<std::setfill('0')<<nivel<<".dat";
+
+		Parser_salas parser;
+		parser.parsear_fichero(ss.str());
+
+		if((size_t)variante >= parser.cuenta_contenedores())
+		{
+			throw std::runtime_error("La variante de sala es inválida");
+		}
+
+		parser.generar_variante_sala(variante, Parser_salas::tipo_sala::inicio);
+		parser.acc_sala().modificar_posicion(0, 0);
+
+		resultado.insertar_sala(0, 0, parser.acc_sala());
+		return resultado;
+	}
+	catch(HerramientasProyecto::Matriz_2d_excepcion& e)
+	{
+		LOG<<"Error al insertar la sala generada..."<<std::endl;
+		throw std::runtime_error("Error al insertar sala de test...");
+	}
+
+}
+
 void Traductor_mapas::parsear_sala(const Proto_sala& ps, App_Niveles::Mapa& resultado, App_RepositorioSalas::Repositorio_salas& repo)
 {
 	Parser_salas parser;
@@ -51,7 +85,6 @@ void Traductor_mapas::parsear_sala(const Proto_sala& ps, App_Niveles::Mapa& resu
 	//TODO: Faltan las excepciones que esto puede tirar, que no son pocas.
 
 	parser.parsear_fichero(repo.obtener_ruta_sala(ps.acc_salidas()));
-//	parser.parsear_fichero("data/salas/1/1_001.dat");
 
 	/**
 	* La sala hay que "compilarla" una vez parseado el fichero. Básicamente

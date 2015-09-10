@@ -6,11 +6,10 @@
 #include "../../graficos/bloque_transformacion_representable.h"
 #include "../../interfaces/objeto_juego_i.h"
 #include "../../interfaces/representable_i.h"
-#include "../../interfaces/bonus_i.h"
 #include "../../interfaces/sonoro_i.h"
-#include "../../interfaces/recoge_bonus_i.h"
 #include "../../audio/audio_reproducir.h"
 #include "../../interfaces/generador_objetos_juego_i.h"
+#include "../../interfaces/efecto_colision_i.h"
 
 
 namespace App_Juego_ObjetoJuego
@@ -18,7 +17,7 @@ namespace App_Juego_ObjetoJuego
 class Bonus_salud:
 		public App_Juego::Actor, 
 		public App_Interfaces::Representable_I,
-		public App_Interfaces::Bonus_I,
+		public App_Interfaces::Efecto_colision_I,
 		public App_Interfaces::Sonoro_I,
 		public App_Interfaces::Generador_objetos_juego_I
 {
@@ -32,14 +31,14 @@ class Bonus_salud:
 
 	///////////////
 	//Implementación de Generador_objetos_juego_I
+	public:
 	virtual	void					generar_objetos(App_Interfaces::Factoria_objetos_juego_I&);
 
 	///////////////
-	// Implementación de Bonus_i.
+	// Implementación de Efecto_colision_I...
 	public:
-
-	virtual void					recoger(App_Interfaces::Recoge_bonus_I&);
-	bool						es_bonus_para(const Espaciable& e)const {return en_colision_con(e);}
+	virtual void					efecto_colision(App_Interfaces::Efecto_colision_recogedor_I&);
+	virtual bool					es_colision_para(const App_Interfaces::Espaciable& e)const {return en_colision_con(e);}
 
 	////////////////
 	// Implementación de Sonoro_i

@@ -31,7 +31,7 @@ class Movil
 	float 					acc_vector_x() {return vector.x;}
 	float 					acc_vector_y() {return vector.y;}
 
-	void 					accion_gravedad(float delta, float valor_gravedad);
+	void 					accion_gravedad(float delta, float valor_gravedad=1.0f);
 
 	//delta: tiempo que ha pasado, vector: referencia a la parte del vector, factor: cantidad de fuerza a aplicar al vector.
 	float 					integrar_vector(float delta, float& vector, float factor);

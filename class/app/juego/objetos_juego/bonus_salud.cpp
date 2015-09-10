@@ -30,12 +30,12 @@ void Bonus_salud::transformar_bloque(App_Graficos::Bloque_transformacion_represe
 	b.establecer_posicion(acc_espaciable_x(), acc_espaciable_y(), W, H);
 }
 
-void Bonus_salud::recoger(App_Interfaces::Recoge_bonus_I& rb)
+void Bonus_salud::efecto_colision(App_Interfaces::Efecto_colision_recogedor_I& ec)
 {
-	if(rb.puede_recoger_salud())
+	if(ec.puede_recoger_salud())
 	{
-		rb.sumar_salud(salud);
-		Bonus_I::recoger(rb);
+		ec.sumar_salud(salud);
+		mut_borrar(true);
 
 		using namespace App_Audio;
 		insertar_reproducir(Info_audio_reproducir(

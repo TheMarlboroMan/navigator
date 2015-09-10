@@ -346,7 +346,6 @@ void Controlador_juego::dibujar(DLibV::Pantalla& pantalla)
 	* const Espaciable::t_caja caja(c_foco.x, c_foco.y, c_foco.w, c_foco.h);
 	*/
 
-
 	//Recolectar representables...
 	std::vector<const Representable_I *> vr=(*sala_actual).obtener_vector_representables();
 	vr.push_back(&jugador);

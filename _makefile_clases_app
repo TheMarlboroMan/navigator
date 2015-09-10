@@ -28,7 +28,7 @@ $(DIR_O)actor_movil.o \
 $(DIR_O)representable_i.o \
 $(DIR_O)sonoro_i.o \
 $(DIR_O)generador_objetos_juego_i.o \
-$(DIR_GRAFICOS)bloque_transformacion_representable.h\
+$(DIR_O)bloque_transformacion_representable.o\
 $(DIR_INPUT)input_usuario.h \
 $(DIR_JUEGO)jugador.h \
 $(DIR_JUEGO)jugador.cpp
@@ -177,7 +177,7 @@ $(DIR_O)objeto_juego_i.o\
 $(DIR_O)representable_i.o\
 $(DIR_O)bonus_i.o\
 $(DIR_O)generador_objetos_juego_i.o\
-$(DIR_GRAFICOS)bloque_transformacion_representable.h\
+$(DIR_O)bloque_transformacion_representable.o\
 $(DIR_JUEGO_OBJETOS)bonus_salud.h\
 $(DIR_JUEGO_OBJETOS)bonus_salud.cpp
 	$(CC) $(CFLAGS) $(INCLUDES) $(DIR_JUEGO_OBJETOS)bonus_salud.cpp -o $(DIR_O)bonus_salud.o
@@ -188,7 +188,7 @@ $(DIR_O)objeto_juego_i.o\
 $(DIR_O)representable_i.o\
 $(DIR_O)bonus_i.o\
 $(DIR_O)generador_objetos_juego_i.o\
-$(DIR_GRAFICOS)bloque_transformacion_representable.h\
+$(DIR_O)bloque_transformacion_representable.o\
 $(DIR_JUEGO_OBJETOS)bonus_tiempo.h\
 $(DIR_JUEGO_OBJETOS)bonus_tiempo.cpp
 	$(CC) $(CFLAGS) $(INCLUDES) $(DIR_JUEGO_OBJETOS)bonus_tiempo.cpp -o $(DIR_O)bonus_tiempo.o
@@ -196,7 +196,7 @@ $(DIR_JUEGO_OBJETOS)bonus_tiempo.cpp
 $(DIR_O)proyectil_normal.o:\
 $(DIR_O)proyectil_base.o\
 $(DIR_O)generador_numeros.o\
-$(DIR_GRAFICOS)bloque_transformacion_representable.h\
+$(DIR_O)bloque_transformacion_representable.o\
 $(DIR_JUEGO_OBJETOS)proyectil_normal.h\
 $(DIR_JUEGO_OBJETOS)proyectil_normal.cpp
 	$(CC) $(CFLAGS) $(INCLUDES) $(DIR_JUEGO_OBJETOS)proyectil_normal.cpp -o $(DIR_O)proyectil_normal.o
@@ -270,7 +270,7 @@ $(DIR_JUEGO_OBJETOS)particula_chispa.cpp
 
 $(DIR_O)particula_fantasma.o:\
 $(DIR_O)particula_base.o\
-$(DIR_GRAFICOS)bloque_transformacion_representable.h\
+$(DIR_O)bloque_transformacion_representable.o\
 $(DIR_JUEGO_OBJETOS)particula_fantasma.h \
 $(DIR_JUEGO_OBJETOS)particula_fantasma.cpp
 	$(CC) $(CFLAGS) $(INCLUDES) $(DIR_JUEGO_OBJETOS)particula_fantasma.cpp -o $(DIR_O)particula_fantasma.o
@@ -390,11 +390,23 @@ $(DIR_NIVELES)celda_decorativa.cpp
 ################################################################################
 #Graficos
 
+$(DIR_O)bloque_transformacion_representable.o :\
+$(DIR_O)animaciones.o \
+$(DIR_GRAFICOS)bloque_transformacion_representable.h \
+$(DIR_GRAFICOS)bloque_transformacion_representable.cpp
+	$(CC) $(CFLAGS) $(INCLUDES) $(DIR_GRAFICOS)bloque_transformacion_representable.cpp -o $(DIR_O)bloque_transformacion_representable.o
+
 $(DIR_O)representador.o :\
 $(DIR_O)representable_i.o \
 $(DIR_GRAFICOS)representador.h \
 $(DIR_GRAFICOS)representador.cpp
 	$(CC) $(CFLAGS) $(INCLUDES) $(DIR_GRAFICOS)representador.cpp -o $(DIR_O)representador.o
+
+$(DIR_O)animaciones.o :\
+$(DIR_O)tabla_animaciones.o \
+$(DIR_GRAFICOS)animaciones.h \
+$(DIR_GRAFICOS)animaciones.cpp
+	$(CC) $(CFLAGS) $(INCLUDES) $(DIR_GRAFICOS)animaciones.cpp -o $(DIR_O)animaciones.o
 
 ################################################################################
 #Colisiones

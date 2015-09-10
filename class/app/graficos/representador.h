@@ -5,7 +5,6 @@
 #include "../definiciones/definiciones.h"
 #include "../interfaces/representable_i.h"
 
-
 /*El representador funciona de la siguiente forma: desde el controlador 
 generamos un array de punteros a "Representables". Se le pasa el array al 
 representador que primero lo ordena por profundidad y luego genera un bloque de

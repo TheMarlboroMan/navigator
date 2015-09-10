@@ -16,11 +16,13 @@ void App::loop_aplicacion(Kernel_app& kernel)
 	//Declaraciones de herramientas externas.
 	Director_estados DI;
 
-	//Iniciar el motor de mapas y el primer nivel.
-
 	App_Generador::Motor_mapas MS;
 	try
 	{
+		//Iniciar animaciones...
+		
+
+		//Iniciar el motor de mapas y el primer nivel.
 		MS.iniciar_repo();
 		MS.generar_mapa(10, 10);
 

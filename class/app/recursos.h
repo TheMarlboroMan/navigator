@@ -17,7 +17,7 @@ class Recursos_graficos
 	};
 
 	enum texturas{
-		rt_defecto=1,
+		rt_juego=1,
 		rt_automapa=2,
 		rt_template_tiles=3,
 		rt_particulas=4

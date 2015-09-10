@@ -117,7 +117,7 @@ void Jugador::transformar_bloque(Bloque_transformacion_representable &b) const
 	//Se asume que todos los frames van mirando a la derecha.
 	b.establecer_tipo(Bloque_transformacion_representable::tipos::tr_bitmap);
 	b.establecer_alpha(255);
-	b.establecer_recurso(Recursos_graficos::rt_defecto);
+	b.establecer_recurso(Recursos_graficos::rt_juego);
 	b.establecer_recorte(32, 0, 27, 16);
 	b.establecer_posicion(acc_espaciable_x()-1, acc_espaciable_y()-1, 27, 16);
 	b.invertir_horizontal(direccion==App_Definiciones::direcciones::izquierda);
@@ -308,6 +308,6 @@ void Jugador::generar_objetos(App_Interfaces::Factoria_objetos_juego_I& f)
 	{
 		f.fabricar_fantasma(					
 			acc_espaciable_x(), acc_espaciable_y(), 1.0f, 20.0f, direccion,
-			App::Recursos_graficos::rt_defecto, DLibH::Caja<int, int>(32, 0, 27, 16));
+			App::Recursos_graficos::rt_juego, DLibH::Caja<int, int>(32, 0, 27, 16));
 	}
 }

@@ -1,6 +1,8 @@
 #ifndef SPRITES_PARTICULAS_H
 #define SPRITES_PARTICULAS_H
 
+//TODO: Todo esto se iría por ahí a otro lado...
+
 namespace App_Definiciones
 {
 struct Sprites_particulas

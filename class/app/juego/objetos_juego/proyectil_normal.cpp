@@ -52,7 +52,7 @@ void Proyectil_normal::transformar_bloque(App_Graficos::Bloque_transformacion_re
 
 	b.establecer_tipo(Bloque_transformacion_representable::tipos::tr_bitmap);
 //	b.establecer_alpha(alpha);
-	b.establecer_recurso(Recursos_graficos::rt_defecto);
+	b.establecer_recurso(Recursos_graficos::rt_juego);
 	
 	switch(color)
 	{

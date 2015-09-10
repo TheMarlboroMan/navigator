@@ -1,4 +1,5 @@
 DEP_HERRAMIENTAS_PROYECTO=$(DIR_O)tabla_sprites.o \
+$(DIR_O)tabla_animaciones.o \
 $(DIR_O)generador_numeros.o \
 $(DIR_O)selector_aleatorio.o \
 
@@ -9,7 +10,9 @@ $(DIR_O)celda_base.o\
 $(DIR_O)celda.o\
 $(DIR_O)mapa.o\
 $(DIR_O)espaciable.o\
+$(DIR_O)bloque_transformacion_representable.o\
 $(DIR_O)representador.o\
+$(DIR_O)animaciones.o\
 $(DIR_O)actor.o\
 $(DIR_O)actor_movil.o\
 $(DIR_O)movil.o\

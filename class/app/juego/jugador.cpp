@@ -114,12 +114,16 @@ void Jugador::recibir_impacto(float val)
 
 void Jugador::transformar_bloque(Bloque_transformacion_representable &b) const
 {
+	using namespace App_Definiciones;
+	const auto& f=b.obtener_frame(animaciones::sprites, animaciones_sprites::jugador, 0);
+
 	//Se asume que todos los frames van mirando a la derecha.
 	b.establecer_tipo(Bloque_transformacion_representable::tipos::tr_bitmap);
 	b.establecer_alpha(255);
 	b.establecer_recurso(Recursos_graficos::rt_juego);
-	b.establecer_recorte(32, 0, 27, 16);
-	b.establecer_posicion(acc_espaciable_x()-1, acc_espaciable_y()-1, 27, 16);
+	b.establecer_recorte(f.x, f.y, f.w, f.h);
+		//TODO: De dónde salen esos dos números fijos???????????????????
+	b.establecer_posicion(acc_espaciable_x()+f.desp_x, acc_espaciable_y()+f.desp_y, 27, 16);
 	b.invertir_horizontal(direccion==App_Definiciones::direcciones::izquierda);
 	b.establecer_mod_color(mod_color.r, mod_color.g, mod_color.b);
 }

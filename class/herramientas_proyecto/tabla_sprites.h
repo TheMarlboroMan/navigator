@@ -70,7 +70,7 @@ class Tabla_sprites
 
 	private:
 
-	std::map<unsigned int, Frame_sprites> 		mapa;
+	std::map<size_t, Frame_sprites> 		mapa;
 
 };
 

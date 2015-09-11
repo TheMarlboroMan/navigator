@@ -11,6 +11,7 @@ Bloque_transformacion_representable::Bloque_transformacion_representable()
 	tipo_actual(tipos::tr_bitmap),
 	visible(true)
 {
+	animaciones.cargar();
 	rep_agr_din.imponer_alpha();
 	rep_agr_din.imponer_modo_blend();
 	rep_agr_est.imponer_alpha();
@@ -26,6 +27,11 @@ Bloque_transformacion_representable::~Bloque_transformacion_representable()
 const HerramientasProyecto::Tabla_animaciones&	Bloque_transformacion_representable::obtener_animacion(size_t v) const
 {
 	return animaciones.obtener(v);
+}
+
+const HerramientasProyecto::Frame_sprites& Bloque_transformacion_representable::obtener_frame(size_t tabla, size_t animacion, size_t frame) const
+{
+	return animaciones.obtener(tabla).obtener(animacion).obtener(frame).frame;
 }
 
 bool Bloque_transformacion_representable::es_visible() const 

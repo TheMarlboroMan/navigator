@@ -47,20 +47,15 @@ void Proyectil_normal::transformar_bloque(App_Graficos::Bloque_transformacion_re
 {
 	using namespace App_Graficos;
 	using namespace App;
-
-//	unsigned int alpha=(acc_potencia() * 255.0f) / acc_potencia_original();
+	using namespace App_Definiciones;
+	const auto& f=b.obtener_frame(animaciones::sprites, color==colores::rojo ? animaciones_sprites::proyectil_rojo : animaciones_sprites::proyectil_azul, 0);
+	float alpha=(acc_potencia() * 255.0f) / acc_potencia_original();
 
 	b.establecer_tipo(Bloque_transformacion_representable::tipos::tr_bitmap);
-//	b.establecer_alpha(alpha);
+	b.establecer_alpha(alpha);
 	b.establecer_recurso(Recursos_graficos::rt_juego);
-	
-	switch(color)
-	{
-		case colores::rojo: b.establecer_recorte(32, 16, acc_espaciable_w(), acc_espaciable_h()); break;
-		case colores::azul: b.establecer_recorte(40, 16, acc_espaciable_w(), acc_espaciable_h()); break;
-	}
-
-	b.establecer_posicion(acc_espaciable_x(), acc_espaciable_y(), acc_espaciable_w(), acc_espaciable_h());
+	b.establecer_recorte(f.x, f.y, f.w, f.h); 
+	b.establecer_posicion(acc_espaciable_x()+f.desp_x, acc_espaciable_y()+f.desp_y, acc_espaciable_w(), acc_espaciable_h());
 }
 
 void Proyectil_normal::colisionar_con_nivel()

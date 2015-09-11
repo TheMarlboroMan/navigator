@@ -20,20 +20,6 @@ struct Bloque_transformacion_representable
 	};
 
 	///////////////////////////////////
-	// Propiedades
-
-	private:
-
-	Animaciones					animaciones;
-	DLibV::Representacion_bitmap_dinamica 		rep_bmp;
-	DLibV::Representacion_agrupada_dinamica 	rep_agr_din;
-	DLibV::Representacion_agrupada_estatica 	rep_agr_est;
-	DLibV::Representacion_primitiva_puntos_dinamica rep_prim_punt;
-	DLibV::Representacion * 			rep;
-	tipos 						tipo_actual;
-	bool 						visible;
-	
-	///////////////////////////////////
 	// Interfaz pública
 
 	public:
@@ -42,6 +28,7 @@ struct Bloque_transformacion_representable
 								~Bloque_transformacion_representable();
 
 	const HerramientasProyecto::Tabla_animaciones&		obtener_animacion(size_t v) const;
+	const HerramientasProyecto::Frame_sprites&		obtener_frame(size_t tabla, size_t animacion, size_t frame) const;
 	bool 							es_visible() const;
 	void 							establecer_recorte(unsigned int x, unsigned int y, unsigned int w, unsigned int h);
 	void 							establecer_posicion(unsigned int x, unsigned int y, unsigned int w, unsigned int h);
@@ -74,6 +61,20 @@ struct Bloque_transformacion_representable
 	void 							establecer_textura_manual(DLibV::Textura * r);
 
 	friend class Representador;
+
+	///////////////////////////////////
+	// Propiedades
+
+	private:
+
+	Animaciones					animaciones;
+	DLibV::Representacion_bitmap_dinamica 		rep_bmp;
+	DLibV::Representacion_agrupada_dinamica 	rep_agr_din;
+	DLibV::Representacion_agrupada_estatica 	rep_agr_est;
+	DLibV::Representacion_primitiva_puntos_dinamica rep_prim_punt;
+	DLibV::Representacion * 			rep;
+	tipos 						tipo_actual;
+	bool 						visible;
 };
 
 }

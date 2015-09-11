@@ -13,15 +13,18 @@ const HerramientasProyecto::Tabla_animaciones& Animaciones::obtener(size_t v) co
 
 void Animaciones::cargar()
 {	
+	LOG<<"Iniciando registro de animaciones..."<<std::endl;
+
 	//Cargar las tablas de sprites...
 	auto f=[this](const std::string& ruta_frames, const std::string& ruta_animaciones, size_t indice)
 	{
+		LOG<<"Registrando animaciones "<<indice<<" -> "<<ruta_frames<<" -> "<<ruta_animaciones<<std::endl;
 		HerramientasProyecto::Tabla_sprites ts(ruta_frames);
 		animaciones.insert(std::make_pair(indice, HerramientasProyecto::Tabla_animaciones(ts, ruta_animaciones)));
 	};
 
 	using namespace App_Definiciones;
 
-	f("data/hojas/sprites_hoja.dat", "data/hojas/sprites_anim.dat", sprites);
+	f("data/hojas/juego_hoja.dat", "data/hojas/juego_anim.dat", sprites);
 	f("data/hojas/particulas_hoja.dat", "data/hojas/particulas_anim.dat", particulas);
 }

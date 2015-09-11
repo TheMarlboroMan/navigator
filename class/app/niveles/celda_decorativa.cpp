@@ -2,7 +2,8 @@
 
 using namespace App_Niveles;
 
-HerramientasProyecto::Tabla_sprites Celda_decorativa::tabla_sprites("data/recursos/template_tiles.dat");
+//TODO: This is shit. Un error al cargar y nunca se logueará.
+HerramientasProyecto::Tabla_sprites Celda_decorativa::tabla_sprites("data/hojas/template_hoja.dat");
 
 /**
 * @param t_dim x

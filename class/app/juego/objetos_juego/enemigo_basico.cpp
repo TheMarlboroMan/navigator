@@ -26,13 +26,15 @@ unsigned short int Enemigo_basico::obtener_profundidad_ordenacion()const
 void Enemigo_basico::transformar_bloque(App_Graficos::Bloque_transformacion_representable &b) const
 {
 	using namespace App_Graficos;
+	using namespace App_Definiciones;
+	const auto& f=b.obtener_frame(animaciones::sprites, animaciones_sprites::enemigo_basico, 0);
 
 	//Se asume que todos los frames van mirando a la derecha.
 	b.establecer_tipo(Bloque_transformacion_representable::tipos::tr_bitmap);
 	b.establecer_alpha(255);
 	b.establecer_recurso(App::Recursos_graficos::rt_juego);
-	b.establecer_recorte(32, 0, 27, 16);
-	b.establecer_posicion(acc_espaciable_x()-1, acc_espaciable_y()-1, W, H);
+	b.establecer_recorte(f.x, f.y, f.w, f.h);
+	b.establecer_posicion(acc_espaciable_x()+f.desp_x, acc_espaciable_y()+f.desp_y, W, H);
 	b.invertir_horizontal(direccion==App_Definiciones::direcciones::izquierda);
 }
 

@@ -14,7 +14,7 @@ class Controlador_pausa:
 	//Interface pública...
 	public:
 
-						Controlador_pausa(Director_estados &DI, App_Juego_Automapa::Automapa&);
+						Controlador_pausa(Director_estados &DI, App_Juego_Automapa::Automapa&, const App_Graficos::Animaciones&);
 
 	virtual void 				preloop(Input_base& input, float delta);
 	virtual void 				postloop(Input_base& input, float delta);

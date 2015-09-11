@@ -25,6 +25,7 @@ class Representador
 
 	public:
 
+						Representador(const Animaciones&);
 	unsigned int 				generar_vista(DLibV::Pantalla&, DLibV::Camara&, const std::vector<const App_Interfaces::Representable_I *>&);
 	unsigned int 				generar_vista(DLibV::Pantalla&, const std::vector<const App_Interfaces::Representable_I *>&);
 	void 					generar_hud(DLibV::Pantalla& pantalla, int salud, int energia, int escudo, std::string tiempo);

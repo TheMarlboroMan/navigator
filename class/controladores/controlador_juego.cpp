@@ -16,9 +16,10 @@ using namespace App_Niveles;
 using namespace App_Juego;
 using namespace App_Juego_Logica;
 
-Controlador_juego::Controlador_juego(Director_estados &DI, App_Niveles::Mapa& mapa, App_Juego_Automapa::Automapa& am)
+Controlador_juego::Controlador_juego(Director_estados &DI, App_Niveles::Mapa& mapa, App_Juego_Automapa::Automapa& am, const App_Graficos::Animaciones& animaciones)
 	:Controlador_base(DI),
 	camara(0, 0, App_Definiciones::definiciones::w_vista, App_Definiciones::definiciones::h_vista),
+	representador(animaciones),
 	mapa(mapa),
 	jugador(32.0, 32.0),
 	automapa(am),

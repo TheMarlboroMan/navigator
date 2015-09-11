@@ -6,6 +6,12 @@
 using namespace App_Graficos;
 using namespace App_Interfaces;
 
+Representador::Representador(const Animaciones& animaciones)
+	:bloque_transformacion(animaciones)
+{
+
+}
+
 unsigned int Representador::generar_vista(
 	DLibV::Pantalla& pantalla, 
 	DLibV::Camara& camara, 

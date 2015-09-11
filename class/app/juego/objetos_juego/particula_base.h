@@ -30,7 +30,6 @@ class Particula_base:
 	int					calcular_parcial_tiempo_vida(float t) const;
 	void					restar_tiempo_vida(float v);
 	bool					es_expirada() const {return tiempo_vida <= 0.0f;}
-	static HerramientasProyecto::Tabla_sprites&	acc_tabla_sprites() {return tabla_sprites;}
 
 	//////////////
 	// Implementación de Representable_I
@@ -50,7 +49,6 @@ class Particula_base:
 	//Privadas
 	private:
 
-	static HerramientasProyecto::Tabla_sprites 	tabla_sprites;
 	float					tiempo_vida;
 	float					tiempo_vida_inicial;
 

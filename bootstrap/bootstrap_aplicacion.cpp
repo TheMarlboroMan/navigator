@@ -2,6 +2,7 @@
 #include "bootstrap_aplicacion.h"
 #include "../class/controladores/controlador_juego.h"
 #include "../class/controladores/controlador_pausa.h"
+#include "../class/app/graficos/animaciones.h"
 #include "../class/app/generador/motor_mapas.h"
 #include "../class/app/recursos.h"
 
@@ -44,6 +45,10 @@ void App::loop_aplicacion(Kernel_app& kernel)
 	App_Generador::Motor_mapas MS;
 	try
 	{
+		//Iniciar los recursos de animaciones...
+		App_Graficos::Animaciones animaciones;
+		animaciones.cargar();
+
 		//Iniciar el motor de mapas y el primer nivel.
 		const auto& params_test=App::obtener_parametros_test(kernel.acc_controlador_argumentos());
 		MS.iniciar_repo();
@@ -58,8 +63,8 @@ void App::loop_aplicacion(Kernel_app& kernel)
 		}
 
 		//Controladores.
-		Controlador_juego C_J(DI, MS.acc_mapa(), MS.acc_automapa());
-		Controlador_pausa C_P(DI, MS.acc_automapa());
+		Controlador_juego C_J(DI, MS.acc_mapa(), MS.acc_automapa(), animaciones);
+		Controlador_pausa C_P(DI, MS.acc_automapa(), animaciones);
 
 		//Interface común...
 		Interface_controlador * IC=&C_J;

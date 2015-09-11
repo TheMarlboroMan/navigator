@@ -2,8 +2,10 @@
 
 using namespace App_Graficos;
 
-Bloque_transformacion_representable::Bloque_transformacion_representable()
-	:rep_bmp(), 
+Bloque_transformacion_representable::Bloque_transformacion_representable(const Animaciones& animaciones)
+	:
+	animaciones(animaciones),
+	rep_bmp(), 
 	rep_agr_din(true),
 	rep_agr_est(true),
 	rep_prim_punt(0, 0, 0),
@@ -11,7 +13,6 @@ Bloque_transformacion_representable::Bloque_transformacion_representable()
 	tipo_actual(tipos::tr_bitmap),
 	visible(true)
 {
-	animaciones.cargar();
 	rep_agr_din.imponer_alpha();
 	rep_agr_din.imponer_modo_blend();
 	rep_agr_est.imponer_alpha();

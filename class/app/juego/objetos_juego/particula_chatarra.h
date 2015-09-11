@@ -4,7 +4,7 @@
 #include <herramientas/vector_2d/vector_2d.h>
 
 #include "particula_movil_base.h"
-#include "../../definiciones/sprites_particulas.h"
+#include "../../definiciones/animaciones.h"
 #include "../../recursos.h"
 #include "../../../herramientas_proyecto/generador_numeros.h"
 

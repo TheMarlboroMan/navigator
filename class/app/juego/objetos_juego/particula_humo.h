@@ -2,7 +2,7 @@
 #define PARTICULA_HUMO_H
 
 #include "particula_base.h"
-#include "../../definiciones/sprites_particulas.h"
+#include "../../definiciones/animaciones.h"
 #include "../../recursos.h"
 
 namespace App_Juego_ObjetoJuego

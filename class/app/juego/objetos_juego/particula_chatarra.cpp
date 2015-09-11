@@ -7,8 +7,8 @@ Particula_chatarra::Particula_chatarra(float x, float y, float tv, const DLibH::
 	frame(0)
 {
 	//Escoger frame.
-	using def=App_Definiciones::Sprites_particulas;
-	auto g=HerramientasProyecto::Generador_int(def::chatarra_01_01, def::chatarra_08_04);
+	using def=App_Definiciones::definiciones_particulas;
+	auto g=HerramientasProyecto::Generador_int(def::min_chatarra, def::max_chatarra);
 	frame=g();
 }
 
@@ -23,7 +23,8 @@ void Particula_chatarra::transformar_bloque(App_Graficos::Bloque_transformacion_
 	b.establecer_alpha(255);
 	b.establecer_recurso(App::Recursos_graficos::rt_particulas);
 
-	const auto& f=acc_tabla_sprites().obtener(frame);
-	b.establecer_recorte(f.x, f.y, W, H);
+//TODO TODO TODO
+//	const auto& f=acc_tabla_sprites().obtener(frame);
+//	b.establecer_recorte(f.x, f.y, W, H);
 	b.establecer_posicion(acc_espaciable_x(), acc_espaciable_y(), W, H);
 }

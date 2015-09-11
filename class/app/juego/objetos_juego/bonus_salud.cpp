@@ -51,9 +51,13 @@ void Bonus_salud::generar_objetos(App_Interfaces::Factoria_objetos_juego_I& f)
 {
 	if(es_borrar())
 	{
-		f.fabricar_fantasma(
-		acc_espaciable_x(), acc_espaciable_y(), 0.8f, 10.0f, App_Definiciones::direcciones::derecha,
-		App::Recursos_graficos::rt_juego, 
-		DLibH::Caja<int, int>(16, 32, W, H));
+//TODO: EEERRROR.... No tenemos acceso a los frames desde aquí!!!!!...
+//		using namespace App_Definiciones;
+//		const auto& frame=b.obtener_frame(animaciones::sprites, animaciones_sprites::bonus_salud, 0);
+
+//		f.fabricar_fantasma(
+//		acc_espaciable_x(), acc_espaciable_y(), 0.8f, 10.0f, App_Definiciones::direcciones::derecha,
+//		App::Recursos_graficos::rt_juego, 
+//		DLibH::Caja<int, int>(frame.x, frame.y, frame.w, frame.h));
 	}
 }

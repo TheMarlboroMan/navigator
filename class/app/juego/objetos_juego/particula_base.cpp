@@ -2,9 +2,6 @@
 
 using namespace App_Juego_ObjetoJuego;
 
-//TODO: This is shit... Tenemos que hacerlo de otra forma.
-HerramientasProyecto::Tabla_sprites Particula_base::tabla_sprites("data/hojas/particulas_hoja.dat");
-
 Particula_base::Particula_base(float tv)
 	:tiempo_vida(tv), tiempo_vida_inicial(tv)
 {

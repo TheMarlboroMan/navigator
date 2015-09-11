@@ -1,7 +1,8 @@
 #include "controlador_pausa.h"
 
-Controlador_pausa::Controlador_pausa(Director_estados &DI, App_Juego_Automapa::Automapa& am)
+Controlador_pausa::Controlador_pausa(Director_estados &DI, App_Juego_Automapa::Automapa& am, const App_Graficos::Animaciones& animaciones)
 	:Controlador_base(DI), 
+	representador(animaciones),
 	automapa(am),
 	vista_automapa(21, 21),
 	x_mapa(0), y_mapa(0) //Esta no será la posición final, por supuesto...

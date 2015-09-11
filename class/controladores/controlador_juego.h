@@ -28,7 +28,7 @@ class Controlador_juego:public Controlador_base
 	//Interface pública.
 	public:
 	
-						Controlador_juego(Director_estados &DI, App_Niveles::Mapa&, App_Juego_Automapa::Automapa&);
+						Controlador_juego(Director_estados &DI, App_Niveles::Mapa&, App_Juego_Automapa::Automapa&, const App_Graficos::Animaciones&);
 						~Controlador_juego();
 
 	virtual void 				preloop(Input_base& input, float delta);

@@ -2,7 +2,7 @@
 #define PARTICULA_EXPLOSION_H
 
 #include "particula_movil_base.h"
-#include "../../definiciones/sprites_particulas.h"
+#include "../../definiciones/animaciones.h"
 #include "../../recursos.h"
 
 namespace App_Juego_ObjetoJuego

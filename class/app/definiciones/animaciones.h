@@ -29,6 +29,13 @@ enum animaciones_particulas
 	chatarra
 };
 
+enum definiciones_particulas
+{
+	min_chatarra=9,
+	max_chatarra=40,
+	lon_humo=4,
+	lon_explosion=4
+};
 
 }
 

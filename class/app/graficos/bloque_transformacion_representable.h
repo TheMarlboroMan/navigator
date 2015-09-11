@@ -24,7 +24,7 @@ struct Bloque_transformacion_representable
 
 	public:
 
-								Bloque_transformacion_representable();
+								Bloque_transformacion_representable(const Animaciones&);
 								~Bloque_transformacion_representable();
 
 	const HerramientasProyecto::Tabla_animaciones&		obtener_animacion(size_t v) const;
@@ -67,7 +67,7 @@ struct Bloque_transformacion_representable
 
 	private:
 
-	Animaciones					animaciones;
+	const Animaciones&				animaciones;
 	DLibV::Representacion_bitmap_dinamica 		rep_bmp;
 	DLibV::Representacion_agrupada_dinamica 	rep_agr_din;
 	DLibV::Representacion_agrupada_estatica 	rep_agr_est;

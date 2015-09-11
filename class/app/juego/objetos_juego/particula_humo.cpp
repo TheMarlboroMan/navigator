@@ -4,9 +4,6 @@ using namespace App_Juego_ObjetoJuego;
 
 Particula_humo::Particula_humo(float x, float y, float tv):
 	Particula_base(tv),
-	//TODO...
-	//frame_actual(App_Definiciones::Sprites_particulas::humo_01),
-	frame_actual(0),
 	x(x), y(y),
 	w(0.0f), h(0.0f)
 {
@@ -24,26 +21,23 @@ void Particula_humo::transformar_bloque(App_Graficos::Bloque_transformacion_repr
 	b.establecer_alpha(127);
 	b.establecer_recurso(App::Recursos_graficos::rt_particulas);
 
-//	TODO TODO TODO... Aquí ya hay velocidades...
-//	const auto& f=acc_tabla_sprites().obtener(frame_actual);
-//	b.establecer_recorte(f.x, f.y, f.w, f.h);
+	using namespace App_Definiciones;
+	//TODO: Usar un método que saque el que sea con respecto al tiempo de vida total.
+	const auto& f=b.obtener_animacion(animaciones::sprites, animaciones_particulas::humo).obtener_para_tiempo_animacion(acc_tiempo_activa());
+
+	b.establecer_recorte(f.x, f.y, f.w, f.h);
 
 	//Centramos la posición según el ancho del frame anterior.
-//	float pos_x=x-(w / 2);
-//	float pos_y=y-(h / 2);
+	float pos_x=x-(w / 2);
+	float pos_y=y-(h / 2);
 
-//	w=f.w;
-//	h=f.h;
+	w=f.w;
+	h=f.h;
 
-//	b.establecer_posicion(pos_x, pos_y, w, h);
+	b.establecer_posicion(pos_x, pos_y, w, h);
 }
 
 void Particula_humo::turno(App_Interfaces::Contexto_turno_I& ct)
 {
 	restar_tiempo_vida(ct.acc_delta());
-
-	//La selección del frame.
-	float lon=App_Definiciones::definiciones_particulas::lon_humo;
-	//TODO...
-//	frame_actual=App_Definiciones::Sprites_particulas::humo_01+calcular_parcial_tiempo_vida(lon)-1;
 }

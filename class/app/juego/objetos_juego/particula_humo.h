@@ -34,7 +34,6 @@ class Particula_humo:
 	//Internas.
 	private:
 
-	int						frame_actual;
 	//TODO: Porqué la partícula base no tiene ya una posición???. Si van a salir muchas más querremos revisar esto.
 	float							x, y;
 	mutable float						w, h;

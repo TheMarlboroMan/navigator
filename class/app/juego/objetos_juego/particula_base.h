@@ -30,6 +30,7 @@ class Particula_base:
 	int					calcular_parcial_tiempo_vida(float t) const;
 	void					restar_tiempo_vida(float v);
 	bool					es_expirada() const {return tiempo_vida <= 0.0f;}
+	float					acc_tiempo_activa() const {return tiempo_vida_inicial - tiempo_vida;}
 
 	//////////////
 	// Implementación de Representable_I

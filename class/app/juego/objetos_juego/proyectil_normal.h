@@ -22,28 +22,10 @@ class Proyectil_normal:
 
 	enum class colores {rojo, azul};
 
-	class Propiedades_proyectil
-	{
-		private:
-		float x, y;
-		unsigned int w, h;
-		public:
-		Propiedades_proyectil(float px, float py, unsigned int pw, unsigned int ph):x(px), y(py), w(pw), h(ph) {}
-		friend class Proyectil_normal;
-	};
-
-	struct Propiedades_proyectil_jugador:public Propiedades_proyectil
-	{
-		public:
-		static const unsigned int W=8, H=8;
-		Propiedades_proyectil_jugador(float px, float py):Propiedades_proyectil(px, py, W, H) {}
-	};
-
 	/////////////////////
 	//Interface pública.
 	public:
 							Proyectil_normal(float x, float y, int w, int h, const DLibH::Vector_2d& v, float potencia, App_Juego_ObjetoJuego::Proyectil_normal::colores color);
-							Proyectil_normal(const Propiedades_proyectil& pp);
 	virtual						~Proyectil_normal() {}
 	void						mut_color(colores c) {color=c;}
 

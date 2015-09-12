@@ -17,14 +17,13 @@ unsigned short int Particula_humo::obtener_profundidad_ordenacion()const
 
 void Particula_humo::transformar_bloque(App_Graficos::Bloque_transformacion_representable &b)const
 {
+	using namespace App_Definiciones;
+	//Pasamos el tiempo de vida para hacer efecto "reverse".
+	const auto& f=b.obtener_animacion(animaciones::particulas, animaciones_particulas::humo).obtener_para_tiempo_animacion(acc_tiempo_vida(), acc_tiempo_vida_inicial()).frame;
+
 	b.establecer_tipo(App_Graficos::Bloque_transformacion_representable::tipos::tr_bitmap);
 	b.establecer_alpha(127);
 	b.establecer_recurso(App::Recursos_graficos::rt_particulas);
-
-	using namespace App_Definiciones;
-	//TODO: Usar un método que saque el que sea con respecto al tiempo de vida total.
-	const auto& f=b.obtener_animacion(animaciones::sprites, animaciones_particulas::humo).obtener_para_tiempo_animacion(acc_tiempo_activa());
-
 	b.establecer_recorte(f.x, f.y, f.w, f.h);
 
 	//Centramos la posición según el ancho del frame anterior.

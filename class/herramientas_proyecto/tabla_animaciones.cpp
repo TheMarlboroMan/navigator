@@ -1,7 +1,14 @@
 #include "tabla_animaciones.h"
 
 using namespace HerramientasProyecto;
-			
+
+Animacion::Animacion()
+	:nombre(), duracion_total(0.0f)
+{
+
+}
+
+		
 /**
 * Ajusta el valor "momento_aparición" de cada uno de los frames con respecto
 * al tiempo general de la aplicación.
@@ -36,6 +43,27 @@ const Linea_animacion& Animacion::obtener_para_tiempo_animacion(float t) const
 	}
 }
 
+/**
+* Devuelve la línea que corresponde para el tiempo t en el ciclo de la 
+* animación asumiendo que la duración completa es "total" y no la duración
+* establecida por la animación en si.
+*/
+
+const Linea_animacion& Animacion::obtener_para_tiempo_animacion(float t, float total) const
+{
+	if(lineas.size()==1) return lineas.at(0);
+	else
+	{
+		float mult=total / duracion_total;
+		float transformado=fmod(t, total);
+		for(const Linea_animacion& fr : lineas)
+		{
+			if(transformado <= fr.momento_aparicion * mult) return fr;
+		}
+		return lineas.at(0);
+	}
+}
+
 //Aquí definimos los métodos de la tabla de animaciones.
 
 Tabla_animaciones::Tabla_animaciones(const Tabla_sprites& t)
@@ -61,6 +89,8 @@ void Tabla_animaciones::cargar(const std::string& ruta)
 	}
 	else
 	{
+		LOG<<"Iniciando inserción de animaciones de "<<ruta<<std::endl;
+
 		std::string linea;
 		const char inicio_titulo='*';
 		const char inicio_cabecera='!';
@@ -70,7 +100,8 @@ void Tabla_animaciones::cargar(const std::string& ruta)
 		auto insertar_anim=[this](Animacion animacion, size_t id)
 		{
 			animacion.reajustar_tiempo_frames();
-			animaciones[id]=animacion;					
+			animaciones[id]=animacion;		
+			LOG<<"Insertada animacion "<<id<<" con "<<animacion.size()<<" frames y "<<animacion.acc_duracion_total()<<"ms."<<std::endl;			
 		};
 
 		try
@@ -145,7 +176,7 @@ void Tabla_animaciones::interpretar_como_linea(const std::string& linea, Animaci
 
 			float dur=(float)duracion / 1000.f;
 			animacion.duracion_total+=dur;
-			animacion.lineas.push_back(Linea_animacion{dur, 0.0f, frame});
+			animacion.lineas.push_back(Linea_animacion(dur, 0.0f, frame));
 			animacion.reajustar_tiempo_frames();
 		}
 		catch(std::out_of_range& e)

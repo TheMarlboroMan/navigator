@@ -16,10 +16,11 @@ namespace HerramientasProyecto
 struct Linea_animacion
 {
 	public:
-
+					Linea_animacion(float d, float m, const Frame_sprites& f)
+						:duracion(d), momento_aparicion(m), frame(f) {}
 					explicit operator bool() const {return duracion && frame;}
-	float 				duracion;				//Cuánto dura.
-	float				momento_aparicion;			//Cuál es el último momento de su duración dentro de toda la animación.
+	float 				duracion=0.0f;				//Cuánto dura.
+	float				momento_aparicion=0.0f;			//Cuál es el último momento de su duración dentro de toda la animación.
 	Frame_sprites 			frame;
 };
 
@@ -29,10 +30,12 @@ class Animacion
 {
 					//No necesita constructor: el float se inicializa a 0.0f...
 	public:
-					explicit operator bool() const {return duracion_total || lineas.size();}
+					Animacion();
+					explicit operator bool() const {return duracion_total > 0.0 || lineas.size() > 0;}
 	const Linea_animacion&		obtener(size_t v) const {return lineas.at(v);}
 	Linea_animacion			obtener(size_t v) {return lineas.at(v);}
 	const Linea_animacion&		obtener_para_tiempo_animacion(float) const;
+	const Linea_animacion&		obtener_para_tiempo_animacion(float, float) const;
 	size_t				size() const {return lineas.size();}
 	const std::string&		acc_nombre() const {return nombre;}
 	float				acc_duracion_total() const {return duracion_total;}

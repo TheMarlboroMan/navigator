@@ -32,7 +32,6 @@ class Particula_explosion:
 	//Internas.
 	private:
 
-	int						frame_actual;
 	mutable float						w, h;
 
 };

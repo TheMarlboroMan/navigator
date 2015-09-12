@@ -97,7 +97,7 @@ void App::loop_aplicacion(Kernel_app& kernel)
 		};
 
 	}
-	catch(std::runtime_error& e)
+	catch(std::exception& e)
 	{
 		std::cout<<"ERROR: "<<e.what()<<std::endl;
 		return;

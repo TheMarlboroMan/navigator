@@ -2,9 +2,6 @@
 
 using namespace App_Niveles;
 
-//TODO: This is shit. Un error al cargar y nunca se logueará.
-HerramientasProyecto::Tabla_sprites Celda_decorativa::tabla_sprites("data/hojas/template_hoja.dat");
-
 /**
 * @param t_dim x
 * @param t_dim y
@@ -18,7 +15,10 @@ Celda_decorativa::Celda_decorativa(App_Definiciones::t_dim px, App_Definiciones:
 
 void Celda_decorativa::transformar_bloque(App_Graficos::Bloque_transformacion_representable &b) const
 {
-	const auto& t=tabla_sprites.obtener(indice);
+	using namespace App_Definiciones;
+
+	//TODO: en el futuro el tipo de sala determinaría la animación que se escogería.
+	const auto& t=b.obtener_frame(animaciones::celdas_template, indice, 0);
 
 	using namespace App_Definiciones;
 	b.establecer_tipo(App_Graficos::Bloque_transformacion_representable::tipos::tr_bitmap);

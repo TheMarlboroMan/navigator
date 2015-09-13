@@ -20,11 +20,13 @@ void Animaciones::cargar()
 	{
 		LOG<<"Registrando animaciones "<<indice<<" -> "<<ruta_frames<<" -> "<<ruta_animaciones<<std::endl;
 		HerramientasProyecto::Tabla_sprites ts(ruta_frames);
-		animaciones.insert(std::make_pair(indice, HerramientasProyecto::Tabla_animaciones(ts, ruta_animaciones)));
+		if(animaciones.count(indice)) throw std::runtime_error("Ya existe tabla de animaciones al cargar tablas!!");
+		else animaciones.insert(std::make_pair(indice, HerramientasProyecto::Tabla_animaciones(ts, ruta_animaciones)));
 	};
 
 	using namespace App_Definiciones;
 
 	f("data/hojas/juego_hoja.dat", "data/hojas/juego_anim.dat", sprites);
 	f("data/hojas/particulas_hoja.dat", "data/hojas/particulas_anim.dat", particulas);
+	f("data/hojas/celdas_hoja.dat", "data/hojas/celdas_anim.dat", celdas_template);
 }

@@ -7,7 +7,8 @@ namespace App_Definiciones
 enum animaciones
 {
 	sprites, 
-	particulas
+	particulas,
+	celdas_template
 };
 
 enum animaciones_sprites

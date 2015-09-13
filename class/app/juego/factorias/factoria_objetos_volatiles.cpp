@@ -21,9 +21,21 @@ std::shared_ptr<App_Juego_ObjetoJuego::Particula_chatarra> Factoria_objetos_vola
 	return res;
 }
 
-std::shared_ptr<App_Juego_ObjetoJuego::Particula_fantasma> Factoria_objetos_volatiles::crear_fantasma(float x, float y, float tv, float ve, App_Definiciones::direcciones direccion, int recurso, const DLibH::Caja<int, int>& recorte)
+std::shared_ptr<App_Juego_ObjetoJuego::Particula_fantasma_jugador> Factoria_objetos_volatiles::crear_fantasma_jugador(float x, float y, float tv, float ve, App_Definiciones::direcciones direccion)
 {
-	auto res=std::shared_ptr<Particula_fantasma>(new Particula_fantasma(x, y, tv, ve, direccion, recurso, recorte));
+	auto res=std::shared_ptr<Particula_fantasma_jugador>(new Particula_fantasma_jugador(x, y, tv, ve, direccion));
+	return res;
+}
+
+std::shared_ptr<App_Juego_ObjetoJuego::Particula_fantasma_bonus_tiempo> Factoria_objetos_volatiles::crear_fantasma_bonus_tiempo(float x, float y, float tv, float ve)
+{
+	auto res=std::shared_ptr<Particula_fantasma_bonus_tiempo>(new Particula_fantasma_bonus_tiempo(x, y, tv, ve));
+	return res;
+}
+
+std::shared_ptr<App_Juego_ObjetoJuego::Particula_fantasma_bonus_salud> Factoria_objetos_volatiles::crear_fantasma_bonus_salud(float x, float y, float tv, float ve)
+{
+	auto res=std::shared_ptr<Particula_fantasma_bonus_salud>(new Particula_fantasma_bonus_salud(x, y, tv, ve));
 	return res;
 }
 

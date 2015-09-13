@@ -48,6 +48,9 @@ $(DIR_O)efecto_colision_recogedor_i.o\
 $(DIR_O)particula_base.o\
 $(DIR_O)particula_movil_base.o\
 $(DIR_O)particula_fantasma.o\
+$(DIR_O)particula_fantasma_jugador.o\
+$(DIR_O)particula_fantasma_bonus_tiempo.o\
+$(DIR_O)particula_fantasma_bonus_salud.o\
 $(DIR_O)particula_explosion.o\
 $(DIR_O)particula_chatarra.o\
 $(DIR_O)particula_chispa.o\

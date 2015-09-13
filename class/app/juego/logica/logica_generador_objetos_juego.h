@@ -26,7 +26,9 @@ class Interface_creador_objetos:
 	virtual void					fabricar_chispa(float x, float y, float tv, const DLibH::Vector_2d&);
 	virtual void					fabricar_explosion(float x, float y, float tv, const DLibH::Vector_2d&);
 	virtual void					fabricar_chatarra(float x, float y, float tv, const DLibH::Vector_2d&);
-	virtual void					fabricar_fantasma(float x, float y, float tv, float ve, App_Definiciones::direcciones direccion, int recurso, const DLibH::Caja<int, int>& recorte);
+	virtual void					fabricar_fantasma_jugador(float x, float y, float tv, float ve, App_Definiciones::direcciones direccion);
+	virtual void					fabricar_fantasma_bonus_salud(float x, float y, float tv, float ve);
+	virtual void					fabricar_fantasma_bonus_tiempo(float x, float y, float tv, float ve);
 	virtual void					fabricar_humo(float x, float y, float tv);
 	virtual void					fabricar_proyectil_normal_enemigo(float x, float y, int w, int h, const DLibH::Vector_2d& v, float pot);
 	virtual void					fabricar_trazador_humo(float x, float y, float tv, const DLibH::Vector_2d& v);

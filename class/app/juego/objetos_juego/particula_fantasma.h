@@ -3,8 +3,6 @@
 
 #include "particula_base.h"
 #include "../../graficos/bloque_transformacion_representable.h"
-#include "../../definiciones/definiciones.h"
-#include <herramientas/caja/caja.h>
 
 namespace App_Juego_ObjetoJuego
 {
@@ -14,14 +12,14 @@ class Particula_fantasma:
 	//////////////////////
 	//Interface pública.
 	public:
-						Particula_fantasma(float x, float y, float tv, float ve, App_Definiciones::direcciones direccion, int recurso, const DLibH::Caja<int, int>& recorte);
+						Particula_fantasma(float x, float y, float tv, float ve);
 
 	//////////////
 	// Implementación de Representable_I
 	public:
 
 	virtual unsigned short int 		obtener_profundidad_ordenacion()const;
-	virtual void 				transformar_bloque(App_Graficos::Bloque_transformacion_representable &b)const;
+	virtual void 				transformar_bloque(App_Graficos::Bloque_transformacion_representable &b)const=0;
 
 	//////////////
 	// Implementación de Con_turno_I
@@ -31,13 +29,10 @@ class Particula_fantasma:
 
 	/////////////////
 	//Internas.
-	private:
+	protected:
 
-	float					x, y, w, h;
+	float					x, y, extra_w, extra_h;
 	float 					velocidad_expansion;
-	App_Definiciones::direcciones 		direccion;
-	int recurso;
-	DLibH::Caja<int, int>			recorte;
 };
 
 }

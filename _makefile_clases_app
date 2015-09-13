@@ -280,6 +280,24 @@ $(DIR_JUEGO_OBJETOS)particula_fantasma.h \
 $(DIR_JUEGO_OBJETOS)particula_fantasma.cpp
 	$(CC) $(CFLAGS) $(INCLUDES) $(DIR_JUEGO_OBJETOS)particula_fantasma.cpp -o $(DIR_O)particula_fantasma.o
 
+$(DIR_O)particula_fantasma_jugador.o:\
+$(DIR_O)particula_fantasma.o\
+$(DIR_JUEGO_OBJETOS)particula_fantasma_jugador.h \
+$(DIR_JUEGO_OBJETOS)particula_fantasma_jugador.cpp
+	$(CC) $(CFLAGS) $(INCLUDES) $(DIR_JUEGO_OBJETOS)particula_fantasma_jugador.cpp -o $(DIR_O)particula_fantasma_jugador.o
+
+$(DIR_O)particula_fantasma_bonus_tiempo.o:\
+$(DIR_O)particula_fantasma.o\
+$(DIR_JUEGO_OBJETOS)particula_fantasma_bonus_tiempo.h \
+$(DIR_JUEGO_OBJETOS)particula_fantasma_bonus_tiempo.cpp
+	$(CC) $(CFLAGS) $(INCLUDES) $(DIR_JUEGO_OBJETOS)particula_fantasma_bonus_tiempo.cpp -o $(DIR_O)particula_fantasma_bonus_tiempo.o
+
+$(DIR_O)particula_fantasma_bonus_salud.o:\
+$(DIR_O)particula_fantasma.o\
+$(DIR_JUEGO_OBJETOS)particula_fantasma_bonus_salud.h \
+$(DIR_JUEGO_OBJETOS)particula_fantasma_bonus_salud.cpp
+	$(CC) $(CFLAGS) $(INCLUDES) $(DIR_JUEGO_OBJETOS)particula_fantasma_bonus_salud.cpp -o $(DIR_O)particula_fantasma_bonus_salud.o
+
 ################################################################################
 #Audio
 
@@ -443,7 +461,9 @@ $(DIR_O)particula_chispa.o\
 $(DIR_O)particula_chatarra.o\
 $(DIR_O)particula_explosion.o\
 $(DIR_O)particula_humo.o\
-$(DIR_O)particula_fantasma.o\
+$(DIR_O)particula_fantasma_jugador.o\
+$(DIR_O)particula_fantasma_bonus_tiempo.o\
+$(DIR_O)particula_fantasma_bonus_salud.o\
 $(DIR_O)posicion_inicial.o\
 $(DIR_O)proyectil_normal.o\
 $(DIR_O)trazador_humo.o\

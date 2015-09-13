@@ -44,9 +44,21 @@ void Interface_creador_objetos::fabricar_chatarra(float x, float y, float tv, co
 	contenedor_volatiles.particulas.push_back(ob);
 }
 
-void Interface_creador_objetos::fabricar_fantasma(float x, float y, float tv, float ve, App_Definiciones::direcciones direccion, int recurso, const DLibH::Caja<int, int>& recorte)
+void Interface_creador_objetos::fabricar_fantasma_jugador(float x, float y, float tv, float ve, App_Definiciones::direcciones direccion)
 {
-	auto ob=factoria_volatiles.crear_fantasma(x, y, tv, ve, direccion, recurso, recorte);
+	auto ob=factoria_volatiles.crear_fantasma_jugador(x, y, tv, ve, direccion);
+	contenedor_volatiles.particulas.push_back(ob);
+}
+
+void Interface_creador_objetos::fabricar_fantasma_bonus_tiempo(float x, float y, float tv, float ve)
+{
+	auto ob=factoria_volatiles.crear_fantasma_bonus_tiempo(x, y, tv, ve);
+	contenedor_volatiles.particulas.push_back(ob);
+}
+
+void Interface_creador_objetos::fabricar_fantasma_bonus_salud(float x, float y, float tv, float ve)
+{
+	auto ob=factoria_volatiles.crear_fantasma_bonus_salud(x, y, tv, ve);
 	contenedor_volatiles.particulas.push_back(ob);
 }
 

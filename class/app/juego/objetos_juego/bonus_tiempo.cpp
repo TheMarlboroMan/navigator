@@ -48,12 +48,6 @@ void Bonus_tiempo::generar_objetos(App_Interfaces::Factoria_objetos_juego_I& f)
 {
 	if(es_borrar())
 	{
-//TODO: EEERRROR.... No tenemos acceso a los frames desde aquí!!!!!...
-//		using namespace App_Definiciones;
-//		const auto& frame=b.obtener_frame(animaciones::sprites, animaciones_sprites::bonus_tiempo, 0);
-//		f.fabricar_fantasma(
-//		acc_espaciable_x(), acc_espaciable_y(), 0.8f, 10.0f, App_Definiciones::direcciones::derecha,
-//		App::Recursos_graficos::rt_juego, 
-//		DLibH::Caja<int, int>(frame.x, frame.y, frame.w, frame.h));
+		f.fabricar_fantasma_bonus_tiempo(acc_espaciable_x(), acc_espaciable_y(), 0.8f, 10);
 	}
 }

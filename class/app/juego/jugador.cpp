@@ -310,12 +310,6 @@ void Jugador::generar_objetos(App_Interfaces::Factoria_objetos_juego_I& f)
 {
 	if(senales.crear_fantasma)
 	{
-//TODO: EEERRROR.... No tenemos acceso a los frames desde aquí!!!!!...
-//		using namespace App_Definiciones;
-//		const auto& frame=b.obtener_frame(animaciones::sprites, animaciones_sprites::jugador, 0);
-
-//		f.fabricar_fantasma(					
-//			acc_espaciable_x(), acc_espaciable_y(), 1.0f, 20.0f, direccion,
-//			App::Recursos_graficos::rt_juego, DLibH::Caja<int, int>(frame.x, frame.y, frame.w, frame.h));
+		f.fabricar_fantasma_jugador(acc_espaciable_x(), acc_espaciable_y(), 1.0f, 20.0f, direccion);
 	}
 }

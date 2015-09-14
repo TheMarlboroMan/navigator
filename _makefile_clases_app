@@ -218,6 +218,14 @@ $(DIR_JUEGO_OBJETOS)entrada.h \
 $(DIR_JUEGO_OBJETOS)entrada.cpp
 	$(CC) $(CFLAGS) $(INCLUDES) $(DIR_JUEGO_OBJETOS)entrada.cpp -o $(DIR_O)entrada.o
 
+$(DIR_O)obstaculo_generico.o:\
+$(DIR_O)actor.o\
+$(DIR_O)objeto_juego_i.o \
+$(DIR_O)representable_i.o \
+$(DIR_JUEGO_OBJETOS)obstaculo_generico.h \
+$(DIR_JUEGO_OBJETOS)obstaculo_generico.cpp
+	$(CC) $(CFLAGS) $(INCLUDES) $(DIR_JUEGO_OBJETOS)obstaculo_generico.cpp -o $(DIR_O)obstaculo_generico.o
+
 $(DIR_O)salida.o:\
 $(DIR_O)espaciable.o\
 $(DIR_O)representable_i.o\
@@ -451,6 +459,7 @@ $(DIR_O)enemigo_basico.o\
 $(DIR_O)enemigo_rebote.o\
 $(DIR_O)entrada.o\
 $(DIR_O)salida.o\
+$(DIR_O)obstaculo_generico.o\
 $(DIR_O)posicion_inicial.o\
 $(DIR_FACTORIAS)factoria_objetos_juego.h \
 $(DIR_FACTORIAS)factoria_objetos_juego.cpp

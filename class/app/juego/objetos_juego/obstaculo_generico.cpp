@@ -3,16 +3,17 @@
 using namespace App_Juego_ObjetoJuego;
 
 Obstaculo_generico::Obstaculo_generico(float x, float y, int tipo)
-	:Actor(x, y, 1, 1),
+	//TODO... Escoger W y H de alguna parte...
+	:Actor(x, y, 15, 22),
 	Objeto_juego_I(),
 	tipo(tipo)
 {
 	//TODO: En función del tipo extraer sus propiedades. Posiblemente
 	//sea un objeto estático que se inicialice, lea un fichero y contenga
 	//las informaciones de tamaño.
-
-	//TODO: Preparar un tema de animaciones.... Cada animación puede apuntar
-	//a un id de recorte en una hoja concreta.
+	
+	//TODO: Odiamos las cosas estáticas... Mejor que se inicialice en un 
+	//punto conocido...
 }
 
 
@@ -24,14 +25,13 @@ unsigned short int Obstaculo_generico::obtener_profundidad_ordenacion()const
 
 void Obstaculo_generico::transformar_bloque(App_Graficos::Bloque_transformacion_representable &b)const
 {
-	//TODO: Escoger recorte según animación corriente. Copiar código de 
-	//The seer: tenemos una clase que lo único que hace es ciclar el
-	//tiempo de animaciones.	
+	using namespace App_Definiciones;
+	const auto& f=b.obtener_frame(animaciones::sprites, animaciones_sprites::obstaculo_generico, 0);
+
+	b.establecer_tipo(App_Graficos::Bloque_transformacion_representable::tipos::tr_bitmap);
+	b.establecer_alpha(255);
+	b.establecer_recurso(App::Recursos_graficos::rt_juego);
+	b.establecer_recorte(f.x, f.y, f.w, f.h);
+	b.establecer_posicion(acc_espaciable_x()+f.desp_x, acc_espaciable_y()+f.desp_y, 15, 22); //w, h);
+
 }
-
-	/////////////////
-	//Internas
-
-	private:
-
-	int					tipo;

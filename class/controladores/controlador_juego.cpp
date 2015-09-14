@@ -365,8 +365,7 @@ void Controlador_juego::logica_proyectiles(float delta)
 			}
 			else
 			{
-				std::vector<const Celda *> celdas=CC.celdas_en_caja(cc, sala);
-				if(celdas.size()) p->colisionar_con_nivel(); //Implica borrar...
+				if(CC.solidos_en_caja_sala(cc, sala).size()) p->colisionar_con_nivel(); //Implica borrar...
 			}
 		}
 	};

@@ -13,6 +13,7 @@
 #include "../objetos_juego/entrada.h"
 #include "../objetos_juego/salida.h"
 #include "../objetos_juego/posicion_inicial.h"
+#include "../objetos_juego/obstaculo_generico.h"
 
 namespace App_Juego_Factorias
 {
@@ -56,6 +57,7 @@ class Factoria_objetos_juego
 	void						insertar(std::shared_ptr<App_Juego_ObjetoJuego::Enemigo_basico>&);
 	void						insertar(std::shared_ptr<App_Juego_ObjetoJuego::Enemigo_rebote>&);
 	void						insertar(std::shared_ptr<App_Juego_ObjetoJuego::Salida>&);
+	void						insertar(std::shared_ptr<App_Juego_ObjetoJuego::Obstaculo_generico>&);
 
 	std::shared_ptr<App_Juego_ObjetoJuego::Bonus_tiempo>		crear_bonus_tiempo(float x, float y, float t);
 	std::shared_ptr<App_Juego_ObjetoJuego::Bonus_salud>		crear_bonus_salud(float x, float y, float t);
@@ -72,6 +74,7 @@ class Factoria_objetos_juego
 	void						interpretar_como_entrada(const std::vector<std::string>&);
 	void						interpretar_como_salida(const std::vector<std::string>&);
 	void						interpretar_como_posicion_inicial(const std::vector<std::string>&);
+	void						interpretar_como_obstaculo_generico(const std::vector<std::string>&);
 
 	///////////////////
 	// Propiedades.
@@ -91,6 +94,7 @@ class Factoria_objetos_juego
 	static const int				lp_bonus_tiempo=4;
 	static const int				lp_enemigo_basico=4;
 	static const int				lp_enemigo_rebote=6;
+	static const int				lp_obstaculo_generico=4;
 
 	enum tipos {
 		entrada=1,
@@ -99,7 +103,8 @@ class Factoria_objetos_juego
 		bonus_salud=10,
 		bonus_tiempo=11,
 		enemigo_basico=30,
-		enemigo_rebote=31
+		enemigo_rebote=31,
+		obstaculo_generico=50
 	};
 };
 

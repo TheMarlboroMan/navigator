@@ -32,6 +32,7 @@ void Factoria_objetos_juego::interpretar_linea(const std::string& linea)
 			case entrada:		interpretar_como_entrada(params); break;
 			case salida:		interpretar_como_salida(params); break;
 			case posicion_inicial:	interpretar_como_posicion_inicial(params); break;
+			case obstaculo_generico:	interpretar_como_obstaculo_generico(params); break;
 			default:
 				LOG<<"No se ha interpretado la línea "<<linea<<" por ser de tipo ["<<tipo<<"] desconocido."<<std::endl;
 			break;
@@ -47,10 +48,6 @@ void Factoria_objetos_juego::insertar(std::shared_ptr<App_Juego_ObjetoJuego::Bon
 {
 	auto& contenedor=*contenedor_ptr;
 	contenedor.objetos_juego.push_back(ob);
-
-	contenedor.solidos.push_back( std::shared_ptr<Espaciable>(ob, static_cast<Espaciable*>(ob.get())));
-
-
 	contenedor.representables.push_back( std::shared_ptr<Representable_I>(ob, static_cast<Representable_I*>(ob.get())));
 	contenedor.sonoros.push_back(std::shared_ptr<Sonoro_I>(ob, static_cast<Sonoro_I*>(ob.get())));
 	contenedor.generadores_objetos_juego.push_back(std::shared_ptr<Generador_objetos_juego_I>(ob, static_cast<Generador_objetos_juego_I*>(ob.get())));
@@ -61,9 +58,6 @@ void Factoria_objetos_juego::insertar(std::shared_ptr<App_Juego_ObjetoJuego::Bon
 {
 	auto& contenedor=*contenedor_ptr;
 	contenedor.objetos_juego.push_back(ob);
-
-	contenedor.solidos.push_back( std::shared_ptr<Espaciable>(ob, static_cast<Espaciable*>(ob.get())));
-
 	contenedor.representables.push_back(std::shared_ptr<Representable_I>(ob, static_cast<Representable_I*>(ob.get())));
 	contenedor.efectos_colision.push_back(std::shared_ptr<Efecto_colision_I>(ob, static_cast<Efecto_colision_I*>(ob.get())));
 	contenedor.sonoros.push_back(std::shared_ptr<Sonoro_I>(ob, static_cast<Sonoro_I*>(ob.get())));
@@ -97,6 +91,14 @@ void Factoria_objetos_juego::insertar(std::shared_ptr<App_Juego_ObjetoJuego::Sal
 	auto& contenedor=*contenedor_ptr;
 	contenedor.objetos_juego.push_back(ob);
 	contenedor.efectos_colision.push_back(std::shared_ptr<Efecto_colision_I>(ob, static_cast<Efecto_colision_I*>(ob.get())));
+	contenedor.representables.push_back(std::shared_ptr<Representable_I>(ob, static_cast<Representable_I*>(ob.get())));
+}
+
+void Factoria_objetos_juego::insertar(std::shared_ptr<App_Juego_ObjetoJuego::Obstaculo_generico>& ob)
+{
+	auto& contenedor=*contenedor_ptr;
+	contenedor.objetos_juego.push_back(ob);
+	contenedor.solidos.push_back( std::shared_ptr<Espaciable>(ob, static_cast<Espaciable*>(ob.get())));
 	contenedor.representables.push_back(std::shared_ptr<Representable_I>(ob, static_cast<Representable_I*>(ob.get())));
 }
 
@@ -218,6 +220,23 @@ void Factoria_objetos_juego::interpretar_como_posicion_inicial(const std::vector
 		const int x=toi(params[1]);
 		const int y=toi(params[2]);
 		contenedor_ptr->posicion_inicial.reset( new Posicion_inicial(x, y));
+	}
+}
+
+void Factoria_objetos_juego::interpretar_como_obstaculo_generico(const std::vector<std::string>& params)
+{
+	if(params.size() != lp_obstaculo_generico)
+	{
+		throw Factoria_objetos_juego_excepcion(params.size(), lp_posicion_inicial, "Posición inicial");
+	}
+	else
+	{
+		const int x=toi(params[1]);
+		const int y=toi(params[2]);
+		const int tipo=toi(params[3]);
+
+		std::shared_ptr<Obstaculo_generico> ob(new Obstaculo_generico(x, y, tipo));
+		insertar(ob);
 	}
 }
 

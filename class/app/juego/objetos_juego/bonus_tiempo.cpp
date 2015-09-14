@@ -28,7 +28,7 @@ void Bonus_tiempo::transformar_bloque(App_Graficos::Bloque_transformacion_repres
 	b.establecer_tipo(Bloque_transformacion_representable::tipos::tr_bitmap);
 	b.establecer_alpha(255);
 	b.establecer_recurso(Recursos_graficos::rt_juego);
-	b.establecer_recorte(f.x, f.w, f.w, f.h);
+	b.establecer_recorte(f.x, f.y, f.w, f.h);
 	b.establecer_posicion(acc_espaciable_x()+f.desp_x, acc_espaciable_y()+f.desp_y, W, H);
 }
 

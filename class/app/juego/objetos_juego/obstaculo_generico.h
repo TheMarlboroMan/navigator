@@ -7,13 +7,18 @@
 #include "../../interfaces/objeto_juego_i.h"
 #include "../../interfaces/representable_i.h"
 
+/**
+* Un objeto cuya única finalidad es ser solido y estar ahí, impidiendo el paso 
+* del jugador y decorando un poco el mundo.
+*/
+
 namespace App_Juego_ObjetoJuego
 {
 
 class Obstaculo_generico:
 	public App_Juego::Actor,
-	public App_Interfaces:Objeto_juego_I,
-	public App_Interfaces::Representable_I	
+	public App_Interfaces::Objeto_juego_I,
+	public App_Interfaces::Representable_I
 {
 	//////////////////
 	//Interface pública

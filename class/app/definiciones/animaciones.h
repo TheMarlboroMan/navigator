@@ -20,7 +20,8 @@ enum animaciones_sprites
 	proyectil_azul,
 	enemigo_basico,
 	enemigo_rebote,
-	salida
+	salida,
+	obstaculo_generico
 };
 
 enum animaciones_particulas

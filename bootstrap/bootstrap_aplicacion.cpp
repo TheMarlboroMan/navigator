@@ -42,15 +42,22 @@ void App::loop_aplicacion(Kernel_app& kernel)
 	//Declaraciones de herramientas externas.
 	Director_estados DI;
 
-	App_Generador::Motor_mapas MS;
+
+
 	try
 	{
 		//Iniciar los recursos de animaciones...
 		App_Graficos::Animaciones animaciones;
 		animaciones.cargar();
 
+		//TODO: Iniciar los recursos de actores genéricos...
+
 		//Iniciar el motor de mapas y el primer nivel.
 		const auto& params_test=App::obtener_parametros_test(kernel.acc_controlador_argumentos());
+
+		//TODO: Contendría el parser de salas, que debe contener el diccionario de 
+		//actores genéricos, que habría que inicializar antes.
+		App_Generador::Motor_mapas MS;
 		MS.iniciar_repo();
 
 		if(params_test.valido)
@@ -89,7 +96,6 @@ void App::loop_aplicacion(Kernel_app& kernel)
 						C_P.refrescar();
 						IC=&C_P; 
 					break;
-
 				}
 
 				DI.confirmar_cambio_estado();

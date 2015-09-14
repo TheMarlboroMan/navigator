@@ -33,6 +33,7 @@ $(DIR_O)unidad_automapa.o\
 $(DIR_O)vista_unidad_automapa.o\
 $(DIR_O)vista_automapa.o\
 $(DIR_O)contador_tiempo.o\
+$(DIR_O)info_obstaculos_genericos.o\
 $(DIR_O)factoria_objetos_juego.o\
 $(DIR_O)factoria_objetos_volatiles.o\
 $(DIR_O)contenedor_objetos.o\

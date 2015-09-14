@@ -12,12 +12,12 @@ Motor_mapas::Motor_mapas()
 * @throw std::runtime_error
 */
 
-void Motor_mapas::iniciar_repo()
+void Motor_mapas::iniciar_repo(const App_Lectores::Info_obstaculos_genericos& iog)
 {
-	repo.iniciar("data/salas/repo.dat");
+	repo.iniciar("data/salas/repo.dat", iog);
 }
 
-void Motor_mapas::generar_mapa(int principales, int secundarias)
+void Motor_mapas::generar_mapa(int principales, int secundarias, const App_Lectores::Info_obstaculos_genericos& iog)
 {
 	Generador_estructura_niveles GEN;
 	GEN.generar_camino_principal(principales);
@@ -25,15 +25,15 @@ void Motor_mapas::generar_mapa(int principales, int secundarias)
 	GEN.normalizar();
 
 	Traductor_mapas TM;
-	mapa=TM.traducir_mapa(GEN.acc_proto_salas(), repo);
+	mapa=TM.traducir_mapa(GEN.acc_proto_salas(), repo, iog);
 
 	generar_automapa(mapa);
 }
 
-void Motor_mapas::generar_mapa_test(int tipo, int nivel, int variante)
+void Motor_mapas::generar_mapa_test(int tipo, int nivel, int variante, const App_Lectores::Info_obstaculos_genericos& iog)
 {
 	Traductor_mapas TM;
-	mapa=TM.traducir_mapa_test(tipo, nivel, variante, repo);
+	mapa=TM.traducir_mapa_test(tipo, nivel, variante, repo, iog);
 	generar_automapa(mapa);
 }
 

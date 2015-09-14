@@ -23,9 +23,9 @@ class Motor_mapas
 
 						Motor_mapas();
 
-	void					iniciar_repo();
-	void					generar_mapa(int principales, int secundarias);
-	void					generar_mapa_test(int tipo, int nivel, int variante);
+	void					iniciar_repo(const App_Lectores::Info_obstaculos_genericos& iog);
+	void					generar_mapa(int principales, int secundarias, const App_Lectores::Info_obstaculos_genericos& iog);
+	void					generar_mapa_test(int tipo, int nivel, int variante, const App_Lectores::Info_obstaculos_genericos& iog);
 	App_Niveles::Mapa&			acc_mapa() {return mapa;}
 	App_Juego_Automapa::Automapa&		acc_automapa() {return automapa;}
 

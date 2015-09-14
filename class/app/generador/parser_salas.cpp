@@ -1,4 +1,5 @@
 #include "parser_salas.h"
+#include "../lectores/info_obstaculos_genericos.h"
 
 using namespace App_Generador;
 
@@ -19,13 +20,14 @@ Parser_salas::Parser_salas()
 
 }
 
-void Parser_salas::parsear_fichero(const std::string& ruta)
+void Parser_salas::parsear_fichero(const std::string& ruta, const App_Lectores::Info_obstaculos_genericos& iog)
 {
 	DLibH::Lector_txt L(ruta, '#');
 
 	if(!L)
 	{
 		LOG<<"ERROR: Imposible localizar nivel en fichero "<<ruta<<std::endl;
+		throw std::runtime_error("Imposible localizar nivel en fichero");
 	}
 	else
 	{	
@@ -33,7 +35,7 @@ void Parser_salas::parsear_fichero(const std::string& ruta)
 
 		//La factoría contendrá los objetos de juego hasta que finalmente
 		//se implanten en la sala.
-		App_Juego_Factorias::Factoria_objetos_juego factoria;
+		App_Juego_Factorias::Factoria_objetos_juego factoria(iog);
 
 		while(true)
 		{

@@ -11,7 +11,7 @@ using namespace App_Niveles;
 using namespace App_Definiciones;
 using namespace HerramientasProyecto;
 
-App_Niveles::Mapa Traductor_mapas::traducir_mapa(const std::vector<Proto_sala>& p, App_RepositorioSalas::Repositorio_salas& repo)
+App_Niveles::Mapa Traductor_mapas::traducir_mapa(const std::vector<Proto_sala>& p, App_RepositorioSalas::Repositorio_salas& repo, const App_Lectores::Info_obstaculos_genericos& iog)
 {
 	//TODO: Teh suckage...
 	t_dim w=0, h=0;
@@ -38,13 +38,13 @@ App_Niveles::Mapa Traductor_mapas::traducir_mapa(const std::vector<Proto_sala>& 
 	//Generar las salas de turno.
 	for(const Proto_sala& ps : p)
 	{
-		parsear_sala(ps, resultado, repo);
+		parsear_sala(ps, resultado, repo, iog);
 	}
 
 	return resultado;
 }
 
-App_Niveles::Mapa Traductor_mapas::traducir_mapa_test(int tipo, int nivel, int variante, App_RepositorioSalas::Repositorio_salas& repo)
+App_Niveles::Mapa Traductor_mapas::traducir_mapa_test(int tipo, int nivel, int variante, App_RepositorioSalas::Repositorio_salas& repo, const App_Lectores::Info_obstaculos_genericos& iog)
 {
 	try
 	{		
@@ -57,7 +57,7 @@ App_Niveles::Mapa Traductor_mapas::traducir_mapa_test(int tipo, int nivel, int v
 		ss<<"data/salas/"<<tipo<<"/"<<tipo<<"_"<<std::setw(3)<<std::setfill('0')<<nivel<<".dat";
 
 		Parser_salas parser;
-		parser.parsear_fichero(ss.str());
+		parser.parsear_fichero(ss.str(), iog);
 
 		if((size_t)variante >= parser.cuenta_contenedores())
 		{
@@ -78,13 +78,10 @@ App_Niveles::Mapa Traductor_mapas::traducir_mapa_test(int tipo, int nivel, int v
 
 }
 
-void Traductor_mapas::parsear_sala(const Proto_sala& ps, App_Niveles::Mapa& resultado, App_RepositorioSalas::Repositorio_salas& repo)
+void Traductor_mapas::parsear_sala(const Proto_sala& ps, App_Niveles::Mapa& resultado, App_RepositorioSalas::Repositorio_salas& repo, const App_Lectores::Info_obstaculos_genericos& iog)
 {
 	Parser_salas parser;
-
-	//TODO: Faltan las excepciones que esto puede tirar, que no son pocas.
-
-	parser.parsear_fichero(repo.obtener_ruta_sala(ps.acc_salidas()));
+	parser.parsear_fichero(repo.obtener_ruta_sala(ps.acc_salidas()), iog);
 
 	/**
 	* La sala hay que "compilarla" una vez parseado el fichero. Básicamente
@@ -107,7 +104,7 @@ void Traductor_mapas::parsear_sala(const Proto_sala& ps, App_Niveles::Mapa& resu
 	}
 	catch(Matriz_2d_excepcion& e)
 	{
-		//TODO: No no no... ¿Qué hacemos aquí?.
-		//std::cout<<"ERROR AL INSERTAR SALA "<<e.x<<","<<e.y<<" : PARA "<<w<<"x"<<h<<" : "<<e.what()<<std::endl;
+		LOG<<"ERROR AL INSERTAR SALA "<<e.x<<","<<e.y<<" : "<<e.what()<<std::endl;
+		throw e;
 	}
 }

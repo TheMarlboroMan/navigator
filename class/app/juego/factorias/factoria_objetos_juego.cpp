@@ -5,8 +5,8 @@ using namespace App_Juego_ObjetoJuego;
 using namespace App_Interfaces;
 using namespace DLibH;
 
-Factoria_objetos_juego::Factoria_objetos_juego()
-	:contenedor_ptr(nullptr)
+Factoria_objetos_juego::Factoria_objetos_juego(const App_Lectores::Info_obstaculos_genericos& iog)
+	:contenedor_ptr(nullptr), info_obstaculos_genericos(iog)
 {
 
 }
@@ -235,7 +235,7 @@ void Factoria_objetos_juego::interpretar_como_obstaculo_generico(const std::vect
 		const int y=toi(params[2]);
 		const int tipo=toi(params[3]);
 
-		std::shared_ptr<Obstaculo_generico> ob(new Obstaculo_generico(x, y, tipo));
+		std::shared_ptr<Obstaculo_generico> ob(new Obstaculo_generico(x, y, tipo, info_obstaculos_genericos));
 		insertar(ob);
 	}
 }

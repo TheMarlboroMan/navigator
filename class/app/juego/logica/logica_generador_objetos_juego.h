@@ -19,7 +19,7 @@ class Interface_creador_objetos:
 {
 	public:
 
-							Interface_creador_objetos(App_Juego_Contenedores::Contenedor_objetos&, App_Juego_Contenedores::Contenedor_volatiles&, App_Interfaces::Espaciable&);
+							Interface_creador_objetos(App_Juego_Contenedores::Contenedor_objetos&, App_Juego_Contenedores::Contenedor_volatiles&, App_Interfaces::Espaciable&, const App_Lectores::Info_obstaculos_genericos& iog);
 	
 	virtual void					fabricar_bonus_tiempo(float x, float y, float t);
 	virtual void					fabricar_bonus_salud(float x, float y, float t);
@@ -53,7 +53,7 @@ class Logica_generador_objetos_juego
 
 	public:
 
-							Logica_generador_objetos_juego(App_Juego::Jugador&);
+							Logica_generador_objetos_juego(App_Juego::Jugador&, const App_Lectores::Info_obstaculos_genericos& iog);
 	void 						procesar(std::vector<App_Interfaces::Generador_objetos_juego_I *> v);
 	bool						hay_nuevos() const {return contenedor.objetos_juego.size();}
 	bool						hay_volatiles() const {return contenedor_volatiles.size();}

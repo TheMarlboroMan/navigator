@@ -16,7 +16,7 @@ using namespace App_Niveles;
 using namespace App_Juego;
 using namespace App_Juego_Logica;
 
-Controlador_juego::Controlador_juego(Director_estados &DI, App_Niveles::Mapa& mapa, App_Juego_Automapa::Automapa& am, const App_Graficos::Animaciones& animaciones)
+Controlador_juego::Controlador_juego(Director_estados &DI, App_Niveles::Mapa& mapa, App_Juego_Automapa::Automapa& am, const App_Graficos::Animaciones& animaciones, const App_Lectores::Info_obstaculos_genericos& iog)
 	:Controlador_base(DI),
 	camara(0, 0, App_Definiciones::definiciones::w_vista, App_Definiciones::definiciones::h_vista),
 	representador(animaciones),
@@ -24,6 +24,7 @@ Controlador_juego::Controlador_juego(Director_estados &DI, App_Niveles::Mapa& ma
 	jugador(32.0, 32.0),
 	automapa(am),
 	vista_automapa(5, 5),
+	info_obstaculos_genericos(iog),
 	contador_tiempo(),
 	sala_actual(nullptr),
 	cambiar_modo_pantalla(false)
@@ -417,7 +418,7 @@ void Controlador_juego::logica_mundo(float delta)
 	for(auto &p : contenedor_volatiles.proyectiles_enemigos) vgoj.push_back(p.get());
 	for(auto &p : contenedor_volatiles.trazadores) vgoj.push_back(p.get());
 
-	Logica_generador_objetos_juego lgoj(jugador);
+	Logica_generador_objetos_juego lgoj(jugador, info_obstaculos_genericos);
 	lgoj.procesar(vgoj);
 	if(lgoj.hay_nuevos()) sala_actual->fusionar_objetos_juego(lgoj.acc_contenedor());
 	if(lgoj.hay_volatiles()) contenedor_volatiles.fusionar_con(lgoj.acc_contenedor_volatiles());

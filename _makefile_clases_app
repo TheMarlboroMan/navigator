@@ -6,6 +6,7 @@ DIR_NIVELES=$(DIR_CLASES_APP)niveles/
 DIR_INTERFACES=$(DIR_CLASES_APP)interfaces/
 DIR_INPUT=$(DIR_CLASES_APP)input/
 DIR_GRAFICOS=$(DIR_CLASES_APP)graficos/
+DIR_LECTORES=$(DIR_CLASES_APP)lectores/
 DIR_JUEGO=$(DIR_CLASES_APP)juego/
 DIR_VISITANTES=$(DIR_CLASES_APP)visitantes/
 DIR_JUEGO_AUTOMAPA=$(DIR_JUEGO)automapa/
@@ -219,6 +220,7 @@ $(DIR_JUEGO_OBJETOS)entrada.cpp
 	$(CC) $(CFLAGS) $(INCLUDES) $(DIR_JUEGO_OBJETOS)entrada.cpp -o $(DIR_O)entrada.o
 
 $(DIR_O)obstaculo_generico.o:\
+$(DIR_O)info_obstaculos_genericos.o\
 $(DIR_O)actor.o\
 $(DIR_O)objeto_juego_i.o \
 $(DIR_O)representable_i.o \
@@ -325,6 +327,14 @@ $(DIR_O)audio_detener.o\
 $(DIR_AUDIO)gestor_audio.h\
 $(DIR_AUDIO)gestor_audio.cpp
 	$(CC) $(CFLAGS) $(INCLUDES) $(DIR_AUDIO)gestor_audio.cpp -o $(DIR_O)gestor_audio.o
+
+################################################################################
+#Lectores
+
+$(DIR_O)info_obstaculos_genericos.o:\
+$(DIR_LECTORES)info_obstaculos_genericos.h \
+$(DIR_LECTORES)info_obstaculos_genericos.cpp
+	$(CC) $(CFLAGS) $(INCLUDES) $(DIR_LECTORES)info_obstaculos_genericos.cpp -o $(DIR_O)info_obstaculos_genericos.o
 
 ################################################################################
 #Juego sistemas
@@ -452,6 +462,7 @@ $(DIR_COLISIONES)calculador_colisiones.cpp
 #Generador
 
 $(DIR_O)factoria_objetos_juego.o:\
+$(DIR_O)info_obstaculos_genericos.o\
 $(DIR_O)contenedor_objetos.o\
 $(DIR_O)bonus_salud.o\
 $(DIR_O)bonus_tiempo.o\

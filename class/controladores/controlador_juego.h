@@ -21,6 +21,7 @@
 #include "../app/graficos/representador.h"
 #include "../app/colisiones/calculador_colisiones.h"
 #include "../app/input/recogedor_input.h"
+#include "../app/lectores/info_obstaculos_genericos.h"
 
 class Controlador_juego:public Controlador_base
 {
@@ -28,7 +29,7 @@ class Controlador_juego:public Controlador_base
 	//Interface pública.
 	public:
 	
-						Controlador_juego(Director_estados &DI, App_Niveles::Mapa&, App_Juego_Automapa::Automapa&, const App_Graficos::Animaciones&);
+						Controlador_juego(Director_estados &DI, App_Niveles::Mapa&, App_Juego_Automapa::Automapa&, const App_Graficos::Animaciones&, const App_Lectores::Info_obstaculos_genericos&);
 						~Controlador_juego();
 
 	virtual void 				preloop(Input_base& input, float delta);
@@ -51,6 +52,7 @@ class Controlador_juego:public Controlador_base
 
 	App_Juego_Automapa::Automapa& 			automapa;
 	App_Juego_Automapa::Vista_automapa		vista_automapa;
+	const App_Lectores::Info_obstaculos_genericos&	info_obstaculos_genericos;
 	App_Juego_Sistemas::Contador_tiempo 		contador_tiempo;
 	App_Niveles::Sala * 				sala_actual;
 

@@ -3,6 +3,7 @@
 #include "../class/controladores/controlador_juego.h"
 #include "../class/controladores/controlador_pausa.h"
 #include "../class/app/graficos/animaciones.h"
+#include "../class/app/lectores/info_obstaculos_genericos.h"
 #include "../class/app/generador/motor_mapas.h"
 #include "../class/app/recursos.h"
 
@@ -46,32 +47,39 @@ void App::loop_aplicacion(Kernel_app& kernel)
 
 	try
 	{
+		//TODO: Quizás las animaciones y los obstáculos genéricos y demás pudieran ir en un mismo paquete...
+
 		//Iniciar los recursos de animaciones...
 		App_Graficos::Animaciones animaciones;
 		animaciones.cargar();
 
-		//TODO: Iniciar los recursos de actores genéricos...
+		//Iniciar los recursos de actores genéricos...
+		App_Lectores::Info_obstaculos_genericos info_obstaculos_genericos("data/prototipos/genericos.dat");
 
 		//Iniciar el motor de mapas y el primer nivel.
 		const auto& params_test=App::obtener_parametros_test(kernel.acc_controlador_argumentos());
 
-		//TODO: Contendría el parser de salas, que debe contener el diccionario de 
-		//actores genéricos, que habría que inicializar antes.
-		App_Generador::Motor_mapas MS;
-		MS.iniciar_repo();
+		App_Generador::Motor_mapas motor_mapas;
+		motor_mapas.iniciar_repo(info_obstaculos_genericos);
+
+
+		//TODO.
+		//Más tarde o más temprano esto tendrá que cambiar... El mapa no podemos usarlo así,
+		//al cambiar de nivel hay que generar otro y se va a reventar la referencia en el controlador
+		//de juego.
 
 		if(params_test.valido)
 		{
-			MS.generar_mapa_test(params_test.tipo, params_test.nivel, params_test.variante);
+			motor_mapas.generar_mapa_test(params_test.tipo, params_test.nivel, params_test.variante, info_obstaculos_genericos);
 		}
 		else
 		{
-			MS.generar_mapa(10, 10);
+			motor_mapas.generar_mapa(2, 2, info_obstaculos_genericos);
 		}
 
 		//Controladores.
-		Controlador_juego C_J(DI, MS.acc_mapa(), MS.acc_automapa(), animaciones);
-		Controlador_pausa C_P(DI, MS.acc_automapa(), animaciones);
+		Controlador_juego C_J(DI, motor_mapas.acc_mapa(), motor_mapas.acc_automapa(), animaciones, info_obstaculos_genericos);
+		Controlador_pausa C_P(DI, motor_mapas.acc_automapa(), animaciones);
 
 		//Interface común...
 		Interface_controlador * IC=&C_J;

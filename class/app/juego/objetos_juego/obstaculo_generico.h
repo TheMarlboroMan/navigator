@@ -6,6 +6,7 @@
 #include "../../graficos/bloque_transformacion_representable.h"
 #include "../../interfaces/objeto_juego_i.h"
 #include "../../interfaces/representable_i.h"
+#include "../../lectores/info_obstaculos_genericos.h"
 
 /**
 * Un objeto cuya única finalidad es ser solido y estar ahí, impidiendo el paso 
@@ -25,7 +26,7 @@ class Obstaculo_generico:
 
 	public:
 
-						Obstaculo_generico(float x, float y, int tipo);
+						Obstaculo_generico(float x, float y, int tipo, const App_Lectores::Info_obstaculos_genericos&);
 
 	/////////////////
 	//Implementación de Representable_I
@@ -40,6 +41,7 @@ class Obstaculo_generico:
 	private:
 
 	int					tipo;
+	size_t					indice_animacion;
 
 };
 

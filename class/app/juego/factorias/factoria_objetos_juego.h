@@ -5,6 +5,7 @@
 #include <vector>
 #include <string>
 
+#include "../../lectores/info_obstaculos_genericos.h"
 #include "../contenedores/contenedor_objetos.h"
 #include "../objetos_juego/bonus_salud.h"
 #include "../objetos_juego/bonus_tiempo.h"
@@ -47,7 +48,7 @@ class Factoria_objetos_juego
 	//Interface pública.
 	public:
 
-							Factoria_objetos_juego();
+							Factoria_objetos_juego(const App_Lectores::Info_obstaculos_genericos&);
 	void						establecer_contenedor(App_Juego_Contenedores::Contenedor_objetos&);
 
 	void 						interpretar_linea(const std::string&);
@@ -82,6 +83,7 @@ class Factoria_objetos_juego
 	private:
 
 	App_Juego_Contenedores::Contenedor_objetos *	contenedor_ptr;
+	const App_Lectores::Info_obstaculos_genericos&	info_obstaculos_genericos;
 
 	/**
 	* longitudes de parámetros.

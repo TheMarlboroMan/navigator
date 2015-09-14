@@ -27,17 +27,16 @@ class Traductor_mapas
 	* Se entiende que el vector de proto_salas ya está normalizado o 
 	* el fallo que puede dar es de categoría.
 	*/
-
-
-
-	App_Niveles::Mapa 		traducir_mapa(const std::vector<Proto_sala>& p, App_RepositorioSalas::Repositorio_salas&);
-	App_Niveles::Mapa 		traducir_mapa_test(int tipo, int nivel, int variante, App_RepositorioSalas::Repositorio_salas&);
+	App_Niveles::Mapa 		traducir_mapa(const std::vector<Proto_sala>& p, App_RepositorioSalas::Repositorio_salas&, const App_Lectores::Info_obstaculos_genericos&);
+	App_Niveles::Mapa 		traducir_mapa_test(int tipo, int nivel, int variante, App_RepositorioSalas::Repositorio_salas&, const App_Lectores::Info_obstaculos_genericos&);
 
 	//////////////////
 	//Métodos privados
 	private:
 
-	void				parsear_sala(const Proto_sala&, App_Niveles::Mapa&, App_RepositorioSalas::Repositorio_salas&);
+	void				parsear_sala(const Proto_sala&, App_Niveles::Mapa&, App_RepositorioSalas::Repositorio_salas&, const App_Lectores::Info_obstaculos_genericos&);
+
+
 };
 
 }

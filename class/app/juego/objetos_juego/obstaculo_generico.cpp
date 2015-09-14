@@ -2,18 +2,23 @@
 
 using namespace App_Juego_ObjetoJuego;
 
-Obstaculo_generico::Obstaculo_generico(float x, float y, int tipo)
-	//TODO... Escoger W y H de alguna parte...
-	:Actor(x, y, 15, 22),
+Obstaculo_generico::Obstaculo_generico(float x, float y, int tipo, const App_Lectores::Info_obstaculos_genericos& iog)
+	:Actor(x, y, 0, 0),
 	Objeto_juego_I(),
-	tipo(tipo)
+	tipo(tipo), indice_animacion(0)
 {
-	//TODO: En función del tipo extraer sus propiedades. Posiblemente
-	//sea un objeto estático que se inicialice, lea un fichero y contenga
-	//las informaciones de tamaño.
-	
-	//TODO: Odiamos las cosas estáticas... Mejor que se inicialice en un 
-	//punto conocido...
+	try
+	{
+		const auto& info=iog.obtener(tipo);
+		mut_w_caja(info.w);
+		mut_h_caja(info.h);
+		indice_animacion=info.indice_animacion;
+	}
+	catch(std::out_of_range& e)
+	{
+		LOG<<"ERROR: Obstáculo genérico fuera de rango al intentar cargar tipo "<<tipo<<std::endl;
+		throw;
+	}
 }
 
 
@@ -26,7 +31,7 @@ unsigned short int Obstaculo_generico::obtener_profundidad_ordenacion()const
 void Obstaculo_generico::transformar_bloque(App_Graficos::Bloque_transformacion_representable &b)const
 {
 	using namespace App_Definiciones;
-	const auto& f=b.obtener_frame(animaciones::sprites, animaciones_sprites::obstaculo_generico, 0);
+	const auto& f=b.obtener_frame(animaciones::sprites, indice_animacion, 0);
 
 	b.establecer_tipo(App_Graficos::Bloque_transformacion_representable::tipos::tr_bitmap);
 	b.establecer_alpha(255);

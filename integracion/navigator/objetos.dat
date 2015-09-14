@@ -12,5 +12,5 @@
 	velocidad	100
 	rebote[0=invertir, 1=90 derecha, 2=90 izquierda]	0
 	direccion[1=arr,2=der,4=aba,8=izq]	1
-50	Obstáculo genérico	15	22	64,64,64
-	something	100
+50	Obstáculo genérico (1-??)	32	32	64,64,64
+	tipo	1

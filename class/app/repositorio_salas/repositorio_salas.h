@@ -16,7 +16,7 @@ class Repositorio_salas
 	//Interface pública.
 	public:
 					Repositorio_salas();
-	void 				iniciar(const std::string&); /** throw std::runtime_error */
+	void 				iniciar(const std::string&, const App_Lectores::Info_obstaculos_genericos& iog); /** throw std::runtime_error */
 	const std::string		obtener_ruta_sala(App_Definiciones::direcciones);
 
 	//////////////////////////

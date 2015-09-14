@@ -57,7 +57,7 @@ void Repositorio_salas::iniciar_mapa()
 	}
 }
 
-void Repositorio_salas::iniciar(const std::string& r)
+void Repositorio_salas::iniciar(const std::string& r, const App_Lectores::Info_obstaculos_genericos& iog)
 {
 	//Abrir el fichero con la ruta...
 	DLibH::Lector_txt L(r, '#');
@@ -79,7 +79,7 @@ void Repositorio_salas::iniciar(const std::string& r)
 			LOG<<"Procesando "<<linea<<std::endl;
 
 			App_Generador::Parser_salas p;
-			p.parsear_fichero(linea);
+			p.parsear_fichero(linea, iog);
 
 			if(!p.comprobar_validez_sala())
 			{

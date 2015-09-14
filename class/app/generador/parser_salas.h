@@ -32,7 +32,7 @@ class Parser_salas
 	}; //El tipo de sala determinará la unión que se haga de las variantes.
 
 								Parser_salas();
-	void 							parsear_fichero(const std::string& ruta);
+	void 							parsear_fichero(const std::string& ruta, const App_Lectores::Info_obstaculos_genericos& iog);
 	App_Niveles::Sala&					acc_sala() {return sala;}
 	bool							comprobar_validez_sala() const;
 	size_t							cuenta_contenedores() {return contenedores.size();}

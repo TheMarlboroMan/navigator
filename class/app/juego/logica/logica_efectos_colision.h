@@ -16,7 +16,7 @@ class Logica_efectos_colision
 	public:
 						Logica_efectos_colision(App_Juego_Sistemas::Contador_tiempo& t, App_Juego::Jugador& j);
 	void					procesar(std::vector<App_Interfaces::Efecto_colision_I *>&);
-	bool					es_salida_nivel() const {return false; /*TODO TODO*/;}
+	bool					es_salida_nivel() const {return ecr.es_salida_nivel();}
 	/////////////////////////
 	//Internas
 

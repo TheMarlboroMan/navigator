@@ -21,7 +21,9 @@ enum animaciones_sprites
 	enemigo_basico,
 	enemigo_rebote,
 	salida,
-	obstaculo_generico
+	obstaculo_generico,
+	enemigo_tanque,
+	enemigo_tanque_canon
 };
 
 enum animaciones_particulas

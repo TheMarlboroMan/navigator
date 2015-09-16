@@ -11,6 +11,7 @@
 #include "../objetos_juego/bonus_tiempo.h"
 #include "../objetos_juego/enemigo_basico.h"
 #include "../objetos_juego/enemigo_rebote.h"
+#include "../objetos_juego/enemigo_tanque.h"
 #include "../objetos_juego/entrada.h"
 #include "../objetos_juego/salida.h"
 #include "../objetos_juego/posicion_inicial.h"
@@ -57,6 +58,7 @@ class Factoria_objetos_juego
 	void						insertar(std::shared_ptr<App_Juego_ObjetoJuego::Bonus_salud>&);
 	void						insertar(std::shared_ptr<App_Juego_ObjetoJuego::Enemigo_basico>&);
 	void						insertar(std::shared_ptr<App_Juego_ObjetoJuego::Enemigo_rebote>&);
+	void						insertar(std::shared_ptr<App_Juego_ObjetoJuego::Enemigo_tanque>&);
 	void						insertar(std::shared_ptr<App_Juego_ObjetoJuego::Salida>&);
 	void						insertar(std::shared_ptr<App_Juego_ObjetoJuego::Obstaculo_generico>&);
 
@@ -72,6 +74,7 @@ class Factoria_objetos_juego
 	void						interpretar_como_bonus_salud(const std::vector<std::string>&);
 	void						interpretar_como_enemigo_basico(const std::vector<std::string>&);
 	void						interpretar_como_enemigo_rebote(const std::vector<std::string>&);
+	void						interpretar_como_enemigo_tanque(const std::vector<std::string>&);
 	void						interpretar_como_entrada(const std::vector<std::string>&);
 	void						interpretar_como_salida(const std::vector<std::string>&);
 	void						interpretar_como_posicion_inicial(const std::vector<std::string>&);
@@ -96,6 +99,7 @@ class Factoria_objetos_juego
 	static const int				lp_bonus_tiempo=4;
 	static const int				lp_enemigo_basico=4;
 	static const int				lp_enemigo_rebote=6;
+	static const int				lp_enemigo_tanque=4;
 	static const int				lp_obstaculo_generico=4;
 
 	enum tipos {
@@ -106,6 +110,7 @@ class Factoria_objetos_juego
 		bonus_tiempo=11,
 		enemigo_basico=30,
 		enemigo_rebote=31,
+		enemigo_tanque=32,
 		obstaculo_generico=50
 	};
 };

@@ -29,6 +29,7 @@ void Factoria_objetos_juego::interpretar_linea(const std::string& linea)
 			case bonus_salud:	interpretar_como_bonus_salud(params); break;
 			case enemigo_basico:	interpretar_como_enemigo_basico(params); break;
 			case enemigo_rebote:	interpretar_como_enemigo_rebote(params); break;
+			case enemigo_tanque:	interpretar_como_enemigo_tanque(params); break;
 			case entrada:		interpretar_como_entrada(params); break;
 			case salida:		interpretar_como_salida(params); break;
 			case posicion_inicial:	interpretar_como_posicion_inicial(params); break;
@@ -74,6 +75,20 @@ void Factoria_objetos_juego::insertar(std::shared_ptr<App_Juego_ObjetoJuego::Ene
 	contenedor.con_turno.push_back(std::shared_ptr<Con_turno_I>(ob, static_cast<Con_turno_I*>(ob.get())));
 	contenedor.disparables.push_back(std::shared_ptr<Disparable_I>(ob, static_cast<Disparable_I*>(ob.get())));
 	contenedor.generadores_objetos_juego.push_back(std::shared_ptr<Generador_objetos_juego_I>(ob, static_cast<Generador_objetos_juego_I*>(ob.get())));
+}
+
+void Factoria_objetos_juego::insertar(std::shared_ptr<App_Juego_ObjetoJuego::Enemigo_tanque>& ob)
+{
+	auto& contenedor=*contenedor_ptr;
+	contenedor.objetos_juego.push_back(ob);
+	contenedor.efectos_colision.push_back(std::shared_ptr<Efecto_colision_I>(ob, static_cast<Efecto_colision_I*>(ob.get())));
+	contenedor.representables.push_back(std::shared_ptr<Representable_I>(ob, static_cast<Representable_I*>(ob.get())));
+	contenedor.sonoros.push_back(std::shared_ptr<Sonoro_I>(ob, static_cast<Sonoro_I*>(ob.get())));
+	contenedor.con_turno.push_back(std::shared_ptr<Con_turno_I>(ob, static_cast<Con_turno_I*>(ob.get())));
+	contenedor.disparables.push_back(std::shared_ptr<Disparable_I>(ob, static_cast<Disparable_I*>(ob.get())));
+	contenedor.generadores_objetos_juego.push_back(std::shared_ptr<Generador_objetos_juego_I>(ob, static_cast<Generador_objetos_juego_I*>(ob.get())));
+	//Hmmm TODO... Lo dejamos???. Si es así hay que quitar el efecto de colisión... Habría que arreglar lo de que el proyectil no choque contra el propio tanque.
+	//contenedor.solidos.push_back( std::shared_ptr<Espaciable>(ob, static_cast<Espaciable*>(ob.get())));
 }
 
 void Factoria_objetos_juego::insertar(std::shared_ptr<App_Juego_ObjetoJuego::Enemigo_rebote>& ob)
@@ -149,6 +164,22 @@ void Factoria_objetos_juego::interpretar_como_enemigo_basico(const std::vector<s
 		const int y=toi(params[2]);
 		const int salud=toi(params[3]);
 		std::shared_ptr<Enemigo_basico> ob(new Enemigo_basico(x, y, salud));
+		insertar(ob);
+	}
+}
+
+void Factoria_objetos_juego::interpretar_como_enemigo_tanque(const std::vector<std::string>& params)
+{
+	if(params.size() != lp_enemigo_tanque)
+	{
+		throw Factoria_objetos_juego_excepcion(params.size(), lp_enemigo_tanque, "Enemigo tanque");
+	}
+	else
+	{
+		const int x=toi(params[1]);
+		const int y=toi(params[2]);
+		const int salud=toi(params[3]);
+		std::shared_ptr<Enemigo_tanque> ob(new Enemigo_tanque(x, y, salud));
 		insertar(ob);
 	}
 }

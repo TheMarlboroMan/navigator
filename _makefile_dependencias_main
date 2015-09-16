@@ -68,6 +68,7 @@ $(DIR_O)contexto_turno_juego.o\
 $(DIR_O)efecto_colision_recogedor.o\
 $(DIR_O)enemigo_basico.o\
 $(DIR_O)enemigo_rebote.o\
+$(DIR_O)enemigo_tanque.o\
 $(DIR_O)trazador_humo.o\
 $(DIR_O)proyectil_base.o\
 $(DIR_O)proyectil_normal.o\

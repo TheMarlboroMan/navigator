@@ -61,8 +61,6 @@ $(DIR_JUEGO_LOGICA)logica_disparador.cpp
 $(DIR_O)logica_con_turno.o:\
 $(DIR_O)calculador_colisiones.o\
 $(DIR_O)jugador.o\
-$(DIR_O)enemigo_basico.o\
-$(DIR_O)enemigo_rebote.o\
 $(DIR_O)proyectil_normal.o\
 $(DIR_JUEGO_LOGICA)logica_con_turno.h\
 $(DIR_JUEGO_LOGICA)logica_con_turno.cpp
@@ -150,6 +148,19 @@ $(DIR_O)generador_numeros.o\
 $(DIR_JUEGO_OBJETOS)enemigo_basico.h\
 $(DIR_JUEGO_OBJETOS)enemigo_basico.cpp
 	$(CC) $(CFLAGS) $(INCLUDES) $(DIR_JUEGO_OBJETOS)enemigo_basico.cpp -o $(DIR_O)enemigo_basico.o
+
+$(DIR_O)enemigo_tanque.o:\
+$(DIR_O)actor.o\
+$(DIR_O)efecto_colision_i.o\
+$(DIR_O)objeto_juego_i.o\
+$(DIR_O)representable_i.o\
+$(DIR_O)con_turno_i.o\
+$(DIR_O)disparable_i.o\
+$(DIR_O)generador_objetos_juego_i.o\
+$(DIR_O)generador_numeros.o\
+$(DIR_JUEGO_OBJETOS)enemigo_tanque.h\
+$(DIR_JUEGO_OBJETOS)enemigo_tanque.cpp
+	$(CC) $(CFLAGS) $(INCLUDES) $(DIR_JUEGO_OBJETOS)enemigo_tanque.cpp -o $(DIR_O)enemigo_tanque.o
 
 $(DIR_O)enemigo_rebote.o:\
 $(DIR_O)definiciones.o \
@@ -468,6 +479,7 @@ $(DIR_O)bonus_salud.o\
 $(DIR_O)bonus_tiempo.o\
 $(DIR_O)enemigo_basico.o\
 $(DIR_O)enemigo_rebote.o\
+$(DIR_O)enemigo_tanque.o\
 $(DIR_O)entrada.o\
 $(DIR_O)salida.o\
 $(DIR_O)obstaculo_generico.o\

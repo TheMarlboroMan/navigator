@@ -74,7 +74,7 @@ void App::loop_aplicacion(Kernel_app& kernel)
 		}
 		else
 		{
-			motor_mapas.generar_mapa(2, 2, info_obstaculos_genericos);
+			motor_mapas.generar_mapa(10, 10, info_obstaculos_genericos);
 		}
 
 		//Controladores.

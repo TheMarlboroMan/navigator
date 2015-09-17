@@ -44,6 +44,7 @@ class Salida:
 	// Implementación de Representable_i.
 	public:
 
+	virtual unsigned int 			obtener_ciclos_representable()const;
 	virtual unsigned short int 		obtener_profundidad_ordenacion()const;
 	virtual void 				transformar_bloque(App_Graficos::Bloque_transformacion_representable &b)const;
 	virtual bool				es_representable_borrar() const {return es_borrar();}

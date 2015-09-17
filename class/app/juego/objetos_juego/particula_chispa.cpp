@@ -17,6 +17,11 @@ unsigned short int Particula_chispa::obtener_profundidad_ordenacion()const
 	return 30;
 }
 
+unsigned int Particula_chispa::obtener_ciclos_representable()const
+{
+	return 1;
+}
+
 void Particula_chispa::transformar_bloque(App_Graficos::Bloque_transformacion_representable &b)const
 {
 	b.establecer_tipo(App_Graficos::Bloque_transformacion_representable::tipos::tr_primitiva_puntos);

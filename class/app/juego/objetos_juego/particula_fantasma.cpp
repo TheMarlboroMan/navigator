@@ -11,11 +11,6 @@ Particula_fantasma::Particula_fantasma(float x, float y, float tv, float ve)
 
 }
 
-unsigned short int Particula_fantasma::obtener_profundidad_ordenacion()const
-{
-	return 25;
-}
-
 void Particula_fantasma::turno(App_Interfaces::Contexto_turno_I& ct)
 {
 	auto delta=ct.acc_delta();

@@ -23,6 +23,7 @@ class Particula_chatarra:
 	// Implementación de Representable_I
 	public:
 
+	virtual unsigned int	 		obtener_ciclos_representable()const;
 	virtual unsigned short int 		obtener_profundidad_ordenacion()const;
 	virtual void 				transformar_bloque(App_Graficos::Bloque_transformacion_representable &b)const;
 

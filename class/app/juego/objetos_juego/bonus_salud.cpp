@@ -15,6 +15,11 @@ Bonus_salud::Bonus_salud(float x, float y, float s):
 
 }
 
+unsigned int Bonus_salud::obtener_ciclos_representable()const
+{
+	return 1;
+}
+
 unsigned short int Bonus_salud::obtener_profundidad_ordenacion()const
 {
 	return 10;

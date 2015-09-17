@@ -22,9 +22,9 @@ class Particula_movil_base:
 	// Implementación de Representable_I
 	public:
 
+	virtual unsigned int 			obtener_ciclos_representable()const=0;
 	virtual unsigned short int 		obtener_profundidad_ordenacion()const=0;
 	virtual void 				transformar_bloque(App_Graficos::Bloque_transformacion_representable &b)const=0;
-
 	virtual bool				es_representable_borrar()const {return es_borrar();}
 
 	//////////////

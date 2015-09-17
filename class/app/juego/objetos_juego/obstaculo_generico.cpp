@@ -28,6 +28,11 @@ unsigned short int Obstaculo_generico::obtener_profundidad_ordenacion()const
 	return 10;
 }
 
+unsigned int Obstaculo_generico::obtener_ciclos_representable()const
+{
+	return 1;
+}
+
 void Obstaculo_generico::transformar_bloque(App_Graficos::Bloque_transformacion_representable &b)const
 {
 	using namespace App_Definiciones;

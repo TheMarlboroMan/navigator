@@ -42,11 +42,11 @@ void Enemigo_tanque::transformar_bloque(App_Graficos::Bloque_transformacion_repr
 	{
 		case 1:
 			f=b.obtener_frame(animaciones::sprites, animaciones_sprites::enemigo_tanque, 0);
-			b.establecer_posicion(acc_espaciable_x(), acc_espaciable_y(), W, H);
+			b.establecer_posicion(acc_espaciable_x(), acc_espaciable_y(), f.w, f.h);
 		break;
 		case 2:
 			f=b.obtener_frame(animaciones::sprites, animaciones_sprites::enemigo_tanque_canon, 0);
-			b.establecer_posicion(acc_espaciable_x()+9, acc_espaciable_y(), W, H);
+			b.establecer_posicion(acc_espaciable_x()+9, acc_espaciable_y(), f.w, f.h);
 			b.especificar_centro_rotacion(2,2);
 			b.rotar(-angulo);
 		break;
@@ -118,7 +118,6 @@ void Enemigo_tanque::generar_objetos(App_Interfaces::Factoria_objetos_juego_I& f
 			++i;
 		}
 
-		f.fabricar_bonus_tiempo(acc_espaciable_x(), acc_espaciable_y(), 5.0f);
 		f.fabricar_explosion(x, y, 1.0f, v);
 	}
 	else

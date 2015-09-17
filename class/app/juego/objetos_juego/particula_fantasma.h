@@ -18,7 +18,8 @@ class Particula_fantasma:
 	// Implementación de Representable_I
 	public:
 
-	virtual unsigned short int 		obtener_profundidad_ordenacion()const;
+	virtual unsigned int 			obtener_ciclos_representable()const=0;
+	virtual unsigned short int 		obtener_profundidad_ordenacion()const=0;
 	virtual void 				transformar_bloque(App_Graficos::Bloque_transformacion_representable &b)const=0;
 
 	//////////////

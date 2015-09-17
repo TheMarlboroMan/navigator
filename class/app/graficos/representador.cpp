@@ -21,10 +21,10 @@ unsigned int Representador::generar_vista(
 
 	for(const Representable_I * r : v)
 	{
-		int ciclos=r->obtener_ciclos_representable();
-		while(ciclos)
+		int ciclos=r->obtener_ciclos_representable(), c=1;
+		while(c <= ciclos)
 		{
-			r->transformar_bloque(bloque_transformacion.mut_ciclo(ciclos--));
+			r->transformar_bloque(bloque_transformacion.mut_ciclo(c++));
 			if(bloque_transformacion.rep->volcar(pantalla, camara)) ++total;
 		}
 		
@@ -41,10 +41,10 @@ unsigned int Representador::generar_vista(
 
 	for(const Representable_I * r : v)
 	{
-		int ciclos=r->obtener_ciclos_representable();
-		while(ciclos)
+		int ciclos=r->obtener_ciclos_representable(), c=1;
+		while(c <= ciclos)
 		{
-			r->transformar_bloque(bloque_transformacion.mut_ciclo(ciclos--));
+			r->transformar_bloque(bloque_transformacion.mut_ciclo(c++));
 			if(bloque_transformacion.rep->volcar(pantalla)) ++total;
 		}
 	}

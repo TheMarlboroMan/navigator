@@ -19,7 +19,9 @@ class Particula_fantasma_bonus_tiempo:
 	// Implementación de Representable_I
 	public:
 
-	virtual void 		transformar_bloque(App_Graficos::Bloque_transformacion_representable &b)const;
+	virtual unsigned int 			obtener_ciclos_representable()const;
+	virtual unsigned short int 		obtener_profundidad_ordenacion()const;
+	virtual void 				transformar_bloque(App_Graficos::Bloque_transformacion_representable &b)const;
 
 	/////////////////////////
 	//Internas...,

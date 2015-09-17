@@ -112,6 +112,16 @@ void Jugador::recibir_impacto(float val)
 		App::Recursos_audio::rs_golpe_jugador, 127, 127));
 }
 
+unsigned int Jugador::obtener_ciclos_representable()const
+{
+	return 1;
+}
+
+unsigned short int Jugador::obtener_profundidad_ordenacion() const
+{
+	return 20;
+}
+
 void Jugador::transformar_bloque(Bloque_transformacion_representable &b) const
 {
 	using namespace App_Definiciones;

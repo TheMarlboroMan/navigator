@@ -17,6 +17,11 @@ unsigned short int Particula_chatarra::obtener_profundidad_ordenacion()const
 	return 30;
 }
 
+unsigned int Particula_chatarra::obtener_ciclos_representable()const
+{
+	return 1;
+}
+
 void Particula_chatarra::transformar_bloque(App_Graficos::Bloque_transformacion_representable &b)const
 {
 	using namespace App_Definiciones;

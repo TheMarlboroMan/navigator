@@ -36,6 +36,11 @@ unsigned short int Proyectil_normal::obtener_profundidad_ordenacion()const
 	return 40;
 }
 
+unsigned int Proyectil_normal::obtener_ciclos_representable()const
+{
+	return 1;
+}
+
 void Proyectil_normal::transformar_bloque(App_Graficos::Bloque_transformacion_representable &b)const
 {
 	using namespace App_Graficos;

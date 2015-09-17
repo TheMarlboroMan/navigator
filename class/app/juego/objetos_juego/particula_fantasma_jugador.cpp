@@ -8,6 +8,16 @@ Particula_fantasma_jugador::Particula_fantasma_jugador(float x, float y, float t
 
 }
 
+unsigned short int Particula_fantasma_jugador::obtener_profundidad_ordenacion()const
+{
+	return 25;
+}
+
+unsigned int Particula_fantasma_jugador::obtener_ciclos_representable()const
+{
+	return 1;
+}
+
 void Particula_fantasma_jugador::transformar_bloque(App_Graficos::Bloque_transformacion_representable &b)const
 {
 	using namespace App_Definiciones;

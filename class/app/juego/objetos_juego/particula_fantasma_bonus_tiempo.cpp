@@ -8,6 +8,16 @@ Particula_fantasma_bonus_tiempo::Particula_fantasma_bonus_tiempo(float x, float 
 
 }
 
+unsigned short int Particula_fantasma_bonus_tiempo::obtener_profundidad_ordenacion()const
+{
+	return 25;
+}
+
+unsigned int Particula_fantasma_bonus_tiempo::obtener_ciclos_representable()const
+{
+	return 1;
+}
+
 void Particula_fantasma_bonus_tiempo::transformar_bloque(App_Graficos::Bloque_transformacion_representable &b)const
 {
 	using namespace App_Definiciones;

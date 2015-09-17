@@ -66,6 +66,11 @@ unsigned short int Enemigo_rebote::obtener_profundidad_ordenacion() const
 	return 10;
 }
 
+unsigned int Enemigo_rebote::obtener_ciclos_representable() const
+{
+	return 1;
+}
+
 void Enemigo_rebote::transformar_bloque(App_Graficos::Bloque_transformacion_representable &b)const
 {
 	using namespace App_Graficos;

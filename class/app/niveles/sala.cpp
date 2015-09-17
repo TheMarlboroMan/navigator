@@ -1,7 +1,7 @@
 #include "sala.h"
 
 using namespace App_Niveles;
-using namespace HerramientasProyecto;
+using namespace Herramientas_proyecto;
 
 /**
 * @param t_dim pw 

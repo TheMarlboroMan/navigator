@@ -8,7 +8,7 @@ Particula_chatarra::Particula_chatarra(float x, float y, float tv, const DLibH::
 {
 	//Escoger frame.
 	using def=App_Definiciones::definiciones_particulas;
-	auto g=HerramientasProyecto::Generador_int(def::min_chatarra, def::max_chatarra);
+	auto g=Herramientas_proyecto::Generador_int(def::min_chatarra, def::max_chatarra);
 	frame=g()-def::min_chatarra;
 }
 

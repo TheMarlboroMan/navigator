@@ -5,7 +5,7 @@ using namespace App_Juego_ObjetoJuego;
 Particula_chispa::Particula_chispa(float x, float y, float tv, const DLibH::Vector_2d& v):
 	Particula_movil_base(x, y, tv, v), cr(0), cg(0), cb(0), ca(0)
 {
-	auto G=HerramientasProyecto::Generador_int(128, 255);
+	auto G=Herramientas_proyecto::Generador_int(128, 255);
 	cr=G();
 	cg=G();
 	cb=G();

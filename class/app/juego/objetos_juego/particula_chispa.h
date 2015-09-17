@@ -2,9 +2,8 @@
 #define PARTICULA_CHISPA_H
 
 #include <herramientas/vector_2d/vector_2d.h>
-
+#include <generador_numeros.h>
 #include "particula_movil_base.h"
-#include "../../../herramientas_proyecto/generador_numeros.h"
 
 namespace App_Juego_ObjetoJuego
 {

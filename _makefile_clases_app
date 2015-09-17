@@ -144,7 +144,6 @@ $(DIR_O)representable_i.o\
 $(DIR_O)con_turno_i.o\
 $(DIR_O)disparable_i.o\
 $(DIR_O)generador_objetos_juego_i.o\
-$(DIR_O)generador_numeros.o\
 $(DIR_JUEGO_OBJETOS)enemigo_basico.h\
 $(DIR_JUEGO_OBJETOS)enemigo_basico.cpp
 	$(CC) $(CFLAGS) $(INCLUDES) $(DIR_JUEGO_OBJETOS)enemigo_basico.cpp -o $(DIR_O)enemigo_basico.o
@@ -157,7 +156,6 @@ $(DIR_O)representable_i.o\
 $(DIR_O)con_turno_i.o\
 $(DIR_O)disparable_i.o\
 $(DIR_O)generador_objetos_juego_i.o\
-$(DIR_O)generador_numeros.o\
 $(DIR_JUEGO_OBJETOS)enemigo_tanque.h\
 $(DIR_JUEGO_OBJETOS)enemigo_tanque.cpp
 	$(CC) $(CFLAGS) $(INCLUDES) $(DIR_JUEGO_OBJETOS)enemigo_tanque.cpp -o $(DIR_O)enemigo_tanque.o
@@ -206,7 +204,6 @@ $(DIR_JUEGO_OBJETOS)bonus_tiempo.cpp
 
 $(DIR_O)proyectil_normal.o:\
 $(DIR_O)proyectil_base.o\
-$(DIR_O)generador_numeros.o\
 $(DIR_O)bloque_transformacion_representable.o\
 $(DIR_JUEGO_OBJETOS)proyectil_normal.h\
 $(DIR_JUEGO_OBJETOS)proyectil_normal.cpp
@@ -256,7 +253,6 @@ $(DIR_JUEGO_OBJETOS)posicion_inicial.cpp
 	$(CC) $(CFLAGS) $(INCLUDES) $(DIR_JUEGO_OBJETOS)posicion_inicial.cpp -o $(DIR_O)posicion_inicial.o
 
 $(DIR_O)particula_base.o:\
-$(DIR_O)tabla_sprites.o\
 $(DIR_O)representable_i.o\
 $(DIR_O)con_turno_i.o \
 $(DIR_JUEGO_OBJETOS)particula_base.h \
@@ -455,7 +451,6 @@ $(DIR_GRAFICOS)representador.cpp
 	$(CC) $(CFLAGS) $(INCLUDES) $(DIR_GRAFICOS)representador.cpp -o $(DIR_O)representador.o
 
 $(DIR_O)animaciones.o :\
-$(DIR_O)tabla_animaciones.o \
 $(DIR_GRAFICOS)animaciones.h \
 $(DIR_GRAFICOS)animaciones.cpp
 	$(CC) $(CFLAGS) $(INCLUDES) $(DIR_GRAFICOS)animaciones.cpp -o $(DIR_O)animaciones.o
@@ -504,7 +499,6 @@ $(DIR_FACTORIAS)factoria_objetos_volatiles.cpp
 	$(CC) $(CFLAGS) $(INCLUDES) $(DIR_FACTORIAS)factoria_objetos_volatiles.cpp -o $(DIR_O)factoria_objetos_volatiles.o
 
 $(DIR_O)traductor_mapas.o:\
-$(DIR_O)generador_numeros.o \
 $(DIR_O)repositorio_salas.o\
 $(DIR_O)proto_sala.o\
 $(DIR_O)parser_salas.o\

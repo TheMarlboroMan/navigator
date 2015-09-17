@@ -27,9 +27,11 @@ struct Bloque_transformacion_representable
 								Bloque_transformacion_representable(const Animaciones&);
 								~Bloque_transformacion_representable();
 
-	const HerramientasProyecto::Tabla_animaciones&		obtener_tabla_animaciones(size_t v) const;
-	const HerramientasProyecto::Animacion&			obtener_animacion(size_t tabla, size_t animacion) const;
-	const HerramientasProyecto::Frame_sprites&		obtener_frame(size_t tabla, size_t animacion, size_t frame) const;
+	int							acc_ciclo() const {return ciclo;}
+	Bloque_transformacion_representable&			mut_ciclo(int v) {ciclo=v; return *this;}
+	const Herramientas_proyecto::Tabla_animaciones&		obtener_tabla_animaciones(size_t v) const;
+	const Herramientas_proyecto::Animacion&			obtener_animacion(size_t tabla, size_t animacion) const;
+	const Herramientas_proyecto::Frame_sprites&		obtener_frame(size_t tabla, size_t animacion, size_t frame) const;
 	bool 							es_visible() const;
 	void 							establecer_recorte(unsigned int x, unsigned int y, unsigned int w, unsigned int h);
 	void 							establecer_posicion(unsigned int x, unsigned int y, unsigned int w, unsigned int h);
@@ -76,6 +78,7 @@ struct Bloque_transformacion_representable
 	DLibV::Representacion * 			rep;
 	tipos 						tipo_actual;
 	bool 						visible;
+	int						ciclo;
 };
 
 }

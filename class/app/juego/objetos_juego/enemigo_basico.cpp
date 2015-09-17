@@ -90,24 +90,24 @@ void Enemigo_basico::generar_objetos(App_Interfaces::Factoria_objetos_juego_I& f
 
 		float x=acc_espaciable_x()+(acc_espaciable_w()/2);
 		float y=acc_espaciable_y()+(acc_espaciable_w()/2);
-		auto g=HerramientasProyecto::Generador_int(10, 30);
-		auto gvel=HerramientasProyecto::Generador_int(150, 300);
+		auto g=Herramientas_proyecto::Generador_int(10, 30);
+		auto gvel=Herramientas_proyecto::Generador_int(150, 300);
 		int i=0, mp=g();
 		while(i < mp)
 		{
-			auto g=HerramientasProyecto::Generador_int(0, 359);
+			auto g=Herramientas_proyecto::Generador_int(0, 359);
 			auto v=Vector_2d::vector_unidad_para_angulo(g())*gvel();
 			f.fabricar_chatarra(x, y, 3.0f, v);
 			++i;
 		}
 
-		auto gtraza=HerramientasProyecto::Generador_int(3, 5);
-		auto gveltraza=HerramientasProyecto::Generador_int(160, 200);
-		auto gduracion=HerramientasProyecto::Generador_int(40, 100);
+		auto gtraza=Herramientas_proyecto::Generador_int(3, 5);
+		auto gveltraza=Herramientas_proyecto::Generador_int(160, 200);
+		auto gduracion=Herramientas_proyecto::Generador_int(40, 100);
 		i=0;
 		while(i < gtraza())
 		{
-			auto g=HerramientasProyecto::Generador_int(0, 359);
+			auto g=Herramientas_proyecto::Generador_int(0, 359);
 			auto v=Vector_2d::vector_unidad_para_angulo(g())*gveltraza();
 			float dur=(float)gduracion() / 100.0;
 			f.fabricar_trazador_humo(x, y, dur, v);

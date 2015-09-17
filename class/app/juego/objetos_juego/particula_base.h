@@ -3,7 +3,6 @@
 
 #include "../../interfaces/representable_i.h"
 #include "../../interfaces/con_turno_i.h"
-#include "../../../herramientas_proyecto/tabla_sprites.h"
 
 /**
 * Clase base para la partícula...

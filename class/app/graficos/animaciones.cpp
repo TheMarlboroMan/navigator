@@ -2,7 +2,7 @@
 
 using namespace App_Graficos;
 
-const HerramientasProyecto::Tabla_animaciones& Animaciones::obtener(size_t v) const
+const Herramientas_proyecto::Tabla_animaciones& Animaciones::obtener(size_t v) const
 {
 	return animaciones.at(v);
 }
@@ -19,9 +19,9 @@ void Animaciones::cargar()
 	auto f=[this](const std::string& ruta_frames, const std::string& ruta_animaciones, size_t indice)
 	{
 		LOG<<"Registrando animaciones "<<indice<<" -> "<<ruta_frames<<" -> "<<ruta_animaciones<<std::endl;
-		HerramientasProyecto::Tabla_sprites ts(ruta_frames);
+		Herramientas_proyecto::Tabla_sprites ts(ruta_frames);
 		if(animaciones.count(indice)) throw std::runtime_error("Ya existe tabla de animaciones al cargar tablas!!");
-		else animaciones.insert(std::make_pair(indice, HerramientasProyecto::Tabla_animaciones(ts, ruta_animaciones)));
+		else animaciones.insert(std::make_pair(indice, Herramientas_proyecto::Tabla_animaciones(ts, ruta_animaciones)));
 	};
 
 	using namespace App_Definiciones;

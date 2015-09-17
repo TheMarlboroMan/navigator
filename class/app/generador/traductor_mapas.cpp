@@ -1,5 +1,5 @@
 #include "traductor_mapas.h"
-#include "../../herramientas_proyecto/generador_numeros.h"
+#include <generador_numeros.h>
 
 #include "parser_salas.h"
 #include "../juego/objetos_juego/bonus_tiempo.h"
@@ -9,7 +9,7 @@
 using namespace App_Generador;
 using namespace App_Niveles;
 using namespace App_Definiciones;
-using namespace HerramientasProyecto;
+using namespace Herramientas_proyecto;
 
 App_Niveles::Mapa Traductor_mapas::traducir_mapa(const std::vector<Proto_sala>& p, App_RepositorioSalas::Repositorio_salas& repo, const App_Lectores::Info_obstaculos_genericos& iog)
 {
@@ -70,7 +70,7 @@ App_Niveles::Mapa Traductor_mapas::traducir_mapa_test(int tipo, int nivel, int v
 		resultado.insertar_sala(0, 0, parser.acc_sala());
 		return resultado;
 	}
-	catch(HerramientasProyecto::Matriz_2d_excepcion& e)
+	catch(Herramientas_proyecto::Matriz_2d_excepcion& e)
 	{
 		LOG<<"Error al insertar la sala generada..."<<std::endl;
 		throw std::runtime_error("Error al insertar sala de test...");
@@ -89,7 +89,7 @@ void Traductor_mapas::parsear_sala(const Proto_sala& ps, App_Niveles::Mapa& resu
 	* o el principio para eliminar entidades especiales.
 	*/
 
-	HerramientasProyecto::Generador_int G(1, parser.cuenta_contenedores()-1);
+	Herramientas_proyecto::Generador_int G(1, parser.cuenta_contenedores()-1);
 
 	Parser_salas::tipo_sala t=Parser_salas::tipo_sala::normal;
 	if(ps.es_inicio()) t=Parser_salas::tipo_sala::inicio;

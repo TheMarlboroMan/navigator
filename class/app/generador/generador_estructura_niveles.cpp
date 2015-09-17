@@ -1,5 +1,5 @@
 #include "generador_estructura_niveles.h"
-#include "../../herramientas_proyecto/selector_aleatorio.h"
+#include <selector_aleatorio.h>
 #include <algorithm>
 #include <herramientas/log_base/log_base.h>
 
@@ -31,7 +31,7 @@ void Generador_estructura_niveles::construir_sala(int x, int y, direcciones sali
 
 direcciones Generador_estructura_niveles::obtener_salida_aleatoria(direcciones salidas)
 {
-	HerramientasProyecto::Selector_aleatorio_uniforme<direcciones> SAU;
+	Herramientas_proyecto::Selector_aleatorio_uniforme<direcciones> SAU;
 	std::vector<direcciones> vs {direcciones::arriba, direcciones::abajo, direcciones::izquierda, direcciones::derecha};
 	for(direcciones t : vs) if( (salidas & t) != direcciones::nada ) SAU.insertar(t);
 
@@ -175,7 +175,7 @@ void Generador_estructura_niveles::generar_salas_secundarias(unsigned int c)
 	LOG<<"Iniciando construccion de "<<c<<" salas secundarias"<<std::endl;
 
 	unsigned int i=0;
-	using namespace HerramientasProyecto;
+	using namespace Herramientas_proyecto;
 	
 	while(i < c)
 	{

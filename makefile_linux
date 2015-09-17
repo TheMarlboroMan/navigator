@@ -9,10 +9,8 @@ CFLAGS=-c $(SIMBOLOS_DEBUG) $(OPTIMIZACION) $(FLAGS_BASE)
 CFLAGS_TARGET_FINAL=$(SIMBOLOS_DEBUG) $(OPTIMIZACION) $(FLAGS_BASE)
 CC=g++
 EJECUTABLE=a.out
-LIMPIAR=rm objects/*; rm $(EJECUTABLE); mkdir objects; touch objects/dummy;
-COMANDO_MOVER=mv libdan2/libDanSDL2.a libDanSDL2.a; 
 
-DIR_HOME=/home/dani/programacion/c++/
+DIR_HOME=/home/daniel/Escritorio/stuff/
 DIR_LIBDAN2=$(DIR_HOME)libdansdl2
 DIR_HERRAMIENTAS_PROYECTO=$(DIR_HOME)herramientas_proyecto/class/
 DIR_O_HERRAMIENTAS_PROYECTO=$(DIR_HOME)herramientas_proyecto/objects/

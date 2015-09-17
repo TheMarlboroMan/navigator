@@ -1,13 +1,14 @@
 #ifndef TRAZADOR_HUMO_H
 #define TRAZADOR_HUMO_H
 
+#include <generador_numeros.h>
+
 #include "../../definiciones/definiciones.h"
 #include "../actor_movil.h"
 #include "../../recursos.h"
 #include "../../interfaces/objeto_juego_i.h"
 #include "../../interfaces/con_turno_i.h"
 #include "../../interfaces/generador_objetos_juego_i.h"
-#include "../../../herramientas_proyecto/generador_numeros.h"
 
 /**
 * El trazador de humo es un objeto no representable y móvil, cuya finalidad es

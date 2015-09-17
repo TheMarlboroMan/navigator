@@ -25,17 +25,17 @@ Bloque_transformacion_representable::~Bloque_transformacion_representable()
 	rep_agr_est.vaciar_grupo();
 }
 
-const HerramientasProyecto::Tabla_animaciones&	Bloque_transformacion_representable::obtener_tabla_animaciones(size_t v) const
+const Herramientas_proyecto::Tabla_animaciones&	Bloque_transformacion_representable::obtener_tabla_animaciones(size_t v) const
 {
 	return animaciones.obtener(v);
 }
 
-const HerramientasProyecto::Animacion&	Bloque_transformacion_representable::obtener_animacion(size_t tabla, size_t animacion) const
+const Herramientas_proyecto::Animacion&	Bloque_transformacion_representable::obtener_animacion(size_t tabla, size_t animacion) const
 {
 	return animaciones.obtener(tabla).obtener(animacion);
 }
 
-const HerramientasProyecto::Frame_sprites& Bloque_transformacion_representable::obtener_frame(size_t tabla, size_t animacion, size_t frame) const
+const Herramientas_proyecto::Frame_sprites& Bloque_transformacion_representable::obtener_frame(size_t tabla, size_t animacion, size_t frame) const
 {
 	return animaciones.obtener(tabla).obtener(animacion).obtener(frame).frame;
 }

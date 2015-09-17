@@ -47,7 +47,7 @@ void Trazador_humo::generar_objetos(App_Interfaces::Factoria_objetos_juego_I& f)
 	if(tiempo_humo <= 0.0f)
 	{
 		tiempo_humo=max_tiempo_humo;
-		auto gduracion=HerramientasProyecto::Generador_int(10, 40);
+		auto gduracion=Herramientas_proyecto::Generador_int(10, 40);
 		float dur=(float)gduracion() / 100.0;
 		f.fabricar_humo(acc_espaciable_x(), acc_espaciable_y(), duracion_humo+dur);
 	}

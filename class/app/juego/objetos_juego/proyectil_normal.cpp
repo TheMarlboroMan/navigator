@@ -86,8 +86,8 @@ void Proyectil_normal::generar_objetos(App_Interfaces::Factoria_objetos_juego_I&
 
 	if(cantidad_chispas)
 	{		
-		auto ggrad=HerramientasProyecto::Generador_int(-30, 30);
-		auto gvel=HerramientasProyecto::Generador_int(150, 300);
+		auto ggrad=Herramientas_proyecto::Generador_int(-30, 30);
+		auto gvel=Herramientas_proyecto::Generador_int(150, 300);
 		int i=0;
 
 		float x=acc_espaciable_x()+(acc_espaciable_w()/2);

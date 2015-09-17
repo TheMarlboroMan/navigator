@@ -11,8 +11,6 @@
 #include "../recursos.h"
 #include "../input/input_usuario.h"
 #include "../definiciones/definiciones.h"
-//#include "../../herramientas_proyecto/tabla_sprites.h"
-//#include "jugador_estados.h"
 
 namespace App_Juego
 {

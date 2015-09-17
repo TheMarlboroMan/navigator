@@ -1,6 +1,7 @@
 #ifndef ENEMIGO_BASICO_H
 #define ENEMIGO_BASICO_H
 
+#include <generador_numeros.h>
 #include "../../definiciones/definiciones.h"
 #include "../actor_movil.h"
 #include "../../recursos.h"
@@ -12,7 +13,6 @@
 #include "../../interfaces/efecto_colision_i.h"
 #include "../../interfaces/generador_objetos_juego_i.h"
 #include "../../graficos/bloque_transformacion_representable.h"
-#include "../../../herramientas_proyecto/generador_numeros.h"
 
 namespace App_Juego_ObjetoJuego
 {

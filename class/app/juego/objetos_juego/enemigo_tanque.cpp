@@ -21,34 +21,38 @@ unsigned short int Enemigo_tanque::obtener_profundidad_ordenacion()const
 	return 10;
 }
 
+unsigned int Enemigo_tanque::obtener_ciclos_representable()const
+{
+	return 2;
+}
+
 
 void Enemigo_tanque::transformar_bloque(App_Graficos::Bloque_transformacion_representable &b) const
 {
 	using namespace App_Graficos;
 	using namespace App_Definiciones;
-	using BMP=DLibV::Representacion_bitmap_dinamica;
 
-	const auto& f1=b.obtener_frame(animaciones::sprites, animaciones_sprites::enemigo_tanque, 0);
-	const auto& f2=b.obtener_frame(animaciones::sprites, animaciones_sprites::enemigo_tanque_canon, 0);
+	b.establecer_tipo(Bloque_transformacion_representable::tipos::tr_bitmap);
+	b.establecer_alpha(255);
+	b.establecer_recurso(App::Recursos_graficos::rt_juego);
 
-	//Se asume que todos los frames van mirando a la derecha.
-	b.establecer_tipo(Bloque_transformacion_representable::tipos::tr_grupo_dinamico);
+	Herramientas_proyecto::Frame_sprites f;
 
-	BMP * cuerpo=new BMP();
-	cuerpo->establecer_textura(DLibV::Gestor_texturas::obtener(App::Recursos_graficos::rt_juego));
-	cuerpo->establecer_recorte(f1.x+f1.desp_x, f1.y+f1.desp_y, f1.w, f1.h);
-	cuerpo->establecer_posicion(0, 0, f1.w, f1.h);
+	switch(b.acc_ciclo())
+	{
+		case 1:
+			f=b.obtener_frame(animaciones::sprites, animaciones_sprites::enemigo_tanque, 0);
+			b.establecer_posicion(acc_espaciable_x(), acc_espaciable_y(), W, H);
+		break;
+		case 2:
+			f=b.obtener_frame(animaciones::sprites, animaciones_sprites::enemigo_tanque_canon, 0);
+			b.establecer_posicion(acc_espaciable_x()+9, acc_espaciable_y(), W, H);
+			b.especificar_centro_rotacion(2,2);
+			b.rotar(-angulo);
+		break;
+	}
 
-	BMP * canon=new BMP();
-	canon->establecer_textura(DLibV::Gestor_texturas::obtener(App::Recursos_graficos::rt_juego));
-	canon->establecer_recorte(f2.x+f2.desp_x, f2.y+f2.desp_y, f2.w, f2.h);
-	canon->establecer_posicion(10, 0, f2.w, f2.h);
-	canon->transformar_centro_rotacion(2, 2);
-	canon->transformar_rotar(-angulo); //La rotación es "counter clockwise" en SDL2.
-
-	b.insertar_en_grupo(cuerpo);
-	b.insertar_en_grupo(canon);
-	b.establecer_posicion(acc_espaciable_x(), acc_espaciable_y(), W, H);
+	b.establecer_recorte(f.x, f.y, f.w, f.h);
 }
 
 void Enemigo_tanque::turno(App_Interfaces::Contexto_turno_I& ct)
@@ -90,24 +94,24 @@ void Enemigo_tanque::generar_objetos(App_Interfaces::Factoria_objetos_juego_I& f
 
 		float x=acc_espaciable_x()+(acc_espaciable_w()/2);
 		float y=acc_espaciable_y()+(acc_espaciable_w()/2);
-		auto g=HerramientasProyecto::Generador_int(10, 30);
-		auto gvel=HerramientasProyecto::Generador_int(150, 300);
+		auto g=Herramientas_proyecto::Generador_int(10, 30);
+		auto gvel=Herramientas_proyecto::Generador_int(150, 300);
 		int i=0, mp=g();
 		while(i < mp)
 		{
-			auto g=HerramientasProyecto::Generador_int(0, 359);
+			auto g=Herramientas_proyecto::Generador_int(0, 359);
 			auto v=Vector_2d::vector_unidad_para_angulo(g())*gvel();
 			f.fabricar_chatarra(x, y, 3.0f, v);
 			++i;
 		}
 
-		auto gtraza=HerramientasProyecto::Generador_int(3, 5);
-		auto gveltraza=HerramientasProyecto::Generador_int(160, 200);
-		auto gduracion=HerramientasProyecto::Generador_int(40, 100);
+		auto gtraza=Herramientas_proyecto::Generador_int(3, 5);
+		auto gveltraza=Herramientas_proyecto::Generador_int(160, 200);
+		auto gduracion=Herramientas_proyecto::Generador_int(40, 100);
 		i=0;
 		while(i < gtraza())
 		{
-			auto g=HerramientasProyecto::Generador_int(0, 359);
+			auto g=Herramientas_proyecto::Generador_int(0, 359);
 			auto v=Vector_2d::vector_unidad_para_angulo(g())*gveltraza();
 			float dur=(float)gduracion() / 100.0;
 			f.fabricar_trazador_humo(x, y, dur, v);

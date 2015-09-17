@@ -1,11 +1,13 @@
 #ifndef SALA_H
 #define SALA_H
 
+#include <memory>
+
+#include <matriz2d.h>
+
 #include "celda.h"
 #include "celda_decorativa.h"
-#include "../../herramientas_proyecto/matriz2d.h"
 #include "../definiciones/definiciones.h"
-#include <memory>
 
 #include "../juego/contenedores/contenedor_objetos.h"
 
@@ -44,7 +46,7 @@ class Sala
 	
 
 	//TODO: Elimianr...
-	const HerramientasProyecto::Matriz_2d<Celda>& 		acc_matriz() const {return celdas;}
+	const Herramientas_proyecto::Matriz_2d<Celda>& 		acc_matriz() const {return celdas;}
 	const App_Juego_ObjetoJuego::Entrada& 			obtener_entrada_posicion(App_Definiciones::direcciones p); /** @throw std::logic_error cuando no hay entrada en esa posición. */
 	const std::shared_ptr<App_Juego_ObjetoJuego::Posicion_inicial>	obtener_posicion_inicial_jugador() {return objetos.posicion_inicial;}
 	const std::shared_ptr<App_Juego_ObjetoJuego::Salida>	obtener_salida() {return objetos.salida;}
@@ -57,8 +59,8 @@ class Sala
 
 	App_Definiciones::tipos::coordenadas_t_dim 		pos; //Posición en una rejilla general.
 	App_Definiciones::t_dim 				w, h;		//Ancho y alto.
-	HerramientasProyecto::Matriz_2d<Celda> 			celdas;
-	HerramientasProyecto::Matriz_2d<Celda_decorativa> 	celdas_decorativas;
+	Herramientas_proyecto::Matriz_2d<Celda> 			celdas;
+	Herramientas_proyecto::Matriz_2d<Celda_decorativa> 	celdas_decorativas;
 	App_Juego_Contenedores::Contenedor_objetos	 	objetos;
 
 	///////////

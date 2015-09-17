@@ -14,7 +14,7 @@ class Mapa
 
 	App_Definiciones::t_dim 				w, h;
 	App_Definiciones::tipos::coordenadas_t_dim 		sala_inicial;
-	HerramientasProyecto::Matriz_2d<Sala> 			salas;
+	Herramientas_proyecto::Matriz_2d<Sala> 			salas;
 
 	///////////
 	// Interface pública.

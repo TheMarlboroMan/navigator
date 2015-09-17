@@ -1,9 +1,9 @@
 #ifndef PROYECTIL_NORMAL_H
 #define PROYECTIL_NORMAL_H
 
+#include <generador_numeros.h>
 #include "proyectil_base.h"
 #include "../../graficos/bloque_transformacion_representable.h"
-#include "../../../herramientas_proyecto/generador_numeros.h"
 
 /**
 * Un proyectil corriente y moliente.

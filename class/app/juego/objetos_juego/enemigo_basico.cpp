@@ -44,7 +44,7 @@ void Enemigo_basico::turno(App_Interfaces::Contexto_turno_I& ct)
 	tiempo_proximo_disparo-=delta;
 
 	//Encarar al jugador.
-	auto vd=obtener_vector_para(ct.acc_blanco());
+	auto vd=obtener_vector_pantalla_para(ct.acc_blanco());
 
 	mut_direccion(vd.x < 0.0 ? App_Definiciones::direcciones::izquierda : App_Definiciones::direcciones::derecha);
 
@@ -123,7 +123,7 @@ void Enemigo_basico::generar_objetos(App_Interfaces::Factoria_objetos_juego_I& f
 		{
 			tiempo_proximo_disparo=TIEMPO_PROXIMO_DISPARO_DEFECTO;
 
-			const auto v=obtener_vector_para(f.acc_blanco_disparo()) * 200.0f;
+			const auto v=obtener_vector_pantalla_para(f.acc_blanco_disparo()) * 200.0f;
 			f.fabricar_proyectil_normal_enemigo(acc_espaciable_x(), acc_espaciable_y(), 8, 8, v, 25.0);
 
 			//TODO: Los concerns de audio están mezlados con el resto :(.

@@ -49,8 +49,17 @@ class Espaciable
 	unsigned int 			acc_espaciable_w() const {return copia_caja().w;}
 	unsigned int 			acc_espaciable_h() const {return copia_caja().h;}
 	DLibH::Punto_2d<float> 		acc_espaciable_posicion() const {return copia_caja().origen;}
-	DLibH::Vector_2d 		obtener_vector_para(const Espaciable& e) {return obtener_vector_para(*this, e);}
-	DLibH::Vector_2d 		obtener_vector_para(const Espaciable& a, const Espaciable& b) ;
+
+	DLibH::Vector_2d_pantalla	obtener_vector_pantalla_para(const Espaciable& e) const {return obtener_vector_pantalla_para(*this, e);}
+	DLibH::Vector_2d_pantalla	obtener_vector_pantalla_para(const Espaciable& a, const Espaciable& b) const;
+	DLibH::Vector_2d_cartesiano	obtener_vector_cartesiano_para(const Espaciable& e) const {return obtener_vector_cartesiano_para(*this, e);}
+	DLibH::Vector_2d_cartesiano	obtener_vector_cartesiano_para(const Espaciable& a, const Espaciable& b) const;
+
+	float		 		obtener_angulo_pantalla_para(const Espaciable& e) const {return obtener_angulo_pantalla_para(*this, e);}
+	float		 		obtener_angulo_pantalla_para(const Espaciable& a, const Espaciable& b) const;
+	float		 		obtener_angulo_cartesiano_para(const Espaciable& e) const {return obtener_angulo_cartesiano_para(*this, e);}
+	float		 		obtener_angulo_cartesiano_para(const Espaciable& a, const Espaciable& b) const;
+
 	bool 				en_colision_con(const Espaciable&, bool=false) const;
 
 	//Estos son siempre según la geometría en la que 0.0 es el punto superior

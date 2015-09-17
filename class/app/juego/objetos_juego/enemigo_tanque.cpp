@@ -42,9 +42,9 @@ void Enemigo_tanque::transformar_bloque(App_Graficos::Bloque_transformacion_repr
 	BMP * canon=new BMP();
 	canon->establecer_textura(DLibV::Gestor_texturas::obtener(App::Recursos_graficos::rt_juego));
 	canon->establecer_recorte(f2.x+f2.desp_x, f2.y+f2.desp_y, f2.w, f2.h);
-	canon->establecer_posicion(10, -5, f2.w, f2.h);
-	canon->transformar_centro_rotacion(2, 9);
-	canon->transformar_rotar(angulo);
+	canon->establecer_posicion(10, 0, f2.w, f2.h);
+	canon->transformar_centro_rotacion(2, 2);
+	canon->transformar_rotar(-angulo); //La rotación es "counter clockwise" en SDL2.
 
 	b.insertar_en_grupo(cuerpo);
 	b.insertar_en_grupo(canon);
@@ -56,7 +56,9 @@ void Enemigo_tanque::turno(App_Interfaces::Contexto_turno_I& ct)
 	float delta=ct.acc_delta();
 	tiempo_proximo_disparo-=delta;
 
-	angulo=obtener_vector_para(ct.acc_blanco()).angulo_grados() + 90.0f;
+	auto v=obtener_vector_cartesiano_para(ct.acc_blanco());
+	float a=v.angulo_grados();
+	if(a >= 0.0f) angulo=a;
 }
 
 void Enemigo_tanque::recibir_disparo(float potencia)
@@ -121,18 +123,25 @@ void Enemigo_tanque::generar_objetos(App_Interfaces::Factoria_objetos_juego_I& f
 		{
 			tiempo_proximo_disparo=TIEMPO_PROXIMO_DISPARO_DEFECTO;
 
-			const auto v=obtener_vector_para(f.acc_blanco_disparo()) * 200.0f;
+			//Calculamos el vector hasta el blanco.
+			const auto v=obtener_vector_cartesiano_para(f.acc_blanco_disparo()) * 200.0f;
+			float angulo_vector=v.angulo_grados();
 
-			//TODO: X e Y deben estar un movidos fuera del tanque o algo así, porque
-			//el proyectil choca con el propio tanque si lo hacemos sólido :S.
+			//El ángulo del disparo debe estar entre 0 y 180 grados, siendo 0 "derecha". El 180 lo controlamos
+			//porque otros ángulos son... negativos.
+			if(angulo_vector >= 0.0f)
+			{
+				//TODO: X e Y deben estar un movidos fuera del tanque o algo así, porque
+				//el proyectil choca con el propio tanque si lo hacemos sólido :S.
 
-			f.fabricar_proyectil_normal_enemigo(acc_espaciable_x()+ (acc_espaciable_w() / 2), acc_espaciable_y(), 8, 8, v, 25.0);
+				f.fabricar_proyectil_normal_enemigo(acc_espaciable_x()+ (acc_espaciable_w() / 2), acc_espaciable_y(), 8, 8, v.a_pantalla(), 25.0);
 
-			//TODO: Los concerns de audio están mezlados con el resto :(.
-			insertar_reproducir(App_Audio::Info_audio_reproducir(
-				App_Audio::Info_audio_reproducir::t_reproduccion::simple,
-				App_Audio::Info_audio_reproducir::t_sonido::repetible,  
-				App::Recursos_audio::rs_disparo, 127, 127));
+				//TODO: Los concerns de audio están mezlados con el resto :(.
+				insertar_reproducir(App_Audio::Info_audio_reproducir(
+					App_Audio::Info_audio_reproducir::t_reproduccion::simple,
+					App_Audio::Info_audio_reproducir::t_sonido::repetible,  
+					App::Recursos_audio::rs_disparo, 127, 127));
+			}
 		}
 	}
 }

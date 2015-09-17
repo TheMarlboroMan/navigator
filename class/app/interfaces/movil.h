@@ -25,8 +25,8 @@ class Movil
 	Movil();
 	virtual ~Movil();
 
-	const DLibH::Vector_2d& 		acc_vector() const {return vector;}
-	DLibH::Vector_2d 			acc_vector() {return vector;}
+	const DLibH::Vector_2d_pantalla& 	acc_vector() const {return vector;}
+	DLibH::Vector_2d_pantalla 		acc_vector() {return vector;}
 
 	float 					acc_vector_x() {return vector.x;}
 	float 					acc_vector_y() {return vector.y;}
@@ -50,7 +50,7 @@ class Movil
 	// Propiedades...
 	private:
 
-	DLibH::Vector_2d 			vector;
+	DLibH::Vector_2d_pantalla 		vector;
 
 };
 

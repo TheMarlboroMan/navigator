@@ -60,7 +60,7 @@ unsigned short int Proyectil_rayo_estatico::obtener_profundidad_ordenacion()cons
 void Proyectil_rayo_estatico::transformar_bloque(App_Graficos::Bloque_transformacion_representable &b) const
 {
 	using namespace App_Graficos;
-/*
+
 	switch(b.acc_ciclo())
 	{
 		case 1:
@@ -78,6 +78,6 @@ void Proyectil_rayo_estatico::transformar_bloque(App_Graficos::Bloque_transforma
 			while(p--) b.insertar_punto(px(), py());
 		break;
 	}
-*/
+
 	b.establecer_alpha(192);
 }

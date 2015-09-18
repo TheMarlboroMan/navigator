@@ -34,7 +34,7 @@ Enemigo_tanque_izquierda::Enemigo_tanque_izquierda(float px, float py, float s)
 	:Enemigo_tanque(px, py, W, H, s)
 {
 }
-/*
+
 void Enemigo_tanque_abajo::transformar_cuerpo(App_Graficos::Bloque_transformacion_representable &b)const
 {
 	using namespace App_Definiciones;
@@ -45,24 +45,23 @@ void Enemigo_tanque_abajo::transformar_cuerpo(App_Graficos::Bloque_transformacio
 
 void Enemigo_tanque_arriba::transformar_cuerpo(App_Graficos::Bloque_transformacion_representable &b)const
 {
-
-//	using namespace App_Definiciones;
-//	const auto f=b.obtener_frame(animaciones::sprites, animaciones_sprites::enemigo_tanque, 0);
-//	b.establecer_posicion(acc_espaciable_x(), acc_espaciable_y(), f.w, f.h);
-//	b.invertir_vertical(true);
-//	b.establecer_recorte(f.x, f.y, f.w, f.h);
+	using namespace App_Definiciones;
+	const auto f=b.obtener_frame(animaciones::sprites, animaciones_sprites::enemigo_tanque, 0);
+	b.establecer_posicion(acc_espaciable_x(), acc_espaciable_y(), f.w, f.h);
+	b.invertir_vertical(true);
+	b.establecer_recorte(f.x, f.y, f.w, f.h);
 }
 
 void Enemigo_tanque_derecha::transformar_cuerpo(App_Graficos::Bloque_transformacion_representable &b)const
 {
-//	using namespace App_Definiciones;
+	using namespace App_Definiciones;
 
-//	const auto f=b.obtener_frame(animaciones::sprites, animaciones_sprites::enemigo_tanque, 0);
-//	//TODO: Esto no está bien colocado.
-//	b.especificar_centro_rotacion(0, 0);
-//	b.rotar(90);
-//	b.invertir_vertical(true);
-//	b.establecer_recorte(f.x, f.y, f.w, f.h);
+	const auto f=b.obtener_frame(animaciones::sprites, animaciones_sprites::enemigo_tanque, 0);
+	//TODO: Esto no está bien colocado.
+	b.especificar_centro_rotacion(0, 0);
+	b.rotar(90);
+	b.invertir_vertical(true);
+	b.establecer_recorte(f.x, f.y, f.w, f.h);
 }
 
 void Enemigo_tanque_izquierda::transformar_cuerpo(App_Graficos::Bloque_transformacion_representable &b)const
@@ -70,13 +69,46 @@ void Enemigo_tanque_izquierda::transformar_cuerpo(App_Graficos::Bloque_transform
 //	using namespace App_Definiciones;
 
 //	const auto f=b.obtener_frame(animaciones::sprites, animaciones_sprites::enemigo_tanque, 0);
-//	//TODO: Esto no está bien colocado.
+	//TODO: Esto no está bien colocado.
 //	b.especificar_centro_rotacion(acc_espaciable_w(), 0);
 //	b.rotar(90);
 //	b.establecer_recorte(f.x, f.y, f.w, f.h);
 }
 
 void Enemigo_tanque_abajo::transformar_canon(App_Graficos::Bloque_transformacion_representable &b, float angulo)const
+{
+	using namespace App_Definiciones;
+
+	const auto f=b.obtener_frame(animaciones::sprites, animaciones_sprites::enemigo_tanque_canon, 0);
+	b.establecer_posicion(acc_espaciable_x()+10, acc_espaciable_y(), f.w, f.h);
+	b.especificar_centro_rotacion(2,2);
+	b.rotar(-angulo);
+	b.establecer_recorte(f.x, f.y, f.w, f.h);
+}
+
+void Enemigo_tanque_arriba::transformar_canon(App_Graficos::Bloque_transformacion_representable &b, float angulo)const
+{
+	using namespace App_Definiciones;
+
+	const auto f=b.obtener_frame(animaciones::sprites, animaciones_sprites::enemigo_tanque_canon, 0);
+	b.establecer_posicion(acc_espaciable_x()+10, acc_espaciable_y()+4, f.w, f.h);
+	b.especificar_centro_rotacion(2,2);
+	b.rotar(-angulo);
+	b.establecer_recorte(f.x, f.y, f.w, f.h);
+}
+
+void Enemigo_tanque_derecha::transformar_canon(App_Graficos::Bloque_transformacion_representable &b, float angulo)const
+{
+	using namespace App_Definiciones;
+
+	const auto f=b.obtener_frame(animaciones::sprites, animaciones_sprites::enemigo_tanque_canon, 0);
+	b.establecer_posicion(acc_espaciable_x(), acc_espaciable_y(), f.w, f.h);
+	b.especificar_centro_rotacion(2,2);
+	b.rotar(-angulo);
+	b.establecer_recorte(f.x, f.y, f.w, f.h);
+}
+
+void Enemigo_tanque_izquierda::transformar_canon(App_Graficos::Bloque_transformacion_representable &b, float angulo)const
 {
 //	using namespace App_Definiciones;
 
@@ -87,39 +119,6 @@ void Enemigo_tanque_abajo::transformar_canon(App_Graficos::Bloque_transformacion
 //	b.establecer_recorte(f.x, f.y, f.w, f.h);
 }
 
-void Enemigo_tanque_arriba::transformar_canon(App_Graficos::Bloque_transformacion_representable &b, float angulo)const
-{
-//	using namespace App_Definiciones;
-
-//	const auto f=b.obtener_frame(animaciones::sprites, animaciones_sprites::enemigo_tanque, 0);
-//	b.establecer_posicion(acc_espaciable_x()+10, acc_espaciable_y()+4, f.w, f.h);
-//	b.especificar_centro_rotacion(2,2);
-//	b.rotar(-angulo);
-//	b.establecer_recorte(f.x, f.y, f.w, f.h);
-}
-
-void Enemigo_tanque_derecha::transformar_canon(App_Graficos::Bloque_transformacion_representable &b, float angulo)const
-{
-//	using namespace App_Definiciones;
-
-//	const auto f=b.obtener_frame(animaciones::sprites, animaciones_sprites::enemigo_tanque, 0);
-//	b.establecer_posicion(acc_espaciable_x(), acc_espaciable_y(), f.w, f.h);
-//	b.especificar_centro_rotacion(2,2);
-//	b.rotar(-angulo);
-//	b.establecer_recorte(f.x, f.y, f.w, f.h);
-}
-
-void Enemigo_tanque_izquierda::transformar_canon(App_Graficos::Bloque_transformacion_representable &b, float angulo)const
-{
-//	using namespace App_Definiciones;
-
-//	const auto f=b.obtener_frame(animaciones::sprites, animaciones_sprites::enemigo_tanque, 0);
-//	b.establecer_posicion(acc_espaciable_x()+10, acc_espaciable_y(), f.w, f.h);
-//	b.especificar_centro_rotacion(2,2);
-//	b.rotar(-angulo);
-//	b.establecer_recorte(f.x, f.y, f.w, f.h);
-}
-*/
 
 /**************************************************/
 
@@ -143,9 +142,10 @@ void Enemigo_tanque::transformar_bloque(App_Graficos::Bloque_transformacion_repr
 
 	switch(b.acc_ciclo())
 	{
-//		case 1: transformar_cuerpo(b); break;
-//		case 2: transformar_canon(b, angulo); break;
+		case 1: transformar_cuerpo(b); break;
+		case 2: transformar_canon(b, angulo); break;
 	}	
+
 }
 
 void Enemigo_tanque::turno(App_Interfaces::Contexto_turno_I& ct)

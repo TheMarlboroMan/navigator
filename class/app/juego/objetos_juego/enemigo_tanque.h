@@ -34,10 +34,11 @@ class Enemigo_tanque:
 	static const float				SALUD_DEFECTO;
 
 							Enemigo_tanque(float px, float py, int w, int h, float s);
-//	virtual void					transformar_cuerpo(App_Graficos::Bloque_transformacion_representable &b)const=0;
-//	virtual void					transformar_canon(App_Graficos::Bloque_transformacion_representable &b, float angulo)const=0;
-	virtual	float					max_angulo()const=0;
-	virtual	float					min_angulo()const=0;
+	virtual						~Enemigo_tanque() {}
+	virtual void					transformar_cuerpo(App_Graficos::Bloque_transformacion_representable &b)const=0;
+	virtual void					transformar_canon(App_Graficos::Bloque_transformacion_representable &b, float angulo)const=0;
+	virtual float					max_angulo()const=0;
+	virtual float					min_angulo()const=0;
 
 	///////////////
 	// Implementación de Representable_i.
@@ -103,8 +104,8 @@ class Enemigo_tanque_abajo:
 				Enemigo_tanque_abajo(float px, float py, float s=SALUD_DEFECTO);
 	virtual float		max_angulo()const {return 180.f;}
 	virtual float		min_angulo()const {return 0.f;}
-//	virtual void 		transformar_cuerpo(App_Graficos::Bloque_transformacion_representable &b)const;
-//	virtual void		transformar_canon(App_Graficos::Bloque_transformacion_representable &b, float angulo)const;
+	virtual void 		transformar_cuerpo(App_Graficos::Bloque_transformacion_representable &b)const;
+	virtual void		transformar_canon(App_Graficos::Bloque_transformacion_representable &b, float angulo)const;
 
 	private:
 
@@ -120,8 +121,8 @@ class Enemigo_tanque_arriba:
 				Enemigo_tanque_arriba(float px, float py, float s=SALUD_DEFECTO);
 	virtual float		max_angulo()const {return 360.f;}
 	virtual float		min_angulo()const {return 180.f;}
-//	virtual void 		transformar_cuerpo(App_Graficos::Bloque_transformacion_representable &b)const;
-//	virtual void		transformar_canon(App_Graficos::Bloque_transformacion_representable &b, float angulo)const;
+	virtual void 		transformar_cuerpo(App_Graficos::Bloque_transformacion_representable &b)const;
+	virtual void		transformar_canon(App_Graficos::Bloque_transformacion_representable &b, float angulo)const;
 
 	private:
 
@@ -137,8 +138,8 @@ class Enemigo_tanque_derecha:
 				Enemigo_tanque_derecha(float px, float py, float s=SALUD_DEFECTO);
 	virtual float		max_angulo()const {return 270.f;}
 	virtual float		min_angulo()const {return 90.f;}
-//	virtual void 		transformar_cuerpo(App_Graficos::Bloque_transformacion_representable &b)const;
-//	virtual void		transformar_canon(App_Graficos::Bloque_transformacion_representable &b, float angulo)const;
+	virtual void 		transformar_cuerpo(App_Graficos::Bloque_transformacion_representable &b)const;
+	virtual void		transformar_canon(App_Graficos::Bloque_transformacion_representable &b, float angulo)const;
 
 	private:
 
@@ -154,8 +155,8 @@ class Enemigo_tanque_izquierda:
 				Enemigo_tanque_izquierda(float px, float py, float s=SALUD_DEFECTO);
 	virtual float		max_angulo()const {return 270.f;}
 	virtual float		min_angulo()const {return 90.f;}
-//	virtual void 		transformar_cuerpo(App_Graficos::Bloque_transformacion_representable &b)const;
-//	virtual void		transformar_canon(App_Graficos::Bloque_transformacion_representable &b, float angulo)const;
+	virtual void 		transformar_cuerpo(App_Graficos::Bloque_transformacion_representable &b)const;
+	virtual void		transformar_canon(App_Graficos::Bloque_transformacion_representable &b, float angulo)const;
 
 	private:
 

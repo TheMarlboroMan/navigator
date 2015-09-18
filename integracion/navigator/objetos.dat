@@ -12,7 +12,14 @@
 	velocidad	100
 	rebote[0=invertir, 1=90 derecha, 2=90 izquierda]	0
 	direccion[1=arr,2=der,4=aba,8=izq]	1
-32	Enemigo tanque	24	9	128,0,0
+32	Enemigo tanque	9	9	128,0,0
 	salud	30
+	orientacion[1=arr, 2=der, 4=aba, 8=izq]	4
+33	Disparador estático	32	32	128,0,0
+	direccion[arr=1, der=2, aba=4, izq=8]	1
+	tiempo (ms)	1000
+	pausa inicial(ms)	0
+	duracion (ms)	500
+	longitud (tiles)	1
 50	Obstáculo genérico (1-??)	32	32	64,64,64
 	tipo	1

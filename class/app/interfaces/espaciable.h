@@ -27,7 +27,7 @@ class Espaciable
 
 	typedef DLibH::Caja<float, unsigned int> t_caja;
 	enum t{T_X=1, T_Y=2};
-	enum direcciones{D_ARRIBA=1, D_DERECHA=2, D_ABAJO=4, D_IZQUIERDA=8};
+	//enum direcciones{D_ARRIBA=1, D_DERECHA=2, D_ABAJO=4, D_IZQUIERDA=8};
 
 	///////////////////////////////
 	// Propiedades e internas...
@@ -44,8 +44,10 @@ class Espaciable
 
 	float 				acc_espaciable_x() const {return copia_caja().origen.x;}
 	float 				acc_espaciable_y() const {return copia_caja().origen.y;}
-	float 				acc_espaciable_fx() const {return copia_caja().origen.x+copia_caja().w;}
-	float 				acc_espaciable_fy() const {return copia_caja().origen.y+copia_caja().h;}
+	float 				acc_espaciable_cx() const {return acc_espaciable_x() + (acc_espaciable_w() / 2);}
+	float 				acc_espaciable_cy() const {return acc_espaciable_y() + (acc_espaciable_h() / 2);}
+	float 				acc_espaciable_fx() const {return acc_espaciable_x() + acc_espaciable_w();}
+	float 				acc_espaciable_fy() const {return acc_espaciable_y() + acc_espaciable_h();}
 	unsigned int 			acc_espaciable_w() const {return copia_caja().w;}
 	unsigned int 			acc_espaciable_h() const {return copia_caja().h;}
 	DLibH::Punto_2d<float> 		acc_espaciable_posicion() const {return copia_caja().origen;}

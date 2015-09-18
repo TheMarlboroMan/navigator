@@ -16,7 +16,7 @@ struct definiciones
 	definiciones();
 
 	public:
-	static const t_dim 			dim_celda=32;	
+	static const t_dim 			dim_celda=32;
 
 	static const int 			w_vista=640;
 	static const int 			h_vista=400;
@@ -56,6 +56,7 @@ struct tipos
 enum class direcciones {nada=0, arriba=1, derecha=2, abajo=4, izquierda=8};
 
 direcciones convertir_en_direccion(int); /**@throw std::runtime_error */
+bool es_direccion_pura(direcciones);
 
 direcciones obtener_direccion_contraria(direcciones s);
 /*constexpr*/ direcciones operator|(direcciones a, direcciones b);

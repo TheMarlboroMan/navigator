@@ -366,7 +366,8 @@ void Controlador_juego::logica_proyectiles(float delta)
 			}
 			else
 			{
-				if(CC.solidos_en_caja_sala(cc, sala).size()) p->colisionar_con_nivel(); //Implica borrar...
+				//En caso de proyectiles móviles, implicaría borrar...
+				if(CC.solidos_en_caja_sala(cc, sala).size()) p->colisionar_con_nivel(); 
 			}
 		}
 	};

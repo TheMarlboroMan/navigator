@@ -74,6 +74,12 @@ void Interface_creador_objetos::fabricar_proyectil_normal_enemigo(float x, float
 	contenedor_volatiles.proyectiles_enemigos.push_back(ob);
 }
 
+void Interface_creador_objetos::fabricar_proyectil_rayo_estatico_enemigo(float x, float y, int w, int h, float pot)
+{
+	auto ob=factoria_volatiles.crear_proyectil_rayo_estatico(x, y, w, h, pot);
+	contenedor_volatiles.proyectiles_enemigos.push_back(ob);
+}
+
 ///////////////////////////////////
 
 Logica_generador_objetos_juego::Logica_generador_objetos_juego(App_Juego::Jugador& j, const App_Lectores::Info_obstaculos_genericos& iog)

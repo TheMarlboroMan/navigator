@@ -66,12 +66,14 @@ $(DIR_O)logica_efectos_colision.o\
 $(DIR_O)logica_generador_objetos_juego.o\
 $(DIR_O)contexto_turno_juego.o\
 $(DIR_O)efecto_colision_recogedor.o\
+$(DIR_O)disparador_estatico.o\
 $(DIR_O)enemigo_basico.o\
 $(DIR_O)enemigo_rebote.o\
 $(DIR_O)enemigo_tanque.o\
 $(DIR_O)trazador_humo.o\
 $(DIR_O)proyectil_base.o\
 $(DIR_O)proyectil_normal.o\
+$(DIR_O)proyectil_rayo_estatico.o\
 $(DIR_O)item_repositorio.o\
 $(DIR_O)repositorio_salas.o\
 $(DIR_O)audio_reproducir.o\

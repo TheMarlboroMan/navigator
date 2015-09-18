@@ -31,6 +31,7 @@ class Interface_creador_objetos:
 	virtual void					fabricar_fantasma_bonus_tiempo(float x, float y, float tv, float ve);
 	virtual void					fabricar_humo(float x, float y, float tv);
 	virtual void					fabricar_proyectil_normal_enemigo(float x, float y, int w, int h, const DLibH::Vector_2d& v, float pot);
+	virtual void					fabricar_proyectil_rayo_estatico_enemigo(float x, float y, int w, int h, float pot);
 	virtual void					fabricar_trazador_humo(float x, float y, float tv, const DLibH::Vector_2d& v);
 
 	virtual const App_Interfaces::Espaciable& 	acc_blanco_disparo() const {return espaciable;}

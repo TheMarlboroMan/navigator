@@ -16,6 +16,7 @@
 #include "../objetos_juego/particula_fantasma_bonus_salud.h"
 #include "../objetos_juego/particula_humo.h"
 #include "../objetos_juego/proyectil_normal.h"
+#include "../objetos_juego/proyectil_rayo_estatico.h"
 
 
 namespace App_Juego_Factorias
@@ -37,6 +38,7 @@ class Factoria_objetos_volatiles
 	std::shared_ptr<App_Juego_ObjetoJuego::Particula_fantasma_bonus_salud>	crear_fantasma_bonus_salud(float x, float y, float tv, float ve);
 	std::shared_ptr<App_Juego_ObjetoJuego::Particula_humo>		crear_humo(float x, float y, float tv);
 	std::shared_ptr<App_Juego_ObjetoJuego::Proyectil_normal>	crear_proyectil_normal(float x, float y, int w, int h, const DLibH::Vector_2d& v, float pot);
+	std::shared_ptr<App_Juego_ObjetoJuego::Proyectil_rayo_estatico>	crear_proyectil_rayo_estatico(float x, float y, int w, int h, float pot);
 	std::shared_ptr<App_Juego_ObjetoJuego::Trazador_humo>		crear_trazador_humo(float x, float y, float tv, const DLibH::Vector_2d& v);
 
 	///////////////////////

@@ -9,6 +9,7 @@ Bloque_transformacion_representable::Bloque_transformacion_representable(const A
 	rep_agr_din(true),
 	rep_agr_est(true),
 	rep_prim_punt(0, 0, 0),
+	rep_prim_caja(DLibH::Herramientas_SDL::nuevo_sdl_rect(0,0,0,0), 0, 0, 0),
 	rep(&rep_bmp),
 	tipo_actual(tipos::tr_bitmap),
 	visible(true)
@@ -86,6 +87,10 @@ void Bloque_transformacion_representable::establecer_tipo(tipos t)
 			rep_prim_punt.limpiar_puntos();
 			rep=&rep_prim_punt;
 		break;
+
+		case tipos::tr_primitiva_caja:
+			rep=&rep_prim_caja;
+		break;
 	}
 
 	establecer_alpha(255);
@@ -124,15 +129,17 @@ void Bloque_transformacion_representable::insertar_en_grupo(DLibV::Representacio
 	{
 		case tipos::tr_bitmap: 	break;
 		case tipos::tr_primitiva_puntos: break;
+		case tipos::tr_primitiva_caja: break;
 		case tipos::tr_grupo_dinamico:	rep_agr_din.insertar_representacion(r);	break;
 		case tipos::tr_grupo_estatico:	rep_agr_est.insertar_representacion(r);	break;
+
 	}
 }
 
 ////////////////////
 //Métodos para manipular la representación de puntos.
 
-void Bloque_transformacion_representable::establecer_color_puntos(int r, int g, int b)
+void Bloque_transformacion_representable::color_puntos(int r, int g, int b)
 {
 	rep_prim_punt.mut_rgb(r, g, b);
 }
@@ -140,6 +147,19 @@ void Bloque_transformacion_representable::establecer_color_puntos(int r, int g, 
 void Bloque_transformacion_representable::insertar_punto(int x, int y)
 {
 	rep_prim_punt.insertar(x, y);
+}
+
+/////////////////////
+// Métodos para manipular la representación de caja...
+
+void Bloque_transformacion_representable::color_caja(int r, int g, int b)
+{
+	rep_prim_caja.mut_rgb(r, g, b);
+}
+
+void Bloque_transformacion_representable::posicion_caja(int x, int y, int w, int h)
+{
+	rep_prim_caja.establecer_posicion(x, y, w, h);
 }
 
 ///////////////////

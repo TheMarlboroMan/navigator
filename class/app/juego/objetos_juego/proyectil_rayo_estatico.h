@@ -1,32 +1,24 @@
-#ifndef PROYECTIL_NORMAL_H
-#define PROYECTIL_NORMAL_H
+#ifndef PROYECTIL_RAYO_ESTATICO_H
+#define PROYECTIL_RAYO_ESTATICO_H
 
 #include <generador_numeros.h>
 #include "proyectil_base.h"
 #include "../../graficos/bloque_transformacion_representable.h"
 
 /**
-* Un proyectil corriente y moliente.
-* Viene con varias clases helper para hacer constructores de acuerdo con 
-* los tipos.
+* Un proyectil estático, que ocupa siempre el mismo espacio en una caja y 
+* que no desaparece al chocar con cosas.
 **/
 
 namespace App_Juego_ObjetoJuego
 {
-class Proyectil_normal:
+class Proyectil_rayo_estatico:
 	public Proyectil_base
 {
 	/////////////////////
-	//Definiciones:
-	public:
-
-	enum class colores {rojo, azul};
-
-	/////////////////////
 	//Interface pública.
 	public:
-							Proyectil_normal(float x, float y, int w, int h, const DLibH::Vector_2d& v, float potencia, App_Juego_ObjetoJuego::Proyectil_normal::colores color);
-	void						mut_color(colores c) {color=c;}
+							Proyectil_rayo_estatico(float x, float y, int w, int h, float potencia);
 
 	virtual void					colisionar_con_nivel();
 	virtual void					colisionar_con_enemigo();
@@ -50,7 +42,7 @@ class Proyectil_normal:
 	virtual void 					transformar_bloque(App_Graficos::Bloque_transformacion_representable &b)const;
 
 	/////////////////////
-	//Implementación de Actor_movil
+	//Implementación de Actor_movil, tan inútil como parece porque no se mueve. Al menos de momento.
 	public:
 	virtual float 					obtener_peso() const {return 0.0f;}
 	virtual float 					obtener_max_velocidad_caida() const {return 0.0f;}
@@ -59,12 +51,10 @@ class Proyectil_normal:
 	/////////////////////
 	//Propiedades
 	private:
-
-	static const float 				FACTOR_DEBILITAR;
-	 
-	colores 					color;
-	int						cantidad_chispas;
-	float						tv_chispas;
+	
+	static const int				puntos_por_longitud=4;
+	int						longitud;
+	float 						tiempo_vida;
 };
 }
 

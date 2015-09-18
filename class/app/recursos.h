@@ -45,7 +45,8 @@ class Recursos_audio
 		rs_recargar_escudo=14,
 		rs_estasis=15,
 		rs_recoger_bonus=16,
-		rs_disparo_pared=17
+		rs_disparo_pared=17,
+		rs_disparo_rayo=18
 	};
 };
 

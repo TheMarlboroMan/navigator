@@ -52,6 +52,12 @@ std::shared_ptr<App_Juego_ObjetoJuego::Proyectil_normal> Factoria_objetos_volati
 	return res;
 }
 
+std::shared_ptr<App_Juego_ObjetoJuego::Proyectil_rayo_estatico> Factoria_objetos_volatiles::crear_proyectil_rayo_estatico(float x, float y, int w, int h, float pot)
+{
+	auto res=std::shared_ptr<Proyectil_rayo_estatico>(new Proyectil_rayo_estatico(x, y, w, h, pot));
+	return res;
+}
+
 std::shared_ptr<App_Juego_ObjetoJuego::Trazador_humo> Factoria_objetos_volatiles::crear_trazador_humo(float x, float y, float tv, const DLibH::Vector_2d& v)
 {
 	auto res=std::shared_ptr<Trazador_humo>(new Trazador_humo(x, y, tv, v));

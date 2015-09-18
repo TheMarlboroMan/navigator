@@ -12,6 +12,7 @@
 #include "../objetos_juego/enemigo_basico.h"
 #include "../objetos_juego/enemigo_rebote.h"
 #include "../objetos_juego/enemigo_tanque.h"
+#include "../objetos_juego/disparador_estatico.h"
 #include "../objetos_juego/entrada.h"
 #include "../objetos_juego/salida.h"
 #include "../objetos_juego/posicion_inicial.h"
@@ -20,7 +21,7 @@
 namespace App_Juego_Factorias
 {
 
-class Factoria_objetos_juego_excepcion:
+class Factoria_objetos_juego_excepcion_parametros:
 	public std::runtime_error
 {
 	public:
@@ -29,7 +30,7 @@ class Factoria_objetos_juego_excepcion:
 	int 		longitud_esperada;
 	std::string 	tipo;
 
-	Factoria_objetos_juego_excepcion(int lp, int le, const std::string& lt)
+	Factoria_objetos_juego_excepcion_parametros(int lp, int le, const std::string& lt)
 		:std::runtime_error("Error en factoria de objetos juego."), 
 		longitud_parametros(lp),
 		longitud_esperada(le),
@@ -56,6 +57,7 @@ class Factoria_objetos_juego
 
 	void						insertar(std::shared_ptr<App_Juego_ObjetoJuego::Bonus_tiempo>&);
 	void						insertar(std::shared_ptr<App_Juego_ObjetoJuego::Bonus_salud>&);
+	void						insertar(std::shared_ptr<App_Juego_ObjetoJuego::Disparador_estatico>&);
 	void						insertar(std::shared_ptr<App_Juego_ObjetoJuego::Enemigo_basico>&);
 	void						insertar(std::shared_ptr<App_Juego_ObjetoJuego::Enemigo_rebote>&);
 	void						insertar(std::shared_ptr<App_Juego_ObjetoJuego::Enemigo_tanque>&);
@@ -70,8 +72,10 @@ class Factoria_objetos_juego
 	private:
 
 	int						toi(const std::string& c) {return std::atoi(c.c_str());}
+	int						tof(const std::string& c) {return std::atof(c.c_str());}
 	void						interpretar_como_bonus_tiempo(const std::vector<std::string>&);
 	void						interpretar_como_bonus_salud(const std::vector<std::string>&);
+	void						interpretar_como_disparador_estatico(const std::vector<std::string>&);
 	void						interpretar_como_enemigo_basico(const std::vector<std::string>&);
 	void						interpretar_como_enemigo_rebote(const std::vector<std::string>&);
 	void						interpretar_como_enemigo_tanque(const std::vector<std::string>&);
@@ -99,8 +103,9 @@ class Factoria_objetos_juego
 	static const int				lp_bonus_tiempo=4;
 	static const int				lp_enemigo_basico=4;
 	static const int				lp_enemigo_rebote=6;
-	static const int				lp_enemigo_tanque=4;
+	static const int				lp_enemigo_tanque=5;
 	static const int				lp_obstaculo_generico=4;
+	static const int				lp_disparador_estatico=8;
 
 	enum tipos {
 		entrada=1,
@@ -111,6 +116,7 @@ class Factoria_objetos_juego
 		enemigo_basico=30,
 		enemigo_rebote=31,
 		enemigo_tanque=32,
+		disparador_estatico=33,
 		obstaculo_generico=50
 	};
 };

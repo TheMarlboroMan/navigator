@@ -26,6 +26,23 @@ App_Definiciones::direcciones App_Definiciones::operator&(App_Definiciones::dire
 	return static_cast<App_Definiciones::direcciones>(static_cast<int>(a) & static_cast<int>(b));
 }
 
+bool App_Definiciones::es_direccion_pura(App_Definiciones::direcciones dir)
+{
+	switch(dir)
+	{
+		case App_Definiciones::direcciones::arriba:
+		case App_Definiciones::direcciones::abajo:
+		case App_Definiciones::direcciones::derecha:
+		case App_Definiciones::direcciones::izquierda:
+			return true;
+		break;
+		case App_Definiciones::direcciones::nada:
+		default:
+			return false;
+		break;
+	}
+}
+
 App_Definiciones::direcciones App_Definiciones::convertir_en_direccion(int v)
 {
 	if(v < 0 && v > 15)

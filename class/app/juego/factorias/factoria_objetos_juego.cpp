@@ -30,6 +30,7 @@ void Factoria_objetos_juego::interpretar_linea(const std::string& linea)
 			case enemigo_basico:	interpretar_como_enemigo_basico(params); break;
 			case enemigo_rebote:	interpretar_como_enemigo_rebote(params); break;
 			case enemigo_tanque:	interpretar_como_enemigo_tanque(params); break;
+			case disparador_estatico:	interpretar_como_disparador_estatico(params); break;
 			case entrada:		interpretar_como_entrada(params); break;
 			case salida:		interpretar_como_salida(params); break;
 			case posicion_inicial:	interpretar_como_posicion_inicial(params); break;
@@ -39,9 +40,16 @@ void Factoria_objetos_juego::interpretar_linea(const std::string& linea)
 			break;
 		}
 	}
-	catch(Factoria_objetos_juego_excepcion& e)
+
+	catch(Factoria_objetos_juego_excepcion_parametros& e)
 	{
 		LOG<<"ERROR Al interpretar línea como "<<e.tipo<<". Se esperan ["<<e.longitud_esperada<<"] parámetros, se reciben ["<<e.longitud_parametros<<"] <"<<linea<<">"<<std::endl;
+		throw e;
+	}
+	catch(std::runtime_error& e)
+	{
+		LOG<<"ERROR "<<e.what()<<" al interpretar línea : <"<<linea<<">"<<std::endl;
+		throw e;
 	}
 }
 
@@ -62,6 +70,15 @@ void Factoria_objetos_juego::insertar(std::shared_ptr<App_Juego_ObjetoJuego::Bon
 	contenedor.representables.push_back(std::shared_ptr<Representable_I>(ob, static_cast<Representable_I*>(ob.get())));
 	contenedor.efectos_colision.push_back(std::shared_ptr<Efecto_colision_I>(ob, static_cast<Efecto_colision_I*>(ob.get())));
 	contenedor.sonoros.push_back(std::shared_ptr<Sonoro_I>(ob, static_cast<Sonoro_I*>(ob.get())));
+	contenedor.generadores_objetos_juego.push_back(std::shared_ptr<Generador_objetos_juego_I>(ob, static_cast<Generador_objetos_juego_I*>(ob.get())));
+}
+
+void Factoria_objetos_juego::insertar(std::shared_ptr<App_Juego_ObjetoJuego::Disparador_estatico>& ob)
+{
+	auto& contenedor=*contenedor_ptr;
+	contenedor.objetos_juego.push_back(ob);
+	contenedor.sonoros.push_back(std::shared_ptr<Sonoro_I>(ob, static_cast<Sonoro_I*>(ob.get())));
+	contenedor.con_turno.push_back(std::shared_ptr<Con_turno_I>(ob, static_cast<Con_turno_I*>(ob.get())));
 	contenedor.generadores_objetos_juego.push_back(std::shared_ptr<Generador_objetos_juego_I>(ob, static_cast<Generador_objetos_juego_I*>(ob.get())));
 }
 
@@ -123,7 +140,7 @@ void Factoria_objetos_juego::interpretar_como_bonus_tiempo(const std::vector<std
 {
 	if(params.size() != lp_bonus_tiempo)
 	{
-		throw Factoria_objetos_juego_excepcion(params.size(), lp_bonus_tiempo, "Bonus tiempo");
+		throw Factoria_objetos_juego_excepcion_parametros(params.size(), lp_bonus_tiempo, "Bonus tiempo");
 	}
 	else
 	{
@@ -140,7 +157,7 @@ void Factoria_objetos_juego::interpretar_como_bonus_salud(const std::vector<std:
 {
 	if(params.size() != lp_bonus_tiempo)
 	{
-		throw Factoria_objetos_juego_excepcion(params.size(), lp_bonus_salud, "Bonus salud");
+		throw Factoria_objetos_juego_excepcion_parametros(params.size(), lp_bonus_salud, "Bonus salud");
 	}
 	else
 	{
@@ -156,7 +173,7 @@ void Factoria_objetos_juego::interpretar_como_enemigo_basico(const std::vector<s
 {
 	if(params.size() != lp_enemigo_basico)
 	{
-		throw Factoria_objetos_juego_excepcion(params.size(), lp_enemigo_basico, "Enemigo básico");
+		throw Factoria_objetos_juego_excepcion_parametros(params.size(), lp_enemigo_basico, "Enemigo básico");
 	}
 	else
 	{
@@ -168,18 +185,60 @@ void Factoria_objetos_juego::interpretar_como_enemigo_basico(const std::vector<s
 	}
 }
 
+void Factoria_objetos_juego::interpretar_como_disparador_estatico(const std::vector<std::string>& params)
+{
+	if(params.size() != lp_disparador_estatico)
+	{
+		throw Factoria_objetos_juego_excepcion_parametros(params.size(), lp_disparador_estatico, "Disparador estático");
+	}
+	else
+	{
+		using namespace App_Definiciones;
+		const int x=toi(params[1]);
+		const int y=toi(params[2]);
+		const direcciones dir=convertir_en_direccion(toi(params[3]));
+
+		if(!es_direccion_pura(dir))
+		{
+			throw std::runtime_error("Disparador estático : dirección inválida");
+		}
+
+		const float tiempo=tof(params[4]) / 1000.0f;
+		const float pausa=tof(params[5]) / 1000.0f;
+		const float duracion=tof(params[6]) / 1000.0f;
+		const int longitud=toi(params[7]);
+		std::shared_ptr<Disparador_estatico> ob(new Disparador_estatico(x, y, tiempo, pausa, duracion, dir, longitud));
+		insertar(ob);
+	}
+}
+
 void Factoria_objetos_juego::interpretar_como_enemigo_tanque(const std::vector<std::string>& params)
 {
 	if(params.size() != lp_enemigo_tanque)
 	{
-		throw Factoria_objetos_juego_excepcion(params.size(), lp_enemigo_tanque, "Enemigo tanque");
+		throw Factoria_objetos_juego_excepcion_parametros(params.size(), lp_enemigo_tanque, "Enemigo tanque");
 	}
 	else
 	{
+		using namespace App_Definiciones;
 		const int x=toi(params[1]);
 		const int y=toi(params[2]);
 		const int salud=toi(params[3]);
-		std::shared_ptr<Enemigo_tanque> ob(new Enemigo_tanque(x, y, salud));
+		const direcciones orientacion=convertir_en_direccion(toi(params[4]));
+
+		std::shared_ptr<Enemigo_tanque> ob=nullptr;
+
+		switch(orientacion)
+		{
+			case direcciones::abajo: ob.reset(new Enemigo_tanque_abajo(x, y, salud)); break;
+			case direcciones::arriba: ob.reset(new Enemigo_tanque_arriba(x, y, salud)); break;
+			case direcciones::izquierda: ob.reset(new Enemigo_tanque_izquierda(x, y, salud)); break;
+			case direcciones::derecha: ob.reset(new Enemigo_tanque_derecha(x, y, salud)); break;
+			default:
+				throw std::runtime_error("Enemigo tanque : orientación inválida");
+			break;
+		}
+
 		insertar(ob);
 	}
 }
@@ -188,7 +247,7 @@ void Factoria_objetos_juego::interpretar_como_enemigo_rebote(const std::vector<s
 {
 	if(params.size() != lp_enemigo_rebote)
 	{
-		throw Factoria_objetos_juego_excepcion(params.size(), lp_enemigo_rebote, "Enemigo rebote");
+		throw Factoria_objetos_juego_excepcion_parametros(params.size(), lp_enemigo_rebote, "Enemigo rebote");
 	}
 	else
 	{
@@ -213,10 +272,12 @@ void Factoria_objetos_juego::interpretar_como_entrada(const std::vector<std::str
 {
 	if(params.size() != lp_entrada)
 	{
-		throw Factoria_objetos_juego_excepcion(params.size(), lp_entrada, "Entrada");
+		throw Factoria_objetos_juego_excepcion_parametros(params.size(), lp_entrada, "Entrada");
 	}
 	else
 	{
+
+
 		const int x=toi(params[1]);
 		const int y=toi(params[2]);
 		const App_Definiciones::direcciones pos=App_Definiciones::convertir_en_direccion(toi(params[3]));
@@ -229,7 +290,7 @@ void Factoria_objetos_juego::interpretar_como_salida(const std::vector<std::stri
 {
 	if(params.size() != lp_salida)
 	{
-		throw Factoria_objetos_juego_excepcion(params.size(), lp_salida, "Salida");
+		throw Factoria_objetos_juego_excepcion_parametros(params.size(), lp_salida, "Salida");
 	}
 	else
 	{
@@ -244,7 +305,7 @@ void Factoria_objetos_juego::interpretar_como_posicion_inicial(const std::vector
 {
 	if(params.size() != lp_posicion_inicial)
 	{
-		throw Factoria_objetos_juego_excepcion(params.size(), lp_posicion_inicial, "Posición inicial");
+		throw Factoria_objetos_juego_excepcion_parametros(params.size(), lp_posicion_inicial, "Posición inicial");
 	}
 	else
 	{
@@ -258,7 +319,7 @@ void Factoria_objetos_juego::interpretar_como_obstaculo_generico(const std::vect
 {
 	if(params.size() != lp_obstaculo_generico)
 	{
-		throw Factoria_objetos_juego_excepcion(params.size(), lp_posicion_inicial, "Posición inicial");
+		throw Factoria_objetos_juego_excepcion_parametros(params.size(), lp_posicion_inicial, "Posición inicial");
 	}
 	else
 	{

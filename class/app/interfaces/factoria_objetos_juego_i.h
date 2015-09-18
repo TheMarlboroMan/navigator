@@ -31,6 +31,7 @@ class Factoria_objetos_juego_I
 	virtual void			fabricar_bonus_salud(float x, float y, float t)=0;
 
 	virtual void			fabricar_proyectil_normal_enemigo(float x, float y, int w, int h, const DLibH::Vector_2d& v, float pot)=0;
+	virtual void			fabricar_proyectil_rayo_estatico_enemigo(float x, float y, int w, int h, float pot)=0;
 	virtual void			fabricar_trazador_humo(float x, float y, float tv, const DLibH::Vector_2d& v)=0;
 
 	virtual void			fabricar_chispa(float x, float y, float tv, const DLibH::Vector_2d&)=0;

@@ -26,6 +26,6 @@ void Particula_chispa::transformar_bloque(App_Graficos::Bloque_transformacion_re
 {
 	b.establecer_tipo(App_Graficos::Bloque_transformacion_representable::tipos::tr_primitiva_puntos);
 	b.establecer_alpha(ca);
-	b.establecer_color_puntos(cr, cg, cb);
+	b.color_puntos(cr, cg, cb);
 	b.insertar_punto(acc_espaciable_x(), acc_espaciable_y());
 }

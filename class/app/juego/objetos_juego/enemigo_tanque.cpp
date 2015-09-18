@@ -5,16 +5,123 @@ using namespace App_Juego_ObjetoJuego;
 const float Enemigo_tanque::SALUD_DEFECTO=30.0f;
 const float Enemigo_tanque::TIEMPO_PROXIMO_DISPARO_DEFECTO=3.0f;
 
-Enemigo_tanque::Enemigo_tanque(float px, float py, float s)
+Enemigo_tanque::Enemigo_tanque(float px, float py, int w, int h, float s)
 	:
 	Objeto_juego_I(),
-	Actor(px, py, W, H),
+	Actor(px, py, w, h),
 	salud(s),
 	tiempo_proximo_disparo(TIEMPO_PROXIMO_DISPARO_DEFECTO),
-	angulo(0.0)
+	angulo(0.0f)
+{
+}
+
+Enemigo_tanque_abajo::Enemigo_tanque_abajo(float px, float py, float s)
+	:Enemigo_tanque(px, py, W, H, s)
+{
+}
+
+Enemigo_tanque_arriba::Enemigo_tanque_arriba(float px, float py, float s)
+	:Enemigo_tanque(px, py, W, H, s)
+{
+}
+
+Enemigo_tanque_derecha::Enemigo_tanque_derecha(float px, float py, float s)
+	:Enemigo_tanque(px, py, W, H, s)
+{
+}
+
+Enemigo_tanque_izquierda::Enemigo_tanque_izquierda(float px, float py, float s)
+	:Enemigo_tanque(px, py, W, H, s)
+{
+}
+/*
+void Enemigo_tanque_abajo::transformar_cuerpo(App_Graficos::Bloque_transformacion_representable &b)const
+{
+	using namespace App_Definiciones;
+	const auto f=b.obtener_frame(animaciones::sprites, animaciones_sprites::enemigo_tanque, 0);
+	b.establecer_posicion(acc_espaciable_x(), acc_espaciable_y(), f.w, f.h);
+	b.establecer_recorte(f.x, f.y, f.w, f.h);
+}
+
+void Enemigo_tanque_arriba::transformar_cuerpo(App_Graficos::Bloque_transformacion_representable &b)const
 {
 
+//	using namespace App_Definiciones;
+//	const auto f=b.obtener_frame(animaciones::sprites, animaciones_sprites::enemigo_tanque, 0);
+//	b.establecer_posicion(acc_espaciable_x(), acc_espaciable_y(), f.w, f.h);
+//	b.invertir_vertical(true);
+//	b.establecer_recorte(f.x, f.y, f.w, f.h);
 }
+
+void Enemigo_tanque_derecha::transformar_cuerpo(App_Graficos::Bloque_transformacion_representable &b)const
+{
+//	using namespace App_Definiciones;
+
+//	const auto f=b.obtener_frame(animaciones::sprites, animaciones_sprites::enemigo_tanque, 0);
+//	//TODO: Esto no está bien colocado.
+//	b.especificar_centro_rotacion(0, 0);
+//	b.rotar(90);
+//	b.invertir_vertical(true);
+//	b.establecer_recorte(f.x, f.y, f.w, f.h);
+}
+
+void Enemigo_tanque_izquierda::transformar_cuerpo(App_Graficos::Bloque_transformacion_representable &b)const
+{
+//	using namespace App_Definiciones;
+
+//	const auto f=b.obtener_frame(animaciones::sprites, animaciones_sprites::enemigo_tanque, 0);
+//	//TODO: Esto no está bien colocado.
+//	b.especificar_centro_rotacion(acc_espaciable_w(), 0);
+//	b.rotar(90);
+//	b.establecer_recorte(f.x, f.y, f.w, f.h);
+}
+
+void Enemigo_tanque_abajo::transformar_canon(App_Graficos::Bloque_transformacion_representable &b, float angulo)const
+{
+//	using namespace App_Definiciones;
+
+//	const auto f=b.obtener_frame(animaciones::sprites, animaciones_sprites::enemigo_tanque_canon, 0);
+//	b.establecer_posicion(acc_espaciable_x()+10, acc_espaciable_y(), f.w, f.h);
+//	b.especificar_centro_rotacion(2,2);
+//	b.rotar(-angulo);
+//	b.establecer_recorte(f.x, f.y, f.w, f.h);
+}
+
+void Enemigo_tanque_arriba::transformar_canon(App_Graficos::Bloque_transformacion_representable &b, float angulo)const
+{
+//	using namespace App_Definiciones;
+
+//	const auto f=b.obtener_frame(animaciones::sprites, animaciones_sprites::enemigo_tanque, 0);
+//	b.establecer_posicion(acc_espaciable_x()+10, acc_espaciable_y()+4, f.w, f.h);
+//	b.especificar_centro_rotacion(2,2);
+//	b.rotar(-angulo);
+//	b.establecer_recorte(f.x, f.y, f.w, f.h);
+}
+
+void Enemigo_tanque_derecha::transformar_canon(App_Graficos::Bloque_transformacion_representable &b, float angulo)const
+{
+//	using namespace App_Definiciones;
+
+//	const auto f=b.obtener_frame(animaciones::sprites, animaciones_sprites::enemigo_tanque, 0);
+//	b.establecer_posicion(acc_espaciable_x(), acc_espaciable_y(), f.w, f.h);
+//	b.especificar_centro_rotacion(2,2);
+//	b.rotar(-angulo);
+//	b.establecer_recorte(f.x, f.y, f.w, f.h);
+}
+
+void Enemigo_tanque_izquierda::transformar_canon(App_Graficos::Bloque_transformacion_representable &b, float angulo)const
+{
+//	using namespace App_Definiciones;
+
+//	const auto f=b.obtener_frame(animaciones::sprites, animaciones_sprites::enemigo_tanque, 0);
+//	b.establecer_posicion(acc_espaciable_x()+10, acc_espaciable_y(), f.w, f.h);
+//	b.especificar_centro_rotacion(2,2);
+//	b.rotar(-angulo);
+//	b.establecer_recorte(f.x, f.y, f.w, f.h);
+}
+*/
+
+/**************************************************/
 
 unsigned short int Enemigo_tanque::obtener_profundidad_ordenacion()const
 {
@@ -26,33 +133,19 @@ unsigned int Enemigo_tanque::obtener_ciclos_representable()const
 	return 2;
 }
 
-
 void Enemigo_tanque::transformar_bloque(App_Graficos::Bloque_transformacion_representable &b) const
 {
 	using namespace App_Graficos;
-	using namespace App_Definiciones;
 
 	b.establecer_tipo(Bloque_transformacion_representable::tipos::tr_bitmap);
 	b.establecer_alpha(255);
 	b.establecer_recurso(App::Recursos_graficos::rt_juego);
 
-	Herramientas_proyecto::Frame_sprites f;
-
 	switch(b.acc_ciclo())
 	{
-		case 1:
-			f=b.obtener_frame(animaciones::sprites, animaciones_sprites::enemigo_tanque, 0);
-			b.establecer_posicion(acc_espaciable_x(), acc_espaciable_y(), f.w, f.h);
-		break;
-		case 2:
-			f=b.obtener_frame(animaciones::sprites, animaciones_sprites::enemigo_tanque_canon, 0);
-			b.establecer_posicion(acc_espaciable_x()+9, acc_espaciable_y(), f.w, f.h);
-			b.especificar_centro_rotacion(2,2);
-			b.rotar(-angulo);
-		break;
-	}
-
-	b.establecer_recorte(f.x, f.y, f.w, f.h);
+//		case 1: transformar_cuerpo(b); break;
+//		case 2: transformar_canon(b, angulo); break;
+	}	
 }
 
 void Enemigo_tanque::turno(App_Interfaces::Contexto_turno_I& ct)
@@ -62,7 +155,16 @@ void Enemigo_tanque::turno(App_Interfaces::Contexto_turno_I& ct)
 
 	auto v=obtener_vector_cartesiano_para(ct.acc_blanco());
 	float a=v.angulo_grados();
-	if(a >= 0.0f) angulo=a;
+
+	//Convertir a formato 360...
+	if(a < 0.f)
+	{
+		a=180.f + 180.f + a;
+	}
+
+	if(a < min_angulo()) angulo=min_angulo();
+	else if(a > max_angulo()) angulo=max_angulo();
+	else angulo=a;
 }
 
 void Enemigo_tanque::recibir_disparo(float potencia)
@@ -128,10 +230,13 @@ void Enemigo_tanque::generar_objetos(App_Interfaces::Factoria_objetos_juego_I& f
 
 			//Calculamos el vector hasta el blanco.
 			const auto v=obtener_vector_cartesiano_para(f.acc_blanco_disparo()) * 200.0f;
+
+			//TODO: Convertir en 360...
 			float angulo_vector=v.angulo_grados();
 
-			//El ángulo del disparo debe estar entre 0 y 180 grados, siendo 0 "derecha". El 180 lo controlamos
-			//porque otros ángulos son... negativos.
+
+			//TODO TODO TODO Bleeergh...
+
 			if(angulo_vector >= 0.0f)
 			{
 				//TODO: X e Y deben estar un movidos fuera del tanque o algo así, porque

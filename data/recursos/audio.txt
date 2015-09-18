@@ -12,5 +12,6 @@
 15	data/sonidos/estasis.ogg
 16	data/sonidos/recoger_bonus.ogg
 17	data/sonidos/disparo_pared.ogg
+18	data/sonidos/disparo_rayo.ogg
 
 #Sonidos de aplicacion...

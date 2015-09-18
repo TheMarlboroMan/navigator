@@ -16,7 +16,8 @@ struct Bloque_transformacion_representable
 		tr_bitmap=1,
 		tr_grupo_dinamico=2,
 		tr_grupo_estatico=3,
-		tr_primitiva_puntos=4
+		tr_primitiva_puntos=4,
+		tr_primitiva_caja=5,
 	};
 
 	///////////////////////////////////
@@ -50,8 +51,14 @@ struct Bloque_transformacion_representable
 	////////////////////
 	//Métodos para manipular la representación de puntos.
 
-	void 							establecer_color_puntos(int r, int g, int b);
+	void 							color_puntos(int r, int g, int b);
 	void 							insertar_punto(int x, int y);
+
+	////////////////////
+	//Métodos para manipular la representación de caja.
+
+	void 							color_caja(int r, int g, int b);
+	void 							posicion_caja(int x, int y, int w, int h);
 
 	///////////////////
 	// Métodos para manipular la representación de bitmap...
@@ -75,6 +82,7 @@ struct Bloque_transformacion_representable
 	DLibV::Representacion_agrupada_dinamica 	rep_agr_din;
 	DLibV::Representacion_agrupada_estatica 	rep_agr_est;
 	DLibV::Representacion_primitiva_puntos_dinamica rep_prim_punt;
+	DLibV::Representacion_primitiva_caja_dinamica 	rep_prim_caja;
 	DLibV::Representacion * 			rep;
 	tipos 						tipo_actual;
 	bool 						visible;

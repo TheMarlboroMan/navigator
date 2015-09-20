@@ -39,10 +39,10 @@ void Espaciable::establecer_posicion(float x, float y)
 
 DLibH::Vector_2d_pantalla Espaciable::obtener_vector_pantalla_para(const Espaciable& a, const Espaciable& b) const
 {
-	float ax=a.acc_espaciable_x() + (a.acc_espaciable_w() / 2);
-	float ay=a.acc_espaciable_y() + (a.acc_espaciable_h() / 2);
-	float bx=b.acc_espaciable_x() + (b.acc_espaciable_w() / 2);
-	float by=b.acc_espaciable_y() + (b.acc_espaciable_h() / 2);
+	float ax=a.acc_espaciable_cx();
+	float ay=a.acc_espaciable_cy();
+	float bx=b.acc_espaciable_cx();
+	float by=b.acc_espaciable_cy();
 
 	return Vector_2d::obtener_para_puntos_pantalla(bx, by, ax, ay);
 }
@@ -54,10 +54,10 @@ float Espaciable::obtener_angulo_pantalla_para(const Espaciable& a, const Espaci
 
 DLibH::Vector_2d_cartesiano Espaciable::obtener_vector_cartesiano_para(const Espaciable& a, const Espaciable& b) const
 {
-	float ax=a.acc_espaciable_x() + (a.acc_espaciable_w() / 2);
-	float ay=a.acc_espaciable_y() + (a.acc_espaciable_h() / 2);
-	float bx=b.acc_espaciable_x() + (b.acc_espaciable_w() / 2);
-	float by=b.acc_espaciable_y() + (b.acc_espaciable_h() / 2);
+	float ax=a.acc_espaciable_cx();
+	float ay=a.acc_espaciable_cy();
+	float bx=b.acc_espaciable_cx();
+	float by=b.acc_espaciable_cy();
 
 	return Vector_2d::obtener_para_puntos_cartesiano(bx, by, ax, ay);
 }

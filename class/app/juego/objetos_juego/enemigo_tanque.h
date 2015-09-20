@@ -36,9 +36,9 @@ class Enemigo_tanque:
 							Enemigo_tanque(float px, float py, int w, int h, float s);
 	virtual						~Enemigo_tanque() {}
 	virtual void					transformar_cuerpo(App_Graficos::Bloque_transformacion_representable &b)const=0;
-	virtual void					transformar_canon(App_Graficos::Bloque_transformacion_representable &b, float angulo)const=0;
-	virtual float					max_angulo()const=0;
-	virtual float					min_angulo()const=0;
+	virtual float					transformar_angulo_disparo(float a) const=0;
+	virtual bool					validar_angulo_disparo(float a) const=0;
+	virtual DLibH::Punto_2d<float>			desplazamiento_proyectil() const=0;
 
 	///////////////
 	// Implementación de Representable_i.
@@ -102,10 +102,10 @@ class Enemigo_tanque_abajo:
 {
 	public:
 				Enemigo_tanque_abajo(float px, float py, float s=SALUD_DEFECTO);
-	virtual float		max_angulo()const {return 180.f;}
-	virtual float		min_angulo()const {return 0.f;}
+	virtual float		transformar_angulo_disparo(float a) const;
 	virtual void 		transformar_cuerpo(App_Graficos::Bloque_transformacion_representable &b)const;
-	virtual void		transformar_canon(App_Graficos::Bloque_transformacion_representable &b, float angulo)const;
+	virtual bool		validar_angulo_disparo(float a) const;
+	virtual DLibH::Punto_2d<float>	desplazamiento_proyectil() const {return DLibH::Punto_2d<float>(0.0f, 8.0f);}
 
 	private:
 
@@ -119,10 +119,10 @@ class Enemigo_tanque_arriba:
 {
 	public:
 				Enemigo_tanque_arriba(float px, float py, float s=SALUD_DEFECTO);
-	virtual float		max_angulo()const {return 360.f;}
-	virtual float		min_angulo()const {return 180.f;}
+	virtual float		transformar_angulo_disparo(float a) const;
 	virtual void 		transformar_cuerpo(App_Graficos::Bloque_transformacion_representable &b)const;
-	virtual void		transformar_canon(App_Graficos::Bloque_transformacion_representable &b, float angulo)const;
+	virtual bool		validar_angulo_disparo(float a) const;
+	virtual DLibH::Punto_2d<float>	desplazamiento_proyectil() const {return DLibH::Punto_2d<float>(0.0f, -8.0f);}
 
 	private:
 
@@ -136,10 +136,10 @@ class Enemigo_tanque_derecha:
 {
 	public:
 				Enemigo_tanque_derecha(float px, float py, float s=SALUD_DEFECTO);
-	virtual float		max_angulo()const {return 270.f;}
-	virtual float		min_angulo()const {return 90.f;}
+	virtual float		transformar_angulo_disparo(float a) const;
 	virtual void 		transformar_cuerpo(App_Graficos::Bloque_transformacion_representable &b)const;
-	virtual void		transformar_canon(App_Graficos::Bloque_transformacion_representable &b, float angulo)const;
+	virtual bool		validar_angulo_disparo(float a) const;
+	virtual DLibH::Punto_2d<float>	desplazamiento_proyectil() const {return DLibH::Punto_2d<float>(-8.0f, 0.0f);}
 
 	private:
 
@@ -153,10 +153,10 @@ class Enemigo_tanque_izquierda:
 {
 	public:
 				Enemigo_tanque_izquierda(float px, float py, float s=SALUD_DEFECTO);
-	virtual float		max_angulo()const {return 270.f;}
-	virtual float		min_angulo()const {return 90.f;}
+	virtual float		transformar_angulo_disparo(float a) const;
 	virtual void 		transformar_cuerpo(App_Graficos::Bloque_transformacion_representable &b)const;
-	virtual void		transformar_canon(App_Graficos::Bloque_transformacion_representable &b, float angulo)const;
+	virtual bool		validar_angulo_disparo(float a) const;
+	virtual DLibH::Punto_2d<float>	desplazamiento_proyectil() const {return DLibH::Punto_2d<float>(8.0f, 0.0f);}
 
 	private:
 

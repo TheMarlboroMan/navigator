@@ -18,6 +18,7 @@ struct Bloque_transformacion_representable
 		tr_grupo_estatico=3,
 		tr_primitiva_puntos=4,
 		tr_primitiva_caja=5,
+		tr_externa=6
 	};
 
 	///////////////////////////////////
@@ -42,6 +43,8 @@ struct Bloque_transformacion_representable
 	void 							establecer_alpha(unsigned int v);
 	void 							establecer_blend(unsigned int v);
 	void 							establecer_mod_color(unsigned int r, unsigned int g, unsigned int b);
+	void							establecer_externa(DLibV::Representacion& rep);
+	void							establecer_externa(DLibV::Representacion * rep);
 
 	///////////////////
 	// Metodos para manipular el grupo de representaciones...

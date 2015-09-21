@@ -68,6 +68,12 @@ void Interface_creador_objetos::fabricar_humo(float x, float y, float tv)
 	contenedor_volatiles.particulas.push_back(ob);
 }
 
+void Interface_creador_objetos::fabricar_particula_numero(float x, float y, size_t val)
+{
+	auto ob=factoria_volatiles.crear_particula_numero(x, y, val);
+	contenedor_volatiles.particulas.push_back(ob);
+}
+
 void Interface_creador_objetos::fabricar_proyectil_normal_enemigo(float x, float y, int w, int h, const DLibH::Vector_2d& v, float pot)
 {
 	auto ob=factoria_volatiles.crear_proyectil_normal(x, y, w, h, v, pot);

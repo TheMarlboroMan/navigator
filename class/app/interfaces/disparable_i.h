@@ -14,13 +14,20 @@ namespace App_Interfaces
 
 class Espaciable;
 
+class Disparable_contexto_I
+{
+	public:
+				~Disparable_contexto_I() {}
+	virtual void		insertar_marcador(float val, float x, float y)=0;
+};
+
 class Disparable_I:
 	public virtual Objeto_juego_I
 {
 	public:
 
 				~Disparable_I() {}
-	virtual void 		recibir_disparo(float potencia)=0;
+	virtual void 		recibir_disparo(float potencia, Disparable_contexto_I&)=0;
 	virtual bool		es_colision_proyectil(const Espaciable&)const=0;
 };
 }

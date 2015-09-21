@@ -38,7 +38,7 @@ class Enemigo_rebote:
 	//Implementación de Disparable_I
 	public:
 
-	virtual void 			recibir_disparo(float potencia);
+	virtual void 			recibir_disparo(float potencia, App_Interfaces::Disparable_contexto_I& contexto);
 	virtual bool			es_colision_proyectil(const Espaciable& e)const {return en_colision_con(e);}
 
 	////////////////////////

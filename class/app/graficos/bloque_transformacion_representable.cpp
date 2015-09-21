@@ -91,6 +91,10 @@ void Bloque_transformacion_representable::establecer_tipo(tipos t)
 		case tipos::tr_primitiva_caja:
 			rep=&rep_prim_caja;
 		break;
+
+		case tipos::tr_externa:
+			rep=nullptr;
+		break;
 	}
 
 	establecer_alpha(255);
@@ -127,9 +131,10 @@ void Bloque_transformacion_representable::insertar_en_grupo(DLibV::Representacio
 {
 	switch(tipo_actual)
 	{
-		case tipos::tr_bitmap: 	break;
-		case tipos::tr_primitiva_puntos: break;
-		case tipos::tr_primitiva_caja: break;
+		case tipos::tr_bitmap:
+		case tipos::tr_primitiva_puntos:
+		case tipos::tr_primitiva_caja:
+		case tipos::tr_externa: break;
 		case tipos::tr_grupo_dinamico:	rep_agr_din.insertar_representacion(r);	break;
 		case tipos::tr_grupo_estatico:	rep_agr_est.insertar_representacion(r);	break;
 
@@ -195,4 +200,21 @@ void Bloque_transformacion_representable::establecer_recurso(unsigned int i) //P
 void Bloque_transformacion_representable::establecer_textura_manual(DLibV::Textura * r) 
 {
 	rep_bmp.establecer_textura(r);
+}
+
+/**
+* Establece el puntero a una representación que no es una de las que provee
+* el bloque de transformación representable. Si luego no existe o falla no es
+* problema de esta clase.
+*/
+
+void Bloque_transformacion_representable::establecer_externa(DLibV::Representacion * p_rep)
+{
+	establecer_externa(*p_rep);
+}
+
+void Bloque_transformacion_representable::establecer_externa(DLibV::Representacion& p_rep)
+{
+	tipo_actual=tipos::tr_externa;
+	rep=&p_rep;
 }

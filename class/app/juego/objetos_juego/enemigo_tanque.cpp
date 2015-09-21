@@ -172,11 +172,14 @@ void Enemigo_tanque::turno(App_Interfaces::Contexto_turno_I& ct)
 	angulo=transformar_angulo_disparo(DLibH::Herramientas::angulo_360(v.angulo_grados()));
 }
 
-void Enemigo_tanque::recibir_disparo(float potencia)
+void Enemigo_tanque::recibir_disparo(float potencia, App_Interfaces::Disparable_contexto_I& contexto)
 {
 	int id_sonido=App::Recursos_audio::rs_explosion;
 
 	salud-=potencia;
+
+	contexto.insertar_marcador(potencia, acc_espaciable_cx(), acc_espaciable_y());
+
 	if(salud <= 0.0) 
 	{
 		mut_borrar(true);
@@ -240,11 +243,10 @@ void Enemigo_tanque::generar_objetos(App_Interfaces::Factoria_objetos_juego_I& f
 
 			if(validar_angulo_disparo(angulo_vector))
 			{			
+				const auto dp=desplazamiento_origen_proyectil();
 				float rad=DLibH::Herramientas::grados_a_radianes(angulo_vector);
 				float canx=cos(rad)*8.f+dp.x;
 				float cany=-(sin(rad)*8.f)+dp.y; //Negamos para convertir de cartesiano a pantalla...
-
-				const auto dp=desplazamiento_origen_proyectil();
 
 				f.fabricar_proyectil_normal_enemigo(acc_espaciable_cx()+canx, acc_espaciable_cy()+cany, 8, 8, v.a_pantalla(), 25.0);
 

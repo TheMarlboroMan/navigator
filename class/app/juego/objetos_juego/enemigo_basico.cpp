@@ -66,11 +66,14 @@ void Enemigo_basico::turno(App_Interfaces::Contexto_turno_I& ct)
 	}
 }
 
-void Enemigo_basico::recibir_disparo(float potencia)
+void Enemigo_basico::recibir_disparo(float potencia, App_Interfaces::Disparable_contexto_I& contexto)
 {
 	int id_sonido=App::Recursos_audio::rs_explosion;
 
 	salud-=potencia;
+
+	contexto.insertar_marcador(potencia, acc_espaciable_cx(), acc_espaciable_y());
+
 	if(salud <= 0.0) 
 	{
 		mut_borrar(true);

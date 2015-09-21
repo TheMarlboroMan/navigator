@@ -326,6 +326,9 @@ void Controlador_juego::dibujar(DLibV::Pantalla& pantalla)
 	auto it=std::remove_if(std::begin(vr), std::end(vr), [](const Representable_I * r) {return r->es_representable_borrar();});
 	vr.erase(it, std::end(vr));
 	
+	//TODO: Generar aquí las representaciones de las partículas de número de los coj?????
+	//Si lo hacemos aquí hay demasiado coupling... 
+
 	//Ordenarlos...
 	App_Interfaces::Ordenador_representables ord;
 	std::sort(std::begin(vr), std::end(vr), ord);
@@ -387,9 +390,9 @@ void Controlador_juego::logica_mundo(float delta)
 	* del jugador ha hecho impacto con ellas.
 	*/
 
+	Logica_disparable ld(contenedor_volatiles.proyectiles_jugador);	//Se declara fuera porque va a usarse más adelante...
 	if(contenedor_volatiles.proyectiles_jugador.size()) 
 	{
-		Logica_disparable ld(contenedor_volatiles.proyectiles_jugador);
 		auto vd=sala_actual->acc_objetos_juego().recolectar_disparables();
 		ld.procesar(vd);
 	}
@@ -418,6 +421,7 @@ void Controlador_juego::logica_mundo(float delta)
 	for(auto &p : contenedor_volatiles.proyectiles_jugador) vgoj.push_back(p.get());
 	for(auto &p : contenedor_volatiles.proyectiles_enemigos) vgoj.push_back(p.get());
 	for(auto &p : contenedor_volatiles.trazadores) vgoj.push_back(p.get());
+	if(ld.hay_numeros_por_generar()) vgoj.push_back(&ld.acc_generador_particulas());
 
 	Logica_generador_objetos_juego lgoj(jugador, info_obstaculos_genericos);
 	lgoj.procesar(vgoj);

@@ -23,6 +23,7 @@ class Interface_creador_objetos:
 	
 	virtual void					fabricar_bonus_tiempo(float x, float y, float t);
 	virtual void					fabricar_bonus_salud(float x, float y, float t);
+	virtual void					fabricar_particula_numero(float x, float y, size_t val);
 	virtual void					fabricar_chispa(float x, float y, float tv, const DLibH::Vector_2d&);
 	virtual void					fabricar_explosion(float x, float y, float tv, const DLibH::Vector_2d&);
 	virtual void					fabricar_chatarra(float x, float y, float tv, const DLibH::Vector_2d&);

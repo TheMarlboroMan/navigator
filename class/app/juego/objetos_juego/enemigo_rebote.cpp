@@ -25,7 +25,7 @@ Enemigo_rebote::Enemigo_rebote(float px, float py, float vel, tipos_rebote treb,
 	establecer_vector(DLibH::Vector_2d(vx*vel, vy*vel));
 }
 
-void Enemigo_rebote::recibir_disparo(float potencia)
+void Enemigo_rebote::recibir_disparo(float potencia, App_Interfaces::Disparable_contexto_I& contexto)
 {
 	//No hace nada.
 }

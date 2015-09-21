@@ -38,7 +38,7 @@ class Enemigo_tanque:
 	virtual void					transformar_cuerpo(App_Graficos::Bloque_transformacion_representable &b)const=0;
 	virtual float					transformar_angulo_disparo(float a) const=0;
 	virtual bool					validar_angulo_disparo(float a) const=0;
-	virtual DLibH::Punto_2d<float>			desplazamiento_proyectil() const=0;
+	virtual DLibH::Punto_2d<float>			desplazamiento_origen_proyectil() const=0; //Expresa el desplazamiento del origen del proyectil en coordenadas de pantalla a partir del centro del actor.
 
 	///////////////
 	// Implementación de Representable_i.
@@ -105,7 +105,7 @@ class Enemigo_tanque_abajo:
 	virtual float		transformar_angulo_disparo(float a) const;
 	virtual void 		transformar_cuerpo(App_Graficos::Bloque_transformacion_representable &b)const;
 	virtual bool		validar_angulo_disparo(float a) const;
-	virtual DLibH::Punto_2d<float>	desplazamiento_proyectil() const {return DLibH::Punto_2d<float>(0.0f, 8.0f);}
+	virtual DLibH::Punto_2d<float>	desplazamiento_origen_proyectil() const {return DLibH::Punto_2d<float>(0.0f, -8.0f);}
 
 	private:
 
@@ -122,7 +122,7 @@ class Enemigo_tanque_arriba:
 	virtual float		transformar_angulo_disparo(float a) const;
 	virtual void 		transformar_cuerpo(App_Graficos::Bloque_transformacion_representable &b)const;
 	virtual bool		validar_angulo_disparo(float a) const;
-	virtual DLibH::Punto_2d<float>	desplazamiento_proyectil() const {return DLibH::Punto_2d<float>(0.0f, -8.0f);}
+	virtual DLibH::Punto_2d<float>	desplazamiento_origen_proyectil() const {return DLibH::Punto_2d<float>(0.0f, 8.0f);}
 
 	private:
 
@@ -139,7 +139,7 @@ class Enemigo_tanque_derecha:
 	virtual float		transformar_angulo_disparo(float a) const;
 	virtual void 		transformar_cuerpo(App_Graficos::Bloque_transformacion_representable &b)const;
 	virtual bool		validar_angulo_disparo(float a) const;
-	virtual DLibH::Punto_2d<float>	desplazamiento_proyectil() const {return DLibH::Punto_2d<float>(-8.0f, 0.0f);}
+	virtual DLibH::Punto_2d<float>	desplazamiento_origen_proyectil() const {return DLibH::Punto_2d<float>(-8.0f, 0.0f);}
 
 	private:
 
@@ -156,7 +156,7 @@ class Enemigo_tanque_izquierda:
 	virtual float		transformar_angulo_disparo(float a) const;
 	virtual void 		transformar_cuerpo(App_Graficos::Bloque_transformacion_representable &b)const;
 	virtual bool		validar_angulo_disparo(float a) const;
-	virtual DLibH::Punto_2d<float>	desplazamiento_proyectil() const {return DLibH::Punto_2d<float>(8.0f, 0.0f);}
+	virtual DLibH::Punto_2d<float>	desplazamiento_origen_proyectil() const {return DLibH::Punto_2d<float>(8.0f, 0.0f);}
 
 	private:
 

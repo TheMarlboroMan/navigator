@@ -1,0 +1,5 @@
+data/logs/*.log
+makefile_linux
+makefile_win
+objects/*
+a.out

@@ -239,15 +239,13 @@ void Enemigo_tanque::generar_objetos(App_Interfaces::Factoria_objetos_juego_I& f
 			float angulo_vector=DLibH::Herramientas::angulo_360(v.angulo_grados());
 
 			if(validar_angulo_disparo(angulo_vector))
-			{
+			{			
 				float rad=DLibH::Herramientas::grados_a_radianes(angulo_vector);
-				
-				const auto dp=desplazamiento_proyectil();
 				float canx=cos(rad)*8.f+dp.x;
 				float cany=-(sin(rad)*8.f)+dp.y; //Negamos para convertir de cartesiano a pantalla...
 
-				//TODO: Mejor aún, que el origen del proyectil sea distinto según cada tipo!!!!.
-				//Igual que tenemos "desplammiento" tener también "origen".
+				const auto dp=desplazamiento_origen_proyectil();
+
 				f.fabricar_proyectil_normal_enemigo(acc_espaciable_cx()+canx, acc_espaciable_cy()+cany, 8, 8, v.a_pantalla(), 25.0);
 
 				//TODO: Los concerns de audio están mezlados con el resto :(.

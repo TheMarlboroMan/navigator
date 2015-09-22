@@ -21,7 +21,7 @@ class Particula_numero:
 	//////////////////
 	//Interface pública...
 	public:
-						Particula_numero(float x, float y, float tv, const DLibH::Vector_2d& v);
+						Particula_numero(float x, float y, float tv, size_t val, const DLibH::Vector_2d& v);
 	static void				preparar_representacion(size_t numero, const DLibV::Representacion_texto_auto_dinamica& rep) {textos.insert(std::make_pair(numero, rep));}
 	bool					debe_preparar_representacion(size_t numero) const {return textos.count(numero);}
 

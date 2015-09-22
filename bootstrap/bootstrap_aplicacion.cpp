@@ -43,8 +43,6 @@ void App::loop_aplicacion(Kernel_app& kernel)
 	//Declaraciones de herramientas externas.
 	Director_estados DI;
 
-
-
 	try
 	{
 		//TODO: Quizás las animaciones y los obstáculos genéricos y demás pudieran ir en un mismo paquete...

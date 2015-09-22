@@ -41,7 +41,8 @@ std::shared_ptr<App_Juego_ObjetoJuego::Particula_fantasma_bonus_salud> Factoria_
 
 std::shared_ptr<App_Juego_ObjetoJuego::Particula_numero> Factoria_objetos_volatiles::crear_particula_numero(float x, float y, size_t val)
 {
-	auto res=std::shared_ptr<Particula_numero>(new Particula_numero(x, y, val, DLibH::Vector_2d(0.0f, -60.0f)));
+
+	auto res=std::shared_ptr<Particula_numero>(new Particula_numero(x, y, 1.f, val, DLibH::Vector_2d(0.0f, -60.0f)));
 	return res;
 }
 

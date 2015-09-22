@@ -34,7 +34,7 @@ class Factoria_objetos_juego_I
 	virtual void			fabricar_proyectil_rayo_estatico_enemigo(float x, float y, int w, int h, float pot)=0;
 	virtual void			fabricar_trazador_humo(float x, float y, float tv, const DLibH::Vector_2d& v)=0;
 
-	virtual void			fabricar_particula_numero(float x, float y, size_t)=0;
+	virtual void			fabricar_particula_numero(float x, float y, size_t, App_Definiciones::colores::colores_texto)=0;
 	virtual void			fabricar_chispa(float x, float y, float tv, const DLibH::Vector_2d&)=0;
 	virtual void			fabricar_explosion(float x, float y, float tv, const DLibH::Vector_2d&)=0;
 	virtual void			fabricar_chatarra(float x, float y, float tv, const DLibH::Vector_2d&)=0;

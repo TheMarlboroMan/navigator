@@ -68,9 +68,9 @@ void Interface_creador_objetos::fabricar_humo(float x, float y, float tv)
 	contenedor_volatiles.particulas.push_back(ob);
 }
 
-void Interface_creador_objetos::fabricar_particula_numero(float x, float y, size_t val)
+void Interface_creador_objetos::fabricar_particula_numero(float x, float y, size_t val, App_Definiciones::colores::colores_texto col)
 {
-	auto ob=factoria_volatiles.crear_particula_numero(x, y, val);
+	auto ob=factoria_volatiles.crear_particula_numero(x, y, val, col);
 	contenedor_volatiles.particulas.push_back(ob);
 }
 

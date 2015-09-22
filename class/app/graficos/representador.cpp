@@ -83,21 +83,7 @@ void Representador::generar_hud(DLibV::Pantalla& pantalla, int salud, int energi
 	rep_hud.establecer_posicion(16, 416);
 	rep_hud.volcar(pantalla);
 
-//	rep_hud.asignar(tiempo);
-//	rep_hud.establecer_posicion(16, 464);
-//	rep_hud.volcar(pantalla);
-
-	//TODO: Al hacer copias el color hace lo que 
-	auto rep_cosa=rep_hud;
-
-	rep_cosa.asignar(tiempo);
-	rep_cosa.establecer_posicion(16, 464);
-	rep_cosa.volcar(pantalla);
-
-	DLibV::Representacion_texto_auto_estatica rep_cosa2(rep_hud);
-
-	rep_cosa2.asignar(tiempo);
-	rep_cosa2.establecer_posicion(128, 464);
-	rep_cosa2.volcar(pantalla);
-
+	rep_hud.asignar(tiempo);
+	rep_hud.establecer_posicion(16, 464);
+	rep_hud.volcar(pantalla);
 }

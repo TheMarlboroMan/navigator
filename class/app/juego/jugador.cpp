@@ -85,12 +85,14 @@ void Jugador::recibir_impacto(float val)
 	{
 		escudo-=val;
 		salud-=val / 4;
+		senales.dano_recibido+=val / 4;
 	}
 	else
 	{
 		float dif=val-escudo;
 		escudo=0.0;
 		salud-=dif;
+		senales.dano_recibido+=dif;
 	}
 
 	if(escudo < 0.0) escudo=0.0;
@@ -99,6 +101,13 @@ void Jugador::recibir_impacto(float val)
 	mod_color.r=escudo ? 0.0 : 255.0;
 	mod_color.g=escudo ? 0.0 : 0.0;
 	mod_color.b=escudo ? 255.0 : 0.0;
+
+	/**
+	* Ajustar al valor entero más alto.
+	*/
+
+	escudo=ceil(escudo);
+	salud=ceil(salud);
 
 	/*
 	* Un pequeño hack: el sonido golpe_jugador apunta al mismo wav pero
@@ -141,6 +150,12 @@ void Jugador::transformar_bloque(Bloque_transformacion_representable &b) const
 void Jugador::turno(float delta)
 {
 	using namespace App_Input;
+
+	if(senales.tiempo_dano)
+	{
+		senales.tiempo_dano-=delta;
+		if(senales.tiempo_dano < 0.f) senales.tiempo_dano=0.f;
+	}
 
 	posicion_anterior=copia_caja();
 
@@ -275,8 +290,12 @@ void Jugador::consumir_energia(float c)
 
 void Jugador::sumar_salud(float v)
 {
+	senales.salud_recuperada=v;
 	salud+=v;
-	if(salud > MAX_SALUD) salud=MAX_SALUD;
+	if(salud > MAX_SALUD)
+	{
+		salud=MAX_SALUD;
+	}
 }
 
 bool Jugador::disparar()
@@ -321,5 +340,18 @@ void Jugador::generar_objetos(App_Interfaces::Factoria_objetos_juego_I& f)
 	if(senales.crear_fantasma)
 	{
 		f.fabricar_fantasma_jugador(acc_espaciable_x(), acc_espaciable_y(), 1.0f, 20.0f, direccion);
+	}
+
+	if(senales.dano_recibido && !senales.tiempo_dano)
+	{
+		f.fabricar_particula_numero(acc_espaciable_cx(), acc_espaciable_y(), senales.dano_recibido, App_Definiciones::colores::colores_texto::rojo);
+		senales.dano_recibido=0;
+		senales.tiempo_dano=0.2f;
+	}
+
+	if(senales.salud_recuperada)
+	{
+		f.fabricar_particula_numero(acc_espaciable_cx(), acc_espaciable_y(), senales.salud_recuperada, App_Definiciones::colores::colores_texto::verde);
+		senales.salud_recuperada=0;
 	}
 }

@@ -337,7 +337,7 @@ void Controlador_juego::dibujar(DLibV::Pantalla& pantalla)
 	representador.generar_vista(pantalla, camara, vr);
 
 	//Hud
-	representador.generar_hud(pantalla, jugador.acc_salud(), jugador.acc_energia(), jugador.acc_escudo(), contador_tiempo.formatear_tiempo_restante());
+	representador.generar_hud(pantalla, ceil(jugador.acc_salud()), ceil(jugador.acc_energia()), ceil(jugador.acc_escudo()), contador_tiempo.formatear_tiempo_restante());
 
 	//Automapa
 	representador.generar_vista(pantalla, vista_automapa.obtener_vista(400, 412, 7));

@@ -53,6 +53,11 @@ struct tipos
 	};
 };
 
+struct colores
+{
+	enum class colores_texto {blanco, rojo, verde, azul};
+};
+
 enum class direcciones {nada=0, arriba=1, derecha=2, abajo=4, izquierda=8};
 
 direcciones convertir_en_direccion(int); /**@throw std::runtime_error */

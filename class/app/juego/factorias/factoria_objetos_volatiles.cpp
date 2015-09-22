@@ -39,10 +39,9 @@ std::shared_ptr<App_Juego_ObjetoJuego::Particula_fantasma_bonus_salud> Factoria_
 	return res;
 }
 
-std::shared_ptr<App_Juego_ObjetoJuego::Particula_numero> Factoria_objetos_volatiles::crear_particula_numero(float x, float y, size_t val)
+std::shared_ptr<App_Juego_ObjetoJuego::Particula_numero> Factoria_objetos_volatiles::crear_particula_numero(float x, float y, size_t val, App_Definiciones::colores::colores_texto col)
 {
-
-	auto res=std::shared_ptr<Particula_numero>(new Particula_numero(x, y, 1.f, val, DLibH::Vector_2d(0.0f, -60.0f)));
+	auto res=std::shared_ptr<Particula_numero>(new Particula_numero(x, y, 1.f, val, col, DLibH::Vector_2d(0.0f, -60.0f)));
 	return res;
 }
 

@@ -131,6 +131,9 @@ class Jugador:
 	struct
 	{ 
 		bool				crear_fantasma=false;
+		float				tiempo_dano=0.f;
+		size_t				dano_recibido=0;
+		size_t				salud_recuperada=0;
 	}senales;
 
 //	Tabla_sprites TREC;

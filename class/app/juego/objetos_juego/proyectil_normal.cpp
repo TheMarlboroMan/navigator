@@ -3,7 +3,7 @@
 
 using namespace App_Juego_ObjetoJuego;
 
-const float Proyectil_normal::FACTOR_DEBILITAR=9.0f;
+const float Proyectil_normal::FACTOR_DEBILITAR=15.0f;
 
 Proyectil_normal::Proyectil_normal(float x, float y, int w, int h, const DLibH::Vector_2d& v, float potencia, App_Juego_ObjetoJuego::Proyectil_normal::colores color)
 	:Proyectil_base(x, y, w, h),

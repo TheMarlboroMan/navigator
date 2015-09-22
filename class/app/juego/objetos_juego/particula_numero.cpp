@@ -4,9 +4,10 @@ using namespace App_Juego_ObjetoJuego;
 
 std::map<size_t, DLibV::Representacion_texto_auto_dinamica> Particula_numero::textos;
 
-Particula_numero::Particula_numero(float x, float y, float tv, size_t val, const DLibH::Vector_2d& v):
+Particula_numero::Particula_numero(float x, float y, float tv, size_t val, App_Definiciones::colores::colores_texto col, const DLibH::Vector_2d& v):
 	Particula_movil_base(x, y, tv, v),
-	numero(val)
+	numero(val),
+	color(col)
 {
 
 }
@@ -35,7 +36,14 @@ void Particula_numero::transformar_bloque(App_Graficos::Bloque_transformacion_re
 
 	b.establecer_externa(textos.at(numero));
 
-	b.establecer_mod_color(255, 255, 255);
+	switch(color)
+	{
+		case App_Definiciones::colores::colores_texto::blanco: b.establecer_mod_color(255, 255, 255); break;
+		case App_Definiciones::colores::colores_texto::rojo: b.establecer_mod_color(255, 0, 0); break;
+		case App_Definiciones::colores::colores_texto::verde: b.establecer_mod_color(0, 255, 0); break;
+		case App_Definiciones::colores::colores_texto::azul: b.establecer_mod_color(0, 0, 255); break;
+	}
+
 	float alpha=calcular_parcial_tiempo_vida(255);
 	if(alpha < 0.0f) alpha=0.0f;
 

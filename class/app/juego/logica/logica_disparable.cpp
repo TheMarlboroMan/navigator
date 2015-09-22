@@ -33,6 +33,6 @@ void Logica_disparable::contexto::generar_objetos(App_Interfaces::Factoria_objet
 {
 	for(const auto& m : marcadores)
 	{
-		foj.fabricar_particula_numero(m.x, m.y, m.numero);
+		foj.fabricar_particula_numero(m.x, m.y, m.numero, App_Definiciones::colores::colores_texto::rojo);
 	}
 }

@@ -9,7 +9,7 @@ Enemigo_tanque::Enemigo_tanque(float px, float py, int w, int h, float s)
 	:
 	Objeto_juego_I(),
 	Actor(px, py, w, h),
-	salud(s),
+	salud(s), salud_max(s),
 	tiempo_proximo_disparo(TIEMPO_PROXIMO_DISPARO_DEFECTO),
 	angulo(0.0f)
 {
@@ -179,6 +179,7 @@ void Enemigo_tanque::recibir_disparo(float potencia, App_Interfaces::Disparable_
 	salud-=potencia;
 
 	contexto.insertar_marcador(potencia, acc_espaciable_cx(), acc_espaciable_y());
+	contexto.asignar_barra(salud_max, salud, "SENTRY");
 
 	if(salud <= 0.0) 
 	{

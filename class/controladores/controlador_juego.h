@@ -61,7 +61,8 @@ class Controlador_juego:public Controlador_base
 	{
 		App_Graficos::Barra_indicadora		salud,
 							energia,
-							escudo;
+							escudo,
+							enemigo;
 	}barras;
 
 	///////////////

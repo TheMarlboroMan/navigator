@@ -31,12 +31,17 @@ Controlador_juego::Controlador_juego(Director_estados &DI, App_Niveles::Mapa& ma
 	barras{
 		{80, 416, 100, 100, "HULL"},
 		{80, 427, 100, 100, "ENERGY"},
-		{80, 438, 100, 100, "SHIELD"}
+		{80, 438, 100, 100, "SHIELD"},
+		{200, 416, 100, 100, "..."}
 	}
 {
 	barras.salud.establecer_color(192, 0, 0);
 	barras.energia.establecer_color(0, 192, 0);
 	barras.escudo.establecer_color(0, 0, 192);
+
+	barras.enemigo.establecer_color(192, 0, 0);
+	barras.enemigo.caducar();
+	barras.enemigo.ocultar_cantidad();
 
 	sala_actual=&(mapa.obtener_sala_inicio());
 	ajustar_camara_a_sala(*sala_actual);
@@ -96,6 +101,7 @@ void Controlador_juego::loop(Input_base& input, float delta)
 		}
 
 		contador_tiempo.turno(delta);
+		barras.enemigo.turno(delta);
 
 		Recogedor_input RI;
 		Input_usuario iu=RI.recoger_input_usuario(input);
@@ -213,6 +219,7 @@ void Controlador_juego::cargar_sala(int ax, int ay, App_Definiciones::direccione
 
 void Controlador_juego::limpiar_pre_cambio_sala()
 {
+	barras.enemigo.caducar();
 	contenedor_volatiles.vaciar();
 }
 
@@ -350,7 +357,7 @@ void Controlador_juego::dibujar(DLibV::Pantalla& pantalla)
 	barras.energia.establecer_valor_actual(ceil(jugador.acc_energia()));
 	barras.escudo.establecer_valor_actual(ceil(jugador.acc_escudo()));
 
-	representador.generar_hud(pantalla, barras.salud, barras.energia, barras.escudo, contador_tiempo.formatear_tiempo_restante());
+	representador.generar_hud(pantalla, barras.salud, barras.energia, barras.escudo, barras.enemigo, contador_tiempo.formatear_tiempo_restante());
 
 	//Automapa
 	representador.generar_vista(pantalla, vista_automapa.obtener_vista(400, 412, 7));
@@ -409,6 +416,7 @@ void Controlador_juego::logica_mundo(float delta)
 		auto vd=sala_actual->acc_objetos_juego().recolectar_disparables();
 		ld.procesar(vd);
 	}
+	ld.actualizar_barra(barras.enemigo);
 
 	/** 
 	* Objeto para procesar la lógica de los turnos...

@@ -93,6 +93,7 @@ class Enemigo_tanque:
 	private:
 
 	float 						salud;
+	float 						salud_max;
 	float 						tiempo_proximo_disparo;
 	float						angulo;
 };

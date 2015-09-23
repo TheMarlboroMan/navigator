@@ -8,6 +8,7 @@
 */
 
 #include "objeto_juego_i.h"
+#include <string>
 
 namespace App_Interfaces
 {
@@ -19,6 +20,7 @@ class Disparable_contexto_I
 	public:
 				~Disparable_contexto_I() {}
 	virtual void		insertar_marcador(float val, float x, float y)=0;
+	virtual void		asignar_barra(float s_max, float s_actual, const std::string&)=0;
 };
 
 class Disparable_I:

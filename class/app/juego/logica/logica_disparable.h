@@ -12,6 +12,11 @@
 * Controla si han recibido impactos.
 */
 
+namespace App_Graficos
+{
+class Barra_indicadora;
+}
+
 namespace App_Juego_Logica
 {
 
@@ -31,6 +36,14 @@ class Logica_disparable
 
 		std::vector<marcador> 		marcadores;
 
+		struct info_barra
+		{
+			float			salud_max=0.f, salud_actual=0.f;
+			std::string		nombre;
+			bool 			activa=false;
+		}info_barra;
+
+		void				asignar_barra(float sm, float sa, const std::string& n);
 		void				insertar_marcador(float val, float x, float y);
 		virtual	void			generar_objetos(App_Interfaces::Factoria_objetos_juego_I& foj);
 	}contexto;
@@ -43,6 +56,9 @@ class Logica_disparable
 	virtual void 					procesar(std::vector<App_Interfaces::Disparable_I *>&);
 	App_Interfaces::Generador_objetos_juego_I&	acc_generador_particulas() {return contexto;}
 	bool						hay_numeros_por_generar() const {return contexto.marcadores.size();}
+	void						actualizar_barra(App_Graficos::Barra_indicadora&);
+	
+	
 
 	/////////////////////////
 	//Propiedades privadas.

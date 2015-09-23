@@ -9,7 +9,8 @@ Barra_indicadora::Barra_indicadora(int x, int y, int vmax, int vact, const std::
 	txt_nombre(DLibV::Gestor_superficies::obtener(App::Recursos_graficos::rs_fuente_base), pnombre),
 	txt_cantidad(DLibV::Gestor_superficies::obtener(App::Recursos_graficos::rs_fuente_base), "100"),
 	nombre(pnombre),
-	w_max(W), valor_max(vmax), valor_actual(vact)
+	w_max(W), valor_max(vmax), valor_actual(vact),
+	tiempo_vigencia(-1.f)
 {
 	caja.establecer_alpha(192);
 	txt_nombre.establecer_posicion(caja.acc_posicion());
@@ -62,4 +63,13 @@ void Barra_indicadora::volcar(DLibV::Pantalla& pantalla)
 	caja.volcar(pantalla);
 	txt_nombre.volcar(pantalla);
 	txt_cantidad.volcar(pantalla);
+}
+
+void Barra_indicadora::turno(float v)
+{
+	if(tiempo_vigencia > 0.0f)
+	{
+		tiempo_vigencia-=v;
+		if(tiempo_vigencia < 0.0f) tiempo_vigencia=0.0f;
+	}
 }

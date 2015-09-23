@@ -52,7 +52,7 @@ unsigned int Representador::generar_vista(
 	return total;
 }
 
-void Representador::generar_hud(DLibV::Pantalla& pantalla, Barra_indicadora& salud, Barra_indicadora& energia, Barra_indicadora& escudo, std::string tiempo)
+void Representador::generar_hud(DLibV::Pantalla& pantalla, Barra_indicadora& salud, Barra_indicadora& energia, Barra_indicadora& escudo, Barra_indicadora& enemigos, std::string tiempo)
 {
 	//Dibujar caja HUD...
 	SDL_Rect cp=DLibH::Herramientas_SDL::nuevo_sdl_rect(X_FONDO_HUD, Y_FONDO_HUD, W_FONDO_HUD, H_FONDO_HUD);
@@ -63,6 +63,7 @@ void Representador::generar_hud(DLibV::Pantalla& pantalla, Barra_indicadora& sal
 	salud.volcar(pantalla);
 	energia.volcar(pantalla);
 	escudo.volcar(pantalla);
+	if(enemigos.es_vigente()) enemigos.volcar(pantalla);
 
 	DLibV::Representacion_texto_auto_estatica rep_hud(DLibV::Gestor_superficies::obtener(App::Recursos_graficos::rs_fuente_base), tiempo);
 	rep_hud.asignar(tiempo);

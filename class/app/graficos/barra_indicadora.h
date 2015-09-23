@@ -27,6 +27,10 @@ class Barra_indicadora
 	void							volcar(DLibV::Pantalla&);
 	void							mostrar_cantidad() {txt_cantidad.hacer_visible();}
 	void							ocultar_cantidad() {txt_cantidad.hacer_invisible();}
+	void							establecer_caducidad(float v) {tiempo_vigencia=v;}
+	void							caducar() {tiempo_vigencia=0.0;}
+	bool							es_vigente() const {return tiempo_vigencia;}
+	void							turno(float v);
 
 	float							acc_valor_actual() const {return valor_actual;}
 
@@ -45,6 +49,7 @@ class Barra_indicadora
 	unsigned int						w_max;
 	int 							valor_max;
 	int 							valor_actual;
+	float							tiempo_vigencia;
 };
 
 }

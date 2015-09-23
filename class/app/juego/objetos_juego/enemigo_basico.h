@@ -95,6 +95,7 @@ class Enemigo_basico:
 	private:
 
 	float salud;
+	float salud_max;
 	float tiempo_proximo_disparo;
 	App_Definiciones::direcciones direccion;
 };

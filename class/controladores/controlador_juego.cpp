@@ -27,8 +27,17 @@ Controlador_juego::Controlador_juego(Director_estados &DI, App_Niveles::Mapa& ma
 	info_obstaculos_genericos(iog),
 	contador_tiempo(),
 	sala_actual(nullptr),
-	cambiar_modo_pantalla(false)
+	cambiar_modo_pantalla(false),
+	barras{
+		{80, 416, 100, 100, "HULL"},
+		{80, 427, 100, 100, "ENERGY"},
+		{80, 438, 100, 100, "SHIELD"}
+	}
 {
+	barras.salud.establecer_color(192, 0, 0);
+	barras.energia.establecer_color(0, 192, 0);
+	barras.escudo.establecer_color(0, 0, 192);
+
 	sala_actual=&(mapa.obtener_sala_inicio());
 	ajustar_camara_a_sala(*sala_actual);
 	
@@ -337,7 +346,11 @@ void Controlador_juego::dibujar(DLibV::Pantalla& pantalla)
 	representador.generar_vista(pantalla, camara, vr);
 
 	//Hud
-	representador.generar_hud(pantalla, ceil(jugador.acc_salud()), ceil(jugador.acc_energia()), ceil(jugador.acc_escudo()), contador_tiempo.formatear_tiempo_restante());
+	barras.salud.establecer_valor_actual(ceil(jugador.acc_salud()));
+	barras.energia.establecer_valor_actual(ceil(jugador.acc_energia()));
+	barras.escudo.establecer_valor_actual(ceil(jugador.acc_escudo()));
+
+	representador.generar_hud(pantalla, barras.salud, barras.energia, barras.escudo, contador_tiempo.formatear_tiempo_restante());
 
 	//Automapa
 	representador.generar_vista(pantalla, vista_automapa.obtener_vista(400, 412, 7));

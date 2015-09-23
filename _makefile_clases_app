@@ -466,6 +466,7 @@ $(DIR_GRAFICOS)bloque_transformacion_representable.cpp
 	$(CC) $(CFLAGS) $(INCLUDES) $(DIR_GRAFICOS)bloque_transformacion_representable.cpp -o $(DIR_O)bloque_transformacion_representable.o
 
 $(DIR_O)representador.o :\
+$(DIR_O)barra_indicadora.o\
 $(DIR_O)representable_i.o \
 $(DIR_GRAFICOS)representador.h \
 $(DIR_GRAFICOS)representador.cpp
@@ -475,6 +476,11 @@ $(DIR_O)animaciones.o :\
 $(DIR_GRAFICOS)animaciones.h \
 $(DIR_GRAFICOS)animaciones.cpp
 	$(CC) $(CFLAGS) $(INCLUDES) $(DIR_GRAFICOS)animaciones.cpp -o $(DIR_O)animaciones.o
+
+$(DIR_O)barra_indicadora.o :\
+$(DIR_GRAFICOS)barra_indicadora.h \
+$(DIR_GRAFICOS)barra_indicadora.cpp
+	$(CC) $(CFLAGS) $(INCLUDES) $(DIR_GRAFICOS)barra_indicadora.cpp -o $(DIR_O)barra_indicadora.o
 
 ################################################################################
 #Colisiones

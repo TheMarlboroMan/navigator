@@ -12,10 +12,7 @@
 #include "../app/juego/sistemas/contador_tiempo.h"
 #include "../app/juego/contenedores/contenedor_volatiles.h"
 
-//TODO: Quitar...
-#include "../app/juego/objetos_juego/proyectil_base.h"
-#include "../app/juego/objetos_juego/proyectil_normal.h"
-#include "../app/juego/objetos_juego/enemigo_basico.h"
+#include "../app/graficos/barra_indicadora.h"
 
 #include "../app/niveles/mapa.h"
 #include "../app/graficos/representador.h"
@@ -59,8 +56,13 @@ class Controlador_juego:public Controlador_base
 	App_Juego_Contenedores::Contenedor_volatiles	contenedor_volatiles;
 	
 	bool						cambiar_modo_pantalla;
-	int						cosa_audio;
-	
+
+	struct info_barras
+	{
+		App_Graficos::Barra_indicadora		salud,
+							energia,
+							escudo;
+	}barras;
 
 	///////////////
 	//Métodos internos.

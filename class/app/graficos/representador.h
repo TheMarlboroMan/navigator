@@ -4,6 +4,7 @@
 #include "bloque_transformacion_representable.h"
 #include "../definiciones/definiciones.h"
 #include "../interfaces/representable_i.h"
+#include "barra_indicadora.h"
 
 /*El representador funciona de la siguiente forma: desde el controlador 
 generamos un array de punteros a "Representables". Se le pasa el array al 
@@ -28,7 +29,7 @@ class Representador
 						Representador(const Animaciones&);
 	unsigned int 				generar_vista(DLibV::Pantalla&, DLibV::Camara&, const std::vector<const App_Interfaces::Representable_I *>&);
 	unsigned int 				generar_vista(DLibV::Pantalla&, const std::vector<const App_Interfaces::Representable_I *>&);
-	void 					generar_hud(DLibV::Pantalla& pantalla, int salud, int energia, int escudo, std::string tiempo);
+	void 					generar_hud(DLibV::Pantalla& pantalla, Barra_indicadora& salud, Barra_indicadora& energia, Barra_indicadora& escudo, std::string tiempo);
 
 	private:
 

@@ -4,6 +4,9 @@ using namespace App_Juego;
 using namespace App_Graficos;
 using namespace App;
 
+const float Jugador::MAX_SALUD=100.0f;
+const float Jugador::MAX_ESCUDO=100.0f;
+const float Jugador::MAX_ENERGIA=100.0f;
 const float Jugador::ACELERACION_VERTICAL_SEGUNDO=200.0;
 const float Jugador::ACELERACION_HORIZONTAL_SEGUNDO=300.0;
 const float Jugador::DECELERACION_HORIZONTAL_SEGUNDO=350.0;
@@ -25,8 +28,10 @@ Jugador::Jugador(float x, float y)
 	:Actor_movil(x, y, W, H),
 	mod_color{255.0, 255.0, 255.0},
 	posicion_anterior(copia_caja()),
-	salud(MAX_SALUD), energia(MAX_ENERGIA), 
-	escudo(MAX_ESCUDO), cooloff_energia(0.0f),
+	salud(0.0f, MAX_SALUD, MAX_SALUD), 
+	energia(0.0f, MAX_ENERGIA, MAX_SALUD), 
+	escudo(0.0f, MAX_ESCUDO, MAX_ESCUDO), 
+	cooloff_energia(0.0f),
 	tiempo_aterrizado(0.0),
 //	TREC("data/recortes/jugador.dat"),	
 	direccion(App_Definiciones::direcciones::derecha)
@@ -95,12 +100,12 @@ void Jugador::recibir_impacto(float val)
 		senales.dano_recibido+=dif;
 	}
 
-	if(escudo < 0.0) escudo=0.0;
-	if(salud < 0.0) salud=0.0;
+	if(escudo < 0.0f) escudo=0.0f;
+	if(salud < 0.0f) salud=0.0f;
 
-	mod_color.r=escudo ? 0.0 : 255.0;
-	mod_color.g=escudo ? 0.0 : 0.0;
-	mod_color.b=escudo ? 255.0 : 0.0;
+	mod_color.r=escudo ? 0.0f : 255.0f;
+	mod_color.g=escudo ? 0.0f : 0.0f;
+	mod_color.b=escudo ? 255.0f : 0.0f;
 
 	/**
 	* Ajustar al valor entero más alto.

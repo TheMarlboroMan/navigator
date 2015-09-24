@@ -2,6 +2,7 @@
 #define ENEMIGO_TANQUE_H
 
 #include <generador_numeros.h>
+#include <valor_limitado.h>
 
 #include "../../definiciones/definiciones.h"
 #include "../actor.h"
@@ -92,8 +93,7 @@ class Enemigo_tanque:
 
 	private:
 
-	float 						salud;
-	float 						salud_max;
+	Herramientas_proyecto::Valor_limitado<float>	salud;
 	float 						tiempo_proximo_disparo;
 	float						angulo;
 };

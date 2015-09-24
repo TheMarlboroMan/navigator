@@ -2,6 +2,7 @@ DEP_HERRAMIENTAS_PROYECTO=$(DIR_O_HERRAMIENTAS_PROYECTO)tabla_sprites.o \
 $(DIR_O_HERRAMIENTAS_PROYECTO)tabla_animaciones.o \
 $(DIR_O_HERRAMIENTAS_PROYECTO)generador_numeros.o \
 $(DIR_O_HERRAMIENTAS_PROYECTO)selector_aleatorio.o \
+$(DIR_O_HERRAMIENTAS_PROYECTO)valor_limitado.o \
 
 DEP_CLASES_APP=$(DIR_O)definiciones.o\
 $(DIR_O)sala.o\

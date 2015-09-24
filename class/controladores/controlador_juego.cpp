@@ -342,9 +342,6 @@ void Controlador_juego::dibujar(DLibV::Pantalla& pantalla)
 	auto it=std::remove_if(std::begin(vr), std::end(vr), [](const Representable_I * r) {return r->es_representable_borrar();});
 	vr.erase(it, std::end(vr));
 	
-	//TODO: Generar aquí las representaciones de las partículas de número de los coj?????
-	//Si lo hacemos aquí hay demasiado coupling... 
-
 	//Ordenarlos...
 	App_Interfaces::Ordenador_representables ord;
 	std::sort(std::begin(vr), std::end(vr), ord);

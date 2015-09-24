@@ -9,7 +9,7 @@ Enemigo_tanque::Enemigo_tanque(float px, float py, int w, int h, float s)
 	:
 	Objeto_juego_I(),
 	Actor(px, py, w, h),
-	salud(s), salud_max(s),
+	salud(0.0f, s, s),
 	tiempo_proximo_disparo(TIEMPO_PROXIMO_DISPARO_DEFECTO),
 	angulo(0.0f)
 {
@@ -31,7 +31,7 @@ void Enemigo_tanque_abajo::transformar_cuerpo(App_Graficos::Bloque_transformacio
 
 float Enemigo_tanque_abajo::transformar_angulo_disparo(float a) const
 {
-	if(a > 180.0) a=180.0;
+	if(a > 180.0f) a=180.0f;
 	else if(a < 0.f) a=0.f;
 	return a;
 }
@@ -57,7 +57,7 @@ void Enemigo_tanque_arriba::transformar_cuerpo(App_Graficos::Bloque_transformaci
 
 float Enemigo_tanque_arriba::transformar_angulo_disparo(float a) const
 {
-	if(a > 360.0) a=360.0;
+	if(a > 360.0f) a=360.0f;
 	else if(a < 180.f) a=180.f;
 	return a;
 }
@@ -86,7 +86,7 @@ void Enemigo_tanque_derecha::transformar_cuerpo(App_Graficos::Bloque_transformac
 
 float Enemigo_tanque_derecha::transformar_angulo_disparo(float a) const
 {
-	if(a > 270.0) a=270.0;
+	if(a > 270.0f) a=270.0f;
 	else if(a < 90.f) a=90.f;
 	return a;
 }
@@ -179,9 +179,9 @@ void Enemigo_tanque::recibir_disparo(float potencia, App_Interfaces::Disparable_
 	salud-=potencia;
 
 	contexto.insertar_marcador(potencia, acc_espaciable_cx(), acc_espaciable_y());
-	contexto.asignar_barra(salud_max, salud, "SENTRY");
+	contexto.asignar_barra(salud.max(), salud.actual(), "SENTRY");
 
-	if(salud <= 0.0) 
+	if(salud <= 0.0f) 
 	{
 		mut_borrar(true);
 	}

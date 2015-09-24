@@ -9,7 +9,7 @@ Enemigo_basico::Enemigo_basico(float px, float py, float s)
 	:
 	Objeto_juego_I(),
 	Actor_movil(px, py, W, H),
-	salud(s), salud_max(s),
+	salud(0.0f, s, s),
 	tiempo_proximo_disparo(TIEMPO_PROXIMO_DISPARO_DEFECTO),
 	direccion(App_Definiciones::direcciones::derecha)
 {
@@ -73,9 +73,9 @@ void Enemigo_basico::recibir_disparo(float potencia, App_Interfaces::Disparable_
 	salud-=potencia;
 
 	contexto.insertar_marcador(potencia, acc_espaciable_cx(), acc_espaciable_y());	
-	contexto.asignar_barra(salud_max, salud, "SENTRY");
+	contexto.asignar_barra(salud.max(), salud.actual(), "SENTRY");
 
-	if(salud <= 0.0) 
+	if(salud <= 0.0f) 
 	{
 		mut_borrar(true);
 	}

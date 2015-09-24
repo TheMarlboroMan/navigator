@@ -3,6 +3,7 @@
 
 #include <memory>
 #include <map>
+#include <valor_limitado.h>
 #include "actor_movil.h"
 #include "../interfaces/representable_i.h"
 #include "../interfaces/sonoro_i.h"
@@ -36,9 +37,9 @@ class Jugador:
 
 	void 					procesar_estado(float delta);
 
-	int 					acc_salud() const {return salud;}
-	int 					acc_escudo() const {return escudo;}
-	int 					acc_energia() const {return energia;}
+	float 					acc_salud() const {return salud.actual();}
+	float 					acc_escudo() const {return escudo.actual();}
+	float 					acc_energia() const {return energia.actual();}
 	App_Interfaces::Espaciable::t_caja	acc_posicion_anterior() const {return posicion_anterior;}
 	bool					es_aterrizado() const;
 
@@ -93,9 +94,9 @@ class Jugador:
 	static const int W=25;
 	static const int H=14;
 
-	static const int MAX_SALUD=100;
-	static const int MAX_ESCUDO=100;
-	static const int MAX_ENERGIA=100;
+	static const float MAX_SALUD;
+	static const float MAX_ESCUDO;
+	static const float MAX_ENERGIA;
 	static const float ESCUDO_RECUPERADO_POR_SEGUNDO;
 	static const float ENERGIA_RECUPERADA_POR_SEGUNDO;
 	static const float ENERGIA_ESTASIS_POR_SEGUNDO;
@@ -117,14 +118,16 @@ class Jugador:
 	// Propiedades...
 	private:
 
+	typedef Herramientas_proyecto::Valor_limitado<float>	flim;
+
 	struct {float r, g, b;}			mod_color;
 
 	App_Input::Input_usuario 		input;
 	App_Interfaces::Espaciable::t_caja			posicion_anterior;
 
-	float 					salud;
-	float					energia;
-	float 					escudo;
+	flim 					salud;
+	flim					energia;
+	flim 					escudo;
 	float					cooloff_energia;
 	float					tiempo_aterrizado;
 

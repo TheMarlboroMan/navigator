@@ -2,6 +2,7 @@
 #define ENEMIGO_BASICO_H
 
 #include <generador_numeros.h>
+#include <valor_limitado.h>
 #include "../../definiciones/definiciones.h"
 #include "../actor_movil.h"
 #include "../../recursos.h"
@@ -94,10 +95,9 @@ class Enemigo_basico:
 	// Propiedades.
 	private:
 
-	float salud;
-	float salud_max;
-	float tiempo_proximo_disparo;
-	App_Definiciones::direcciones direccion;
+	Herramientas_proyecto::Valor_limitado<float>	salud;
+	float 						tiempo_proximo_disparo;
+	App_Definiciones::direcciones 			direccion;
 };
 
 }

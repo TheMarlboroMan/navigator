@@ -16,7 +16,8 @@ void Vista_unidad_automapa::transformar_bloque(App_Graficos::Bloque_transformaci
 
 	auto preparar=[this](int x, int y)
 	{
-		DLibV::Representacion_bitmap_estatica * rep=new DLibV::Representacion_bitmap_estatica;
+		DLibV::Representacion_bitmap * rep=new DLibV::Representacion_bitmap;
+		rep->hacer_estatica();
 		rep->establecer_alpha(255);
 		rep->establecer_modo_blend(DLibV::Representacion::BLEND_ALPHA);
 		rep->establecer_textura(DLibV::Gestor_texturas::obtener(Recursos_graficos::rt_automapa));

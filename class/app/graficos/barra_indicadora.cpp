@@ -16,6 +16,9 @@ Barra_indicadora::Barra_indicadora(int x, int y, int vmax, int vact, const std::
 	txt_nombre.establecer_posicion(caja.acc_posicion());
 	txt_cantidad.establecer_posicion(caja.acc_posicion());
 	txt_cantidad.desplazar(-30, 0);
+
+	txt_nombre.hacer_estatica();
+	txt_cantidad.hacer_estatica();
 }
 
 void Barra_indicadora::establecer_posicion(int x, int y)

@@ -2,7 +2,6 @@
 #define CELDA_H
 
 #include "../interfaces/espaciable.h"
-#include "../graficos/representador.h"
 #include "celda_base.h"
 
 namespace App_Niveles

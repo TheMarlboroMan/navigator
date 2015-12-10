@@ -12,8 +12,8 @@ namespace App_Graficos
 
 class Barra_indicadora
 {
-	typedef DLibV::Representacion_primitiva_caja_estatica 	rep_caja;
-	typedef DLibV::Representacion_texto_auto_estatica	rep_txt;
+	typedef DLibV::Representacion_primitiva_caja 		rep_caja;
+	typedef DLibV::Representacion_texto_auto		rep_txt;
 
 	public:
 

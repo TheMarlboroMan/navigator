@@ -2,7 +2,7 @@
 
 using namespace App_Juego_ObjetoJuego;
 
-std::map<size_t, DLibV::Representacion_texto_auto_dinamica> Particula_numero::textos;
+std::map<size_t, DLibV::Representacion_texto_auto> Particula_numero::textos;
 
 Particula_numero::Particula_numero(float x, float y, float tv, size_t val, App_Definiciones::colores::colores_texto col, const DLibH::Vector_2d& v):
 	Particula_movil_base(x, y, tv, v),
@@ -29,7 +29,7 @@ void Particula_numero::transformar_bloque(App_Graficos::Bloque_transformacion_re
 		std::stringstream ss;
 		ss<<numero;
 
-		textos.insert(std::make_pair(numero, DLibV::Representacion_texto_auto_dinamica(
+		textos.insert(std::make_pair(numero, DLibV::Representacion_texto_auto(
 				DLibV::Gestor_superficies::obtener(App::Recursos_graficos::rs_fuente_base), 
 				ss.str() ) ) );
 	}

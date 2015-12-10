@@ -23,7 +23,7 @@ class Particula_numero:
 	//Interface pública...
 	public:
 						Particula_numero(float x, float y, float tv, size_t val, App_Definiciones::colores::colores_texto col, const DLibH::Vector_2d& v);
-	static void				preparar_representacion(size_t numero, const DLibV::Representacion_texto_auto_dinamica& rep) {textos.insert(std::make_pair(numero, rep));}
+	static void				preparar_representacion(size_t numero, const DLibV::Representacion_texto_auto& rep) {textos.insert(std::make_pair(numero, rep));}
 	bool					debe_preparar_representacion(size_t numero) const {return textos.count(numero);}
 
 	//////////////
@@ -46,7 +46,7 @@ class Particula_numero:
 
 	size_t										numero;
 	App_Definiciones::colores::colores_texto					color;
-	static std::map<size_t, DLibV::Representacion_texto_auto_dinamica>		textos;
+	static std::map<size_t, DLibV::Representacion_texto_auto>			textos;
 };
 }
 

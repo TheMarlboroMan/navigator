@@ -14,6 +14,7 @@ struct Bloque_transformacion_representable
 
 	enum class tipos{
 		tr_bitmap=1,
+//TODO: Esto ya no existe...
 		tr_grupo_dinamico=2,
 		tr_grupo_estatico=3,
 		tr_primitiva_puntos=4,
@@ -81,11 +82,11 @@ struct Bloque_transformacion_representable
 	private:
 
 	const Animaciones&				animaciones;
-	DLibV::Representacion_bitmap_dinamica 		rep_bmp;
-	DLibV::Representacion_agrupada_dinamica 	rep_agr_din;
-	DLibV::Representacion_agrupada_estatica 	rep_agr_est;
-	DLibV::Representacion_primitiva_puntos_dinamica rep_prim_punt;
-	DLibV::Representacion_primitiva_caja_dinamica 	rep_prim_caja;
+	DLibV::Representacion_bitmap	 		rep_bmp;
+	DLibV::Representacion_agrupada		 	rep_agr_din;
+	DLibV::Representacion_agrupada		 	rep_agr_est;
+	DLibV::Representacion_primitiva_puntos 		rep_prim_punt;
+	DLibV::Representacion_primitiva_caja	 	rep_prim_caja;
 	DLibV::Representacion * 			rep;
 	tipos 						tipo_actual;
 	bool 						visible;
